@@ -3,91 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Crie sua conta • MDE Hub</title>
 
-  <meta name="description"
-        content="Crie sua conta no MDE Hub com um único cadastro. Nome, e-mail, WhatsApp e consentimento de marketing para acessar ferramentas digitais MDE." />
+  <title>MDE Hub • Criar conta</title>
 
-  <link rel="stylesheet" href="css/style.css" />
+  <meta name="description" content="Crie sua conta gratuita no MDE Hub para acessar as ferramentas digitais da MDE Sistemas." />
+
+  <link rel="stylesheet" href="css/auth.css" />
+  <script defer src="js/auth.js"></script>
+
+  <!-- Supabase + lógica de cadastro -->
+  <script defer src="js/supabase.js"></script>
+  <script defer src="js/register.js"></script>
 </head>
-<body>
+<body class="theme-light">
+  <div class="auth-page">
+    <div class="auth-card">
+      <header class="auth-header">
+        <div class="auth-brand">
+          <span class="auth-logo">MDE Hub</span>
+          <span class="auth-subtitle">Cadastro de acesso às soluções MDE Sistemas</span>
+        </div>
+        <button type="button" class="theme-toggle-btn" data-theme-toggle>
+          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-label">Modo escuro</span>
+        </button>
+      </header>
 
-<header>
-  <div class="brand">MDE Hub</div>
-  <nav>
-    <a href="login.html" class="btn-small">Entrar</a>
-  </nav>
-</header>
+      <main class="auth-content">
+        <h1 class="auth-title">Criar conta gratuita</h1>
+        <p class="auth-text">
+          Com um único cadastro você acessa todas as ferramentas digitais da MDE Sistemas.
+          Utilizamos seu WhatsApp apenas para contato consultivo e comunicações autorizadas.
+        </p>
 
-<div class="container">
+        <form id="register-form" class="auth-form">
+          <div class="form-group">
+            <label for="full_name">Nome completo</label>
+            <input
+              type="text"
+              id="full_name"
+              name="full_name"
+              placeholder="Seu nome completo"
+              required
+              autocomplete="name"
+            />
+          </div>
 
-  <h1>Crie sua conta</h1>
+          <div class="form-group">
+            <label for="email">E-mail corporativo</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="seuemail@hotel.com.br"
+              required
+              autocomplete="email"
+            />
+          </div>
 
-  <p style="margin-top:10px; max-width:720px; opacity:0.9;">
-    Acesse as ferramentas digitais da MDE Sistemas com um único cadastro.
-    Utilizamos seu WhatsApp apenas para contato consultivo e comunicações autorizadas.
-  </p>
+          <div class="form-group">
+            <label for="whatsapp">WhatsApp</label>
+            <input
+              type="tel"
+              id="whatsapp"
+              name="whatsapp"
+              placeholder="(11) 94027-7447"
+              required
+              autocomplete="tel"
+            />
+          </div>
 
-  <form id="register-form">
-    <div>
-      <label for="full_name">Nome completo</label>
-      <input type="text" id="full_name" name="full_name" required />
+          <div class="form-group">
+            <label for="password">Senha de acesso</label>
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Crie uma senha segura"
+                required
+                autocomplete="new-password"
+              />
+              <button type="button" class="password-toggle" data-password-toggle="password">
+                👁
+              </button>
+            </div>
+          </div>
+
+          <label class="checkbox-group">
+            <input type="checkbox" id="consent" name="consent" checked />
+            <span>
+              Autorizo a MDE Sistemas a enviar informações, novidades e oportunidades
+              relacionadas às soluções MDE pelo e-mail e WhatsApp informados.
+            </span>
+          </label>
+
+          <div class="form-footer">
+            <button type="submit" class="btn-primary" id="register-submit">
+              Criar conta gratuita
+            </button>
+          </div>
+
+          <p class="auth-helper">
+            Já possui uma conta?
+            <a href="login.html">Entrar no MDE Hub</a>
+          </p>
+        </form>
+
+        <p class="auth-terms">
+          Ao criar sua conta você concorda com o uso dos seus dados para fins de relacionamento
+          comercial e melhoria das soluções MDE.
+        </p>
+      </main>
+
+      <footer class="auth-footer">
+        <span>MDE Sistemas • Há 35 anos otimizando a hotelaria</span>
+      </footer>
     </div>
-
-    <div>
-      <label for="email">E-mail</label>
-      <input type="email" id="email" name="email" required />
-    </div>
-
-    <div>
-      <label for="whatsapp">WhatsApp</label>
-      <input
-        type="tel"
-        id="whatsapp"
-        name="whatsapp"
-        placeholder="(11) 90000-0000"
-        required
-      />
-    </div>
-
-    <div>
-      <label for="password">Senha de acesso</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        minlength="6"
-        required
-      />
-    </div>
-
-    <div class="checkbox-row">
-      <input type="checkbox" id="accepts_marketing" name="accepts_marketing" />
-      <label for="accepts_marketing" style="font-size:14px; opacity:0.9;">
-        Autorizo a MDE Sistemas a enviar informações, novidades e oportunidades
-        relacionadas às soluções MDE pelo e-mail e WhatsApp informados.
-      </label>
-    </div>
-
-    <button type="submit" class="btn btn-green">
-      Criar conta gratuita
-    </button>
-
-    <p style="margin-top:10px; font-size:14px;">
-      Já possui uma conta?
-      <a href="login.html">Entrar no MDE Hub</a>
-    </p>
-
-    <p style="margin-top:8px; font-size:13px; opacity:0.7;">
-      Ao criar a conta você concorda com o uso dos dados para fins de relacionamento
-      comercial e melhoria das soluções MDE.
-    </p>
-  </form>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/register.js"></script>
+  </div>
 </body>
 </html>
