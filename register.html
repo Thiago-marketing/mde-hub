@@ -3,121 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Crie sua conta • MDE Hub</title>
 
   <meta name="description"
         content="Crie sua conta no MDE Hub com um único cadastro. Nome, e-mail, WhatsApp e consentimento de marketing para acessar ferramentas digitais MDE." />
 
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Futuro banner de cadastro: /img/register-banner.jpg -->
 </head>
-<body class="page-auth">
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="logo-area">
-        <div class="logo-circle">M</div>
-        <div class="logo-text">
-          <span class="logo-title">MDE Hub</span>
-          <span class="logo-subtitle">Plataforma oficial • MDE Sistemas</span>
-        </div>
-      </div>
+<body>
 
-      <nav class="topbar-nav">
-        <a href="login.html" class="btn btn-ghost">Entrar</a>
-      </nav>
+<header>
+  <div class="brand">MDE Hub</div>
+  <nav>
+    <a href="login.html" class="btn-small">Entrar</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <h1>Crie sua conta</h1>
+
+  <p style="margin-top:10px; max-width:720px; opacity:0.9;">
+    Acesse as ferramentas digitais da MDE Sistemas com um único cadastro.
+    Utilizamos seu WhatsApp apenas para contato consultivo e comunicações autorizadas.
+  </p>
+
+  <form id="register-form">
+    <div>
+      <label for="full_name">Nome completo</label>
+      <input type="text" id="full_name" name="full_name" required />
     </div>
-  </header>
 
-  <main class="page auth-layout">
-    <section class="auth-card">
-      <div class="auth-header">
-        <h1>Crie sua conta</h1>
-        <p>
-          Acesse as ferramentas digitais da MDE Sistemas com um único cadastro.
-          Utilizamos seu WhatsApp apenas para contato consultivo e comunicações autorizadas.
-        </p>
-      </div>
+    <div>
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required />
+    </div>
 
-      <form id="register-form" class="form">
-        <div class="form-row">
-          <label for="full_name">Nome completo</label>
-          <input type="text" id="full_name" name="full_name" required />
-        </div>
+    <div>
+      <label for="whatsapp">WhatsApp</label>
+      <input
+        type="tel"
+        id="whatsapp"
+        name="whatsapp"
+        placeholder="(11) 90000-0000"
+        required
+      />
+    </div>
 
-        <div class="form-row">
-          <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" required />
-        </div>
+    <div>
+      <label for="password">Senha de acesso</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        minlength="6"
+        required
+      />
+    </div>
 
-        <div class="form-row">
-          <label for="whatsapp">WhatsApp</label>
-          <input
-            type="tel"
-            id="whatsapp"
-            name="whatsapp"
-            placeholder="(11) 90000-0000"
-            required
-          />
-        </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="accepts_marketing" name="accepts_marketing" />
+      <label for="accepts_marketing" style="font-size:14px; opacity:0.9;">
+        Autorizo a MDE Sistemas a enviar informações, novidades e oportunidades
+        relacionadas às soluções MDE pelo e-mail e WhatsApp informados.
+      </label>
+    </div>
 
-        <div class="form-row">
-          <label for="password">Senha de acesso</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            minlength="6"
-            required
-          />
-        </div>
+    <button type="submit" class="btn btn-green">
+      Criar conta gratuita
+    </button>
 
-        <div class="form-row form-row-inline">
-          <label class="checkbox-label">
-            <input
-              type="checkbox"
-              id="accepts_marketing"
-              name="accepts_marketing"
-            />
-            <span>
-              Autorizo a MDE Sistemas a enviar informações, novidades e oportunidades
-              relacionadas às soluções MDE pelo e-mail e WhatsApp informados.
-            </span>
-          </label>
-        </div>
+    <p style="margin-top:10px; font-size:14px;">
+      Já possui uma conta?
+      <a href="login.html">Entrar no MDE Hub</a>
+    </p>
 
-        <button type="submit" class="btn btn-primary btn-full">
-          Criar conta gratuita
-        </button>
+    <p style="margin-top:8px; font-size:13px; opacity:0.7;">
+      Ao criar a conta você concorda com o uso dos dados para fins de relacionamento
+      comercial e melhoria das soluções MDE.
+    </p>
+  </form>
 
-        <p class="form-helper">
-          Já possui uma conta?
-          <a href="login.html">Entrar no MDE Hub</a>
-        </p>
+</div>
 
-        <p class="form-footnote">
-          Ao criar a conta você concorda com o uso dos dados para fins de relacionamento
-          comercial e melhoria das soluções MDE.
-        </p>
-      </form>
-
-      <section class="auth-extra">
-        <h2>Pensado para times comerciais e operações</h2>
-        <ul>
-          <li>Cadastro único para múltiplas ferramentas digitais</li>
-          <li>WhatsApp sempre disponível para atendimento consultivo</li>
-          <li>Base preparada para CRM e automações de marketing</li>
-        </ul>
-      </section>
-    </section>
-
-    <aside class="auth-visual">
-      <!-- Futuro: imagem ilustrativa em /img/register-banner.jpg -->
-    </aside>
-  </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/register.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/register.js"></script>
 </body>
 </html>
