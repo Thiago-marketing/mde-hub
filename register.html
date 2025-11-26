@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Criar conta • MDE Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/mde-hub/public/css/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="/mde-hub/public/js/supabase.js" defer></script>
+  <script src="/mde-hub/public/js/auth.js" defer></script>
+</head>
+<body class="page page-auth">
+  <div class="shell auth-shell">
+    <div class="auth-card">
+      <div class="auth-left">
+        <div class="logo logo-large">
+          <span class="logo-mark">M</span>
+          <span class="logo-text">MDE Hub</span>
+        </div>
+        <h1>Crie sua conta</h1>
+        <p class="auth-sub">
+          Acesse as ferramentas digitais da MDE Sistemas com um único cadastro.
+          Utilizamos seu WhatsApp apenas para contato consultivo e comunicações autorizadas.
+        </p>
+
+        <form class="auth-form" onsubmit="criarConta(); return false;">
+          <label class="field">
+            <span>Nome completo</span>
+            <input id="nome" type="text" autocomplete="name" required />
+          </label>
+
+          <label class="field">
+            <span>E-mail</span>
+            <input id="email" type="email" autocomplete="email" required />
+          </label>
+
+          <label class="field">
+            <span>WhatsApp</span>
+            <input id="whatsapp" type="text" placeholder="(11) 90000-0000" required />
+          </label>
+
+          <label class="checkbox-field">
+            <input id="aceita_marketing" type="checkbox" required />
+            <span>Autorizo a MDE Sistemas a enviar informações, novidades e
+              oportunidades relacionadas às soluções MDE.</span>
+          </label>
+
+          <label class="field">
+            <span>Senha de acesso</span>
+            <input id="senha" type="password" minlength="6" required />
+          </label>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            Criar conta gratuita
+          </button>
+
+          <p class="auth-alt">
+            Já possui uma conta?
+            <a href="/mde-hub/public/login.html">Entrar no MDE Hub</a>
+          </p>
+
+          <p class="auth-note">
+            Ao criar a conta você concorda com o uso dos dados para fins de
+            relacionamento comercial e melhoria das soluções MDE.
+          </p>
+        </form>
+      </div>
+
+      <div class="auth-right">
+        <div class="auth-panel">
+          <p class="panel-title">Pensado para times comerciais e operações.</p>
+          <ul class="panel-list">
+            <li>Cadastro único para múltiplas ferramentas digitais</li>
+            <li>WhatsApp sempre disponível para atendimento consultivo</li>
+            <li>Base preparada para CRM e automações de marketing</li>
+          </ul>
+          <div class="panel-tagline">
+            Este ambiente evoluirá continuamente com novos recursos ligados ao ecosistema MDE.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
