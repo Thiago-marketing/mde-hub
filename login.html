@@ -3,68 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Entrar • MDE Hub</title>
 
-  <meta name="description"
-        content="Acesse o MDE Hub com seu e-mail e senha para utilizar as ferramentas digitais da MDE Sistemas." />
+  <title>MDE Hub • Entrar</title>
 
-  <link rel="stylesheet" href="css/style.css" />
+  <!-- SEO básico -->
+  <meta name="description" content="Acesse o MDE Hub com seu e-mail e senha para utilizar as ferramentas digitais da MDE Sistemas." />
+
+  <!-- CSS exclusivo de autenticação -->
+  <link rel="stylesheet" href="css/auth.css" />
+
+  <!-- JS de UI (tema, helpers) -->
+  <script defer src="js/auth.js"></script>
+
+  <!-- Supabase + lógica de login -->
+  <script defer src="js/supabase.js"></script>
+  <script defer src="js/login.js"></script>
 </head>
-<body>
+<body class="theme-light">
+  <div class="auth-page">
+    <div class="auth-card">
+      <header class="auth-header">
+        <div class="auth-brand">
+          <!-- Se tiver logo, troca o texto por <img src="img/logo-mde-hub.svg" alt="MDE Hub"> -->
+          <span class="auth-logo">MDE Hub</span>
+          <span class="auth-subtitle">Acesso às soluções digitais MDE Sistemas</span>
+        </div>
+        <button type="button" class="theme-toggle-btn" data-theme-toggle>
+          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-label">Modo escuro</span>
+        </button>
+      </header>
 
-<header>
-  <div class="brand">MDE Hub</div>
-  <nav>
-    <a href="register.html" class="btn-small" style="background:#22c55e;">Criar conta</a>
-  </nav>
-</header>
+      <main class="auth-content">
+        <h1 class="auth-title">Entrar no MDE Hub</h1>
+        <p class="auth-text">
+          Use o e-mail cadastrado para acessar suas ferramentas de gestão, motor de reservas,
+          relatórios e outras soluções digitais da MDE Sistemas.
+        </p>
 
-<div class="container">
+        <form id="login-form" class="auth-form">
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="seuemail@hotel.com.br"
+              required
+              autocomplete="email"
+            />
+          </div>
 
-  <h1>Entrar no MDE Hub</h1>
+          <div class="form-group">
+            <label for="password">Senha de acesso</label>
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Digite sua senha"
+                required
+                autocomplete="current-password"
+              />
+              <button type="button" class="password-toggle" data-password-toggle="password">
+                👁
+              </button>
+            </div>
+          </div>
 
-  <p style="margin-top:10px; max-width:720px; opacity:0.9;">
-    Use o mesmo e-mail cadastrado para acessar suas ferramentas digitais,
-    simuladores e o painel de leads.
-  </p>
+          <div class="form-footer">
+            <button type="submit" class="btn-primary" id="login-submit">
+              Entrar no MDE Hub
+            </button>
+          </div>
 
-  <form id="login-form">
-    <div>
-      <label for="login_email">E-mail</label>
-      <input type="email" id="login_email" name="email" required />
+          <p class="auth-helper">
+            Ainda não tem conta?
+            <a href="register.html">Criar conta gratuita</a>
+          </p>
+        </form>
+
+        <p class="auth-terms">
+          Ao continuar, você concorda com o uso dos seus dados para fins de relacionamento
+          comercial e melhoria das soluções MDE.
+        </p>
+      </main>
+
+      <footer class="auth-footer">
+        <span>MDE Sistemas • Há 35 anos otimizando a hotelaria</span>
+      </footer>
     </div>
-
-    <div>
-      <label for="login_password">Senha</label>
-      <input
-        type="password"
-        id="login_password"
-        name="password"
-        required
-      />
-    </div>
-
-    <button type="submit" class="btn btn-green">
-      Entrar
-    </button>
-
-    <p style="margin-top:10px; font-size:14px;">
-      Ainda não tem conta?
-      <a href="register.html">Criar conta gratuita</a>
-    </p>
-  </form>
-
-  <h2>Segurança e organização</h2>
-  <ul style="margin-top:10px; line-height:1.8;">
-    <li>Acesso controlado por usuário e senha</li>
-    <li>Seu e-mail é a chave única do ecossistema MDE</li>
-    <li>Preparado para autenticação avançada no futuro</li>
-  </ul>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/auth.js"></script>
+  </div>
 </body>
 </html>
