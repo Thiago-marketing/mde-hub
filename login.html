@@ -2,63 +2,86 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Entrar • MDE Hub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/mde-hub/public/css/style.css" />
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="/mde-hub/public/js/supabase.js" defer></script>
-  <script src="/mde-hub/public/js/auth.js" defer></script>
+
+  <title>Entrar • MDE Hub</title>
+
+  <meta name="description"
+        content="Acesse o MDE Hub com seu e-mail e senha para utilizar as ferramentas digitais da MDE Sistemas." />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Futuro banner de login: /img/login-banner.jpg -->
 </head>
-<body class="page page-auth">
-  <div class="shell auth-shell">
-    <div class="auth-card">
-      <div class="auth-left">
-        <div class="logo logo-large">
-          <span class="logo-mark">M</span>
-          <span class="logo-text">MDE Hub</span>
-        </div>
-        <h1>Bem-vindo de volta</h1>
-        <p class="auth-sub">
-          Acesse sua conta para visualizar suas ferramentas, testes e recursos
-          vinculados ao ecossistema MDE Sistemas.
-        </p>
-
-        <form class="auth-form" onsubmit="login(); return false;">
-          <label class="field">
-            <span>E-mail</span>
-            <input id="email" type="email" autocomplete="email" required />
-          </label>
-
-          <label class="field">
-            <span>Senha</span>
-            <input id="senha" type="password" autocomplete="current-password" required />
-          </label>
-
-          <button type="submit" class="btn btn-primary btn-full">
-            Entrar
-          </button>
-
-          <p class="auth-alt">
-            Ainda não tem conta?
-            <a href="/mde-hub/public/register.html">Criar conta no MDE Hub</a>
-          </p>
-        </form>
-      </div>
-
-      <div class="auth-right">
-        <div class="auth-panel">
-          <p class="panel-title">Acesso controlado, visão estratégica.</p>
-          <ul class="panel-list">
-            <li>Autenticação via Supabase, preparada para auditoria</li>
-            <li>Perfis conectados ao banco de leads qualificados</li>
-            <li>Base pronta para permissões por módulo no futuro</li>
-          </ul>
-          <div class="panel-tagline">
-            Use este acesso apenas para fins internos, testes e homologação com clientes.
-          </div>
+<body class="page-auth">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo-area">
+        <div class="logo-circle">M</div>
+        <div class="logo-text">
+          <span class="logo-title">MDE Hub</span>
+          <span class="logo-subtitle">Plataforma oficial • MDE Sistemas</span>
         </div>
       </div>
+
+      <nav class="topbar-nav">
+        <a href="register.html" class="btn btn-primary">Criar conta</a>
+      </nav>
     </div>
-  </div>
+  </header>
+
+  <main class="page auth-layout">
+    <section class="auth-card">
+      <div class="auth-header">
+        <h1>Entrar no MDE Hub</h1>
+        <p>
+          Use o mesmo e-mail cadastrado para acessar suas ferramentas digitais,
+          simuladores e painel de leads.
+        </p>
+      </div>
+
+      <form id="login-form" class="form">
+        <div class="form-row">
+          <label for="login_email">E-mail</label>
+          <input type="email" id="login_email" name="email" required />
+        </div>
+
+        <div class="form-row">
+          <label for="login_password">Senha</label>
+          <input
+            type="password"
+            id="login_password"
+            name="password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">
+          Entrar
+        </button>
+
+        <p class="form-helper">
+          Ainda não tem conta?
+          <a href="register.html">Criar conta gratuita</a>
+        </p>
+      </form>
+
+      <section class="auth-extra">
+        <h2>Segurança e organização</h2>
+        <ul>
+          <li>Acesso controlado por usuário e senha</li>
+          <li>Seu e-mail é a chave única do ecossistema MDE</li>
+          <li>Preparado para autenticação avançada no futuro</li>
+        </ul>
+      </section>
+    </section>
+
+    <aside class="auth-visual">
+      <!-- Futuro: imagem ilustrativa em /img/login-banner.jpg -->
+    </aside>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>
