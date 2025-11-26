@@ -1,10 +1,5 @@
-// register.js
-// Lida com cadastro: Auth + tabela profiles (nome, whatsapp, marketing)
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("register-form");
-
-  if (!form) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -13,65 +8,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("email").value.trim();
     const whatsapp = document.getElementById("whatsapp").value.trim();
     const password = document.getElementById("password").value.trim();
-    const accepts_marketing = document.getElementById("accepts_marketing").checked;
+    const consent = document.getElementById("consent").checked;
 
-    if (!full_name || !email || !password || !whatsapp) {
-      alert("Preencha todos os campos obrigatórios.");
+    // Validações simples
+    if (!full_name || !email || !whatsapp || !password) {
+      alert("Preencha todos os campos.");
+      return;
+    }
+
+    if (!consent) {
+      alert("Você precisa autorizar o envio de comunicações para continuar.");
       return;
     }
 
     try {
-      // --- 1. Criar usuário no Supabase Auth ---
-      const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+      // Signup no Supabase
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
-            full_name,
-            whatsapp,
-            accepts_marketing,
+            full_name: full_name,
+            whatsapp: whatsapp,
+            consent: consent
           }
         }
       });
 
-      if (authError) {
-        console.error(authError);
-        alert("Erro ao criar sua conta: " + authError.message);
+      if (error) {
+        console.error(error);
+        alert("Erro ao criar conta: " + error.message);
         return;
       }
 
-      const userId = authData.user?.id;
-
-      if (!userId) {
-        alert("Erro inesperado ao criar conta.");
-        return;
-      }
-
-      // --- 2. Criar registro na tabela profiles ---
-      const { error: profileError } = await supabaseClient
-        .from("profiles")
-        .insert({
-          id: userId,
-          full_name,
-          whatsapp,
-          accepts_marketing,
-          email,
-          created_at: new Date(),
-        });
-
-      if (profileError) {
-        console.error(profileError);
-        alert("Sua conta foi criada, mas houve um erro ao salvar seus dados de perfil.");
-        return;
-      }
-
-      alert("Conta criada com sucesso! Você será redirecionado.");
-      window.location.href = "dashboard.html";
+      // Sucesso
+      alert("Conta criada com sucesso! Verifique seu e-mail para confirmar.");
+      window.location.href = "login.html";
 
     } catch (err) {
       console.error(err);
-      alert("Erro inesperado. Tente novamente.");
+      alert("Erro inesperado ao criar conta.");
     }
   });
 });
-
