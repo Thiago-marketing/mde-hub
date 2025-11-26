@@ -1,66 +1,56 @@
-// auth.js
-// Cuida de login, sessão, logout e proteção das páginas
+document.addEventListener("DOMContentLoaded", () => {
+  // Tema salvo
+  const body = document.body;
+  const toggleBtn = document.querySelector("[data-theme-toggle]");
 
-document.addEventListener("DOMContentLoaded", async () => {
+  const applyTheme = (theme) => {
+    body.classList.remove("theme-light", "theme-dark");
+    body.classList.add(theme);
+    localStorage.setItem("mdehub-theme", theme);
 
-  // --- LOGIN PAGE ---
-  const loginForm = document.getElementById("login-form");
-
-  if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const email = document.getElementById("login_email").value.trim();
-      const password = document.getElementById("login_password").value.trim();
-
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        alert("Erro ao entrar: " + error.message);
-        return;
+    if (toggleBtn) {
+      const icon = toggleBtn.querySelector(".theme-toggle-icon");
+      const label = toggleBtn.querySelector(".theme-toggle-label");
+      if (theme === "theme-dark" || theme === "dark") {
+        body.classList.remove("theme-light");
+        body.classList.add("theme-dark");
+        icon.textContent = "🌞";
+        label.textContent = "Modo claro";
+      } else {
+        body.classList.remove("theme-dark");
+        body.classList.add("theme-light");
+        icon.textContent = "🌙";
+        label.textContent = "Modo escuro";
       }
+    }
+  };
 
-      // Redireciona ao painel
-      window.location.href = "dashboard.html";
+  // Definir tema inicial
+  const savedTheme = localStorage.getItem("mdehub-theme");
+  if (savedTheme === "theme-dark" || savedTheme === "dark") {
+    applyTheme("theme-dark");
+  } else {
+    applyTheme("theme-light");
+  }
+
+  // Toggle de tema
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const isDark = body.classList.contains("theme-dark");
+      applyTheme(isDark ? "theme-light" : "theme-dark");
     });
   }
 
-  // --- PROTEÇÃO DO DASHBOARD ---
-  const isDashboard = window.location.pathname.includes("dashboard.html");
+  // Mostrar/ocultar senha
+  document.querySelectorAll("[data-password-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const inputId = btn.getAttribute("data-password-toggle");
+      const input = document.getElementById(inputId);
+      if (!input) return;
 
-  if (isDashboard) {
-    const { data: sessionData } = await supabaseClient.auth.getSession();
-
-    if (!sessionData.session) {
-      // Sem sessão → volta para login
-      window.location.href = "login.html";
-      return;
-    }
-
-    const user = sessionData.session.user;
-
-    // Mostrar e-mail no topo
-    const userEmailElement = document.getElementById("user-email");
-    const userGreeting = document.getElementById("user-greeting");
-
-    if (userEmailElement) userEmailElement.textContent = user.email;
-
-    if (userGreeting) {
-      userGreeting.textContent = `Olá, ${user.user_metadata?.full_name || user.email}!`;
-    }
-
-    // Botão logout
-    const logoutBtn = document.getElementById("logout-btn");
-
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", async () => {
-        await supabaseClient.auth.signOut();
-        window.location.href = "login.html";
-      });
-    }
-  }
-
+      const isPassword = input.type === "password";
+      input.type = isPassword ? "text" : "password";
+      btn.textContent = isPassword ? "🙈" : "👁";
+    });
+  });
 });
