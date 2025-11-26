@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Entrar • MDE Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/mde-hub/public/css/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="/mde-hub/public/js/supabase.js" defer></script>
+  <script src="/mde-hub/public/js/auth.js" defer></script>
+</head>
+<body class="page page-auth">
+  <div class="shell auth-shell">
+    <div class="auth-card">
+      <div class="auth-left">
+        <div class="logo logo-large">
+          <span class="logo-mark">M</span>
+          <span class="logo-text">MDE Hub</span>
+        </div>
+        <h1>Bem-vindo de volta</h1>
+        <p class="auth-sub">
+          Acesse sua conta para visualizar suas ferramentas, testes e recursos
+          vinculados ao ecossistema MDE Sistemas.
+        </p>
+
+        <form class="auth-form" onsubmit="login(); return false;">
+          <label class="field">
+            <span>E-mail</span>
+            <input id="email" type="email" autocomplete="email" required />
+          </label>
+
+          <label class="field">
+            <span>Senha</span>
+            <input id="senha" type="password" autocomplete="current-password" required />
+          </label>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            Entrar
+          </button>
+
+          <p class="auth-alt">
+            Ainda não tem conta?
+            <a href="/mde-hub/public/register.html">Criar conta no MDE Hub</a>
+          </p>
+        </form>
+      </div>
+
+      <div class="auth-right">
+        <div class="auth-panel">
+          <p class="panel-title">Acesso controlado, visão estratégica.</p>
+          <ul class="panel-list">
+            <li>Autenticação via Supabase, preparada para auditoria</li>
+            <li>Perfis conectados ao banco de leads qualificados</li>
+            <li>Base pronta para permissões por módulo no futuro</li>
+          </ul>
+          <div class="panel-tagline">
+            Use este acesso apenas para fins internos, testes e homologação com clientes.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
