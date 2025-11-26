@@ -22,21 +22,33 @@ document.addEventListener("DOMContentLoaded", () => {
         email,
         password,
         options: {
-          data: { full_name, whatsapp, consent }
+          // 👉 depois de confirmar o e-mail, vai cair nesta página
+          emailRedirectTo: "https://mde-hub.vercel.app/confirm.html",
+          data: {
+            full_name,
+            whatsapp,
+            consent
+          }
         }
       });
 
       if (error) {
+        console.error(error);
         alert("Erro ao criar conta: " + error.message);
         return;
       }
 
-      alert("Conta criada! Verifique seu e-mail.");
+      alert(
+        "Conta criada! Enviamos um link de confirmação para o seu e-mail. " +
+        "Confirme o endereço para acessar o MDE Hub."
+      );
+
+      // opcional: manda pro login depois do cadastro
       window.location.href = "login.html";
 
     } catch (err) {
       console.error(err);
-      alert("Erro inesperado.");
+      alert("Erro inesperado ao criar conta.");
     }
   });
 });
