@@ -10,15 +10,14 @@
         content="Painel inicial do MDE Hub com visão de leads, ferramentas e acessos às soluções digitais MDE." />
 
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Futuro: ilustração do painel em /img/dashboard-illustration.png -->
 </head>
 <body class="page-dashboard">
   <header class="topbar">
     <div class="topbar-inner">
       <div class="logo-area">
-        <div class="logo-circle">M</div>
+        <div class="logo-circle" id="user-initial">M</div>
         <div class="logo-text">
-          <span class="logo-title">MDE Hub</span>
+          <span class="logo-title" id="user-name">MDE Hub</span>
           <span class="logo-subtitle">Painel de ferramentas digitais</span>
         </div>
       </div>
@@ -75,8 +74,8 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/auth.js"></script>
+  <!-- O ÚNICO SCRIPT QUE O DASHBOARD PRECISA -->
+  <script type="module" src="js/dashboard.js"></script>
+
 </body>
 </html>
