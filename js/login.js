@@ -25,13 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Sucesso: redirecionar
-      window.location.href = "dashboard.html"; 
-      // depois você coloca a página real do Hub aqui
+      window.location.href = "dashboard.html";
 
     } catch (err) {
       console.error(err);
-      alert("Erro inesperado ao fazer login.");
+      alert("Erro inesperado.");
     }
   });
 });
