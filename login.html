@@ -3,85 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Entrar • MDE Hub</title>
 
   <meta name="description"
         content="Acesse o MDE Hub com seu e-mail e senha para utilizar as ferramentas digitais da MDE Sistemas." />
 
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Futuro banner de login: /img/login-banner.jpg -->
 </head>
-<body class="page-auth">
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="logo-area">
-        <div class="logo-circle">M</div>
-        <div class="logo-text">
-          <span class="logo-title">MDE Hub</span>
-          <span class="logo-subtitle">Plataforma oficial • MDE Sistemas</span>
-        </div>
-      </div>
+<body>
 
-      <nav class="topbar-nav">
-        <a href="register.html" class="btn btn-primary">Criar conta</a>
-      </nav>
+<header>
+  <div class="brand">MDE Hub</div>
+  <nav>
+    <a href="register.html" class="btn-small" style="background:#22c55e;">Criar conta</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <h1>Entrar no MDE Hub</h1>
+
+  <p style="margin-top:10px; max-width:720px; opacity:0.9;">
+    Use o mesmo e-mail cadastrado para acessar suas ferramentas digitais,
+    simuladores e o painel de leads.
+  </p>
+
+  <form id="login-form">
+    <div>
+      <label for="login_email">E-mail</label>
+      <input type="email" id="login_email" name="email" required />
     </div>
-  </header>
 
-  <main class="page auth-layout">
-    <section class="auth-card">
-      <div class="auth-header">
-        <h1>Entrar no MDE Hub</h1>
-        <p>
-          Use o mesmo e-mail cadastrado para acessar suas ferramentas digitais,
-          simuladores e painel de leads.
-        </p>
-      </div>
+    <div>
+      <label for="login_password">Senha</label>
+      <input
+        type="password"
+        id="login_password"
+        name="password"
+        required
+      />
+    </div>
 
-      <form id="login-form" class="form">
-        <div class="form-row">
-          <label for="login_email">E-mail</label>
-          <input type="email" id="login_email" name="email" required />
-        </div>
+    <button type="submit" class="btn btn-green">
+      Entrar
+    </button>
 
-        <div class="form-row">
-          <label for="login_password">Senha</label>
-          <input
-            type="password"
-            id="login_password"
-            name="password"
-            required
-          />
-        </div>
+    <p style="margin-top:10px; font-size:14px;">
+      Ainda não tem conta?
+      <a href="register.html">Criar conta gratuita</a>
+    </p>
+  </form>
 
-        <button type="submit" class="btn btn-primary btn-full">
-          Entrar
-        </button>
+  <h2>Segurança e organização</h2>
+  <ul style="margin-top:10px; line-height:1.8;">
+    <li>Acesso controlado por usuário e senha</li>
+    <li>Seu e-mail é a chave única do ecossistema MDE</li>
+    <li>Preparado para autenticação avançada no futuro</li>
+  </ul>
 
-        <p class="form-helper">
-          Ainda não tem conta?
-          <a href="register.html">Criar conta gratuita</a>
-        </p>
-      </form>
+</div>
 
-      <section class="auth-extra">
-        <h2>Segurança e organização</h2>
-        <ul>
-          <li>Acesso controlado por usuário e senha</li>
-          <li>Seu e-mail é a chave única do ecossistema MDE</li>
-          <li>Preparado para autenticação avançada no futuro</li>
-        </ul>
-      </section>
-    </section>
-
-    <aside class="auth-visual">
-      <!-- Futuro: imagem ilustrativa em /img/login-banner.jpg -->
-    </aside>
-  </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/auth.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/auth.js"></script>
 </body>
 </html>
