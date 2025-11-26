@@ -11,5 +11,14 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY
 );
+// IMPORTAÇÃO CORRETA DO SUPABASE (versão 2)
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+// ⚠️ COLE AQUI SEUS DADOS REAIS DO SUPABASE
+const SUPABASE_URL = "https://SEU-PROJECT-ID.supabase.co";
+const SUPABASE_ANON_KEY = "SUA-ANON-KEY";
+
+// Cliente Supabase global
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
