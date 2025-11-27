@@ -1,57 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CRM Kanban • MDE Hub</title>
-
-  <link rel="stylesheet" href="/css/style.css" />
-  <script src="/js/supabase.js"></script>
-  <script src="/js/crm/kanban.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CRM • Kanban • MDE Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
+<body class="page">
+<header class="topbar">
+  <div class="user-info">
+    <span id="userInitial">T</span>
+    <div>
+      <p id="userName">Carregando usuário...</p>
+      <p id="userEmail"></p>
+    </div>
+  </div>
+  <button id="logoutBtn" class="btn-sair">Sair</button>
+</header>
 
-<body>
-  <div data-include="/modules/sidebar.html"></div>
-  <div data-include="/modules/header.html"></div>
+<aside class="sidebar">
+  <h3>CRM MDE</h3>
+  <ul>
+    <li><a href="crm-dashboard.html">Visão geral</a></li>
+    <li><a href="crm.html">Leads</a></li>
+    <li class="active"><a href="crm-kanban.html">Kanban</a></li>
+    <li><a href="crm-atividades.html">Atividades</a></li>
+  </ul>
+</aside>
 
-  <main class="content">
-    <h1 class="page-title">CRM • Kanban</h1>
-    <p class="page-sub">Acompanhe visualmente o funil comercial da MDE.</p>
+<main class="content">
+  <h1>Kanban de oportunidades</h1>
+  <p class="subtitle">Arraste os cards entre as etapas para atualizar o funil.</p>
 
-    <!-- KANBAN -->
-    <section class="kanban-board">
-      <div class="kanban-column" data-etapa="novo">
-        <h2>Novo</h2>
-        <div class="kanban-list" id="col-novo"></div>
-      </div>
+  <section id="kanbanBoard" class="kanban-board">
+    <!-- Colunas montadas pelo JS -->
+  </section>
+</main>
 
-      <div class="kanban-column" data-etapa="qualificando">
-        <h2>Qualificando</h2>
-        <div class="kanban-list" id="col-qualificando"></div>
-      </div>
-
-      <div class="kanban-column" data-etapa="demonstracao">
-        <h2>Demonstração</h2>
-        <div class="kanban-list" id="col-demonstracao"></div>
-      </div>
-
-      <div class="kanban-column" data-etapa="proposta">
-        <h2>Proposta</h2>
-        <div class="kanban-list" id="col-proposta"></div>
-      </div>
-
-      <div class="kanban-column" data-etapa="fechamento">
-        <h2>Fechamento</h2>
-        <div class="kanban-list" id="col-fechamento"></div>
-      </div>
-
-      <div class="kanban-column" data-etapa="perdido">
-        <h2>Perdido</h2>
-        <div class="kanban-list" id="col-perdido"></div>
-      </div>
-    </section>
-  </main>
-
-  <script src="/js/menu.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/app-common.js"></script>
+<script src="../js/crm-kanban.js"></script>
 </body>
 </html>
