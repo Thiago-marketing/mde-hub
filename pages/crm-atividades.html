@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRM • Atividades • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/supabase.js"></script>
+  <script src="/js/crm/atividades.js" defer></script>
+</head>
+
+<body>
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+    <h1 class="page-title">CRM • Atividades</h1>
+    <p class="page-sub">
+      Registre ligações, mensagens e tarefas por lead e mantenha o histórico de contatos organizado.
+    </p>
+
+    <!-- Seleção de lead -->
+    <section class="card">
+      <h2>Selecionar lead</h2>
+
+      <div class="form-grid-2">
+        <div>
+          <label>Lead</label>
+          <select id="selectLead" class="full-width"></select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form nova atividade -->
+    <section id="boxAtividade" class="card mt" style="display:none;">
+      <h2>Nova atividade</h2>
+
+      <form id="formAtividade" class="form-grid">
+        <div>
+          <label>Tipo</label>
+          <select id="tipoAtividade">
+            <option value="ligacao">Ligação</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="email">E-mail</option>
+            <option value="reuniao">Reunião</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Data</label>
+          <input type="date" id="dataAtividade" />
+        </div>
+
+        <div>
+          <label>Hora</label>
+          <input type="time" id="horaAtividade" />
+        </div>
+
+        <div>
+          <label>Status</label>
+          <select id="statusAtividade">
+            <option value="pendente">Pendente</option>
+            <option value="concluida">Concluída</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Próximo contato</label>
+          <input type="date" id="proxContato" />
+        </div>
+
+        <div style="grid-column: span 3;">
+          <label>Descrição / Observações</label>
+          <textarea id="descricaoAtividade" rows="2"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Salvar atividade</button>
+      </form>
+    </section>
+
+    <!-- Histórico -->
+    <section id="boxHistorico" class="card mt" style="display:none;">
+      <h2>Histórico de atividades do lead</h2>
+      <div id="listaAtividades" class="atividades-lista"></div>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
