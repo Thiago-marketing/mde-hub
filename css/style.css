@@ -245,3 +245,62 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
+/* Cards */
+.card {
+  background: #0f2a49;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.form-grid label {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.form-grid input, 
+.form-grid select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 4px;
+}
+
+.btn-primary {
+  grid-column: span 3;
+  background: #1e63d0;
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.lista-reservas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reserva-item {
+  background: #12345a;
+  padding: 14px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reserva-item .status {
+  background: #1e63d0;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
