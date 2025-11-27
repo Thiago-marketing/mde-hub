@@ -1,164 +1,101 @@
-// Carregar módulos (sidebar + header)
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-include]").forEach(el => {
-    fetch(el.getAttribute("data-include"))
-      .then(res => res.text())
-      .then(html => el.innerHTML = html);
-  });
+// crm-atividades.js
+let leadsCache = [];
 
-  carregarLeads();
+document.addEventListener("DOMContentLoaded", () => {
+  carregarUsuario();
+  carregarLeadsParaSelect();
+  carregarAtividades();
+
+  document.getElementById("atividadeForm").addEventListener("submit", salvarAtividade);
+  document.getElementById("filtroLeadNome").addEventListener("input", carregarAtividades);
+  document.getElementById("filtroResp").addEventListener("input", carregarAtividades);
 });
 
-let leadAtual = null;
-
-// =========================
-// CARREGAR LEADS NO SELECT
-// =========================
-async function carregarLeads() {
-  const select = document.getElementById("selectLead");
-
-  const { data, error } = await supabase
+async function carregarLeadsParaSelect() {
+  const { data: leads, error } = await supa
     .from("leads")
-    .select("*")
+    .select("id, nome")
     .order("nome", { ascending: true });
 
   if (error) {
-    console.error(error);
-    select.innerHTML = "<option value=''>Erro ao carregar leads</option>";
+    console.error("Erro ao buscar leads:", error);
     return;
   }
 
-  if (!data || data.length === 0) {
-    select.innerHTML = "<option value=''>Nenhum lead cadastrado</option>";
-    return;
-  }
+  leadsCache = leads;
 
-  select.innerHTML = "<option value=''>Selecione...</option>";
-
-  data.forEach(lead => {
-    select.innerHTML += `
-      <option value="${lead.id}">${lead.nome} — ${lead.empresa || ""}</option>
-    `;
-  });
-
-  select.addEventListener("change", () => {
-    const id = select.value;
-    if (!id) {
-      document.getElementById("boxAtividade").style.display = "none";
-      document.getElementById("boxHistorico").style.display = "none";
-      leadAtual = null;
-      return;
-    }
-    leadAtual = id;
-    document.getElementById("boxAtividade").style.display = "block";
-    document.getElementById("boxHistorico").style.display = "block";
-    inicializarForm();
-    carregarAtividades(id);
+  const sel = document.getElementById("atividadeLead");
+  sel.innerHTML = "";
+  leads.forEach(l => {
+    sel.innerHTML += `<option value="${l.id}">${l.nome}</option>`;
   });
 }
 
-// =========================
-// FORMULÁRIO DE ATIVIDADE
-// =========================
-function inicializarForm() {
-  const form = document.getElementById("formAtividade");
+async function salvarAtividade(e) {
+  e.preventDefault();
 
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-    if (!leadAtual) {
-      alert("Selecione um lead primeiro.");
-      return;
-    }
-
-    const atividade = {
-      lead_id: leadAtual,
-      tipo: document.getElementById("tipoAtividade").value,
-      data_atividade: document.getElementById("dataAtividade").value || null,
-      hora_atividade: document.getElementById("horaAtividade").value || null,
-      status: document.getElementById("statusAtividade").value,
-      proximo_contato: document.getElementById("proxContato").value || null,
-      descricao: document.getElementById("descricaoAtividade").value
-    };
-
-    const { error } = await supabase
-      .from("atividades")
-      .insert([atividade]);
-
-    if (error) {
-      console.error(error);
-      alert("Erro ao salvar atividade.");
-      return;
-    }
-
-    alert("Atividade salva!");
-    form.reset();
-    carregarAtividades(leadAtual);
+  const payload = {
+    lead_id: parseInt(document.getElementById("atividadeLead").value, 10),
+    tipo: document.getElementById("atividadeTipo").value,
+    responsavel: document.getElementById("atividadeResponsavel").value,
+    descricao: document.getElementById("atividadeDescricao").value
   };
-}
 
-// =========================
-// CARREGAR ATIVIDADES
-// =========================
-async function carregarAtividades(leadId) {
-  const box = document.getElementById("listaAtividades");
-
-  const { data, error } = await supabase
-    .from("atividades")
-    .select("*")
-    .eq("lead_id", leadId)
-    .order("created_at", { ascending: false });
+  const { error } = await supa.from("atividades").insert(payload);
 
   if (error) {
-    console.error(error);
-    box.innerHTML = "<p>Erro ao carregar atividades.</p>";
+    console.error("Erro ao salvar atividade:", error);
+    alert("Erro ao salvar atividade");
     return;
   }
 
-  if (!data || data.length === 0) {
-    box.innerHTML = "<p>Nenhuma atividade registrada para este lead ainda.</p>";
-    return;
-  }
+  document.getElementById("atividadeForm").reset();
+  document.getElementById("atividadeStatus").innerText = "Atividade registrada!";
+  setTimeout(() => (document.getElementById("atividadeStatus").innerText = ""), 2500);
 
-  box.innerHTML = "";
-
-  data.forEach(a => {
-    box.innerHTML += montarCardAtividade(a);
-  });
+  carregarAtividades();
 }
 
-// =========================
-// CARD DE ATIVIDADE
-// =========================
-function montarCardAtividade(a) {
-  const dataAtv = a.data_atividade
-    ? new Date(a.data_atividade).toLocaleDateString("pt-BR")
-    : "-";
+async function carregarAtividades() {
+  const { data: atividades, error } = await supa
+    .from("atividades")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(100);
 
-  const prox = a.proximo_contato
-    ? new Date(a.proximo_contato).toLocaleDateString("pt-BR")
-    : "-";
+  if (error) {
+    console.error("Erro ao buscar atividades:", error);
+    return;
+  }
 
-  const tipoLabel = {
-    ligacao: "Ligação",
-    whatsapp: "WhatsApp",
-    email: "E-mail",
-    reuniao: "Reunião",
-    outro: "Outro"
-  }[a.tipo] || a.tipo;
+  const filtroLead = document.getElementById("filtroLeadNome").value.toLowerCase();
+  const filtroResp = document.getElementById("filtroResp").value.toLowerCase();
 
-  const statusLabel = {
-    pendente: "Pendente",
-    concluida: "Concluída"
-  }[a.status] || a.status;
+  const tbody = document.getElementById("atividadesBody");
+  tbody.innerHTML = "";
 
-  return `
-    <div class="atividade-item">
-      <div>
-        <strong>${tipoLabel}</strong> • <span class="atividade-status">${statusLabel}</span>
-        <p>Data: ${dataAtv} ${a.hora_atividade || ""}</p>
-        <p>Próx. contato: ${prox}</p>
-        <p>${a.descricao || ""}</p>
-      </div>
-    </div>
-  `;
+  atividades.forEach(a => {
+    const lead = leadsCache.find(l => l.id === a.lead_id);
+    const nomeLead = lead ? lead.nome : "—";
+
+    const passaLead = filtroLead
+      ? nomeLead.toLowerCase().includes(filtroLead)
+      : true;
+
+    const passaResp = filtroResp
+      ? (a.responsavel || "").toLowerCase().includes(filtroResp)
+      : true;
+
+    if (!passaLead || !passaResp) return;
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${a.created_at ? new Date(a.created_at).toLocaleString() : "-"}</td>
+        <td>${nomeLead}</td>
+        <td>${a.tipo}</td>
+        <td>${a.responsavel || "-"}</td>
+        <td>${a.descricao}</td>
+      </tr>
+    `;
+  });
 }
