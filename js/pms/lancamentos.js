@@ -1,122 +1,79 @@
-// Carregar módulos (sidebar, header)
+// lancamentos.js
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-include]").forEach(el => {
-    fetch(el.getAttribute("data-include"))
-      .then(res => res.text())
-      .then(html => el.innerHTML = html);
-  });
-
-  carregarReservasAtivas();
+  carregarUsuario();
+  carregarReservas();
+  document.getElementById("lancForm").addEventListener("submit", adicionarLancamento);
 });
 
+/* RESERVAS */
+async function carregarReservas() {
+  const user = await supa.auth.getUser();
+  const user_id = user.data.user.id;
 
-// ===============================
-// CARREGAR RESERVAS EM CHECK-IN
-// ===============================
-
-async function carregarReservasAtivas() {
-  const select = document.getElementById("selectReserva");
-
-  const { data, error } = await supabase
+  let { data: reservas } = await supa
     .from("reservas")
-    .select("*, units(numero)")
+    .select("id, uhs(numero), hospedes(nome)")
+    .eq("user_id", user_id)
     .eq("status", "checkin");
 
-  if (error) return console.error(error);
+  const select = document.getElementById("reservaLancSelect");
+  select.innerHTML = "";
 
-  select.innerHTML = "<option value=''>Selecione...</option>";
-
-  data.forEach(r => {
+  reservas.forEach((r) => {
     select.innerHTML += `
       <option value="${r.id}">
-        ${r.hospede} — UH ${r.units.numero}
+        UH ${r.uhs.numero} • ${r.hospedes.nome}
       </option>
     `;
   });
 
-  select.addEventListener("change", () => mostrarArea(select.value, data));
+  listarLancamentos();
+  select.addEventListener("change", listarLancamentos);
 }
 
+/* LISTAR LANÇAMENTOS */
+async function listarLancamentos() {
+  const reservaID = document.getElementById("reservaLancSelect").value;
 
-// ===============================
-// MOSTRAR ÁREA DE LANÇAMENTOS
-// ===============================
-
-function mostrarArea(id, reservas) {
-  if (!id) {
-    document.getElementById("areaLancamentos").style.display = "none";
-    document.getElementById("listaLanc").style.display = "none";
-    return;
-  }
-
-  const reserva = reservas.find(x => x.id == id);
-
-  document.getElementById("areaLancamentos").style.display = "block";
-  document.getElementById("listaLanc").style.display = "block";
-
-  iniciarFormulario(reserva.id);
-  listarLancamentos(reserva.id);
-}
-
-
-// ===============================
-// FORMULÁRIO DE LANÇAMENTO
-// ===============================
-
-function iniciarFormulario(reservaId) {
-  const form = document.getElementById("formLancamento");
-
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-
-    const dados = {
-      reserva_id: reservaId,
-      tipo: document.getElementById("tipo").value,
-      descricao: document.getElementById("descricao").value,
-      valor: Number(document.getElementById("valor").value)
-    };
-
-    const { error } = await supabase.from("lancamentos").insert([dados]);
-
-    if (error) {
-      alert("Erro ao adicionar lançamento");
-      return;
-    }
-
-    alert("Lançamento adicionado!");
-    form.reset();
-    listarLancamentos(reservaId);
-  };
-}
-
-
-// ===============================
-// LISTAR LANÇAMENTOS
-// ===============================
-
-async function listarLancamentos(reservaId) {
-  const box = document.getElementById("lancamentosContainer");
-
-  const { data, error } = await supabase
+  let { data: lancs } = await supa
     .from("lancamentos")
     .select("*")
-    .eq("reserva_id", reservaId)
-    .order("id", { ascending: false });
+    .eq("reserva_id", reservaID)
+    .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error(error);
-    return;
-  }
+  const tbody = document.getElementById("lancTableBody");
+  tbody.innerHTML = "";
 
-  box.innerHTML = "";
-
-  data.forEach(l => {
-    box.innerHTML += `
-      <div class="lanc-item">
-        <span><strong>${l.tipo.toUpperCase()}</strong> — ${l.descricao}</span>
-        <span>R$ ${l.valor.toFixed(2)}</span>
-      </div>
+  lancs.forEach((l) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${l.descricao}</td>
+        <td>R$ ${l.valor.toFixed(2)}</td>
+        <td>${l.tipo}</td>
+        <td>${new Date(l.created_at).toLocaleString()}</td>
+      </tr>
     `;
   });
 }
 
+/* ADICIONAR LANÇAMENTO */
+async function adicionarLancamento(e) {
+  e.preventDefault();
+
+  const reserva_id = document.getElementById("reservaLancSelect").value;
+  const descricao = document.getElementById("descricao").value;
+  const valor = parseFloat(document.getElementById("valor").value);
+  const tipo = document.getElementById("tipo").value;
+
+  let { error } = await supa.from("lancamentos").insert({
+    reserva_id,
+    descricao,
+    valor,
+    tipo
+  });
+
+  if (error) return alert("Erro ao adicionar lançamento");
+
+  e.target.reset();
+  listarLancamentos();
+}
