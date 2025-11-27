@@ -473,3 +473,27 @@ body {
 .kanban-card.dragging {
   opacity: 0.3;
 }
+.atividades-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.atividade-item {
+  background: #12345a;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.atividade-item p {
+  margin: 2px 0;
+}
+
+.atividade-status {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: #1e63d0;
+}
