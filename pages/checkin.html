@@ -1,44 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Check-in • MDE Hub</title>
-
-  <link rel="stylesheet" href="/css/style.css" />
-  <script src="/js/supabase.js"></script>
-  <script src="/js/pms/checkin.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Check-in • PMS Lite • MDE Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
+<body class="page">
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">T</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <button id="logoutBtn" class="btn-sair">Sair</button>
+  </header>
 
-<body>
-  <div data-include="/modules/sidebar.html"></div>
-  <div data-include="/modules/header.html"></div>
+  <aside class="sidebar">
+    <h3>Operação (PMS Lite)</h3>
+    <ul>
+      <li><a href="uhs.html">Unidades (UHs)</a></li>
+      <li><a href="reservas.html">Reservas</a></li>
+      <li class="active"><a href="checkin.html">Check-in</a></li>
+      <li><a href="checkout.html">Check-out</a></li>
+      <li><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="financeiro.html">Financeiro</a></li>
+      <li><a href="relatorios.html">Relatórios</a></li>
+    </ul>
+  </aside>
 
   <main class="content">
-    <h1 class="page-title">Check-in</h1>
-    <p class="page-sub">Realize o check-in de hóspedes e atualize automaticamente o status da UH.</p>
+    <h1>Novo Check-in / Reserva</h1>
+    <p class="subtitle">Fluxo rápido de recepção para até 6 UHs.</p>
 
-    <!-- Seleção de reserva -->
-    <section class="card">
-      <h2>Selecione a reserva</h2>
+    <form id="checkinForm" class="card">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Hóspede</label>
+          <input type="text" id="nomeHospede" required>
+        </div>
+        <div class="form-group">
+          <label>Telefone / WhatsApp</label>
+          <input type="text" id="telefone">
+        </div>
+      </div>
 
-      <select id="selectReserva" class="full-width"></select>
-    </section>
+      <div class="form-row">
+        <div class="form-group">
+          <label>UH</label>
+          <select id="uhSelect" required>
+            <!-- JS preenche com UHs livres -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Origem</label>
+          <input type="text" id="origem" placeholder="Recepção, Booking, WhatsApp, etc.">
+        </div>
+      </div>
 
-    <!-- Dados da reserva -->
-    <section id="dadosReserva" class="card mt" style="display:none;">
-      <h2>Dados da Reserva</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Check-in</label>
+          <input type="date" id="dataEntrada" required>
+        </div>
+        <div class="form-group">
+          <label>Check-out</label>
+          <input type="date" id="dataSaida" required>
+        </div>
+      </div>
 
-      <p><strong>Hóspede:</strong> <span id="rHospede"></span></p>
-      <p><strong>UH:</strong> <span id="rUH"></span></p>
-      <p><strong>Entrada:</strong> <span id="rEntrada"></span></p>
-      <p><strong>Saída:</strong> <span id="rSaida"></span></p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Adultos</label>
+          <input type="number" id="adultos" value="2" min="1">
+        </div>
+        <div class="form-group">
+          <label>Crianças</label>
+          <input type="number" id="criancas" value="0" min="0">
+        </div>
+      </div>
 
-      <button id="btnCheckin" class="btn-primary mt">Confirmar Check-in</button>
-    </section>
+      <button type="submit" class="btn-primary">Confirmar check-in / reserva</button>
+    </form>
+
+    <p id="checkinStatus" class="msg-ok"></p>
   </main>
 
-  <script src="/js/menu.js"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/app-common.js"></script>
+  <script src="../js/checkin.js"></script>
 </body>
 </html>
-
