@@ -497,3 +497,38 @@ body {
   font-size: 11px;
   background: #1e63d0;
 }
+/* DASHBOARD CRM */
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.dash-card {
+  background: #12345a;
+  padding: 18px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.dash-card h2 {
+  font-size: 32px;
+  margin-top: 10px;
+}
+
+.dash-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.dash-row {
+  background: #0f2a49;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
