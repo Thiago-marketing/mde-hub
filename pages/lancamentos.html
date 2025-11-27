@@ -1,68 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lançamentos • MDE Hub</title>
-
-  <link rel="stylesheet" href="/css/style.css" />
-  <script src="/js/supabase.js"></script>
-  <script src="/js/pms/lancamentos.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lançamentos • PMS Lite • MDE Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
+<body class="page">
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">T</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <button id="logoutBtn" class="btn-sair">Sair</button>
+  </header>
 
-<body>
-  <div data-include="/modules/sidebar.html"></div>
-  <div data-include="/modules/header.html"></div>
+  <aside class="sidebar">
+    <h3>Operação (PMS Lite)</h3>
+    <ul>
+      <li><a href="uhs.html">Unidades (UHs)</a></li>
+      <li><a href="reservas.html">Reservas</a></li>
+      <li><a href="checkin.html">Check-in</a></li>
+      <li><a href="checkout.html">Check-out</a></li>
+      <li class="active"><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="financeiro.html">Financeiro</a></li>
+      <li><a href="relatorios.html">Relatórios</a></li>
+    </ul>
+  </aside>
 
   <main class="content">
-    <h1 class="page-title">Lançamentos</h1>
-    <p class="page-sub">Registre consumos e despesas da estadia — comanda básica.</p>
+    <h1>Lançamentos</h1>
+    <p class="subtitle">Controle de consumos e ajustes por reserva.</p>
 
-    <!-- Selecionar reserva -->
     <section class="card">
-      <h2>Selecione a reserva (em Check-in)</h2>
-      <select id="selectReserva" class="full-width"></select>
-    </section>
+      <div class="form-group">
+        <label>Reserva</label>
+        <select id="reservaLancSelect">
+          <!-- JS carrega reservas em estadia -->
+        </select>
+      </div>
 
-
-    <!-- Área de lançamentos -->
-    <section id="areaLancamentos" class="card mt" style="display:none;">
-      <h2>Novo lançamento</h2>
-
-      <form id="formLancamento" class="form-grid">
-        <div>
-          <label>Tipo</label>
-          <select id="tipo">
-            <option value="produto">Produto</option>
-            <option value="taxa">Taxa</option>
-            <option value="ajuste">Ajuste</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Descrição</label>
-          <input type="text" id="descricao" required />
-        </div>
-
-        <div>
-          <label>Valor (R$)</label>
-          <input type="number" id="valor" step="0.01" required />
-        </div>
-
-        <button type="submit" class="btn-primary">Adicionar Lançamento</button>
+      <form id="lancForm" class="form-inline">
+        <input type="text" id="descricao" placeholder="Descrição" required>
+        <input type="number" step="0.01" id="valor" placeholder="Valor" required>
+        <select id="tipo">
+          <option value="debito">Débito</option>
+          <option value="credito">Crédito</option>
+        </select>
+        <button type="submit" class="btn-primary">Adicionar</button>
       </form>
+
+      <table class="table mt">
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody id="lancTableBody">
+          <!-- JS: lançamentos da reserva -->
+        </tbody>
+      </table>
     </section>
-
-
-    <!-- Histórico de lançamentos -->
-    <section id="listaLanc" class="card mt" style="display:none;">
-      <h2>Histórico de lançamentos</h2>
-      <div id="lancamentosContainer"></div>
-    </section>
-
   </main>
 
-  <script src="/js/menu.js"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/app-common.js"></script>
+  <script src="../js/lancamentos.js"></script>
 </body>
 </html>
-
