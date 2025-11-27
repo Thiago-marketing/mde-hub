@@ -3,79 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Painel • MDE Hub</title>
 
-  <meta name="description"
-        content="Painel inicial do MDE Hub com visão de leads, ferramentas e acessos às soluções digitais MDE." />
+  <link rel="stylesheet" href="/css/style.css" />
 
-  <link rel="stylesheet" href="css/style.css" />
+  <script src="/js/supabase.js"></script>
+  <script src="/js/dashboard.js" defer></script>
 </head>
-<body class="page-dashboard">
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="logo-area">
-        <div class="logo-circle" id="user-initial">M</div>
-        <div class="logo-text">
-          <span class="logo-title" id="user-name">MDE Hub</span>
-          <span class="logo-subtitle">Painel de ferramentas digitais</span>
-        </div>
+
+<body>
+  <!-- Sidebar e header padrão -->
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+
+    <!-- Cabeçalho -->
+    <section class="card">
+      <h1 class="page-title">Bem-vindo ao seu Hub MDE</h1>
+      <p class="page-sub">
+        Olá <span id="userName">carregando...</span>, este é o painel que conecta o
+        <strong>CRM interno</strong> com o <strong>PMS Lite</strong> e as ferramentas digitais da MDE.
+      </p>
+      <p style="margin-top:4px;font-size:13px;opacity:0.8;">
+        Login: <span id="userEmail"></span>
+      </p>
+    </section>
+
+    <!-- KPIs principais: CRM + PMS -->
+    <section class="dash-grid mt">
+      <div class="dash-card">
+        <p>Leads cadastrados</p>
+        <h2 id="kpiTotalLeads">0</h2>
+        <small>CRM interno MDE</small>
       </div>
 
-      <nav class="topbar-nav">
-        <span id="user-email" class="user-badge"></span>
-        <button id="logout-btn" class="btn btn-ghost">Sair</button>
-      </nav>
-    </div>
-  </header>
+      <div class="dash-card">
+        <p>Próximos contatos (hoje)</p>
+        <h2 id="kpiProxHoje">0</h2>
+        <small>a partir dos leads com “próximo contato”</small>
+      </div>
 
-  <main class="page">
-    <section class="section">
-      <div class="section-inner">
-        <h1>Bem-vindo ao seu Hub MDE</h1>
-        <p id="user-greeting">
-          Carregando suas informações...
-        </p>
+      <div class="dash-card">
+        <p>Unidades (UHs) cadastradas</p>
+        <h2 id="kpiTotalUhs">0</h2>
+        <small>PMS Lite (até 6 UHs)</small>
+      </div>
 
-        <div class="grid-3">
-          <div class="card">
-            <h2>Leads e cadastros</h2>
-            <p>
-              Em breve você verá aqui uma visão consolidada dos leads e cadastros
-              vinculados ao seu usuário.
-            </p>
-          </div>
-
-          <div class="card">
-            <h2>Ferramentas gratuitas</h2>
-            <p>
-              Simuladores, checklists e mini-painéis serão liberados gradualmente
-              para este ambiente de testes do MDE Hub.
-            </p>
-          </div>
-
-          <div class="card">
-            <h2>Próximos passos</h2>
-            <p>
-              Este painel está preparado para evoluir para um mini-CRM,
-              automações e integrações com as soluções MDE Cloud.
-            </p>
-          </div>
-        </div>
+      <div class="dash-card">
+        <p>UHs ocupadas agora</p>
+        <h2 id="kpiUhsOcupadas">0</h2>
+        <small>com base no status de UHs</small>
       </div>
     </section>
+
+    <!-- Blocos resumindo cada módulo -->
+    <section class="card mt">
+      <h2>Leads e cadastros (CRM)</h2>
+      <p>
+        Você tem <strong id="resumoLeadsTotal">0</strong> leads no funil.  
+        Hoje existem <strong id="resumoLeadsProxHoje">0</strong> contatos previstos.
+      </p>
+      <p style="margin-top:8px;font-size:13px;opacity:.8;">
+        Acesse:
+        <a href="/pages/crm.html">CRM – Leads</a>,
+        <a href="/pages/crm-kanban.html">Kanban</a>,
+        <a href="/pages/crm-dashboard.html">Dashboard CRM</a>,
+        <a href="/pages/crm-atividades.html">Atividades</a>.
+      </p>
+    </section>
+
+    <section class="card mt">
+      <h2>Operação básica (PMS Lite)</h2>
+      <p>
+        UHs cadastradas: <strong id="resumoUhsTotal">0</strong>  
+        • Livres: <strong id="resumoUhsLivres">0</strong>  
+        • Ocupadas: <strong id="resumoUhsOcupadas">0</strong>
+      </p>
+      <p id="textoReservasHoje" style="margin-top:8px;">
+        Nenhuma reserva para hoje ainda.
+      </p>
+      <p style="margin-top:8px;font-size:13px;opacity:.8;">
+        Acesse:
+        (futuro) Mapa de UHs, Reservas, Check-in/out e Comanda do PMS Lite.
+      </p>
+    </section>
+
+    <section class="card mt">
+      <h2>Próximos passos</h2>
+      <p>
+        Este painel está preparado para crescer junto com a MDE Sistemas:
+        mini-CRM, automações, integrações com soluções MDE Cloud e módulos de
+        hospedagem Lite. Use o Hub para testar ideias e validar fluxos internos.
+      </p>
+    </section>
+
   </main>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <p>
-        © 2025 MDE Sistemas • MDE Hub — Ambiente de testes e homologação de ferramentas digitais.
-      </p>
-    </div>
-  </footer>
-
-  <!-- O ÚNICO SCRIPT QUE O DASHBOARD PRECISA -->
-  <script type="module" src="js/dashboard.js"></script>
-
+  <script src="/js/menu.js"></script>
 </body>
 </html>
