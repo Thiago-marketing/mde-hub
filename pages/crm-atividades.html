@@ -1,93 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CRM • Atividades • MDE Hub</title>
-
-  <link rel="stylesheet" href="/css/style.css" />
-  <script src="/js/supabase.js"></script>
-  <script src="/js/crm/atividades.js" defer></script>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
+<body class="page">
+<header class="topbar">
+  <div class="user-info">
+    <span id="userInitial">T</span>
+    <div>
+      <p id="userName">Carregando usuário...</p>
+      <p id="userEmail"></p>
+    </div>
+  </div>
+  <button id="logoutBtn" class="btn-sair">Sair</button>
+</header>
 
-<body>
-  <div data-include="/modules/sidebar.html"></div>
-  <div data-include="/modules/header.html"></div>
+<aside class="sidebar">
+  <h3>CRM MDE</h3>
+  <ul>
+    <li><a href="crm-dashboard.html">Visão geral</a></li>
+    <li><a href="crm.html">Leads</a></li>
+    <li><a href="crm-kanban.html">Kanban</a></li>
+    <li class="active"><a href="crm-atividades.html">Atividades</a></li>
+  </ul>
+</aside>
 
-  <main class="content">
-    <h1 class="page-title">CRM • Atividades</h1>
-    <p class="page-sub">
-      Registre ligações, mensagens e tarefas por lead e mantenha o histórico de contatos organizado.
-    </p>
+<main class="content">
+  <h1>Atividades</h1>
+  <p class="subtitle">Agenda e histórico de contatos com leads.</p>
 
-    <!-- Seleção de lead -->
-    <section class="card">
-      <h2>Selecionar lead</h2>
-
-      <div class="form-grid-2">
-        <div>
-          <label>Lead</label>
-          <select id="selectLead" class="full-width"></select>
-        </div>
+  <section class="card">
+    <h2>Registrar atividade</h2>
+    <form id="atividadeForm" class="form-grid-3">
+      <div class="form-group">
+        <label>Lead</label>
+        <select id="atividadeLead" required></select>
       </div>
-    </section>
+      <div class="form-group">
+        <label>Tipo</label>
+        <select id="atividadeTipo">
+          <option value="whatsapp">WhatsApp</option>
+          <option value="ligacao">Ligação</option>
+          <option value="email">E-mail</option>
+          <option value="reuniao">Reunião</option>
+          <option value="outro">Outro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Responsável</label>
+        <input type="text" id="atividadeResponsavel" placeholder="Thiago, Danilo, etc.">
+      </div>
+      <div class="form-group form-full">
+        <label>Descrição / resumo</label>
+        <textarea id="atividadeDescricao" rows="2" required></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Salvar atividade</button>
+    </form>
+    <p id="atividadeStatus" class="msg-ok"></p>
+  </section>
 
-    <!-- Form nova atividade -->
-    <section id="boxAtividade" class="card mt" style="display:none;">
-      <h2>Nova atividade</h2>
+  <section class="card mt">
+    <div class="toolbar">
+      <input type="text" id="filtroLeadNome" placeholder="Filtrar por lead">
+      <input type="text" id="filtroResp" placeholder="Filtrar por responsável">
+    </div>
 
-      <form id="formAtividade" class="form-grid">
-        <div>
-          <label>Tipo</label>
-          <select id="tipoAtividade">
-            <option value="ligacao">Ligação</option>
-            <option value="whatsapp">WhatsApp</option>
-            <option value="email">E-mail</option>
-            <option value="reuniao">Reunião</option>
-            <option value="outro">Outro</option>
-          </select>
-        </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Data</th>
+        <th>Lead</th>
+        <th>Tipo</th>
+        <th>Responsável</th>
+        <th>Descrição</th>
+      </tr>
+      </thead>
+      <tbody id="atividadesBody"></tbody>
+    </table>
+  </section>
+</main>
 
-        <div>
-          <label>Data</label>
-          <input type="date" id="dataAtividade" />
-        </div>
-
-        <div>
-          <label>Hora</label>
-          <input type="time" id="horaAtividade" />
-        </div>
-
-        <div>
-          <label>Status</label>
-          <select id="statusAtividade">
-            <option value="pendente">Pendente</option>
-            <option value="concluida">Concluída</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Próximo contato</label>
-          <input type="date" id="proxContato" />
-        </div>
-
-        <div style="grid-column: span 3;">
-          <label>Descrição / Observações</label>
-          <textarea id="descricaoAtividade" rows="2"></textarea>
-        </div>
-
-        <button type="submit" class="btn-primary">Salvar atividade</button>
-      </form>
-    </section>
-
-    <!-- Histórico -->
-    <section id="boxHistorico" class="card mt" style="display:none;">
-      <h2>Histórico de atividades do lead</h2>
-      <div id="listaAtividades" class="atividades-lista"></div>
-    </section>
-
-  </main>
-
-  <script src="/js/menu.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/app-common.js"></script>
+<script src="../js/crm-atividades.js"></script>
 </body>
 </html>
