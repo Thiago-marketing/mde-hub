@@ -77,14 +77,34 @@
     </section>
 
     <!-- Lista de leads -->
-    <section class="card mt">
-      <h2>Leads cadastrados</h2>
-      <div id="leadLista" class="lead-list"></div>
-    </section>
+<section class="card mt">
+  <h2>Filtros</h2>
 
-  </main>
+  <div class="form-grid-3">
+    <div>
+      <label>Etapa</label>
+      <select id="filtroEtapa">
+        <option value="">Todas</option>
+        <option value="novo">Novo</option>
+        <option value="qualificando">Qualificando</option>
+        <option value="demonstracao">Demonstração</option>
+        <option value="proposta">Proposta</option>
+        <option value="fechamento">Fechamento</option>
+        <option value="perdido">Perdido</option>
+      </select>
+    </div>
 
-  <script src="/js/menu.js"></script>
-</body>
-</html>
+    <div>
+      <label>Responsável</label>
+      <select id="filtroResponsavel">
+        <option value="">Todos</option>
+        <option value="Thiago">Thiago</option>
+        <option value="Danilo">Danilo</option>
+        <option value="Thaís">Thaís</option>
+        <option value="Márcio">Márcio</option>
+      </select>
+    </div>
 
+    <button id="btnFiltrar" class="btn-primary">Aplicar Filtros</button>
+  </div>
+</section>
