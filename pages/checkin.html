@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Check-in • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/supabase.js"></script>
+  <script src="/js/pms/checkin.js" defer></script>
+</head>
+
+<body>
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+    <h1 class="page-title">Check-in</h1>
+    <p class="page-sub">Realize o check-in de hóspedes e atualize automaticamente o status da UH.</p>
+
+    <!-- Seleção de reserva -->
+    <section class="card">
+      <h2>Selecione a reserva</h2>
+
+      <select id="selectReserva" class="full-width"></select>
+    </section>
+
+    <!-- Dados da reserva -->
+    <section id="dadosReserva" class="card mt" style="display:none;">
+      <h2>Dados da Reserva</h2>
+
+      <p><strong>Hóspede:</strong> <span id="rHospede"></span></p>
+      <p><strong>UH:</strong> <span id="rUH"></span></p>
+      <p><strong>Entrada:</strong> <span id="rEntrada"></span></p>
+      <p><strong>Saída:</strong> <span id="rSaida"></span></p>
+
+      <button id="btnCheckin" class="btn-primary mt">Confirmar Check-in</button>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
 
