@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Relatórios • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/supabase.js"></script>
+  <script src="/js/pms/relatorios.js" defer></script>
+</head>
+
+<body>
+
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+
+    <h1 class="page-title">Relatórios</h1>
+    <p class="page-sub">Consultas rápidas — ocupação, reservas e faturamento por período.</p>
+
+    <!-- Filtros -->
+    <section class="card">
+      <h2>Período</h2>
+
+      <div class="form-grid-2">
+        <div>
+          <label>Data inicial</label>
+          <input type="date" id="dataInicial" />
+        </div>
+
+        <div>
+          <label>Data final</label>
+          <input type="date" id="dataFinal" />
+        </div>
+
+        <button id="btnGerar" class="btn-primary">Gerar Relatórios</button>
+      </div>
+    </section>
+
+    <!-- Resultados -->
+    <section id="boxResultados" class="card mt" style="display:none;">
+      <h2>Resultados</h2>
+
+      <p><strong>Reservas no período:</strong> <span id="rQtdeReservas"></span></p>
+      <p><strong>Ocupação (%):</strong> <span id="rOcupacao"></span></p>
+      <p><strong>Faturamento Total:</strong> R$ <span id="rFaturamento"></span></p>
+
+      <h3 class="mt">Detalhamento</h3>
+      <div id="listaDetalhes" class="lista-detalhes"></div>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
