@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Financeiro • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/supabase.js"></script>
+  <script src="/js/pms/financeiro.js" defer></script>
+</head>
+
+<body>
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+    <h1 class="page-title">Financeiro • Caixa Diário</h1>
+    <p class="page-sub">Controle simples e objetivo dos valores diários da hospedagem.</p>
+
+    <!-- Abertura de caixa -->
+    <section class="card">
+      <h2>Abertura do Caixa</h2>
+
+      <div class="form-grid-2">
+        <div>
+          <label>Data</label>
+          <input type="date" id="dataCaixa" />
+        </div>
+
+        <div>
+          <label>Valor inicial (R$)</label>
+          <input type="number" id="valorInicial" step="0.01" />
+        </div>
+
+        <button id="btnAbrir" class="btn-primary">Abrir Caixa</button>
+      </div>
+    </section>
+
+    <!-- Resumo do Caixa -->
+    <section id="boxResumo" class="card mt" style="display:none;">
+      <h2>Resumo do Caixa</h2>
+
+      <p><strong>Entradas:</strong> R$ <span id="entradas"></span></p>
+      <p><strong>Saídas:</strong> R$ <span id="saidas"></span></p>
+      <p><strong>Total Check-outs:</strong> R$ <span id="checkouts"></span></p>
+      <p><strong>Saldo final:</strong> R$ <span id="saldo"></span></p>
+
+      <button id="btnFechar" class="btn-primary mt">Fechar Caixa</button>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
 
