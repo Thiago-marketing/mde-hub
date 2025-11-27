@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRM • Dashboard • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <script src="/js/supabase.js"></script>
+  <script src="/js/crm/dashboard.js" defer></script>
+</head>
+
+<body>
+
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+
+    <h1 class="page-title">CRM • Dashboard</h1>
+    <p class="page-sub">Resumo geral do funil comercial da MDE</p>
+
+    <!-- CARDS DE INDICADORES -->
+    <section class="dash-grid">
+      <div class="dash-card">
+        <p>Total de Leads</p>
+        <h2 id="kpiTotalLeads">0</h2>
+      </div>
+
+      <div class="dash-card">
+        <p>Próximos contatos (hoje)</p>
+        <h2 id="kpiProxHoje">0</h2>
+      </div>
+
+      <div class="dash-card">
+        <p>Leads na etapa “Proposta”</p>
+        <h2 id="kpiProposta">0</h2>
+      </div>
+
+      <div class="dash-card">
+        <p>Leads na etapa “Fechamento”</p>
+        <h2 id="kpiFechamento">0</h2>
+      </div>
+    </section>
+
+
+    <!-- Leads por etapa -->
+    <section class="card mt">
+      <h2>Leads por etapa</h2>
+      <div id="chartEtapas" class="dash-list"></div>
+    </section>
+
+    <!-- Leads por responsável -->
+    <section class="card mt">
+      <h2>Leads por responsável</h2>
+      <div id="chartResponsavel" class="dash-list"></div>
+    </section>
+
+    <!-- Próximos contatos -->
+    <section class="card mt">
+      <h2>Próximos contatos</h2>
+      <div id="listaProximos" class="dash-list"></div>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
