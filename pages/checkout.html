@@ -18,14 +18,13 @@
   <main class="content">
 
     <h1 class="page-title">Check-out</h1>
-    <p class="page-sub">Finalize a estadia e libere automaticamente a UH.</p>
+    <p class="page-sub">Finalize a estadia, veja o extrato detalhado e libere automaticamente a UH.</p>
 
     <!-- Selecionar reserva -->
     <section class="card">
       <h2>Selecione a reserva em Check-in</h2>
       <select id="selectReserva" class="full-width"></select>
     </section>
-
 
     <!-- Resumo da reserva -->
     <section id="resumoReserva" class="card mt" style="display:none;">
@@ -35,8 +34,30 @@
       <p><strong>UH:</strong> <span id="rUH"></span></p>
       <p><strong>Entrada:</strong> <span id="rEntrada"></span></p>
       <p><strong>Saída prevista:</strong> <span id="rSaida"></span></p>
-      <p><strong>Dias calculados:</strong> <span id="rDias"></span></p>
-      <p><strong>Valor total:</strong> R$ <span id="rTotal"></span></p>
+      <p><strong>Dias de estadia:</strong> <span id="rDias"></span></p>
+      <p><strong>Valor diária:</strong> R$ <span id="rDiaria"></span></p>
+      <p><strong>Subtotal diárias:</strong> R$ <span id="rSubtotalDiarias"></span></p>
+    </section>
+
+    <!-- Extrato de lançamentos -->
+    <section id="extratoLanc" class="card mt" style="display:none;">
+      <h2>Comanda / Lançamentos da Estadia</h2>
+
+      <div id="listaLancamentos" class="extrato-lista"></div>
+
+      <p class="extrato-total-linha">
+        <strong>Total lançamentos:</strong>
+        <span>R$ <span id="rTotalLancamentos"></span></span>
+      </p>
+    </section>
+
+    <!-- Total geral -->
+    <section id="totalGeralBox" class="card mt" style="display:none;">
+      <h2>Total Geral da Conta</h2>
+
+      <p class="extrato-total-geral">
+        Total a pagar: <strong>R$ <span id="rTotalGeral"></span></strong>
+      </p>
 
       <button id="btnCheckout" class="btn-primary mt">Finalizar Check-out</button>
     </section>
@@ -46,4 +67,3 @@
   <script src="/js/menu.js"></script>
 </body>
 </html>
-
