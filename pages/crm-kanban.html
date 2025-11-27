@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRM Kanban • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/supabase.js"></script>
+  <script src="/js/crm/kanban.js" defer></script>
+</head>
+
+<body>
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+    <h1 class="page-title">CRM • Kanban</h1>
+    <p class="page-sub">Acompanhe visualmente o funil comercial da MDE.</p>
+
+    <!-- KANBAN -->
+    <section class="kanban-board">
+      <div class="kanban-column" data-etapa="novo">
+        <h2>Novo</h2>
+        <div class="kanban-list" id="col-novo"></div>
+      </div>
+
+      <div class="kanban-column" data-etapa="qualificando">
+        <h2>Qualificando</h2>
+        <div class="kanban-list" id="col-qualificando"></div>
+      </div>
+
+      <div class="kanban-column" data-etapa="demonstracao">
+        <h2>Demonstração</h2>
+        <div class="kanban-list" id="col-demonstracao"></div>
+      </div>
+
+      <div class="kanban-column" data-etapa="proposta">
+        <h2>Proposta</h2>
+        <div class="kanban-list" id="col-proposta"></div>
+      </div>
+
+      <div class="kanban-column" data-etapa="fechamento">
+        <h2>Fechamento</h2>
+        <div class="kanban-list" id="col-fechamento"></div>
+      </div>
+
+      <div class="kanban-column" data-etapa="perdido">
+        <h2>Perdido</h2>
+        <div class="kanban-list" id="col-perdido"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
