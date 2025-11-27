@@ -168,3 +168,80 @@ input:focus {
 .logout-btn:hover {
     background: #dc2626;
 }
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: #081b2f;
+  color: #fff;
+}
+
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: #0d2238;
+  padding: 20px;
+  position: fixed;
+  top: 0; left: 0;
+}
+
+.sidebar h4 {
+  margin-top: 20px;
+  color: #7fb1ff;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.sidebar-menu a {
+  display: block;
+  margin: 8px 0;
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.sidebar-menu a:hover {
+  background: #143a64;
+}
+
+.topbar {
+  height: 60px;
+  margin-left: 240px;
+  background: #0d2238;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.content {
+  margin-left: 260px;
+  padding: 20px;
+}
+
+.uh-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.uh-card {
+  background: #0f2a49;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.uh-livre { border-left: 6px solid #0f0; }
+.uh-ocupado { border-left: 6px solid #f00; }
+.uh-limpeza { border-left: 6px solid #09f; }
+.uh-manutencao { border-left: 6px solid #666; }
+.uh-bloqueado { border-left: 6px solid #000; }
+
+.btn-acao {
+  background: #1e63d0;
+  border: none;
+  padding: 8px 10px;
+  margin: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+}
