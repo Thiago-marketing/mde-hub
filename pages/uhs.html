@@ -1,28 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UHs • MDE Hub</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <script src="/js/supabase.js"></script>
-  <script src="/js/pms/uhs.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unidades Habitacionais • PMS Lite • MDE Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
+<body class="page">
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">T</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <button id="logoutBtn" class="btn-sair">Sair</button>
+  </header>
 
-<body>
-  <div data-include="/modules/sidebar.html"></div>
-  <div data-include="/modules/header.html"></div>
+  <aside class="sidebar">
+    <h3>Operação (PMS Lite)</h3>
+    <ul>
+      <li class="active"><a href="uhs.html">Unidades (UHs)</a></li>
+      <li><a href="reservas.html">Reservas</a></li>
+      <li><a href="checkin.html">Check-in</a></li>
+      <li><a href="checkout.html">Check-out</a></li>
+      <li><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="financeiro.html">Financeiro</a></li>
+      <li><a href="relatorios.html">Relatórios</a></li>
+    </ul>
+  </aside>
 
   <main class="content">
-    <h1 class="page-title">Unidades Habitacionais (UHs)</h1>
-    <p class="page-sub">Gerencie até 6 unidades — status, limpeza, bloqueios e ações rápidas.</p>
+    <h1>Unidades Habitacionais (UHs)</h1>
+    <p class="subtitle">Controle visual das UHs: livre, ocupado, limpeza, manutenção, bloqueado.</p>
 
-    <div id="uhList" class="uh-grid">
-      <!-- UHs serão carregadas via JS -->
-    </div>
+    <section class="card">
+      <h2>Legenda</h2>
+      <div class="legend">
+        <span class="tag tag-livre">Livre</span>
+        <span class="tag tag-ocupado">Ocupado</span>
+        <span class="tag tag-limpeza">Limpeza</span>
+        <span class="tag tag-manutencao">Manutenção</span>
+        <span class="tag tag-bloqueado">Bloqueado</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Mapa simples</h2>
+      <div id="uhGrid" class="uh-grid">
+        <!-- JS vai montar os quadradinhos das UHs aqui -->
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Lista de UHs</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>UH</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>Previsão saída</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="uhTableBody">
+          <!-- JS vai preencher com dados do Supabase -->
+        </tbody>
+      </table>
+    </section>
   </main>
 
-  <script src="/js/menu.js"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/app-common.js"></script>
+  <script src="../js/uhs.js"></script>
 </body>
 </html>
-
