@@ -1,110 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CRM • MDE Hub</title>
-
-  <link rel="stylesheet" href="/css/style.css" />
-  <script src="/js/supabase.js"></script>
-  <script src="/js/crm/leads.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CRM • Leads • MDE Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-
-<body>
-  <div data-include="/modules/sidebar.html"></div>
-  <div data-include="/modules/header.html"></div>
-
-  <main class="content">
-    <h1 class="page-title">CRM • Leads MDE</h1>
-    <p class="page-sub">
-      Organize o funil comercial da MDE: cadastre leads, acompanhe etapas e próximos contatos.
-    </p>
-
-    <!-- Novo lead -->
-    <section class="card">
-      <h2>Novo Lead</h2>
-
-      <form id="formLead" class="form-grid">
-        <div>
-          <label>Nome do contato</label>
-          <input type="text" id="leadNome" required />
-        </div>
-
-        <div>
-          <label>Empresa / Hotel / Pousada</label>
-          <input type="text" id="leadEmpresa" />
-        </div>
-
-        <div>
-          <label>Segmento</label>
-          <input type="text" id="leadSegmento" placeholder="Hotel, Pousada, Motel, Restaurante..." />
-        </div>
-
-        <div>
-          <label>Origem</label>
-          <input type="text" id="leadOrigem" placeholder="Indicação, Site, WhatsApp, Feira..." />
-        </div>
-
-        <div>
-          <label>Responsável</label>
-          <input type="text" id="leadResponsavel" placeholder="Thiago, Danilo, etc." />
-        </div>
-
-        <div>
-          <label>Próximo contato</label>
-          <input type="date" id="leadProxContato" />
-        </div>
-
-        <div>
-          <label>Etapa do funil</label>
-          <select id="leadEtapa">
-            <option value="novo">Novo</option>
-            <option value="qualificando">Qualificando</option>
-            <option value="demonstracao">Demonstração</option>
-            <option value="proposta">Proposta</option>
-            <option value="fechamento">Fechamento</option>
-            <option value="perdido">Perdido</option>
-          </select>
-        </div>
-
-        <div style="grid-column: span 3;">
-          <label>Observações</label>
-          <textarea id="leadObs" rows="2"></textarea>
-        </div>
-
-        <button type="submit" class="btn-primary">Salvar Lead</button>
-      </form>
-    </section>
-
-    <!-- Lista de leads -->
-<section class="card mt">
-  <h2>Filtros</h2>
-
-  <div class="form-grid-3">
+<body class="page">
+<header class="topbar">
+  <div class="user-info">
+    <span id="userInitial">T</span>
     <div>
-      <label>Etapa</label>
+      <p id="userName">Carregando usuário...</p>
+      <p id="userEmail"></p>
+    </div>
+  </div>
+  <button id="logoutBtn" class="btn-sair">Sair</button>
+</header>
+
+<aside class="sidebar">
+  <h3>CRM MDE</h3>
+  <ul>
+    <li><a href="crm-dashboard.html">Visão geral</a></li>
+    <li class="active"><a href="crm.html">Leads</a></li>
+    <li><a href="crm-kanban.html">Kanban</a></li>
+    <li><a href="crm-atividades.html">Atividades</a></li>
+  </ul>
+</aside>
+
+<main class="content">
+  <h1>Leads</h1>
+  <p class="subtitle">Base de leads para prospecção e vendas da MDE.</p>
+
+  <section class="card">
+    <h2>Novo lead</h2>
+    <form id="leadForm" class="form-grid-3">
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" id="leadNome" required>
+      </div>
+      <div class="form-group">
+        <label>WhatsApp / Telefone</label>
+        <input type="text" id="leadTelefone">
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="leadEmail">
+      </div>
+      <div class="form-group">
+        <label>Origem</label>
+        <input type="text" id="leadOrigem" placeholder="Indicação, Google, Feira, etc.">
+      </div>
+      <div class="form-group">
+        <label>Responsável</label>
+        <input type="text" id="leadResponsavel" placeholder="Thiago, Danilo, etc.">
+      </div>
+      <div class="form-group">
+        <label>Valor estimado (opcional)</label>
+        <input type="number" step="0.01" id="leadValor">
+      </div>
+      <button type="submit" class="btn-primary">Salvar lead</button>
+    </form>
+    <p id="leadStatus" class="msg-ok"></p>
+  </section>
+
+  <section class="card mt">
+    <div class="toolbar">
       <select id="filtroEtapa">
-        <option value="">Todas</option>
+        <option value="">Todas as etapas</option>
         <option value="novo">Novo</option>
         <option value="qualificando">Qualificando</option>
-        <option value="demonstracao">Demonstração</option>
         <option value="proposta">Proposta</option>
-        <option value="fechamento">Fechamento</option>
-        <option value="perdido">Perdido</option>
+        <option value="negociando">Negociando</option>
+        <option value="ganho">Fechado ganho</option>
+        <option value="perdido">Fechado perdido</option>
       </select>
+
+      <input type="text" id="filtroResponsavel" placeholder="Filtrar por responsável">
     </div>
 
-    <div>
-      <label>Responsável</label>
-      <select id="filtroResponsavel">
-        <option value="">Todos</option>
-        <option value="Thiago">Thiago</option>
-        <option value="Danilo">Danilo</option>
-        <option value="Thaís">Thaís</option>
-        <option value="Márcio">Márcio</option>
-      </select>
-    </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Origem</th>
+        <th>Etapa</th>
+        <th>Responsável</th>
+        <th>Valor</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody id="leadsTableBody"></tbody>
+    </table>
+  </section>
+</main>
 
-    <button id="btnFiltrar" class="btn-primary">Aplicar Filtros</button>
-  </div>
-</section>
+<script src="../js/supabase.js"></script>
+<script src="../js/app-common.js"></script>
+<script src="../js/crm-leads.js"></script>
+</body>
+</html>
