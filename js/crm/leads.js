@@ -1,4 +1,4 @@
-// Carregar módulos (sidebar, header)
+// Carregar módulos (sidebar e header)
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-include]").forEach(el => {
     fetch(el.getAttribute("data-include"))
@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   inicializarFormLead();
   carregarLeads();
+
+  document.getElementById("btnFiltrar").onclick = aplicarFiltros;
 });
 
 
-// ============================
-// Formulário: criar novo lead
-// ============================
+// =====================================
+// FORMULÁRIO - SALVAR NOVO LEAD
+// =====================================
 
 function inicializarFormLead() {
   const form = document.getElementById("formLead");
@@ -47,9 +49,9 @@ function inicializarFormLead() {
 }
 
 
-// ============================
-// Carregar leads da tabela
-// ============================
+// =====================================
+// BUSCAR LEADS (SEM FILTRO)
+// =====================================
 
 async function carregarLeads() {
   const lista = document.getElementById("leadLista");
@@ -65,8 +67,44 @@ async function carregarLeads() {
     return;
   }
 
+  montarLista(data);
+}
+
+
+// =====================================
+// FILTRAR LEADS
+// =====================================
+
+async function aplicarFiltros() {
+  const etapa = document.getElementById("filtroEtapa").value;
+  const responsavel = document.getElementById("filtroResponsavel").value;
+
+  let query = supabase.from("leads").select("*");
+
+  if (etapa) query = query.eq("etapa", etapa);
+  if (responsavel) query = query.eq("responsavel", responsavel);
+
+  const { data, error } = await query.order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    alert("Erro ao aplicar filtros.");
+    return;
+  }
+
+  montarLista(data);
+}
+
+
+// =====================================
+// MONTAR LISTA DE LEADS EM TELA
+// =====================================
+
+function montarLista(data) {
+  const lista = document.getElementById("leadLista");
+
   if (!data || data.length === 0) {
-    lista.innerHTML = "<p>Nenhum lead cadastrado ainda.</p>";
+    lista.innerHTML = "<p>Nenhum lead encontrado.</p>";
     return;
   }
 
@@ -76,7 +114,7 @@ async function carregarLeads() {
     lista.innerHTML += montarCardLead(lead);
   });
 
-  // Ativar eventos dos selects de etapa
+  // Ativar dropdown de etapa
   document.querySelectorAll(".lead-etapa-select").forEach(sel => {
     sel.addEventListener("change", async (e) => {
       const leadId = e.target.getAttribute("data-id");
@@ -87,9 +125,9 @@ async function carregarLeads() {
 }
 
 
-// ============================
-// Montar card HTML de cada lead
-// ============================
+// =====================================
+// CARD HTML DO LEAD
+// =====================================
 
 function montarCardLead(lead) {
   const dataProx = lead.proximo_contato
@@ -115,7 +153,7 @@ function montarCardLead(lead) {
         <strong>${lead.nome || "(sem nome)"}</strong>
         <p>${lead.empresa || ""}</p>
         <p>Segmento: ${lead.segmento || "-"} • Origem: ${lead.origem || "-"}</p>
-        <p>Responsável: ${lead.responsavel || "-"} • Próx. contato: ${dataProx}</p>
+        <p>Resp.: ${lead.responsavel || "-"} • Próx: ${dataProx}</p>
       </div>
 
       <div class="lead-side">
@@ -129,9 +167,9 @@ function montarCardLead(lead) {
 }
 
 
-// ============================
-// Atualizar etapa do lead
-// ============================
+// =====================================
+// ATUALIZAR ETAPA
+// =====================================
 
 async function atualizarEtapa(id, etapa) {
   const { error } = await supabase
@@ -142,7 +180,5 @@ async function atualizarEtapa(id, etapa) {
   if (error) {
     console.error(error);
     alert("Erro ao atualizar etapa.");
-    return;
   }
 }
-
