@@ -304,3 +304,18 @@ body {
   padding: 6px 12px;
   border-radius: 6px;
 }
+.full-width {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+}
+
+#dadosReserva p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.mt {
+  margin-top: 20px;
+}
