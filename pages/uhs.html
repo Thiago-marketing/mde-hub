@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Unidades Habitacionais • PMS Lite • MDE Hub</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PMS Lite • Unidades Habitacionais (UHs) • MDE Hub</title>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body class="page">
+
+  <!-- TOPO -->
   <header class="topbar">
     <div class="user-info">
       <span id="userInitial">T</span>
@@ -15,9 +17,16 @@
         <p id="userEmail"></p>
       </div>
     </div>
-    <button id="logoutBtn" class="btn-sair">Sair</button>
+
+    <div class="topbar-actions">
+      <a href="../dashboard.html" class="btn-secondary btn-small">
+        ← Voltar para Hub MDE
+      </a>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
   </header>
 
+  <!-- MENU LATERAL -->
   <aside class="sidebar">
     <h3>Operação (PMS Lite)</h3>
     <ul>
@@ -28,32 +37,45 @@
       <li><a href="lancamentos.html">Lançamentos</a></li>
       <li><a href="financeiro.html">Financeiro</a></li>
       <li><a href="relatorios.html">Relatórios</a></li>
+      <li><a href="#cadastroUH">Cadastro</a></li>
     </ul>
   </aside>
 
+  <!-- CONTEÚDO -->
   <main class="content">
     <h1>Unidades Habitacionais (UHs)</h1>
-    <p class="subtitle">Controle visual das UHs: livre, ocupado, limpeza, manutenção, bloqueado.</p>
+    <p class="subtitle">
+      Controle visual das UHs: livre, ocupado, limpeza, manutenção, bloqueado.
+    </p>
 
+    <!-- LEGENDA -->
     <section class="card">
       <h2>Legenda</h2>
-      <div class="legend">
-        <span class="tag tag-livre">Livre</span>
-        <span class="tag tag-ocupado">Ocupado</span>
-        <span class="tag tag-limpeza">Limpeza</span>
-        <span class="tag tag-manutencao">Manutenção</span>
-        <span class="tag tag-bloqueado">Bloqueado</span>
+      <div class="legend-row">
+        <span class="legend-pill status-livre">Livre</span>
+        <span class="legend-pill status-ocupado">Ocupado</span>
+        <span class="legend-pill status-limpeza">Limpeza</span>
+        <span class="legend-pill status-manutencao">Manutenção</span>
+        <span class="legend-pill status-bloqueado">Bloqueado</span>
       </div>
+      <p class="legend-hint">
+        As cores são reproduzidas no mapa simples abaixo para facilitar a leitura rápida.
+      </p>
     </section>
 
-    <section class="card">
-      <h2>Mapa simples</h2>
+    <!-- MAPA SIMPLES -->
+    <section class="card mt">
+      <div class="card-header-between">
+        <h2>Mapa simples</h2>
+        <span class="badge-info" id="uhResumo"></span>
+      </div>
       <div id="uhGrid" class="uh-grid">
-        <!-- JS vai montar os quadradinhos das UHs aqui -->
+        <!-- Cards de UH montados pelo JS -->
       </div>
     </section>
 
-    <section class="card">
+    <!-- LISTA DE UHs -->
+    <section class="card mt">
       <h2>Lista de UHs</h2>
       <table class="table">
         <thead>
@@ -66,9 +88,47 @@
           </tr>
         </thead>
         <tbody id="uhTableBody">
-          <!-- JS vai preencher com dados do Supabase -->
+          <!-- Linhas montadas pelo JS -->
         </tbody>
       </table>
+    </section>
+
+    <!-- CADASTRO DE UHs -->
+    <section id="cadastroUH" class="card mt">
+      <h2>Cadastro de Unidade</h2>
+      <p class="subtitle">
+        Use este cadastro rápido para incluir UHs no PMS Lite
+        (ex.: 101, 102, 201…).
+      </p>
+
+      <form id="uhForm" class="form-grid-3">
+        <div class="form-group">
+          <label>Número / Nome da UH</label>
+          <input type="text" id="uhNumero" required placeholder="Ex.: 101, 102, Suíte Master" />
+        </div>
+
+        <div class="form-group">
+          <label>Tipo</label>
+          <input type="text" id="uhTipo" placeholder="Standard, Luxo, Master..." />
+        </div>
+
+        <div class="form-group">
+          <label>Status inicial</label>
+          <select id="uhStatusInicial">
+            <option value="livre">Livre</option>
+            <option value="ocupado">Ocupado</option>
+            <option value="limpeza">Limpeza</option>
+            <option value="manutencao">Manutenção</option>
+            <option value="bloqueado">Bloqueado</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Salvar UH
+        </button>
+      </form>
+
+      <p id="uhFormStatus" class="msg-ok"></p>
     </section>
   </main>
 
