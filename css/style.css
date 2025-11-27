@@ -532,3 +532,63 @@ body {
   justify-content: space-between;
   font-size: 14px;
 }
+/* --- PMS Lite: UHs --- */
+
+.legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.legend-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: rgba(255,255,255,0.06);
+}
+
+.legend-hint {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.status-livre { background: rgba(46, 204, 113, 0.2); border: 1px solid #2ecc71; }
+.status-ocupado { background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; }
+.status-limpeza { background: rgba(52, 152, 219, 0.2); border: 1px solid #3498db; }
+.status-manutencao { background: rgba(241, 196, 15, 0.2); border: 1px solid #f1c40f; }
+.status-bloqueado { background: rgba(149, 165, 166, 0.2); border: 1px solid #7f8c8d; }
+
+.uh-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.uh-card {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.uh-card strong { font-size: 1.1rem; }
+
+.uh-card span {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* reaproveita as classes de status da legenda */
+.uh-card.status-livre { border-color: #2ecc71; }
+.uh-card.status-ocupado { border-color: #e74c3c; }
+.uh-card.status-limpeza { border-color: #3498db; }
+.uh-card.status-manutencao { border-color: #f1c40f; }
+.uh-card.status-bloqueado { border-color: #7f8c8d; }
