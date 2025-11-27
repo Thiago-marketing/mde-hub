@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRM • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/supabase.js"></script>
+  <script src="/js/crm/leads.js" defer></script>
+</head>
+
+<body>
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+    <h1 class="page-title">CRM • Leads MDE</h1>
+    <p class="page-sub">
+      Organize o funil comercial da MDE: cadastre leads, acompanhe etapas e próximos contatos.
+    </p>
+
+    <!-- Novo lead -->
+    <section class="card">
+      <h2>Novo Lead</h2>
+
+      <form id="formLead" class="form-grid">
+        <div>
+          <label>Nome do contato</label>
+          <input type="text" id="leadNome" required />
+        </div>
+
+        <div>
+          <label>Empresa / Hotel / Pousada</label>
+          <input type="text" id="leadEmpresa" />
+        </div>
+
+        <div>
+          <label>Segmento</label>
+          <input type="text" id="leadSegmento" placeholder="Hotel, Pousada, Motel, Restaurante..." />
+        </div>
+
+        <div>
+          <label>Origem</label>
+          <input type="text" id="leadOrigem" placeholder="Indicação, Site, WhatsApp, Feira..." />
+        </div>
+
+        <div>
+          <label>Responsável</label>
+          <input type="text" id="leadResponsavel" placeholder="Thiago, Danilo, etc." />
+        </div>
+
+        <div>
+          <label>Próximo contato</label>
+          <input type="date" id="leadProxContato" />
+        </div>
+
+        <div>
+          <label>Etapa do funil</label>
+          <select id="leadEtapa">
+            <option value="novo">Novo</option>
+            <option value="qualificando">Qualificando</option>
+            <option value="demonstracao">Demonstração</option>
+            <option value="proposta">Proposta</option>
+            <option value="fechamento">Fechamento</option>
+            <option value="perdido">Perdido</option>
+          </select>
+        </div>
+
+        <div style="grid-column: span 3;">
+          <label>Observações</label>
+          <textarea id="leadObs" rows="2"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Salvar Lead</button>
+      </form>
+    </section>
+
+    <!-- Lista de leads -->
+    <section class="card mt">
+      <h2>Leads cadastrados</h2>
+      <div id="leadLista" class="lead-list"></div>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
 
