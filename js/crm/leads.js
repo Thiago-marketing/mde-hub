@@ -1,184 +1,114 @@
-// Carregar módulos (sidebar e header)
+// crm-leads.js
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-include]").forEach(el => {
-    fetch(el.getAttribute("data-include"))
-      .then(res => res.text())
-      .then(html => el.innerHTML = html);
-  });
-
-  inicializarFormLead();
+  carregarUsuario();
   carregarLeads();
 
-  document.getElementById("btnFiltrar").onclick = aplicarFiltros;
+  document.getElementById("leadForm").addEventListener("submit", salvarLead);
+  document.getElementById("filtroEtapa").addEventListener("change", carregarLeads);
+  document.getElementById("filtroResponsavel").addEventListener("input", carregarLeads);
 });
 
-
-// =====================================
-// FORMULÁRIO - SALVAR NOVO LEAD
-// =====================================
-
-function inicializarFormLead() {
-  const form = document.getElementById("formLead");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const lead = {
-      nome: document.getElementById("leadNome").value,
-      empresa: document.getElementById("leadEmpresa").value,
-      segmento: document.getElementById("leadSegmento").value,
-      origem: document.getElementById("leadOrigem").value,
-      responsavel: document.getElementById("leadResponsavel").value,
-      proximo_contato: document.getElementById("leadProxContato").value,
-      etapa: document.getElementById("leadEtapa").value,
-      observacoes: document.getElementById("leadObs").value
-    };
-
-    const { error } = await supabase.from("leads").insert([lead]);
-
-    if (error) {
-      console.error(error);
-      alert("Erro ao salvar lead.");
-      return;
-    }
-
-    alert("Lead salvo com sucesso!");
-    form.reset();
-    carregarLeads();
-  });
-}
-
-
-// =====================================
-// BUSCAR LEADS (SEM FILTRO)
-// =====================================
-
 async function carregarLeads() {
-  const lista = document.getElementById("leadLista");
-
-  const { data, error } = await supabase
+  const { data: leads, error } = await supa
     .from("leads")
     .select("*")
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error(error);
-    lista.innerHTML = "<p>Erro ao carregar leads.</p>";
+    console.error("Erro ao buscar leads:", error);
     return;
   }
 
-  montarLista(data);
-}
+  const etapaFiltro = document.getElementById("filtroEtapa").value;
+  const respFiltro  = document.getElementById("filtroResponsavel").value.toLowerCase();
 
-
-// =====================================
-// FILTRAR LEADS
-// =====================================
-
-async function aplicarFiltros() {
-  const etapa = document.getElementById("filtroEtapa").value;
-  const responsavel = document.getElementById("filtroResponsavel").value;
-
-  let query = supabase.from("leads").select("*");
-
-  if (etapa) query = query.eq("etapa", etapa);
-  if (responsavel) query = query.eq("responsavel", responsavel);
-
-  const { data, error } = await query.order("created_at", { ascending: false });
-
-  if (error) {
-    console.error(error);
-    alert("Erro ao aplicar filtros.");
-    return;
-  }
-
-  montarLista(data);
-}
-
-
-// =====================================
-// MONTAR LISTA DE LEADS EM TELA
-// =====================================
-
-function montarLista(data) {
-  const lista = document.getElementById("leadLista");
-
-  if (!data || data.length === 0) {
-    lista.innerHTML = "<p>Nenhum lead encontrado.</p>";
-    return;
-  }
-
-  lista.innerHTML = "";
-
-  data.forEach(lead => {
-    lista.innerHTML += montarCardLead(lead);
+  const filtrados = leads.filter(l => {
+    const etapaOk = etapaFiltro ? l.etapa === etapaFiltro : true;
+    const respOk  = respFiltro ? (l.responsavel || "").toLowerCase().includes(respFiltro) : true;
+    return etapaOk && respOk;
   });
 
-  // Ativar dropdown de etapa
-  document.querySelectorAll(".lead-etapa-select").forEach(sel => {
-    sel.addEventListener("change", async (e) => {
-      const leadId = e.target.getAttribute("data-id");
-      const novaEtapa = e.target.value;
-      await atualizarEtapa(leadId, novaEtapa);
-    });
-  });
-}
+  const tbody = document.getElementById("leadsTableBody");
+  tbody.innerHTML = "";
 
-
-// =====================================
-// CARD HTML DO LEAD
-// =====================================
-
-function montarCardLead(lead) {
-  const dataProx = lead.proximo_contato
-    ? new Date(lead.proximo_contato).toLocaleDateString("pt-BR")
-    : "-";
-
-  const etapas = [
-    { value: "novo", label: "Novo" },
-    { value: "qualificando", label: "Qualificando" },
-    { value: "demonstracao", label: "Demonstração" },
-    { value: "proposta", label: "Proposta" },
-    { value: "fechamento", label: "Fechamento" },
-    { value: "perdido", label: "Perdido" },
-  ];
-
-  const optionsHtml = etapas
-    .map(e => `<option value="${e.value}" ${lead.etapa === e.value ? "selected" : ""}>${e.label}</option>`)
-    .join("");
-
-  return `
-    <div class="lead-item">
-      <div class="lead-main">
-        <strong>${lead.nome || "(sem nome)"}</strong>
-        <p>${lead.empresa || ""}</p>
-        <p>Segmento: ${lead.segmento || "-"} • Origem: ${lead.origem || "-"}</p>
-        <p>Resp.: ${lead.responsavel || "-"} • Próx: ${dataProx}</p>
-      </div>
-
-      <div class="lead-side">
-        <label>Etapa</label>
-        <select class="lead-etapa-select" data-id="${lead.id}">
-          ${optionsHtml}
+  filtrados.forEach(l => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${l.nome || "-"}</td>
+      <td>${l.origem || "-"}</td>
+      <td>
+        <select onchange="alterarEtapa(${l.id}, this.value)">
+          ${opcaoEtapa("novo", "Novo", l.etapa)}
+          ${opcaoEtapa("qualificando", "Qualificando", l.etapa)}
+          ${opcaoEtapa("proposta", "Proposta", l.etapa)}
+          ${opcaoEtapa("negociando", "Negociando", l.etapa)}
+          ${opcaoEtapa("ganho", "Ganho", l.etapa)}
+          ${opcaoEtapa("perdido", "Perdido", l.etapa)}
         </select>
-      </div>
-    </div>
-  `;
+      </td>
+      <td>
+        <input type="text" value="${l.responsavel || ""}"
+               onchange="alterarResponsavel(${l.id}, this.value)">
+      </td>
+      <td>R$ ${l.valor_estimado ? l.valor_estimado.toFixed(2) : "0,00"}</td>
+      <td>${l.status || "aberto"}</td>
+      <td>
+        <button class="btn-small" onclick="marcarGanho(${l.id})">Ganho</button>
+        <button class="btn-small secondary" onclick="marcarPerdido(${l.id})">Perdido</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
+function opcaoEtapa(valor, label, etapaAtual) {
+  const sel = etapaAtual === valor ? "selected" : "";
+  return `<option value="${valor}" ${sel}>${label}</option>`;
+}
 
-// =====================================
-// ATUALIZAR ETAPA
-// =====================================
+async function salvarLead(e) {
+  e.preventDefault();
 
-async function atualizarEtapa(id, etapa) {
-  const { error } = await supabase
-    .from("leads")
-    .update({ etapa })
-    .eq("id", id);
+  const payload = {
+    nome: document.getElementById("leadNome").value,
+    telefone: document.getElementById("leadTelefone").value,
+    email: document.getElementById("leadEmail").value,
+    origem: document.getElementById("leadOrigem").value,
+    responsavel: document.getElementById("leadResponsavel").value,
+    valor_estimado: parseFloat(document.getElementById("leadValor").value || 0),
+    etapa: "novo",
+    status: "aberto"
+  };
+
+  const { error } = await supa.from("leads").insert(payload);
 
   if (error) {
-    console.error(error);
-    alert("Erro ao atualizar etapa.");
+    console.error("Erro ao salvar lead:", error);
+    alert("Erro ao salvar lead");
+    return;
   }
+
+  document.getElementById("leadForm").reset();
+  document.getElementById("leadStatus").innerText = "Lead salvo com sucesso!";
+  setTimeout(() => (document.getElementById("leadStatus").innerText = ""), 2500);
+
+  carregarLeads();
+}
+
+async function alterarEtapa(id, etapa) {
+  await supa.from("leads").update({ etapa }).eq("id", id);
+}
+
+async function alterarResponsavel(id, responsavel) {
+  await supa.from("leads").update({ responsavel }).eq("id", id);
+}
+
+async function marcarGanho(id) {
+  await supa.from("leads").update({ etapa: "ganho", status: "fechado" }).eq("id", id);
+  carregarLeads();
+}
+
+async function marcarPerdido(id) {
+  await supa.from("leads").update({ etapa: "perdido", status: "fechado" }).eq("id", id);
+  carregarLeads();
 }
