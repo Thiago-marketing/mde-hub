@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checklist Governança • MDE Hub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="page">
+
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">T</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <button id="logoutBtn" class="btn-sair">Sair</button>
+  </header>
+
+  <aside class="sidebar">
+    <h3>Menu</h3>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="sim-checkin.html">Simulador Check-in</a></li>
+      <li><a href="sim-tarifa.html">Simulador de Tarifas</a></li>
+      <li class="active"><a href="checklist-governanca.html">Checklist Governança</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <h1>Checklist de Governança</h1>
+    <p class="subtitle">Registre a limpeza de forma prática e rápida.</p>
+
+    <div class="card">
+      <ul class="checklist">
+        <li><label><input type="checkbox"> Trocar roupa de cama</label></li>
+        <li><label><input type="checkbox"> Higienizar banheiro</label></li>
+        <li><label><input type="checkbox"> Aspirar o quarto</label></li>
+        <li><label><input type="checkbox"> Repor toalhas</label></li>
+        <li><label><input type="checkbox"> Descartar lixo</label></li>
+      </ul>
+
+      <button id="btnSalvar" class="btn-primary">Salvar Checklist</button>
+      <p id="statusMsg" class="msg-ok"></p>
+    </div>
+  </main>
+
+  <script src="js/supabase.js"></script>
+  <script src="js/app-common.js"></script>
+  <script>
+    document.getElementById("btnSalvar").onclick = () => {
+      statusMsg.textContent = "Checklist salvo com sucesso!";
+      setTimeout(() => statusMsg.textContent = "", 2500);
+    };
+  </script>
+</body>
+</html>
