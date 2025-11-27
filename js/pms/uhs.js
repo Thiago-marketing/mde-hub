@@ -1,53 +1,78 @@
-// Carregar HTML dos módulos (sidebar, header)
+// uhs.js
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-include]").forEach(el => {
-    fetch(el.getAttribute("data-include"))
-      .then(res => res.text())
-      .then(html => el.innerHTML = html);
-  });
+  carregarUsuario();
+  listarUHs();
 });
 
-async function carregarUHs() {
-  const uhList = document.getElementById("uhList");
+/* LISTAR UHs */
+async function listarUHs() {
+  const user = await supa.auth.getUser();
+  const user_id = user.data.user.id;
 
-  const { data, error } = await supabase
-    .from("units")
+  let { data: uhs, error } = await supa
+    .from("uhs")
     .select("*")
-    .limit(6);
+    .eq("user_id", user_id)
+    .order("numero", { ascending: true });
 
   if (error) {
-    uhList.innerHTML = "<p>Erro ao carregar UHs...</p>";
+    console.error("Erro ao carregar UHs:", error);
     return;
   }
 
-  uhList.innerHTML = "";
+  montarGrid(uhs);
+  montarTabela(uhs);
+}
 
-  data.forEach(uh => {
-    const statusClass = {
-      "livre": "uh-livre",
-      "ocupado": "uh-ocupado",
-      "limpeza": "uh-limpeza",
-      "manutencao": "uh-manutencao",
-      "bloqueado": "uh-bloqueado"
-    }[uh.status] || "";
+/* GRID VISUAL */
+function montarGrid(uhs) {
+  const grid = document.getElementById("uhGrid");
+  grid.innerHTML = "";
 
-    const card = `
-      <div class="uh-card ${statusClass}">
-        <h3>UH ${uh.numero}</h3>
-        <p>Status: <strong>${uh.status}</strong></p>
-        <p>Previsão saída: ${uh.previsao_saida || "-"}</p>
-
-        <div class="uh-actions">
-          <button class="btn-acao">Check-in</button>
-          <button class="btn-acao">Check-out</button>
-          <button class="btn-acao">Lançamentos</button>
-        </div>
-      </div>
+  uhs.forEach((uh) => {
+    const div = document.createElement("div");
+    div.className = `uh-card status-${uh.status}`;
+    div.innerHTML = `
+      <strong>${uh.numero}</strong>
+      <span>${traduzStatus(uh.status)}</span>
     `;
-
-    uhList.innerHTML += card;
+    grid.appendChild(div);
   });
 }
 
-carregarUHs();
+/* TABELA */
+function montarTabela(uhs) {
+  const tbody = document.getElementById("uhTableBody");
+  tbody.innerHTML = "";
 
+  uhs.forEach((uh) => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${uh.numero}</td>
+      <td>${uh.tipo || "-"}</td>
+      <td>${traduzStatus(uh.status)}</td>
+      <td>${uh.previsao_saida || "-"}</td>
+      <td>
+        <button class="btn-small" onclick="verReservaUH('${uh.numero}')">Detalhes</button>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+function traduzStatus(s) {
+  const map = {
+    livre: "Livre",
+    ocupado: "Ocupado",
+    limpeza: "Limpeza",
+    manutencao: "Manutenção",
+    bloqueado: "Bloqueado"
+  };
+  return map[s] || s;
+}
+
+function verReservaUH(numero) {
+  alert("Aqui futuramente abriremos a última reserva da UH " + numero);
+}
