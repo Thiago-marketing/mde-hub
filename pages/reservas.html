@@ -1,76 +1,73 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reservas • MDE Hub</title>
-
-  <link rel="stylesheet" href="/css/style.css" />
-
-  <script src="/js/supabase.js"></script>
-  <script src="/js/pms/reservas.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reservas • PMS Lite • MDE Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
+<body class="page">
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">T</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <button id="logoutBtn" class="btn-sair">Sair</button>
+  </header>
 
-<body>
-  <div data-include="/modules/sidebar.html"></div>
-  <div data-include="/modules/header.html"></div>
+  <aside class="sidebar">
+    <h3>Operação (PMS Lite)</h3>
+    <ul>
+      <li><a href="uhs.html">Unidades (UHs)</a></li>
+      <li class="active"><a href="reservas.html">Reservas</a></li>
+      <li><a href="checkin.html">Check-in</a></li>
+      <li><a href="checkout.html">Check-out</a></li>
+      <li><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="financeiro.html">Financeiro</a></li>
+      <li><a href="relatorios.html">Relatórios</a></li>
+    </ul>
+  </aside>
 
   <main class="content">
-    <h1 class="page-title">Reservas</h1>
-    <p class="page-sub">Gerencie reservas básicas para até 6 unidades.</p>
+    <h1>Reservas</h1>
+    <p class="subtitle">Todas as reservas em um só lugar: futuras, em andamento e finalizadas.</p>
 
-    <!-- Form Nova Reserva -->
     <section class="card">
-      <h2>Criar nova reserva</h2>
+      <div class="toolbar">
+        <button class="btn-primary" onclick="window.location.href='checkin.html'">Nova reserva / check-in</button>
+        <select id="filtroStatus">
+          <option value="">Todos os status</option>
+          <option value="reservado">Reservado</option>
+          <option value="checkin">Em estadia</option>
+          <option value="checkout">Finalizado</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+      </div>
 
-      <form id="formReserva" class="form-grid">
-        <div>
-          <label>Hóspede</label>
-          <input type="text" id="hospede" required />
-        </div>
-
-        <div>
-          <label>Telefone</label>
-          <input type="text" id="telefone" />
-        </div>
-
-        <div>
-          <label>WhatsApp</label>
-          <input type="text" id="whatsapp" />
-        </div>
-
-        <div>
-          <label>UH</label>
-          <select id="unidade" required></select>
-        </div>
-
-        <div>
-          <label>Entrada</label>
-          <input type="date" id="dataEntrada" required />
-        </div>
-
-        <div>
-          <label>Saída</label>
-          <input type="date" id="dataSaida" required />
-        </div>
-
-        <div>
-          <label>Valor da diária</label>
-          <input type="number" id="valorDiaria" step="0.01" />
-        </div>
-
-        <button type="submit" class="btn-primary">Criar Reserva</button>
-      </form>
-    </section>
-
-    <!-- Lista de Reservas -->
-    <section class="card mt">
-      <h2>Reservas Criadas</h2>
-      <div id="listaReservas" class="lista-reservas"></div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>UH</th>
+            <th>Hóspede</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+            <th>Status</th>
+            <th>Origem</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="reservasTableBody">
+          <!-- JS: reservas do Supabase -->
+        </tbody>
+      </table>
     </section>
   </main>
 
-  <script src="/js/menu.js"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/app-common.js"></script>
+  <script src="../js/reservas.js"></script>
 </body>
 </html>
-
