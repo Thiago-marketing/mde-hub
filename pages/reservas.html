@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reservas • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <script src="/js/supabase.js"></script>
+  <script src="/js/pms/reservas.js" defer></script>
+</head>
+
+<body>
+  <div data-include="/modules/sidebar.html"></div>
+  <div data-include="/modules/header.html"></div>
+
+  <main class="content">
+    <h1 class="page-title">Reservas</h1>
+    <p class="page-sub">Gerencie reservas básicas para até 6 unidades.</p>
+
+    <!-- Form Nova Reserva -->
+    <section class="card">
+      <h2>Criar nova reserva</h2>
+
+      <form id="formReserva" class="form-grid">
+        <div>
+          <label>Hóspede</label>
+          <input type="text" id="hospede" required />
+        </div>
+
+        <div>
+          <label>Telefone</label>
+          <input type="text" id="telefone" />
+        </div>
+
+        <div>
+          <label>WhatsApp</label>
+          <input type="text" id="whatsapp" />
+        </div>
+
+        <div>
+          <label>UH</label>
+          <select id="unidade" required></select>
+        </div>
+
+        <div>
+          <label>Entrada</label>
+          <input type="date" id="dataEntrada" required />
+        </div>
+
+        <div>
+          <label>Saída</label>
+          <input type="date" id="dataSaida" required />
+        </div>
+
+        <div>
+          <label>Valor da diária</label>
+          <input type="number" id="valorDiaria" step="0.01" />
+        </div>
+
+        <button type="submit" class="btn-primary">Criar Reserva</button>
+      </form>
+    </section>
+
+    <!-- Lista de Reservas -->
+    <section class="card mt">
+      <h2>Reservas Criadas</h2>
+      <div id="listaReservas" class="lista-reservas"></div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
 
