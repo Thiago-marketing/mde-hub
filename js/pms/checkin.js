@@ -1,100 +1,77 @@
-// Carregar módulos HTML
+// checkin.js
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-include]").forEach(el => {
-    fetch(el.getAttribute("data-include"))
-      .then(res => res.text())
-      .then(html => el.innerHTML = html);
-  });
-
-  carregarReservasPendentes();
+  carregarUsuario();
+  carregarUHsLivres();
+  document.getElementById("checkinForm").addEventListener("submit", fazerCheckin);
 });
 
+/* CARREGAR UHs LIVRES */
+async function carregarUHsLivres() {
+  const user = await supa.auth.getUser();
+  const user_id = user.data.user.id;
 
-// ==========================
-// CARREGAR RESERVAS PENDENTES
-// ==========================
+  let { data: uhs } = await supa
+    .from("uhs")
+    .select("*")
+    .eq("user_id", user_id)
+    .eq("status", "livre");
 
-async function carregarReservasPendentes() {
-  const select = document.getElementById("selectReserva");
+  const select = document.getElementById("uhSelect");
+  select.innerHTML = "";
 
-  const { data, error } = await supabase
-    .from("reservas")
-    .select("*, units(numero)")
-    .eq("status", "confirmada");
+  uhs.forEach((uh) => {
+    select.innerHTML += `<option value="${uh.id}">${uh.numero}</option>`;
+  });
+}
 
-  if (error) {
-    console.error(error);
-    return;
-  }
+/* CHECK-IN */
+async function fazerCheckin(e) {
+  e.preventDefault();
 
-  select.innerHTML = "<option value=''>Selecione...</option>";
+  const user = await supa.auth.getUser();
+  const user_id = user.data.user.id;
 
-  data.forEach(r => {
-    select.innerHTML += `
-      <option value="${r.id}">
-        ${r.hospede} — UH ${r.units.numero} (${r.data_entrada} → ${r.data_saida})
-      </option>
-    `;
+  const nome = document.getElementById("nomeHospede").value;
+  const telefone = document.getElementById("telefone").value;
+  const uh_id = document.getElementById("uhSelect").value;
+  const origem = document.getElementById("origem").value;
+  const entrada = document.getElementById("dataEntrada").value;
+  const saida = document.getElementById("dataSaida").value;
+
+  // 1. criar hóspede
+  let { data: hospede, error: erroHosp } = await supa
+    .from("hospedes")
+    .insert({
+      nome,
+      telefone,
+      user_id
+    })
+    .select()
+    .single();
+
+  if (erroHosp) return alert("Erro ao criar hóspede");
+
+  // 2. criar reserva
+  let { error: erroRes } = await supa.from("reservas").insert({
+    uh_id,
+    hospede_id: hospede.id,
+    data_entrada: entrada,
+    data_saida: saida,
+    origem,
+    status: "checkin",
+    user_id
   });
 
-  select.addEventListener("change", () => mostrarDados(select.value, data));
-}
+  if (erroRes) return alert("Erro ao criar reserva");
 
-
-// ==========================
-// EXIBIR DADOS DA RESERVA
-// ==========================
-
-function mostrarDados(id, reservas) {
-  const card = document.getElementById("dadosReserva");
-
-  if (!id) {
-    card.style.display = "none";
-    return;
-  }
-
-  const r = reservas.find(x => x.id == id);
-
-  document.getElementById("rHospede").innerText = r.hospede;
-  document.getElementById("rUH").innerText = "UH " + r.units.numero;
-  document.getElementById("rEntrada").innerText = r.data_entrada;
-  document.getElementById("rSaida").innerText = r.data_saida;
-
-  card.style.display = "block";
-
-  document.getElementById("btnCheckin").onclick = () => confirmarCheckin(r);
-}
-
-
-// ==========================
-// PROCESSAR CHECK-IN
-// ==========================
-
-async function confirmarCheckin(reserva) {
-  const reservaId = reserva.id;
-  const unidadeId = reserva.unidad_id;
-
-  // 1. Atualizar reserva
-  const up1 = await supabase
-    .from("reservas")
-    .update({ status: "checkin" })
-    .eq("id", reservaId);
-
-  // 2. Atualizar UH para "ocupado"
-  const up2 = await supabase
-    .from("units")
+  // 3. marcar UH como ocupada
+  await supa
+    .from("uhs")
     .update({ status: "ocupado" })
-    .eq("id", unidadeId);
+    .eq("id", uh_id);
 
-  if (up1.error || up2.error) {
-    alert("Erro ao realizar check-in.");
-    console.log(up1.error || up2.error);
-    return;
-  }
-
-  alert("Check-in realizado com sucesso!");
-
-  // Recarregar tela
-  location.reload();
+  document.getElementById("checkinStatus").innerText =
+    "Check-in realizado com sucesso!";
+  e.target.reset();
+  carregarUHsLivres();
 }
-
