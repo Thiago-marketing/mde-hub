@@ -333,3 +333,11 @@ body {
 .btn-primary {
   margin-top: 20px;
 }
+.lanc-item {
+  background: #12345a;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
