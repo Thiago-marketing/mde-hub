@@ -427,3 +427,8 @@ body {
   border-radius: 6px;
   border: none;
 }
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
