@@ -319,3 +319,17 @@ body {
 .mt {
   margin-top: 20px;
 }
+#resumoReserva p {
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+.resumo-total {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  margin-top: 20px;
+}
