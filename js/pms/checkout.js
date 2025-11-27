@@ -9,6 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarReservasAtivas();
 });
 
+let reservasCache = [];
+let reservaAtual = null;
+let totalDiarias = 0;
+let totalLancamentos = 0;
+let totalGeral = 0;
+
 
 // ===============================
 // CARREGAR RESERVAS EM CHECKIN
@@ -22,11 +28,16 @@ async function carregarReservasAtivas() {
     .select("*, units(numero)")
     .eq("status", "checkin");
 
-  if (error) return console.error(error);
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  reservasCache = data || [];
 
   select.innerHTML = "<option value=''>Selecione...</option>";
 
-  data.forEach(r => {
+  reservasCache.forEach(r => {
     select.innerHTML += `
       <option value="${r.id}">
         ${r.hospede} — UH ${r.units.numero}
@@ -34,41 +45,113 @@ async function carregarReservasAtivas() {
     `;
   });
 
-  select.addEventListener("change", () => mostrarResumo(select.value, data));
+  select.addEventListener("change", () => selecionarReserva(select.value));
 }
 
 
 // ===============================
-// EXIBIR RESUMO
+// SELECIONAR RESERVA
 // ===============================
 
-function mostrarResumo(id, reservas) {
+async function selecionarReserva(id) {
   if (!id) {
     document.getElementById("resumoReserva").style.display = "none";
+    document.getElementById("extratoLanc").style.display = "none";
+    document.getElementById("totalGeralBox").style.display = "none";
     return;
   }
 
-  const r = reservas.find(x => x.id == id);
+  reservaAtual = reservasCache.find(x => x.id == id);
+  if (!reservaAtual) return;
 
-  // Cálculo dos dias
+  await montarResumo();
+  await montarExtrato();
+  calcularTotalGeral();
+}
+
+
+// ===============================
+// RESUMO DA ESTADIA (DIÁRIAS)
+// ===============================
+
+async function montarResumo() {
+  const r = reservaAtual;
+
   const entrada = new Date(r.data_entrada);
   const saida = new Date(r.data_saida);
   const diff = (saida - entrada) / (1000 * 60 * 60 * 24);
   const dias = diff || 1;
 
-  const total = dias * Number(r.valor_diaria || 0);
+  const valorDiaria = Number(r.valor_diaria || 0);
+  const subtotal = dias * valorDiaria;
 
-  // Preencher no HTML
+  totalDiarias = subtotal;
+
   document.getElementById("rHospede").innerText = r.hospede;
   document.getElementById("rUH").innerText = "UH " + r.units.numero;
   document.getElementById("rEntrada").innerText = r.data_entrada;
   document.getElementById("rSaida").innerText = r.data_saida;
   document.getElementById("rDias").innerText = dias;
-  document.getElementById("rTotal").innerText = total.toFixed(2);
+  document.getElementById("rDiaria").innerText = valorDiaria.toFixed(2);
+  document.getElementById("rSubtotalDiarias").innerText = subtotal.toFixed(2);
 
   document.getElementById("resumoReserva").style.display = "block";
+}
 
-  document.getElementById("btnCheckout").onclick = () => finalizarCheckout(r, total);
+
+// ===============================
+// EXTRATO DE LANÇAMENTOS
+// ===============================
+
+async function montarExtrato() {
+  const reservaId = reservaAtual.id;
+  const lista = document.getElementById("listaLancamentos");
+
+  const { data, error } = await supabase
+    .from("lancamentos")
+    .select("*")
+    .eq("reserva_id", reservaId)
+    .order("id", { ascending: true });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  lista.innerHTML = "";
+  totalLancamentos = 0;
+
+  if (!data || data.length === 0) {
+    lista.innerHTML = "<p>Não há lançamentos para esta reserva.</p>";
+  } else {
+    data.forEach(l => {
+      totalLancamentos += Number(l.valor || 0);
+
+      lista.innerHTML += `
+        <div class="extrato-item">
+          <span>${l.tipo.toUpperCase()} — ${l.descricao}</span>
+          <span>R$ ${Number(l.valor).toFixed(2)}</span>
+        </div>
+      `;
+    });
+  }
+
+  document.getElementById("rTotalLancamentos").innerText = totalLancamentos.toFixed(2);
+  document.getElementById("extratoLanc").style.display = "block";
+}
+
+
+// ===============================
+// TOTAL GERAL
+// ===============================
+
+function calcularTotalGeral() {
+  totalGeral = totalDiarias + totalLancamentos;
+
+  document.getElementById("rTotalGeral").innerText = totalGeral.toFixed(2);
+  document.getElementById("totalGeralBox").style.display = "block";
+
+  document.getElementById("btnCheckout").onclick = () => finalizarCheckout();
 }
 
 
@@ -76,22 +159,26 @@ function mostrarResumo(id, reservas) {
 // FINALIZAR CHECK-OUT
 // ===============================
 
-async function finalizarCheckout(reserva, total) {
+async function finalizarCheckout() {
+  if (!reservaAtual) return;
 
-  // 1. Atualizar reserva para checkout
+  const reservaId = reservaAtual.id;
+  const unidadeId = reservaAtual.unidad_id; // mantendo o mesmo nome que usamos antes
+
+  // 1. Atualizar reserva com total e status checkout
   const up1 = await supabase
     .from("reservas")
     .update({
       status: "checkout",
-      valor_total: total
+      valor_total: totalGeral
     })
-    .eq("id", reserva.id);
+    .eq("id", reservaId);
 
   // 2. Liberar UH (status = livre)
   const up2 = await supabase
     .from("units")
     .update({ status: "livre" })
-    .eq("id", reserva.unidad_id);
+    .eq("id", unidadeId);
 
   if (up1.error || up2.error) {
     alert("Erro ao finalizar check-out.");
@@ -100,7 +187,5 @@ async function finalizarCheckout(reserva, total) {
   }
 
   alert("Check-out concluído com sucesso!");
-
   location.reload();
 }
-
