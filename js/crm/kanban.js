@@ -1,131 +1,85 @@
-// Carregar módulos
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-include]").forEach(el => {
-    fetch(el.getAttribute("data-include"))
-      .then(res => res.text())
-      .then(html => el.innerHTML = html);
-  });
+// crm-kanban.js
+const ETAPAS = [
+  { id: "novo", label: "Novo" },
+  { id: "qualificando", label: "Qualificando" },
+  { id: "proposta", label: "Proposta" },
+  { id: "negociando", label: "Negociando" },
+  { id: "ganho", label: "Fechado ganho" },
+  { id: "perdido", label: "Fechado perdido" }
+];
 
-  carregarLeadsKanban();
+let leadsKanban = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+  carregarUsuario();
+  carregarKanban();
 });
 
-
-// ===============================
-// BUSCAR TODOS OS LEADS
-// ===============================
-
-async function carregarLeadsKanban() {
-  const { data, error } = await supabase
+async function carregarKanban() {
+  const { data: leads, error } = await supa
     .from("leads")
     .select("*")
     .order("created_at", { ascending: true });
 
   if (error) {
-    console.error(error);
+    console.error("Erro ao carregar leads:", error);
     return;
   }
 
-  montarKanban(data);
+  leadsKanban = leads;
+  montarColunas();
 }
 
+function montarColunas() {
+  const board = document.getElementById("kanbanBoard");
+  board.innerHTML = "";
 
-// ===============================
-// MONTAR KANBAN COM LEADS
-// ===============================
-
-function montarKanban(leads) {
-  const etapas = [
-    "novo",
-    "qualificando",
-    "demonstracao",
-    "proposta",
-    "fechamento",
-    "perdido"
-  ];
-
-  etapas.forEach(etapa => {
-    document.getElementById(`col-${etapa}`).innerHTML = "";
+  ETAPAS.forEach(etapa => {
+    const col = document.createElement("div");
+    col.className = "kanban-col";
+    col.dataset.etapa = etapa.id;
+    col.innerHTML = `
+      <h2>${etapa.label}</h2>
+      <div class="kanban-col-body"
+           ondragover="permitirDrop(event)"
+           ondrop="soltarCard(event, '${etapa.id}')"></div>
+    `;
+    board.appendChild(col);
   });
 
-  leads.forEach(lead => {
-    const card = criarCardLead(lead);
-    document.getElementById(`col-${lead.etapa}`).appendChild(card);
-  });
+  // colocar cards
+  leadsKanban.forEach(lead => {
+    const colBody = board.querySelector(
+      `.kanban-col[data-etapa="${lead.etapa || "novo"}"] .kanban-col-body`
+    ) || board.querySelector(`.kanban-col[data-etapa="novo"] .kanban-col-body`);
 
-  ativarDragAndDrop();
-}
-
-
-// ===============================
-// CRIAR CARD HTML
-// ===============================
-
-function criarCardLead(lead) {
-  const div = document.createElement("div");
-  div.className = "kanban-card";
-  div.draggable = true;
-  div.dataset.id = lead.id;
-
-  const dataProx = lead.proximo_contato
-    ? new Date(lead.proximo_contato).toLocaleDateString("pt-BR")
-    : "-";
-
-  div.innerHTML = `
-    <strong>${lead.nome}</strong>
-    <p>${lead.empresa || ""}</p>
-    <small>Resp.: ${lead.responsavel || "-"}</small><br>
-    <small>Próx.: ${dataProx}</small>
-  `;
-
-  return div;
-}
-
-
-// ===============================
-// DRAG & DROP
-// ===============================
-
-function ativarDragAndDrop() {
-  const cards = document.querySelectorAll(".kanban-card");
-  const columns = document.querySelectorAll(".kanban-list");
-
-  cards.forEach(card => {
-    card.addEventListener("dragstart", () => {
-      card.classList.add("dragging");
-    });
-
-    card.addEventListener("dragend", async () => {
-      card.classList.remove("dragging");
-
-      const id = card.dataset.id;
-      const novaEtapa = card.parentElement.parentElement.dataset.etapa;
-
-      await atualizarEtapa(id, novaEtapa);
-    });
-  });
-
-  columns.forEach(col => {
-    col.addEventListener("dragover", e => {
-      e.preventDefault();
-      const dragging = document.querySelector(".kanban-card.dragging");
-      col.appendChild(dragging);
-    });
+    const card = document.createElement("div");
+    card.className = "kanban-card";
+    card.draggable = true;
+    card.dataset.id = lead.id;
+    card.ondragstart = arrastarCard;
+    card.innerHTML = `
+      <strong>${lead.nome || "Sem nome"}</strong>
+      <span>${lead.origem || "-"}</span>
+      <small>${lead.responsavel || ""}</small>
+    `;
+    colBody.appendChild(card);
   });
 }
 
+/* Drag and drop */
+function arrastarCard(ev) {
+  ev.dataTransfer.setData("text/plain", ev.target.dataset.id);
+}
 
-// ===============================
-// ATUALIZAR ETAPA NO SUPABASE
-// ===============================
+function permitirDrop(ev) {
+  ev.preventDefault();
+}
 
-async function atualizarEtapa(id, etapa) {
-  const { error } = await supabase
-    .from("leads")
-    .update({ etapa })
-    .eq("id", id);
+async function soltarCard(ev, novaEtapa) {
+  ev.preventDefault();
+  const id = ev.dataTransfer.getData("text/plain");
 
-  if (error) {
-    console.error("Erro ao mover lead:", error);
-    alert("Erro ao atualizar etapa.");
-  }
+  await supa.from("leads").update({ etapa: novaEtapa }).eq("id", id);
+  await carregarKanban();
 }
