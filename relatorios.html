@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatórios • PMS Lite • MDE Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page">
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">T</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <button id="logoutBtn" class="btn-sair">Sair</button>
+  </header>
+
+  <aside class="sidebar">
+    <h3>Operação (PMS Lite)</h3>
+    <ul>
+      <li><a href="uhs.html">Unidades (UHs)</a></li>
+      <li><a href="reservas.html">Reservas</a></li>
+      <li><a href="checkin.html">Check-in</a></li>
+      <li><a href="checkout.html">Check-out</a></li>
+      <li><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="financeiro.html">Financeiro</a></li>
+      <li class="active"><a href="relatorios.html">Relatórios</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <h1>Relatórios</h1>
+    <p class="subtitle">Relatórios simples de ocupação e receita para o Mini PMS.</p>
+
+    <section class="card">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Mês/ano</label>
+          <input type="month" id="mesRef">
+        </div>
+        <div class="form-group">
+          <button id="btnGerar" class="btn-primary">Gerar relatório</button>
+        </div>
+      </div>
+
+      <div class="dash-grid mt">
+        <div class="dash-card">
+          <p>Ocupação média</p>
+          <h2 id="kpiOcupacao">0%</h2>
+        </div>
+        <div class="dash-card">
+          <p>Diárias vendidas</p>
+          <h2 id="kpiDiarias">0</h2>
+        </div>
+        <div class="dash-card">
+          <p>Receita do mês</p>
+          <h2 id="kpiReceitaMes">R$ 0,00</h2>
+        </div>
+      </div>
+
+      <div class="mt">
+        <h3>Resumo textual</h3>
+        <p id="relatorioTexto">
+          Gere um relatório para ver o resumo de ocupação e receita.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/supabase.js"></script>
+  <script src="../js/app-common.js"></script>
+  <script src="../js/relatorios.js"></script>
+</body>
+</html>
