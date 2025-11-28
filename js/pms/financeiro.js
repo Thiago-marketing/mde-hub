@@ -1,32 +1,69 @@
-// financeiro.js
-document.addEventListener("DOMContentLoaded", () => {
-  carregarUsuario();
-  document.getElementById("btnFiltrar").addEventListener("click", gerarFinanceiro);
-});
+/***************************************************
+ * FINANCEIRO – PMS Lite
+ ***************************************************/
+const sb = supabase;
 
-async function gerarFinanceiro() {
-  const user = await supa.auth.getUser();
-  const user_id = user.data.user.id;
+const entradasHoje = document.getElementById("entradasHoje");
+const saidasHoje = document.getElementById("saidasHoje");
+const balancoHoje = document.getElementById("balancoHoje");
+const ocupacaoAtual = document.getElementById("ocupacaoAtual");
+const extratoFin = document.getElementById("extratoFin");
 
-  const de = document.getElementById("dataDe").value;
-  const ate = document.getElementById("dataAte").value;
+document.addEventListener("DOMContentLoaded", initFinanceiro);
 
-  let { data: lancs } = await supa
+async function initFinanceiro() {
+  await resumoHoje();
+  await extratoCompleto();
+}
+
+async function resumoHoje() {
+  const hoje = new Date().toISOString().slice(0, 10);
+
+  const { data: lanc } = await sb
     .from("lancamentos")
     .select("*")
-    .eq("user_id", user_id)
-    .gte("created_at", de)
-    .lte("created_at", ate);
+    .gte("created_at", hoje + " 00:00:00")
+    .lte("created_at", hoje + " 23:59:59");
 
-  let debitos = 0;
-  let creditos = 0;
+  const entradaTotal = lanc?.reduce((s, l) => s + Number(l.valor), 0) || 0;
 
-  lancs.forEach((l) => {
-    if (l.tipo === "debito") debitos += l.valor;
-    else creditos += l.valor;
+  entradasHoje.textContent = entradaTotal.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
   });
 
-  document.getElementById("kpiDebitos").innerText = "R$ " + debitos.toFixed(2);
-  document.getElementById("kpiCreditos").innerText = "R$ " + creditos.toFixed(2);
-  document.getElementById("kpiReceita").innerText = "R$ " + (creditos - debitos).toFixed(2);
+  // Ocupação
+  const { data: uhs } = await sb.from("uhs").select("*");
+  const totalUhs = uhs.length;
+
+  const { data: ocupadas } = await sb
+    .from("reservas")
+    .select("id")
+    .lte("checkin", hoje)
+    .gt("checkout", hoje);
+
+  const ocupacao = totalUhs > 0 ? Math.round((ocupadas.length / totalUhs) * 100) : 0;
+  ocupacaoAtual.textContent = ocupacao + "%";
+
+  // Balanço
+  balancoHoje.textContent = entradasHoje.textContent;
+}
+
+async function extratoCompleto() {
+  const { data } = await sb
+    .from("lancamentos")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  extratoFin.innerHTML = "";
+
+  data.forEach((l) => {
+    const div = document.createElement("div");
+    div.className = "extrato-item";
+    div.innerHTML = `
+      <span>${l.descricao}</span>
+      <strong>R$ ${l.valor}</strong>
+    `;
+    extratoFin.appendChild(div);
+  });
 }
