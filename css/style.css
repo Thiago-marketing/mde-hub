@@ -592,3 +592,45 @@ body {
 .uh-card.status-limpeza { border-color: #3498db; }
 .uh-card.status-manutencao { border-color: #f1c40f; }
 .uh-card.status-bloqueado { border-color: #7f8c8d; }
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: 150px repeat(7, 1fr);
+  gap: 6px;
+}
+
+.day-cell {
+  background: #0d1b2f;
+  padding: 6px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.uh-name {
+  background: #102542;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.reserva-block {
+  background: #38bdf8;
+  border-radius: 6px;
+  padding: 6px;
+  color: #001;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+
+.reserva-block:hover {
+  opacity: 0.8;
+}
