@@ -1,59 +1,84 @@
-// checkout.js
-document.addEventListener("DOMContentLoaded", () => {
-  carregarUsuario();
-  carregarReservasEmEstadia();
-  document.getElementById("btnCheckout").addEventListener("click", finalizarCheckout);
-});
+/***************************************************
+ * CHECK-OUT – PMS Lite
+ ***************************************************/
+const sb = supabase;
 
-/* RESERVAS EM ESTADIA */
-async function carregarReservasEmEstadia() {
-  const user = await supa.auth.getUser();
-  const user_id = user.data.user.id;
+const listaCheckout = document.getElementById("listaCheckout");
+const extratoLista = document.getElementById("extratoLista");
+const totalGeral = document.getElementById("totalGeral");
+const btnFinalizar = document.getElementById("btnFinalizar");
 
-  let { data: reservas } = await supa
+let reserva = null;
+
+document.addEventListener("DOMContentLoaded", loadCheckoutLista);
+
+async function loadCheckoutLista() {
+  const hoje = new Date().toISOString().slice(0, 10);
+
+  const { data } = await sb
     .from("reservas")
-    .select("*, uhs(*), hospedes(*)")
-    .eq("user_id", user_id)
-    .eq("status", "checkin");
+    .select("*, uhs(nome)")
+    .lte("checkin", hoje)
+    .gt("checkout", hoje);
 
-  const select = document.getElementById("reservaSelect");
-  select.innerHTML = "";
+  listaCheckout.innerHTML = "";
 
-  reservas.forEach((r) => {
-    select.innerHTML += `
-      <option value="${r.id}">
-        UH ${r.uhs.numero} • ${r.hospedes.nome}
-      </option>
+  data?.forEach((r) => {
+    const div = document.createElement("div");
+    div.className = "reserva-item";
+    div.innerHTML = `
+      <div>
+        <strong>${r.hospede}</strong>
+        <p>${r.uhs.nome}</p>
+      </div>
     `;
+
+    div.onclick = () => {
+      reserva = r;
+      loadExtrato(r.id);
+    };
+
+    listaCheckout.appendChild(div);
   });
 }
 
-/* CHECK-OUT */
-async function finalizarCheckout() {
-  const reservaID = document.getElementById("reservaSelect").value;
+async function loadExtrato(reservaId) {
+  const { data } = await sb
+    .from("lancamentos")
+    .select("*")
+    .eq("reserva_id", reservaId);
 
-  if (!reservaID) return alert("Selecione uma reserva!");
+  extratoLista.innerHTML = "";
+  let total = 0;
 
-  // puxar reserva
-  const { data: r } = await supa
-    .from("reservas")
-    .select("uh_id")
-    .eq("id", reservaID)
-    .single();
+  data?.forEach((l) => {
+    total += Number(l.valor);
 
-  // atualizar reserva
-  await supa
-    .from("reservas")
-    .update({ status: "checkout" })
-    .eq("id", reservaID);
+    const linha = document.createElement("div");
+    linha.className = "extrato-item";
+    linha.innerHTML = `
+      <span>${l.descricao}</span>
+      <strong>R$ ${l.valor}</strong>
+    `;
+    extratoLista.appendChild(linha);
+  });
 
-  // liberar UH
-  await supa
-    .from("uhs")
-    .update({ status: "livre" })
-    .eq("id", r.uh_id);
-
-  document.getElementById("checkoutStatus").innerText =
-    "Check-out concluído!";
-  carregarReservasEmEstadia();
+  totalGeral.textContent = "Total: R$ " + total.toFixed(2);
 }
+
+btnFinalizar.onclick = async () => {
+  if (!reserva) return alert("Selecione um hóspede.");
+
+  const { error } = await sb
+    .from("uhs")
+    .update({ status: "limpeza" })
+    .eq("id", reserva.uh_id);
+
+  if (error) return alert("Erro ao finalizar saída.");
+
+  alert("Check-out concluído!");
+
+  extratoLista.innerHTML = "";
+  totalGeral.textContent = "";
+  loadCheckoutLista();
+};
