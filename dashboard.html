@@ -1,105 +1,100 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Painel • MDE Hub</title>
+  <title>Dashboard • MDE Sistemas</title>
 
-  <link rel="stylesheet" href="/css/style.css" />
-
-  <script src="/js/supabase.js"></script>
-  <script src="/js/dashboard.js" defer></script>
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
-
 <body>
-  <!-- Sidebar e header padrão -->
-  <div data-include="/modules/sidebar.html"></div>
-  <div data-include="/modules/header.html"></div>
 
+  <!-- TOPO -->
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <h3>Operação</h3>
+    <nav>
+      <a href="/dashboard.html" class="active">Dashboard</a>
+      <a href="/pages/reservas.html">Reservas</a>
+      <a href="/pages/checkin.html">Check-in</a>
+      <a href="/pages/checkout.html">Check-out</a>
+      <a href="/pages/uhs.html">Unidades Habitacionais</a>
+      <a href="/pages/financeiro.html">Financeiro</a>
+      <a href="/pages/configuracoes.html">Configurações</a>
+    </nav>
+
+    <h3>CRM</h3>
+    <nav>
+      <a href="/pages/crm-dashboard.html">Painel CRM</a>
+      <a href="/pages/crm-leads.html">Leads</a>
+      <a href="/pages/crm-kanban.html">Kanban</a>
+      <a href="/pages/crm-atividades.html">Atividades</a>
+    </nav>
+
+    <h3>Admin</h3>
+    <nav>
+      <a href="/pages/checklist-governanca.html">Checklist Governança</a>
+      <a href="/pages/auditoria.html">Auditoria</a>
+      <a href="/pages/relatorios.html">Relatórios</a>
+    </nav>
+  </aside>
+
+  <!-- CONTEÚDO -->
   <main class="content">
+    <h1>Dashboard Geral</h1>
 
-    <!-- Cabeçalho -->
-    <section class="card">
-      <h1 class="page-title">Bem-vindo ao seu Hub MDE</h1>
-      <p class="page-sub">
-        Olá <span id="userName">carregando...</span>, este é o painel que conecta o
-        <strong>CRM interno</strong> com o <strong>PMS Lite</strong> e as ferramentas digitais da MDE.
-      </p>
-      <p style="margin-top:4px;font-size:13px;opacity:0.8;">
-        Login: <span id="userEmail"></span>
-      </p>
+    <section class="grid-3">
+      <article class="card metric">
+        <h2>Ocupação hoje</h2>
+        <p class="metric-value" id="metricOcupacao">-- %</p>
+        <p class="metric-detail">UHs ocupadas / totais</p>
+      </article>
+
+      <article class="card metric">
+        <h2>Receita do dia</h2>
+        <p class="metric-value" id="metricReceita">R$ --</p>
+        <p class="metric-detail">Lançamentos já confirmados</p>
+      </article>
+
+      <article class="card metric">
+        <h2>Reservas futuras</h2>
+        <p class="metric-value" id="metricReservasFuturas">--</p>
+        <p class="metric-detail">Próximos 7 dias</p>
+      </article>
     </section>
 
-    <!-- KPIs principais: CRM + PMS -->
-    <section class="dash-grid mt">
-      <div class="dash-card">
-        <p>Leads cadastrados</p>
-        <h2 id="kpiTotalLeads">0</h2>
-        <small>CRM interno MDE</small>
-      </div>
+    <section class="grid-2 mt-lg">
+      <article class="card">
+        <h2>Mapa rápido de UHs</h2>
+        <div id="miniMapaUhs" class="mini-mapa-uhs">
+          <!-- gerado via JS -->
+        </div>
+      </article>
 
-      <div class="dash-card">
-        <p>Próximos contatos (hoje)</p>
-        <h2 id="kpiProxHoje">0</h2>
-        <small>a partir dos leads com “próximo contato”</small>
-      </div>
-
-      <div class="dash-card">
-        <p>Unidades (UHs) cadastradas</p>
-        <h2 id="kpiTotalUhs">0</h2>
-        <small>PMS Lite (até 6 UHs)</small>
-      </div>
-
-      <div class="dash-card">
-        <p>UHs ocupadas agora</p>
-        <h2 id="kpiUhsOcupadas">0</h2>
-        <small>com base no status de UHs</small>
-      </div>
+      <article class="card">
+        <h2>Próximos check-ins e check-outs</h2>
+        <div id="listaMovimentosHoje" class="lista-simples">
+          <!-- gerado via JS -->
+        </div>
+      </article>
     </section>
-
-    <!-- Blocos resumindo cada módulo -->
-    <section class="card mt">
-      <h2>Leads e cadastros (CRM)</h2>
-      <p>
-        Você tem <strong id="resumoLeadsTotal">0</strong> leads no funil.  
-        Hoje existem <strong id="resumoLeadsProxHoje">0</strong> contatos previstos.
-      </p>
-      <p style="margin-top:8px;font-size:13px;opacity:.8;">
-        Acesse:
-        <a href="/pages/crm.html">CRM – Leads</a>,
-        <a href="/pages/crm-kanban.html">Kanban</a>,
-        <a href="/pages/crm-dashboard.html">Dashboard CRM</a>,
-        <a href="/pages/crm-atividades.html">Atividades</a>.
-      </p>
-    </section>
-
-    <section class="card mt">
-      <h2>Operação básica (PMS Lite)</h2>
-      <p>
-        UHs cadastradas: <strong id="resumoUhsTotal">0</strong>  
-        • Livres: <strong id="resumoUhsLivres">0</strong>  
-        • Ocupadas: <strong id="resumoUhsOcupadas">0</strong>
-      </p>
-      <p id="textoReservasHoje" style="margin-top:8px;">
-        Nenhuma reserva para hoje ainda.
-      </p>
-      <p style="margin-top:8px;font-size:13px;opacity:.8;">
-        Acesse:
-        (futuro) Mapa de UHs, Reservas, Check-in/out e Comanda do PMS Lite.
-      </p>
-    </section>
-
-    <section class="card mt">
-      <h2>Próximos passos</h2>
-      <p>
-        Este painel está preparado para crescer junto com a MDE Sistemas:
-        mini-CRM, automações, integrações com soluções MDE Cloud e módulos de
-        hospedagem Lite. Use o Hub para testar ideias e validar fluxos internos.
-      </p>
-    </section>
-
   </main>
 
-  <script src="/js/menu.js"></script>
 </body>
 </html>
