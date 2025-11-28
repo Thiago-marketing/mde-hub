@@ -1,157 +1,66 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PMS Lite • Unidades Habitacionais (UHs) • MDE Hub</title>
-
-  <!-- CSS ABSOLUTO (Vercel root) -->
-  <link rel="stylesheet" href="/css/style.css" />
+  <title>PMS Lite • UHs</title>
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/theme.js"></script>
 </head>
 
-<body class="page">
+<body>
 
-  <!-- TOPO -->
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">T</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
-    </div>
-
-    <div class="topbar-actions">
-      <a href="/dashboard.html" class="btn-secondary btn-small">
-        ← Voltar para Hub MDE
-      </a>
-      <button id="logoutBtn" class="btn-sair">Sair</button>
-    </div>
-  </header>
-
-  <!-- MENU LATERAL -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <h3>Operação (PMS Lite)</h3>
-    <ul>
-      <li class="active"><a href="/pages/uhs.html">Unidades (UHs)</a></li>
-      <li><a href="/pages/reservas.html">Reservas</a></li>
-      <li><a href="/pages/checkin.html">Check-in</a></li>
-      <li><a href="/pages/checkout.html">Check-out</a></li>
-      <li><a href="/pages/lancamentos.html">Lançamentos</a></li>
-      <li><a href="/pages/financeiro.html">Financeiro</a></li>
-      <li><a href="/pages/relatorios.html">Relatórios</a></li>
-    </ul>
+    <h2>PMS Lite</h2>
+    <nav>
+      <a href="/pages/dashboard.html">Dashboard</a>
+      <a href="/pages/uhs.html" class="active">Unidades (UHs)</a>
+      <a href="/pages/reservas.html">Reservas</a>
+      <a href="/pages/checkin.html">Check-in</a>
+      <a href="/pages/checkout.html">Check-out</a>
+      <a href="/pages/lancamentos.html">Lançamentos</a>
+      <a href="/pages/financeiro.html">Financeiro</a>
+    </nav>
   </aside>
 
-  <!-- CONTEÚDO -->
-  <main class="content">
+  <main class="page-content">
 
-    <h1>Unidades Habitacionais (UHs)</h1>
-    <p class="subtitle">
-      Controle visual das UHs: livre, ocupado, limpeza, manutenção e bloqueado.
-    </p>
+    <h1 class="page-title">Unidades Habitacionais</h1>
+    <p class="page-subtitle">Gerencie todos os quartos e status em tempo real.</p>
 
-    <!-- BOTÃO ADICIONAR -->
-    <button id="btnAddUH" class="btn-primary mb">
-      + Nova UH
-    </button>
-
-    <!-- LEGENDA -->
     <section class="card">
-      <h2>Legenda</h2>
+      <h2 class="card-title">Cadastrar / Editar UH</h2>
 
-      <div class="legend-row">
-        <span class="legend-pill status-livre">Livre</span>
-        <span class="legend-pill status-ocupado">Ocupado</span>
-        <span class="legend-pill status-limpeza">Limpeza</span>
-        <span class="legend-pill status-manutencao">Manutenção</span>
-        <span class="legend-pill status-bloqueado">Bloqueado</span>
-      </div>
+      <form id="uhForm" class="form-grid">
+        <div>
+          <label>Nome da UH</label>
+          <input type="text" id="uhNome" placeholder="Ex: Suíte 01">
+        </div>
 
-      <p class="legend-hint">
-        As cores são reproduzidas no mapa simples abaixo para facilitar a leitura rápida.
-      </p>
+        <div>
+          <label>Status</label>
+          <select id="uhStatus">
+            <option value="livre">Livre</option>
+            <option value="ocupado">Ocupado</option>
+            <option value="limpeza">Limpeza</option>
+            <option value="manutencao">Manutenção</option>
+            <option value="bloqueado">Bloqueado</option>
+          </select>
+        </div>
+
+        <button class="btn-primary">Salvar UH</button>
+      </form>
     </section>
 
-    <!-- MAPA SIMPLES -->
-    <section class="card mt">
-      <div class="card-header-between">
-        <h2>Mapa simples</h2>
-        <span class="badge-info" id="uhResumo">0 UHs</span>
-      </div>
-
-      <div id="uhGrid" class="uh-grid">
-        <!-- UH cards gerados pelo JS -->
-      </div>
-    </section>
-
-    <!-- LISTA DE UHS -->
-    <section class="card mt">
-      <h2>Lista de UHs</h2>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>UH</th>
-            <th>Categoria</th>
-            <th>Status</th>
-            <th>Preço</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-
-        <tbody id="uhTableBody">
-          <!-- Conteúdo JS -->
-        </tbody>
-      </table>
+    <section class="card">
+      <h2 class="card-title">Lista de UHs</h2>
+      <div id="uhList" class="uh-list"></div>
     </section>
 
   </main>
 
-  <!-- MODAL CADASTRO / EDIÇÃO -->
-  <div id="modalUH" class="modal hidden">
-    <div class="modal-content">
-
-      <h2 id="modalTitle">Nova UH</h2>
-
-      <form id="uhForm" class="form-grid">
-
-        <input type="hidden" id="uhId">
-
-        <label>Número / Nome da UH</label>
-        <input type="text" id="numeroUH" required placeholder="Ex.: 101, Suíte 02">
-
-        <label>Categoria</label>
-        <input type="text" id="categoriaUH" placeholder="Standard, Luxo, Master">
-
-        <label>Status</label>
-        <select id="statusUH">
-          <option value="livre">Livre</option>
-          <option value="ocupado">Ocupado</option>
-          <option value="limpeza">Limpeza</option>
-          <option value="manutencao">Manutenção</option>
-          <option value="bloqueado">Bloqueado</option>
-        </select>
-
-        <label>Preço padrão (R$)</label>
-        <input type="number" step="0.01" id="precoUH" placeholder="0,00">
-
-        <label>Foto (opcional)</label>
-        <input type="file" id="fotoUH" accept="image/*">
-
-        <div class="modal-actions">
-          <button type="button" id="btnCancel" class="btn-secondary">Cancelar</button>
-          <button type="submit" class="btn-primary">Salvar</button>
-        </div>
-
-      </form>
-
-    </div>
-  </div>
-
-  <!-- SCRIPTS COM CAMINHO ABSOLUTO -->
   <script src="/js/supabase.js"></script>
-  <script src="/js/app-common.js"></script>
   <script src="/js/pms/uhs.js"></script>
 
 </body>
