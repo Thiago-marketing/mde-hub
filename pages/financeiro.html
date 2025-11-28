@@ -1,61 +1,77 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Financeiro • PMS Lite</title>
-  <link rel="stylesheet" href="/css/app.css">
-  <script defer src="/js/theme.js"></script>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Financeiro • MDE Sistemas</title>
 
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+  <script defer src="/js/financeiro.js"></script>
+</head>
 <body>
+  <!-- topo + sidebar; menu Financeiro ativo -->
+
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
 
   <aside class="sidebar">
-    <h2>PMS Lite</h2>
+    <h3>Operação</h3>
     <nav>
-      <a href="/pages/dashboard.html">Dashboard</a>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/pages/reservas.html">Reservas</a>
+      <a href="/pages/checkin.html">Check-in</a>
+      <a href="/pages/checkout.html">Check-out</a>
+      <a href="/pages/uhs.html">Unidades Habitacionais</a>
       <a href="/pages/financeiro.html" class="active">Financeiro</a>
+      <a href="/pages/configuracoes.html">Configurações</a>
+    </nav>
+    <h3>CRM</h3>
+    <nav>
+      <a href="/pages/crm-dashboard.html">Painel CRM</a>
+      <a href="/pages/crm-leads.html">Leads</a>
+      <a href="/pages/crm-kanban.html">Kanban</a>
+      <a href="/pages/crm-atividades.html">Atividades</a>
+    </nav>
+    <h3>Admin</h3>
+    <nav>
+      <a href="/pages/checklist-governanca.html">Checklist Governança</a>
+      <a href="/pages/auditoria.html">Auditoria</a>
+      <a href="/pages/relatorios.html">Relatórios</a>
     </nav>
   </aside>
 
-  <main class="page-content">
+  <main class="content">
+    <h1>Financeiro</h1>
 
-    <h1 class="page-title">Financeiro</h1>
-    <p class="page-subtitle">Resumo diário, mensal e total de entradas/saídas.</p>
+    <section class="grid-2">
+      <article class="card">
+        <h2>Entradas</h2>
+        <div id="listaEntradas" class="tabela-simples"></div>
+      </article>
 
-    <section class="dash-grid">
-
-      <div class="dash-card">
-        <h3>Entradas (Hoje)</h3>
-        <h2 id="entradasHoje">R$ 0,00</h2>
-      </div>
-
-      <div class="dash-card">
-        <h3>Saídas (Hoje)</h3>
-        <h2 id="saidasHoje">R$ 0,00</h2>
-      </div>
-
-      <div class="dash-card">
-        <h3>Balanço (Hoje)</h3>
-        <h2 id="balancoHoje">R$ 0,00</h2>
-      </div>
-
-      <div class="dash-card">
-        <h3>Ocupação Atual</h3>
-        <h2 id="ocupacaoAtual">0%</h2>
-      </div>
-
+      <article class="card">
+        <h2>Saídas</h2>
+        <div id="listaSaidas" class="tabela-simples"></div>
+      </article>
     </section>
 
-    <section class="card">
-      <h2 class="card-title">Extrato financeiro</h2>
-      <div id="extratoFin" class="extrato-lista"></div>
+    <section class="card mt-lg">
+      <h2>Fechamento diário</h2>
+      <div id="fechamentoDiario" class="tabela-simples"></div>
     </section>
-
   </main>
-
-  <script src="/js/supabase.js"></script>
-  <script src="/js/pms/financeiro.js"></script>
 
 </body>
 </html>
