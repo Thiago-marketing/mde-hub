@@ -3,100 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>MDE Hub • Entrar</title>
-
-  <!-- SEO básico -->
-  <meta name="description" content="Acesse o MDE Hub com seu e-mail e senha para utilizar as ferramentas digitais da MDE Sistemas." />
+  <title>Login • MDE Sistemas</title>
 
   <!-- CSS exclusivo de autenticação -->
-  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="/css/auth.css" />
 
-  <!-- JS de UI (tema, helpers) -->
-  <script defer src="js/auth.js"></script>
-
-  <!-- Supabase + lógica de login -->
-  <script defer src="js/supabase.js"></script>
-  <script type="module" src="js/login.js"></script>
+  <!-- JS de autenticação -->
+  <script defer src="/js/auth.js"></script>
 </head>
-<body class="theme-light">
-  <div class="auth-page">
-    <div class="auth-card">
-      <header class="auth-header">
-        <div class="auth-brand">
-          <!-- Se tiver logo, troca o texto por <img src="img/logo-mde-hub.svg" alt="MDE Hub"> -->
-          <span class="auth-logo">MDE Hub</span>
-          <span class="auth-subtitle">Acesso às soluções digitais MDE Sistemas</span>
+<body class="auth-page">
+
+  <main class="auth-container">
+    <section class="auth-card">
+      <h1>MDE Sistemas</h1>
+      <p class="auth-subtitle">Acesse o Hub de Gestão em Nuvem</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
         </div>
-        <button type="button" class="theme-toggle-btn" data-theme-toggle>
-          <span class="theme-toggle-icon">🌙</span>
-          <span class="theme-toggle-label">Modo escuro</span>
-        </button>
-      </header>
 
-      <main class="auth-content">
-        <h1 class="auth-title">Entrar no MDE Hub</h1>
-        <p class="auth-text">
-          Use o e-mail cadastrado para acessar suas ferramentas de gestão, motor de reservas,
-          relatórios e outras soluções digitais da MDE Sistemas.
-        </p>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+        </div>
 
-        <form id="login-form" class="auth-form">
-          <div class="form-group">
-            <label for="email">E-mail</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="seuemail@hotel.com.br"
-              required
-              autocomplete="email"
-            />
-          </div>
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
 
-          <div class="form-group">
-            <label for="password">Senha de acesso</label>
-            <div class="password-wrapper">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Digite sua senha"
-                required
-                autocomplete="current-password"
-              />
-              <button type="button" class="password-toggle" data-password-toggle="password">
-                👁
-              </button>
-            </div>
-          </div>
+      <p class="auth-footer">
+        Ainda não tem acesso?
+        <a href="/register.html">Criar conta</a>
+      </p>
+    </section>
+  </main>
 
-          <div class="form-footer">
-            <button type="submit" class="btn-primary" id="login-submit">
-              Entrar no MDE Hub
-            </button>
-          </div>
-
-          <p class="auth-helper">
-            Ainda não tem conta?
-            <a href="register.html">Criar conta gratuita</a>
-          </p>
-        </form>
-
-        <p class="auth-terms">
-          Ao continuar, você concorda com o uso dos seus dados para fins de relacionamento
-          comercial e melhoria das soluções MDE.
-        </p>
-      </main>
-
-      <footer class="auth-footer">
-        <span>MDE Sistemas • Há 35 anos otimizando a hotelaria</span>
-      </footer>
-    </div>
-  </div>
-</body>
-</html>
-<!-- scripts -->
-<script type="module" src="js/login.js"></script>
 </body>
 </html>
