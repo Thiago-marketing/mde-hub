@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UHs • MDE Hub</title>
+
+  <!-- CSS unificado -->
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body class="hub-body" data-theme="dark">
+  <div class="hub-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="hub-sidebar" id="sidebar">
+      <div class="sidebar-logo">MDE Hub</div>
+
+      <nav class="sidebar-nav">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/reservas.html" class="nav-link">Reservas</a>
+        <a href="/checkin.html" class="nav-link">Check-in</a>
+        <a href="/checkout.html" class="nav-link">Check-out</a>
+
+        <a href="/uhs.html" class="nav-link active">Unidades Habitacionais</a>
+        <a href="/financeiro.html" class="nav-link">Financeiro</a>
+
+        <div class="nav-section-title">CRM</div>
+        <a href="/crm.html" class="nav-link">Painel CRM</a>
+        <a href="/leads.html" class="nav-link">Leads</a>
+
+        <div class="nav-section-title">Admin</div>
+        <a href="/config.html" class="nav-link">Configurações</a>
+      </nav>
+    </aside>
+
+    <!-- OVERLAY MOBILE -->
+    <div class="hub-overlay" id="sidebarOverlay"></div>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="hub-main">
+
+      <!-- TOPBAR -->
+      <header class="hub-topbar">
+        <button class="btn-icon only-mobile" id="menuToggle">☰</button>
+
+        <div class="topbar-left">
+          <div class="user-chip">
+            <span class="user-avatar">U</span>
+            <div class="user-info">
+              <span class="user-name">Usuário de teste</span>
+              <span class="user-email">teste@mdesistemas.com.br</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn-outline" id="themeToggle">Tema</button>
+          <button class="btn-primary" id="logoutBtn">Sair</button>
+        </div>
+      </header>
+
+      <!-- CONTEÚDO -->
+      <main class="hub-content">
+        <h1 class="page-title">Unidades Habitacionais</h1>
+
+        <!-- GRID DAS UHs -->
+        <section class="uh-grid">
+
+          <!-- UH LIVRE -->
+          <div class="uh-card status-livre">
+            <div class="uh-header">
+              <h3 class="uh-number">UH 01</h3>
+              <span class="uh-status-badge livre">Livre</span>
+            </div>
+
+            <div class="uh-info">
+              <p><strong>Tipo:</strong> Standard</p>
+              <p><strong>Capacidade:</strong> 2 adultos</p>
+            </div>
+
+            <div class="uh-actions">
+              <button class="btn-primary">Reservar</button>
+            </div>
+          </div>
+
+          <!-- UH OCUPADA -->
+          <div class="uh-card status-ocupado">
+            <div class="uh-header">
+              <h3 class="uh-number">UH 02</h3>
+              <span class="uh-status-badge ocupado">Ocupado</span>
+            </div>
+
+            <div class="uh-info">
+              <p><strong>Hóspede:</strong> João Santana</p>
+              <p><strong>Saída prevista:</strong> hoje</p>
+            </div>
+
+            <div class="uh-actions">
+              <button class="btn-primary">Check-out</button>
+            </div>
+          </div>
+
+          <!-- UH LIMPEZA -->
+          <div class="uh-card status-limpeza">
+            <div class="uh-header">
+              <h3 class="uh-number">UH 03</h3>
+              <span class="uh-status-badge limpeza">Limpeza</span>
+            </div>
+
+            <div class="uh-info">
+              <p><strong>Observação:</strong> Aguardando camareira</p>
+            </div>
+
+            <div class="uh-actions">
+              <button class="btn-primary">Liberar</button>
+            </div>
+          </div>
+
+          <!-- UH MANUTENÇÃO -->
+          <div class="uh-card status-manutencao">
+            <div class="uh-header">
+              <h3 class="uh-number">UH 04</h3>
+              <span class="uh-status-badge manutencao">Manutenção</span>
+            </div>
+
+            <div class="uh-info">
+              <p><strong>Problema:</strong> Ar-condicionado</p>
+            </div>
+
+            <div class="uh-actions">
+              <button class="btn-primary">Liberar</button>
+            </div>
+          </div>
+
+          <!-- UH BLOQUEADA -->
+          <div class="uh-card status-bloqueado">
+            <div class="uh-header">
+              <h3 class="uh-number">UH 05</h3>
+              <span class="uh-status-badge bloqueado">Bloqueado</span>
+            </div>
+
+            <div class="uh-info">
+              <p><strong>Motivo:</strong> Uso interno</p>
+            </div>
+
+            <div class="uh-actions">
+              <button class="btn-primary">Desbloquear</button>
+            </div>
+          </div>
+
+        </section>
+      </main>
+
+    </div>
+  </div>
+
+  <script src="/js/hub-ui.js"></script>
+</body>
+</html>
