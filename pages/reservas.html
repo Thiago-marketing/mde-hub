@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reservas • PMS Lite • MDE Hub</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <title>PMS Lite – Reservas • MDE Hub</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body class="page">
+
+  <!-- TOPO -->
   <header class="topbar">
     <div class="user-info">
       <span id="userInitial">T</span>
@@ -15,59 +18,91 @@
         <p id="userEmail"></p>
       </div>
     </div>
-    <button id="logoutBtn" class="btn-sair">Sair</button>
+
+    <div class="topbar-actions">
+      <a href="/dashboard.html" class="btn-secondary btn-small">← Voltar</a>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
   </header>
 
+  <!-- MENU LATERAL -->
   <aside class="sidebar">
     <h3>Operação (PMS Lite)</h3>
     <ul>
-      <li><a href="uhs.html">Unidades (UHs)</a></li>
-      <li class="active"><a href="reservas.html">Reservas</a></li>
-      <li><a href="checkin.html">Check-in</a></li>
-      <li><a href="checkout.html">Check-out</a></li>
-      <li><a href="lancamentos.html">Lançamentos</a></li>
-      <li><a href="financeiro.html">Financeiro</a></li>
-      <li><a href="relatorios.html">Relatórios</a></li>
+      <li><a href="/pages/uhs.html">Unidades (UHs)</a></li>
+      <li class="active"><a href="/pages/reservas.html">Reservas</a></li>
+      <li><a href="/pages/checkin.html">Check-in</a></li>
+      <li><a href="/pages/checkout.html">Check-out</a></li>
+      <li><a href="/pages/lancamentos.html">Lançamentos</a></li>
+      <li><a href="/pages/financeiro.html">Financeiro</a></li>
+      <li><a href="/pages/relatorios.html">Relatórios</a></li>
     </ul>
   </aside>
 
+  <!-- CONTEÚDO -->
   <main class="content">
-    <h1>Reservas</h1>
-    <p class="subtitle">Todas as reservas em um só lugar: futuras, em andamento e finalizadas.</p>
 
-    <section class="card">
-      <div class="toolbar">
-        <button class="btn-primary" onclick="window.location.href='checkin.html'">Nova reserva / check-in</button>
-        <select id="filtroStatus">
-          <option value="">Todos os status</option>
-          <option value="reservado">Reservado</option>
-          <option value="checkin">Em estadia</option>
-          <option value="checkout">Finalizado</option>
-          <option value="cancelado">Cancelado</option>
-        </select>
+    <h1>Reservas</h1>
+    <p class="subtitle">Visão rápida de ocupação por UH (7 dias)</p>
+
+    <div class="card mt">
+      <div class="calendar-header">
+        <button id="btnPrev" class="btn-small">← Semana anterior</button>
+        <h2 id="weekLabel"></h2>
+        <button id="btnNext" class="btn-small">Próxima semana →</button>
       </div>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>UH</th>
-            <th>Hóspede</th>
-            <th>Entrada</th>
-            <th>Saída</th>
-            <th>Status</th>
-            <th>Origem</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="reservasTableBody">
-          <!-- JS: reservas do Supabase -->
-        </tbody>
-      </table>
-    </section>
+      <div id="calendarGrid" class="calendar-grid">
+        <!-- preenchido pelo JS -->
+      </div>
+    </div>
+
   </main>
 
-  <script src="../js/supabase.js"></script>
-  <script src="../js/app-common.js"></script>
-  <script src="../js/reservas.js"></script>
+  <!-- MODAL DE RESERVA -->
+  <div id="modalReserva" class="modal hidden">
+    <div class="modal-content">
+
+      <h2 id="modalTitle">Nova Reserva</h2>
+
+      <form id="reservaForm" class="form-grid">
+        <input type="hidden" id="reservaId">
+
+        <label>UH</label>
+        <select id="reservaUH"></select>
+
+        <label>Hóspede</label>
+        <input type="text" id="reservaHospede" required>
+
+        <label>Telefone / WhatsApp</label>
+        <input type="text" id="reservaTelefone">
+
+        <label>Origem</label>
+        <input type="text" id="reservaOrigem" placeholder="WhatsApp, Booking, Recepção...">
+
+        <label>Check-in</label>
+        <input type="date" id="reservaCheckin" required>
+
+        <label>Check-out</label>
+        <input type="date" id="reservaCheckout" required>
+
+        <label>Adultos</label>
+        <input type="number" min="1" id="reservaAdultos" value="1">
+
+        <label>Crianças</label>
+        <input type="number" min="0" id="reservaCriancas" value="0">
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancel" class="btn-secondary">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="/js/supabase.js"></script>
+  <script src="/js/app-common.js"></script>
+  <script src="/js/pms/reservas.js"></script>
 </body>
 </html>
