@@ -3,65 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PMS Lite • UHs</title>
+  <title>Unidades Habitacionais • MDE Sistemas</title>
+
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/theme.js"></script>
+  <script defer src="/js/app.js"></script>
+  <script defer src="/js/uhs.js"></script>
 </head>
-
 <body>
+  <!-- topo + sidebar iguais; menu "Unidades Habitacionais" ativo -->
 
-  <!-- SIDEBAR -->
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
   <aside class="sidebar">
-    <h2>PMS Lite</h2>
+    <h3>Operação</h3>
     <nav>
-      <a href="/pages/dashboard.html">Dashboard</a>
-      <a href="/pages/uhs.html" class="active">Unidades (UHs)</a>
+      <a href="/dashboard.html">Dashboard</a>
       <a href="/pages/reservas.html">Reservas</a>
       <a href="/pages/checkin.html">Check-in</a>
       <a href="/pages/checkout.html">Check-out</a>
-      <a href="/pages/lancamentos.html">Lançamentos</a>
+      <a href="/pages/uhs.html" class="active">Unidades Habitacionais</a>
       <a href="/pages/financeiro.html">Financeiro</a>
+      <a href="/pages/configuracoes.html">Configurações</a>
+    </nav>
+
+    <h3>CRM</h3>
+    <nav>
+      <a href="/pages/crm-dashboard.html">Painel CRM</a>
+      <a href="/pages/crm-leads.html">Leads</a>
+      <a href="/pages/crm-kanban.html">Kanban</a>
+      <a href="/pages/crm-atividades.html">Atividades</a>
+    </nav>
+
+    <h3>Admin</h3>
+    <nav>
+      <a href="/pages/checklist-governanca.html">Checklist Governança</a>
+      <a href="/pages/auditoria.html">Auditoria</a>
+      <a href="/pages/relatorios.html">Relatórios</a>
     </nav>
   </aside>
 
-  <main class="page-content">
-
-    <h1 class="page-title">Unidades Habitacionais</h1>
-    <p class="page-subtitle">Gerencie todos os quartos e status em tempo real.</p>
+  <main class="content">
+    <h1>Unidades Habitacionais</h1>
 
     <section class="card">
-      <h2 class="card-title">Cadastrar / Editar UH</h2>
-
-      <form id="uhForm" class="form-grid">
+      <header class="card-header-inline">
         <div>
-          <label>Nome da UH</label>
-          <input type="text" id="uhNome" placeholder="Ex: Suíte 01">
+          <h2>Mapa de UHs</h2>
+          <p>Visualização rápida da situação de cada unidade</p>
         </div>
-
-        <div>
-          <label>Status</label>
-          <select id="uhStatus">
-            <option value="livre">Livre</option>
-            <option value="ocupado">Ocupado</option>
-            <option value="limpeza">Limpeza</option>
-            <option value="manutencao">Manutenção</option>
-            <option value="bloqueado">Bloqueado</option>
-          </select>
+        <div class="card-actions">
+          <button id="novaUhBtn" class="btn-primary">+ Nova UH</button>
         </div>
+      </header>
 
-        <button class="btn-primary">Salvar UH</button>
-      </form>
+      <div id="gridUhs" class="grade-uhs">
+        <!-- via uhs.js -->
+      </div>
     </section>
-
-    <section class="card">
-      <h2 class="card-title">Lista de UHs</h2>
-      <div id="uhList" class="uh-list"></div>
-    </section>
-
   </main>
-
-  <script src="/js/supabase.js"></script>
-  <script src="/js/pms/uhs.js"></script>
 
 </body>
 </html>
