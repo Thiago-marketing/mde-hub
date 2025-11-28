@@ -1,65 +1,43 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login • MDE Sistemas</title>
 
-  <!-- CSS correto -->
-  <link rel="stylesheet" href="/css/auth.css" />
-
-  <!-- Scripts obrigatórios -->
-  <script defer src="/js/supabase.js"></script>
-  <script defer src="/js/auth.js"></script>
+  <link rel="stylesheet" href="/css/auth.css">
 </head>
 
-<body class="theme-light">
+<body class="auth-page">
 
-  <div class="auth-page">
-    <div class="auth-card">
+  <main class="auth-container">
+    <section class="auth-card">
+      <h1>MDE Sistemas</h1>
+      <p class="auth-subtitle">Acesse o Hub de Gestão em Nuvem</p>
 
-      <header class="auth-header">
-        <div class="auth-brand">
-          <span class="auth-logo">MDE HUB</span>
-          <span class="auth-subtitle">Acesse o Hub de Gestão em Nuvem</span>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" required>
         </div>
 
-        <button type="button" class="theme-toggle-btn" data-theme-toggle>
-          <span class="theme-toggle-icon">🌙</span>
-          <span class="theme-toggle-label">Modo escuro</span>
-        </button>
-      </header>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input id="password" type="password" required>
+        </div>
 
-      <main class="auth-content">
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
 
-        <form id="loginForm">
+      <p class="auth-footer">
+        Ainda não tem acesso?
+        <a href="/register.html">Criar conta</a>
+      </p>
+    </section>
+  </main>
 
-          <div class="form-group">
-            <label for="email">E-mail</label>
-            <input id="email" name="email" type="email" autocomplete="email" required />
-          </div>
-
-          <div class="form-group">
-            <label for="password">Senha</label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required />
-          </div>
-
-          <button type="submit" class="btn-primary">Entrar</button>
-        </form>
-
-        <p class="auth-footer">
-          Ainda não tem acesso?
-          <a href="/register.html">Criar conta</a>
-        </p>
-
-      </main>
-
-      <footer class="auth-footer">
-        MDE Sistemas • Há 35 anos otimizando a hotelaria
-      </footer>
-
-    </div>
-  </div>
-
+  <script defer src="/js/supabase.js"></script>
+  <script defer src="/js/auth.js"></script>
+  <script defer src="/js/theme.js"></script>
 </body>
 </html>
