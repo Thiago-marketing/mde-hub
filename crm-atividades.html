@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atividades • CRM MDE</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+  <script defer src="/js/crm-atividades.js"></script>
+</head>
+<body>
+  <!-- topo + sidebar (Atividades ativo) -->
+  <!-- ... estrutura igual ... -->
+
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <h3>Operação</h3>
+    <nav>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/pages/reservas.html">Reservas</a>
+      <a href="/pages/checkin.html">Check-in</a>
+      <a href="/pages/checkout.html">Check-out</a>
+      <a href="/pages/uhs.html">Unidades Habitacionais</a>
+      <a href="/pages/financeiro.html">Financeiro</a>
+      <a href="/pages/configuracoes.html">Configurações</a>
+    </nav>
+    <h3>CRM</h3>
+    <nav>
+      <a href="/pages/crm-dashboard.html">Painel CRM</a>
+      <a href="/pages/crm-leads.html">Leads</a>
+      <a href="/pages/crm-kanban.html">Kanban</a>
+      <a href="/pages/crm-atividades.html" class="active">Atividades</a>
+    </nav>
+    <h3>Admin</h3>
+    <nav>
+      <a href="/pages/checklist-governanca.html">Checklist Governança</a>
+      <a href="/pages/auditoria.html">Auditoria</a>
+      <a href="/pages/relatorios.html">Relatórios</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <h1>Atividades</h1>
+
+    <section class="card">
+      <header class="card-header-inline">
+        <div>
+          <h2>Tarefas do time</h2>
+          <p>Follow-ups, ligações, visitas e retornos</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn-primary" id="novaAtividadeBtn">+ Nova atividade</button>
+        </div>
+      </header>
+
+      <div id="listaAtividades" class="tabela-simples">
+        <!-- via crm-atividades.js -->
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
