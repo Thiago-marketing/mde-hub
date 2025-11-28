@@ -634,3 +634,83 @@ body {
 .reserva-block:hover {
   opacity: 0.8;
 }
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 5px;
+}
+
+.day-cell {
+  background: #1b2c45;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.uh-name {
+  background: #1b2c45;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.calendar-cell {
+  background: #0f1c2c;
+  border: 1px solid #1b2c45;
+  border-radius: 4px;
+  padding: 4px;
+  min-height: 45px;
+  cursor: pointer;
+  position: relative;
+}
+
+.calendar-cell-empty:hover {
+  background: #15283f;
+}
+
+.reserva-block {
+  background: #1f6bff;
+  padding: 6px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.reserva-block:hover {
+  background: #3a82ff;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #102235;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+}
