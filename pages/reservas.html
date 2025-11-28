@@ -1,108 +1,110 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PMS Lite – Reservas • MDE Hub</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservas • PMS Lite</title>
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 
-<body class="page">
+<body class="dark-page">
 
-  <!-- TOPO -->
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">T</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
-    </div>
-
-    <div class="topbar-actions">
-      <a href="/dashboard.html" class="btn-secondary btn-small">← Voltar</a>
-      <button id="logoutBtn" class="btn-sair">Sair</button>
-    </div>
-  </header>
-
-  <!-- MENU LATERAL -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <h3>Operação (PMS Lite)</h3>
-    <ul>
-      <li><a href="/pages/uhs.html">Unidades (UHs)</a></li>
-      <li class="active"><a href="/pages/reservas.html">Reservas</a></li>
-      <li><a href="/pages/checkin.html">Check-in</a></li>
-      <li><a href="/pages/checkout.html">Check-out</a></li>
-      <li><a href="/pages/lancamentos.html">Lançamentos</a></li>
-      <li><a href="/pages/financeiro.html">Financeiro</a></li>
-      <li><a href="/pages/relatorios.html">Relatórios</a></li>
-    </ul>
+    <h2>PMS Lite</h2>
+    <nav>
+      <a href="/pages/uhs.html">Unidades (UHs)</a>
+      <a href="/pages/reservas.html" class="active">Reservas</a>
+      <a href="/pages/checkin.html">Check-in</a>
+      <a href="/pages/checkout.html">Check-out</a>
+      <a href="/pages/lancamentos.html">Lançamentos</a>
+      <a href="/pages/financeiro.html">Financeiro</a>
+      <a href="/pages/relatorios.html">Relatórios</a>
+    </nav>
   </aside>
 
-  <!-- CONTEÚDO -->
-  <main class="content">
+  <!-- CONTENT -->
+  <main class="page-content">
+    <h1 class="page-title">Reservas</h1>
+    <p class="page-subtitle">
+      Calendário visual para gerenciamento rápido.
+    </p>
 
-    <h1>Reservas</h1>
-    <p class="subtitle">Visão rápida de ocupação por UH (7 dias)</p>
-
-    <div class="card mt">
+    <!-- CARD - Calendário -->
+    <section class="card">
       <div class="calendar-header">
-        <button id="btnPrev" class="btn-small">← Semana anterior</button>
+        <button id="btnPrev" class="btn-primary" style="width:auto;">◀ Semana anterior</button>
         <h2 id="weekLabel"></h2>
-        <button id="btnNext" class="btn-small">Próxima semana →</button>
+        <button id="btnNext" class="btn-primary" style="width:auto;">Próxima semana ▶</button>
       </div>
 
-      <div id="calendarGrid" class="calendar-grid">
-        <!-- preenchido pelo JS -->
+      <div id="calendarGrid" class="calendar-grid"></div>
+    </section>
+
+    <!-- MODAL -->
+    <div id="modalReserva" class="modal hidden">
+      <div class="modal-content">
+
+        <h2 id="modalTitle">Nova Reserva</h2>
+
+        <form id="reservaForm" class="form-grid">
+
+          <input type="hidden" id="reservaId">
+
+          <div class="form-group">
+            <label>UH</label>
+            <select id="reservaUH"></select>
+          </div>
+
+          <div class="form-group">
+            <label>Hóspede</label>
+            <input type="text" id="reservaHospede">
+          </div>
+
+          <div class="form-group">
+            <label>Telefone / WhatsApp</label>
+            <input type="text" id="reservaTelefone">
+          </div>
+
+          <div class="form-group">
+            <label>Origem</label>
+            <input type="text" id="reservaOrigem" placeholder="Recepção, Booking, WhatsApp…">
+          </div>
+
+          <div class="form-group">
+            <label>Check-in</label>
+            <input type="date" id="reservaCheckin">
+          </div>
+
+          <div class="form-group">
+            <label>Check-out</label>
+            <input type="date" id="reservaCheckout">
+          </div>
+
+          <div class="form-group">
+            <label>Adultos</label>
+            <input type="number" id="reservaAdultos" value="1">
+          </div>
+
+          <div class="form-group">
+            <label>Crianças</label>
+            <input type="number" id="reservaCriancas" value="0">
+          </div>
+
+          <button class="btn-primary">Salvar Reserva</button>
+          <button type="button" id="btnCancel" class="btn-primary" style="background:#555;">
+            Cancelar
+          </button>
+
+        </form>
+
       </div>
     </div>
 
   </main>
 
-  <!-- MODAL DE RESERVA -->
-  <div id="modalReserva" class="modal hidden">
-    <div class="modal-content">
-
-      <h2 id="modalTitle">Nova Reserva</h2>
-
-      <form id="reservaForm" class="form-grid">
-        <input type="hidden" id="reservaId">
-
-        <label>UH</label>
-        <select id="reservaUH"></select>
-
-        <label>Hóspede</label>
-        <input type="text" id="reservaHospede" required>
-
-        <label>Telefone / WhatsApp</label>
-        <input type="text" id="reservaTelefone">
-
-        <label>Origem</label>
-        <input type="text" id="reservaOrigem" placeholder="WhatsApp, Booking, Recepção...">
-
-        <label>Check-in</label>
-        <input type="date" id="reservaCheckin" required>
-
-        <label>Check-out</label>
-        <input type="date" id="reservaCheckout" required>
-
-        <label>Adultos</label>
-        <input type="number" min="1" id="reservaAdultos" value="1">
-
-        <label>Crianças</label>
-        <input type="number" min="0" id="reservaCriancas" value="0">
-
-        <div class="modal-actions">
-          <button type="button" id="btnCancel" class="btn-secondary">Cancelar</button>
-          <button type="submit" class="btn-primary">Salvar</button>
-        </div>
-      </form>
-
-    </div>
-  </div>
-
   <script src="/js/supabase.js"></script>
-  <script src="/js/app-common.js"></script>
   <script src="/js/pms/reservas.js"></script>
+
 </body>
 </html>
