@@ -6,9 +6,15 @@
   <title>Dashboard • MDE Sistemas</title>
 
   <link rel="stylesheet" href="/css/app.css" />
+
+  <!-- Supabase precisa vir ANTES -->
+  <script defer src="/js/supabase.js"></script>
+
+  <!-- Script principal do painel -->
   <script defer src="/js/app.js"></script>
 </head>
-<body>
+
+<body class="theme-light">
 
   <!-- TOPO -->
   <header class="topbar">
@@ -21,7 +27,10 @@
     </div>
 
     <div class="topbar-actions">
-      <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
+      <button type="button" class="theme-toggle-btn" data-theme-toggle>
+        <span class="theme-toggle-icon">🌙</span>
+        <span class="theme-toggle-label">Tema</span>
+      </button>
       <button id="logoutBtn" class="btn-sair">Sair</button>
     </div>
   </header>
@@ -82,16 +91,12 @@
     <section class="grid-2 mt-lg">
       <article class="card">
         <h2>Mapa rápido de UHs</h2>
-        <div id="miniMapaUhs" class="mini-mapa-uhs">
-          <!-- gerado via JS -->
-        </div>
+        <div id="miniMapaUhs" class="mini-mapa-uhs"></div>
       </article>
 
       <article class="card">
         <h2>Próximos check-ins e check-outs</h2>
-        <div id="listaMovimentosHoje" class="lista-simples">
-          <!-- gerado via JS -->
-        </div>
+        <div id="listaMovimentosHoje" class="lista-simples"></div>
       </article>
     </section>
   </main>
