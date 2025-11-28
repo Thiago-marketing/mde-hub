@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard • MDE Sistemas</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard • MDE Hub</title>
 
-  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body>
 <body class="hub-body" data-theme="dark">
   <div class="hub-layout">
+
     <!-- SIDEBAR -->
     <aside class="hub-sidebar" id="sidebar">
-      <div class="sidebar-logo">
-        <span class="sidebar-logo-text">MDE Hub</span>
-      </div>
+      <div class="sidebar-logo">MDE Hub</div>
 
       <nav class="sidebar-nav">
         <a href="/dashboard.html" class="nav-link active">Dashboard</a>
@@ -32,12 +30,12 @@
     <!-- OVERLAY MOBILE -->
     <div class="hub-overlay" id="sidebarOverlay"></div>
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ÁREA PRINCIPAL -->
     <div class="hub-main">
+
+      <!-- TOPBAR -->
       <header class="hub-topbar">
-        <button class="btn-icon only-mobile" id="menuToggle" aria-label="Abrir menu">
-          ☰
-        </button>
+        <button class="btn-icon only-mobile" id="menuToggle">☰</button>
 
         <div class="topbar-left">
           <div class="user-chip">
@@ -55,6 +53,7 @@
         </div>
       </header>
 
+      <!-- CONTEÚDO -->
       <main class="hub-content">
         <h1 class="page-title">Dashboard Geral</h1>
 
@@ -77,92 +76,12 @@
             <p class="card-sub">Próximos 7 dias</p>
           </article>
         </section>
-
       </main>
+
     </div>
   </div>
 
+  <!-- JS -->
   <script src="/js/hub-ui.js"></script>
-</body>
-
-  <!-- TOPO -->
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">U</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
-    </div>
-
-    <div class="topbar-actions">
-      <button id="toggleTheme" class="btn-secondary btn-small" data-theme-toggle>
-        <span class="theme-toggle-icon">🌙</span>
-        <span class="theme-toggle-label">Modo escuro</span>
-      </button>
-
-      <button id="logoutBtn" class="btn-sair">Sair</button>
-    </div>
-  </header>
-
-  <!-- MENU LATERAL -->
-  <aside class="sidebar">
-    <h3>Operação</h3>
-    <nav>
-      <a href="/dashboard.html" class="active">Dashboard</a>
-      <a href="/pages/reservas.html">Reservas</a>
-      <a href="/pages/checkin.html">Check-in</a>
-      <a href="/pages/checkout.html">Check-out</a>
-      <a href="/pages/uhs.html">Unidades Habitacionais</a>
-      <a href="/pages/financeiro.html">Financeiro</a>
-      <a href="/pages/configuracoes.html">Configurações</a>
-    </nav>
-
-    <h3>CRM</h3>
-    <nav>
-      <a href="/pages/crm-dashboard.html">Painel CRM</a>
-      <a href="/pages/crm-leads.html">Leads</a>
-      <a href="/pages/crm-kanban.html">Kanban</a>
-      <a href="/pages/crm-atividades.html">Atividades</a>
-    </nav>
-
-    <h3>Admin</h3>
-    <nav>
-      <a href="/pages/checklist-governanca.html">Checklist Governança</a>
-      <a href="/pages/auditoria.html">Auditoria</a>
-      <a href="/pages/relatorios.html">Relatórios</a>
-    </nav>
-  </aside>
-
-  <!-- CONTEÚDO -->
-  <main class="content">
-    <h1>Dashboard Geral</h1>
-
-    <section class="grid-3">
-      <article class="card metric">
-        <h2>Ocupação hoje</h2>
-        <p class="metric-value" id="metricOcupacao">-- %</p>
-        <p class="metric-detail">UHs ocupadas / totais</p>
-      </article>
-
-      <article class="card metric">
-        <h2>Receita do dia</h2>
-        <p class="metric-value" id="metricReceita">R$ --</p>
-        <p class="metric-detail">Lançamentos já confirmados</p>
-      </article>
-
-      <article class="card metric">
-        <h2>Reservas futuras</h2>
-        <p class="metric-value" id="metricReservasFuturas">--</p>
-        <p class="metric-detail">Próximos 7 dias</p>
-      </article>
-    </section>
-  </main>
-
-  <script defer src="/js/supabase.js"></script>
-  <script defer src="/js/app.js"></script>
-  <script defer src="/js/theme.js"></script>
-  <script defer src="/js/auth.js"></script>
-
 </body>
 </html>
