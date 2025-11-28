@@ -1,60 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-mail confirmado • MDE Hub</title>
 
-  <title>MDE Hub • E-mail confirmado</title>
-
-  <!-- Caminho corrigido -->
-  <link rel="stylesheet" href="/css/auth.css" />
-
-  <!-- Primeiro supabase -->
-  <script defer src="/js/supabase.js"></script>
-
-  <!-- Depois auth.js -->
-  <script defer src="/js/auth.js"></script>
+  <link rel="stylesheet" href="/css/auth.css">
 </head>
 
-<body class="theme-light">
-  <div class="auth-page">
-    <div class="auth-card">
+<body class="auth-page">
 
-      <header class="auth-header">
-        <div class="auth-brand">
-          <span class="auth-logo">MDE HUB</span>
-          <span class="auth-subtitle">Confirmação de acesso</span>
-        </div>
+  <main class="auth-container">
+    <section class="auth-card">
+      <h1>E-mail confirmado com sucesso! 🎉</h1>
+      <p class="auth-subtitle">Agora você pode acessar o MDE Hub.</p>
 
-        <button type="button" class="theme-toggle-btn" data-theme-toggle>
-          <span class="theme-toggle-icon">🌙</span>
-          <span class="theme-toggle-label">Modo escuro</span>
-        </button>
-      </header>
+      <a href="/login.html" class="btn-primary" style="margin-top:16px; display:block; text-align:center;">
+        Ir para o login
+      </a>
+    </section>
+  </main>
 
-      <main class="auth-content">
-        <h1 class="auth-title">E-mail confirmado com sucesso ✅</h1>
-
-        <p class="auth-text">
-          Obrigado por confirmar o seu endereço de e-mail.
-        </p>
-
-        <p class="auth-text">
-          Agora você já pode acessar o MDE Hub com seu e-mail e senha cadastrados.
-        </p>
-
-        <div class="form-footer" style="margin-top: 16px;">
-          <a href="/login.html" class="btn-primary" style="display:inline-block; text-align:center; text-decoration:none;">
-            Entrar no MDE Hub
-          </a>
-        </div>
-      </main>
-
-      <footer class="auth-footer">
-        MDE Sistemas • Há 35 anos otimizando a hotelaria
-      </footer>
-
-    </div>
-  </div>
+  <script defer src="/js/theme.js"></script>
 </body>
 </html>
