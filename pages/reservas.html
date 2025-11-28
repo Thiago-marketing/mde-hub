@@ -1,44 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reservas • PMS Lite</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PMS Lite • Reservas</title>
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/theme.js"></script>
 </head>
 
-<body class="dark-page">
+<body>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>PMS Lite</h2>
     <nav>
-      <a href="/pages/uhs.html">Unidades (UHs)</a>
+      <a href="/pages/dashboard.html">Dashboard</a>
+      <a href="/pages/uhs.html">Unidades</a>
       <a href="/pages/reservas.html" class="active">Reservas</a>
       <a href="/pages/checkin.html">Check-in</a>
       <a href="/pages/checkout.html">Check-out</a>
       <a href="/pages/lancamentos.html">Lançamentos</a>
       <a href="/pages/financeiro.html">Financeiro</a>
-      <a href="/pages/relatorios.html">Relatórios</a>
     </nav>
   </aside>
 
-  <!-- CONTENT -->
   <main class="page-content">
-    <h1 class="page-title">Reservas</h1>
-    <p class="page-subtitle">
-      Calendário visual para gerenciamento rápido.
-    </p>
 
-    <!-- CARD - Calendário -->
+    <h1 class="page-title">Reservas</h1>
+    <p class="page-subtitle">Calendário visual semanal, organizado por unidade.</p>
+
     <section class="card">
+
       <div class="calendar-header">
-        <button id="btnPrev" class="btn-primary" style="width:auto;">◀ Semana anterior</button>
-        <h2 id="weekLabel"></h2>
-        <button id="btnNext" class="btn-primary" style="width:auto;">Próxima semana ▶</button>
+        <button id="btnPrev" class="btn-primary">◀ Semana anterior</button>
+        <h2 id="weekLabel">Carregando...</h2>
+        <button id="btnNext" class="btn-primary">Próxima semana ▶</button>
       </div>
 
       <div id="calendarGrid" class="calendar-grid"></div>
+
     </section>
 
     <!-- MODAL -->
@@ -51,50 +51,48 @@
 
           <input type="hidden" id="reservaId">
 
-          <div class="form-group">
+          <div>
             <label>UH</label>
             <select id="reservaUH"></select>
           </div>
 
-          <div class="form-group">
+          <div>
             <label>Hóspede</label>
             <input type="text" id="reservaHospede">
           </div>
 
-          <div class="form-group">
-            <label>Telefone / WhatsApp</label>
+          <div>
+            <label>Telefone</label>
             <input type="text" id="reservaTelefone">
           </div>
 
-          <div class="form-group">
+          <div>
             <label>Origem</label>
-            <input type="text" id="reservaOrigem" placeholder="Recepção, Booking, WhatsApp…">
+            <input type="text" id="reservaOrigem">
           </div>
 
-          <div class="form-group">
+          <div>
             <label>Check-in</label>
             <input type="date" id="reservaCheckin">
           </div>
 
-          <div class="form-group">
+          <div>
             <label>Check-out</label>
             <input type="date" id="reservaCheckout">
           </div>
 
-          <div class="form-group">
+          <div>
             <label>Adultos</label>
             <input type="number" id="reservaAdultos" value="1">
           </div>
 
-          <div class="form-group">
+          <div>
             <label>Crianças</label>
             <input type="number" id="reservaCriancas" value="0">
           </div>
 
-          <button class="btn-primary">Salvar Reserva</button>
-          <button type="button" id="btnCancel" class="btn-primary" style="background:#555;">
-            Cancelar
-          </button>
+          <button class="btn-primary">Salvar</button>
+          <button type="button" id="btnCancel" class="btn-danger">Cancelar</button>
 
         </form>
 
