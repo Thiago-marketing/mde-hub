@@ -1,59 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Check-out • PMS Lite • MDE Hub</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <title>Check-out • PMS Lite</title>
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/theme.js"></script>
 </head>
-<body class="page">
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">T</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
-    </div>
-    <button id="logoutBtn" class="btn-sair">Sair</button>
-  </header>
+
+<body>
 
   <aside class="sidebar">
-    <h3>Operação (PMS Lite)</h3>
-    <ul>
-      <li><a href="uhs.html">Unidades (UHs)</a></li>
-      <li><a href="reservas.html">Reservas</a></li>
-      <li><a href="checkin.html">Check-in</a></li>
-      <li class="active"><a href="checkout.html">Check-out</a></li>
-      <li><a href="lancamentos.html">Lançamentos</a></li>
-      <li><a href="financeiro.html">Financeiro</a></li>
-      <li><a href="relatorios.html">Relatórios</a></li>
-    </ul>
+    <h2>PMS Lite</h2>
+    <nav>
+      <a href="/pages/dashboard.html">Dashboard</a>
+      <a href="/pages/reservas.html">Reservas</a>
+      <a href="/pages/checkin.html">Check-in</a>
+      <a href="/pages/checkout.html" class="active">Check-out</a>
+    </nav>
   </aside>
 
-  <main class="content">
-    <h1>Check-out</h1>
-    <p class="subtitle">Selecione a reserva em estadia e finalize com os lançamentos.</p>
+  <main class="page-content">
+
+    <h1 class="page-title">Check-out</h1>
+    <p class="page-subtitle">Revise o extrato e finalize a saída do hóspede.</p>
 
     <section class="card">
-      <div class="form-group">
-        <label>Reserva em estadia</label>
-        <select id="reservaSelect">
-          <!-- JS carrega reservas com status checkin -->
-        </select>
-      </div>
-
-      <div id="checkoutResumo">
-        <!-- JS mostra resumo da conta, diárias e lançamentos -->
-      </div>
-
-      <button id="btnCheckout" class="btn-primary">Confirmar check-out</button>
-      <p id="checkoutStatus" class="msg-ok"></p>
+      <h2 class="card-title">Hóspedes em Estadia</h2>
+      <div id="listaCheckout" class="lista-reservas"></div>
     </section>
+
+    <section class="card">
+      <h2 class="card-title">Extrato da Reserva</h2>
+      <div id="extratoLista" class="extrato-lista"></div>
+      <div class="extrato-total-geral" id="totalGeral"></div>
+      <button id="btnFinalizar" class="btn-primary mt">Finalizar Check-out</button>
+    </section>
+
   </main>
 
-  <script src="../js/supabase.js"></script>
-  <script src="../js/app-common.js"></script>
-  <script src="../js/checkout.js"></script>
+  <script src="/js/supabase.js"></script>
+  <script src="/js/pms/checkout.js"></script>
+
 </body>
 </html>
