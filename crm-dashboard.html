@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel CRM • MDE Sistemas</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+  <script defer src="/js/crm-dashboard.js"></script>
+</head>
+<body>
+  <!-- topo + sidebar com seção CRM ativa -->
+  <!-- ... -->
+
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <h3>Operação</h3>
+    <nav>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/pages/reservas.html">Reservas</a>
+      <a href="/pages/checkin.html">Check-in</a>
+      <a href="/pages/checkout.html">Check-out</a>
+      <a href="/pages/uhs.html">Unidades Habitacionais</a>
+      <a href="/pages/financeiro.html">Financeiro</a>
+      <a href="/pages/configuracoes.html">Configurações</a>
+    </nav>
+    <h3>CRM</h3>
+    <nav>
+      <a href="/pages/crm-dashboard.html" class="active">Painel CRM</a>
+      <a href="/pages/crm-leads.html">Leads</a>
+      <a href="/pages/crm-kanban.html">Kanban</a>
+      <a href="/pages/crm-atividades.html">Atividades</a>
+    </nav>
+    <h3>Admin</h3>
+    <nav>
+      <a href="/pages/checklist-governanca.html">Checklist Governança</a>
+      <a href="/pages/auditoria.html">Auditoria</a>
+      <a href="/pages/relatorios.html">Relatórios</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <h1>Painel CRM</h1>
+
+    <section class="grid-3">
+      <article class="card metric">
+        <h2>Novos leads</h2>
+        <p class="metric-value" id="crmNovosLeads">--</p>
+        <p class="metric-detail">Últimos 7 dias</p>
+      </article>
+      <article class="card metric">
+        <h2>Propostas enviadas</h2>
+        <p class="metric-value" id="crmPropostas">--</p>
+        <p class="metric-detail">Mês atual</p>
+      </article>
+      <article class="card metric">
+        <h2>Taxa de conversão</h2>
+        <p class="metric-value" id="crmConversao">-- %</p>
+        <p class="metric-detail">Leads ganhas / total</p>
+      </article>
+    </section>
+
+    <section class="card mt-lg">
+      <h2>Funil de vendas</h2>
+      <div id="graficoFunil" class="grafico-placeholder">
+        <!-- pode virar gráfico no futuro -->
+        <p>Em breve: gráfico de funil.</p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
