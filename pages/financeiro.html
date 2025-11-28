@@ -1,74 +1,61 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Financeiro • PMS Lite • MDE Hub</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <title>Financeiro • PMS Lite</title>
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer src="/js/theme.js"></script>
 </head>
-<body class="page">
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">T</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
-    </div>
-    <button id="logoutBtn" class="btn-sair">Sair</button>
-  </header>
+
+<body>
 
   <aside class="sidebar">
-    <h3>Operação (PMS Lite)</h3>
-    <ul>
-      <li><a href="uhs.html">Unidades (UHs)</a></li>
-      <li><a href="reservas.html">Reservas</a></li>
-      <li><a href="checkin.html">Check-in</a></li>
-      <li><a href="checkout.html">Check-out</a></li>
-      <li><a href="lancamentos.html">Lançamentos</a></li>
-      <li class="active"><a href="financeiro.html">Financeiro</a></li>
-      <li><a href="relatorios.html">Relatórios</a></li>
-    </ul>
+    <h2>PMS Lite</h2>
+    <nav>
+      <a href="/pages/dashboard.html">Dashboard</a>
+      <a href="/pages/financeiro.html" class="active">Financeiro</a>
+    </nav>
   </aside>
 
-  <main class="content">
-    <h1>Financeiro</h1>
-    <p class="subtitle">Resumo simples de receita e lançamentos do PMS Lite.</p>
+  <main class="page-content">
+
+    <h1 class="page-title">Financeiro</h1>
+    <p class="page-subtitle">Resumo diário, mensal e total de entradas/saídas.</p>
+
+    <section class="dash-grid">
+
+      <div class="dash-card">
+        <h3>Entradas (Hoje)</h3>
+        <h2 id="entradasHoje">R$ 0,00</h2>
+      </div>
+
+      <div class="dash-card">
+        <h3>Saídas (Hoje)</h3>
+        <h2 id="saidasHoje">R$ 0,00</h2>
+      </div>
+
+      <div class="dash-card">
+        <h3>Balanço (Hoje)</h3>
+        <h2 id="balancoHoje">R$ 0,00</h2>
+      </div>
+
+      <div class="dash-card">
+        <h3>Ocupação Atual</h3>
+        <h2 id="ocupacaoAtual">0%</h2>
+      </div>
+
+    </section>
 
     <section class="card">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Período inicial</label>
-          <input type="date" id="dataDe">
-        </div>
-        <div class="form-group">
-          <label>Período final</label>
-          <input type="date" id="dataAte">
-        </div>
-        <div class="form-group">
-          <button id="btnFiltrar" class="btn-primary">Filtrar</button>
-        </div>
-      </div>
-
-      <div class="dash-grid mt">
-        <div class="dash-card">
-          <p>Receita total</p>
-          <h2 id="kpiReceita">R$ 0,00</h2>
-        </div>
-        <div class="dash-card">
-          <p>Débitos</p>
-          <h2 id="kpiDebitos">R$ 0,00</h2>
-        </div>
-        <div class="dash-card">
-          <p>Créditos</p>
-          <h2 id="kpiCreditos">R$ 0,00</h2>
-        </div>
-      </div>
+      <h2 class="card-title">Extrato financeiro</h2>
+      <div id="extratoFin" class="extrato-lista"></div>
     </section>
+
   </main>
 
-  <script src="../js/supabase.js"></script>
-  <script src="../js/app-common.js"></script>
-  <script src="../js/financeiro.js"></script>
+  <script src="/js/supabase.js"></script>
+  <script src="/js/pms/financeiro.js"></script>
+
 </body>
 </html>
