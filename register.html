@@ -3,127 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Criar conta • MDE Sistemas</title>
 
-  <title>MDE Hub • Criar conta</title>
-
-  <meta name="description" content="Crie sua conta gratuita no MDE Hub para acessar as ferramentas digitais da MDE Sistemas." />
-
-  <link rel="stylesheet" href="css/auth.css" />
-  <script defer src="js/auth.js"></script>
-
-  <!-- Supabase + lógica de cadastro -->
-  <script defer src="js/supabase.js"></script>
-  <script defer src="js/register.js"></script>
+  <link rel="stylesheet" href="/css/auth.css" />
+  <script defer src="/js/register.js"></script>
 </head>
-<body class="theme-light">
-  <div class="auth-page">
-    <div class="auth-card">
-      <header class="auth-header">
-        <div class="auth-brand">
-          <span class="auth-logo">MDE Hub</span>
-          <span class="auth-subtitle">Cadastro de acesso às soluções MDE Sistemas</span>
+<body class="auth-page">
+
+  <main class="auth-container">
+    <section class="auth-card">
+      <h1>Criar conta</h1>
+      <p class="auth-subtitle">Configure seu acesso ao Hub MDE</p>
+
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="name">Nome completo</label>
+          <input id="name" name="name" type="text" autocomplete="name" required />
         </div>
-        <button type="button" class="theme-toggle-btn" data-theme-toggle>
-          <span class="theme-toggle-icon">🌙</span>
-          <span class="theme-toggle-label">Modo escuro</span>
-        </button>
-      </header>
 
-      <main class="auth-content">
-        <h1 class="auth-title">Criar conta gratuita</h1>
-        <p class="auth-text">
-          Com um único cadastro você acessa todas as ferramentas digitais da MDE Sistemas.
-          Utilizamos seu WhatsApp apenas para contato consultivo e comunicações autorizadas.
-        </p>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
 
-        <form id="register-form" class="auth-form">
-          <div class="form-group">
-            <label for="full_name">Nome completo</label>
-            <input
-              type="text"
-              id="full_name"
-              name="full_name"
-              placeholder="Seu nome completo"
-              required
-              autocomplete="name"
-            />
-          </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input id="password" name="password" type="password" autocomplete="new-password" required />
+        </div>
 
-          <div class="form-group">
-            <label for="email">E-mail corporativo</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="seuemail@hotel.com.br"
-              required
-              autocomplete="email"
-            />
-          </div>
+        <button type="submit" class="btn-primary">Criar conta</button>
+      </form>
 
-          <div class="form-group">
-            <label for="whatsapp">WhatsApp</label>
-            <input
-              type="tel"
-              id="whatsapp"
-              name="whatsapp"
-              placeholder="(11) 94027-7447"
-              required
-              autocomplete="tel"
-            />
-          </div>
+      <p class="auth-footer">
+        Já possui acesso?
+        <a href="/index.html">Voltar para login</a>
+      </p>
+    </section>
+  </main>
 
-          <div class="form-group">
-            <label for="password">Senha de acesso</label>
-            <div class="password-wrapper">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Crie uma senha segura"
-                required
-                autocomplete="new-password"
-              />
-              <button type="button" class="password-toggle" data-password-toggle="password">
-                👁
-              </button>
-            </div>
-          </div>
-
-          <label class="checkbox-group">
-            <input type="checkbox" id="consent" name="consent" checked />
-            <span>
-              Autorizo a MDE Sistemas a enviar informações, novidades e oportunidades
-              relacionadas às soluções MDE pelo e-mail e WhatsApp informados.
-            </span>
-          </label>
-
-          <div class="form-footer">
-            <button type="submit" class="btn-primary" id="register-submit">
-              Criar conta gratuita
-            </button>
-          </div>
-
-          <p class="auth-helper">
-            Já possui uma conta?
-            <a href="login.html">Entrar no MDE Hub</a>
-          </p>
-        </form>
-
-        <p class="auth-terms">
-          Ao criar sua conta você concorda com o uso dos seus dados para fins de relacionamento
-          comercial e melhoria das soluções MDE.
-        </p>
-      </main>
-
-      <footer class="auth-footer">
-        <span>MDE Sistemas • Há 35 anos otimizando a hotelaria</span>
-      </footer>
-    </div>
-  </div>
-</body>
-</html>
-<!-- scripts -->
-<script type="module" src="js/register.js"></script>
 </body>
 </html>
