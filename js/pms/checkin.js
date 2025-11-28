@@ -1,73 +1,65 @@
-<link rel="stylesheet" href="/css/app.css">
-<script src="/js/theme.js"></script>
+/***************************************************
+ * CHECK-IN – PMS Lite
+ ***************************************************/
+const sb = supabase;
 
-/* CARREGAR UHs LIVRES */
-async function carregarUHsLivres() {
-  const user = await supa.auth.getUser();
-  const user_id = user.data.user.id;
+const listaCheckin = document.getElementById("listaCheckin");
+const dadosReserva = document.getElementById("dadosReserva");
+const btnConfirmarCheckin = document.getElementById("btnConfirmarCheckin");
 
-  let { data: uhs } = await supa
-    .from("uhs")
-    .select("*")
-    .eq("user_id", user_id)
-    .eq("status", "livre");
+let reservaSelecionada = null;
 
-  const select = document.getElementById("uhSelect");
-  select.innerHTML = "";
+document.addEventListener("DOMContentLoaded", loadCheckinLista);
 
-  uhs.forEach((uh) => {
-    select.innerHTML += `<option value="${uh.id}">${uh.numero}</option>`;
+async function loadCheckinLista() {
+  const hoje = new Date().toISOString().slice(0, 10);
+
+  const { data } = await sb
+    .from("reservas")
+    .select("*, uhs(id, nome)")
+    .eq("checkin", hoje);
+
+  listaCheckin.innerHTML = "";
+
+  data?.forEach((r) => {
+    const div = document.createElement("div");
+    div.className = "reserva-item";
+    div.innerHTML = `
+      <div>
+        <strong>${r.hospede}</strong>
+        <p>${r.uhs.nome}</p>
+      </div>
+    `;
+
+    div.onclick = () => {
+      reservaSelecionada = r;
+      mostrarDados(r);
+    };
+
+    listaCheckin.appendChild(div);
   });
 }
 
-/* CHECK-IN */
-async function fazerCheckin(e) {
-  e.preventDefault();
+function mostrarDados(r) {
+  dadosReserva.innerHTML = `
+    <p><strong>Hóspede:</strong> ${r.hospede}</p>
+    <p><strong>UH:</strong> ${r.uhs.nome}</p>
+    <p><strong>Telefone:</strong> ${r.telefone || "-"}</p>
+    <p><strong>Período:</strong> ${formatarData(r.checkin)} → ${formatarData(r.checkout)}</p>
+  `;
+}
 
-  const user = await supa.auth.getUser();
-  const user_id = user.data.user.id;
+btnConfirmarCheckin.onclick = async () => {
+  if (!reservaSelecionada) return alert("Selecione uma reserva.");
 
-  const nome = document.getElementById("nomeHospede").value;
-  const telefone = document.getElementById("telefone").value;
-  const uh_id = document.getElementById("uhSelect").value;
-  const origem = document.getElementById("origem").value;
-  const entrada = document.getElementById("dataEntrada").value;
-  const saida = document.getElementById("dataSaida").value;
-
-  // 1. criar hóspede
-  let { data: hospede, error: erroHosp } = await supa
-    .from("hospedes")
-    .insert({
-      nome,
-      telefone,
-      user_id
-    })
-    .select()
-    .single();
-
-  if (erroHosp) return alert("Erro ao criar hóspede");
-
-  // 2. criar reserva
-  let { error: erroRes } = await supa.from("reservas").insert({
-    uh_id,
-    hospede_id: hospede.id,
-    data_entrada: entrada,
-    data_saida: saida,
-    origem,
-    status: "checkin",
-    user_id
-  });
-
-  if (erroRes) return alert("Erro ao criar reserva");
-
-  // 3. marcar UH como ocupada
-  await supa
+  const { error } = await sb
     .from("uhs")
     .update({ status: "ocupado" })
-    .eq("id", uh_id);
+    .eq("id", reservaSelecionada.uh_id);
 
-  document.getElementById("checkinStatus").innerText =
-    "Check-in realizado com sucesso!";
-  e.target.reset();
-  carregarUHsLivres();
-}
+  if (error) return alert("Erro ao atualizar UH.");
+
+  alert("Check-in confirmado!");
+  loadCheckinLista();
+  dadosReserva.innerHTML = "";
+};
