@@ -1,400 +1,233 @@
-// ======================================================
-// MDE Hub – PMS Lite
-// Unidades Habitacionais (UHs) – CRUD + Mapa + Lista
-// ======================================================
+/***************************************************
+ * PMS Lite - UHs (CRUD Completo)
+ * MDE Hub - BRsys
+ **************************************************/
 
-// ELEMENTOS DA PÁGINA
-const modal = document.getElementById("modalUH");
-const modalTitle = document.getElementById("modalTitle");
+// ----------- CONFIGURAÇÃO SUPABASE ------------
+const sb = supabase; // já vem do supabase.js
 
+// TABELA
+const TABLE = "uhs";
+
+// STORAGE
+const STORAGE_BUCKET = "uh-fotos";
+
+
+// ----------- ELEMENTOS DA INTERFACE ------------
 const btnAddUH = document.getElementById("btnAddUH");
+const modalUH = document.getElementById("modalUH");
+const modalTitle = document.getElementById("modalTitle");
 const btnCancel = document.getElementById("btnCancel");
-const uhForm = document.getElementById("uhForm");
-
-const uhIdInput = document.getElementById("uhId");
-const numeroInput = document.getElementById("numeroUH");
-const categoriaInput = document.getElementById("categoriaUH");
-const statusInput = document.getElementById("statusUH");
-const precoInput = document.getElementById("precoUH");
-const fotoInput = document.getElementById("fotoUH");
 
 const uhGrid = document.getElementById("uhGrid");
 const uhTableBody = document.getElementById("uhTableBody");
 const uhResumo = document.getElementById("uhResumo");
 
-// ===================== ABRIR / FECHAR MODAL =====================
+const formUH = document.getElementById("uhForm");
 
-btnAddUH?.addEventListener("click", () => {
-  openModal();
+const inputId = document.getElementById("uhId");
+const inputNumero = document.getElementById("numeroUH");
+const inputCategoria = document.getElementById("categoriaUH");
+const inputStatus = document.getElementById("statusUH");
+const inputPreco = document.getElementById("precoUH");
+const inputFoto = document.getElementById("fotoUH");
+
+
+// ----------- ABRIR MODAL ------------
+btnAddUH.addEventListener("click", () => {
+    inputId.value = "";
+    formUH.reset();
+    modalTitle.textContent = "Nova UH";
+    modalUH.classList.remove("hidden");
 });
 
-btnCancel?.addEventListener("click", () => {
-  closeModal();
+btnCancel.addEventListener("click", () => {
+    modalUH.classList.add("hidden");
 });
 
-// fecha clicando fora do conteúdo do modal
-modal?.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
-});
 
-function openModal(editData = null) {
-  if (!modal) return;
-
-  modal.classList.remove("hidden");
-
-  if (editData) {
-    modalTitle.innerText = "Editar UH";
-
-    uhIdInput.value = editData.id;
-    numeroInput.value = editData.numero;
-    categoriaInput.value = editData.categoria || "";
-    statusInput.value = editData.status || "livre";
-    precoInput.value = editData.preco || "";
-    // foto não é recarregada no input file (por padrão do browser)
-  } else {
-    modalTitle.innerText = "Nova UH";
-    uhForm.reset();
-    uhIdInput.value = "";
-    statusInput.value = "livre";
-  }
-}
-
-function closeModal() {
-  if (!modal) return;
-  modal.classList.add("hidden");
-}
-
-// ===================== CARREGAR UHs =====================
-
+// ----------- CARREGAR TODAS AS UHs ------------
 async function loadUHs() {
-  const { data, error } = await supabase
-    .from("uhs") // troque para "uh" se criar a tabela com esse nome
-    .select("*")
-    .order("numero", { ascending: true });
+    const { data, error } = await sb.from(TABLE).select("*").order("numero");
 
-  if (error) {
-    console.error(error);
-    showError?.("Erro ao carregar UHs.");
-    return;
-  }
-
-  renderMapa(data || []);
-  renderTabela(data || []);
-  renderResumo(data || []);
-}
-
-// ===================== RENDER MAPA =====================
-
-function renderMapa(uhs) {
-  if (!uhGrid) return;
-
-  uhGrid.innerHTML = "";
-
-  if (!uhs.length) {
-    uhGrid.innerHTML = `<p class="subtitle">Nenhuma UH cadastrada ainda.</p>`;
-    return;
-  }
-
-  uhs.forEach((uh) => {
-    const card = document.createElement("div");
-    card.classList.add("uh-card");
-
-    // adiciona classe de status para usar as cores do CSS
-    const statusClass = getStatusClass(uh.status || "livre");
-    if (statusClass) card.classList.add(statusClass);
-
-    card.innerHTML = `
-      <div class="uh-card-header">
-        <span class="uh-number">${escapeHtml(uh.numero)}</span>
-      </div>
-      <div class="uh-card-body">
-        <span class="uh-category">${uh.categoria || "-"}</span>
-        <span class="uh-status-label">${labelStatus(uh.status)}</span>
-      </div>
-    `;
-
-    uhGrid.appendChild(card);
-  });
-}
-
-// ===================== RENDER TABELA =====================
-
-function renderTabela(uhs) {
-  if (!uhTableBody) return;
-
-  uhTableBody.innerHTML = "";
-
-  if (!uhs.length) {
-    uhTableBody.innerHTML = `
-      <tr>
-        <td colspan="5" class="text-center">Nenhuma UH cadastrada.</td>
-      </tr>
-    `;
-    return;
-  }
-
-  uhs.forEach((uh) => {
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-      <td>${escapeHtml(uh.numero)}</td>
-      <td>${uh.categoria || "-"}</td>
-      <td>${labelStatus(uh.status)}</td>
-      <td>${formatPreco(uh.preco)}</td>
-      <td>
-        <button class="btn-mini btn-blue" data-edit-id="${uh.id}">Editar</button>
-        <button class="btn-mini btn-red" data-delete-id="${uh.id}">Excluir</button>
-      </td>
-    `;
-
-    uhTableBody.appendChild(tr);
-  });
-
-  // eventos dos botões
-  uhTableBody.querySelectorAll("[data-edit-id]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = parseInt(btn.getAttribute("data-edit-id"), 10);
-      handleEdit(id);
-    });
-  });
-
-  uhTableBody.querySelectorAll("[data-delete-id]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const id = parseInt(btn.getAttribute("data-delete-id"), 10);
-      handleDelete(id);
-    });
-  });
-}
-
-// ===================== RENDER RESUMO =====================
-
-function renderResumo(uhs) {
-  if (!uhResumo) return;
-
-  if (!uhs.length) {
-    uhResumo.textContent = "Nenhuma UH cadastrada.";
-    return;
-  }
-
-  const total = uhs.length;
-  const cont = {
-    livre: 0,
-    ocupado: 0,
-    limpeza: 0,
-    manutencao: 0,
-    bloqueado: 0,
-  };
-
-  uhs.forEach((uh) => {
-    const s = (uh.status || "livre").toLowerCase();
-    if (cont[s] !== undefined) cont[s]++;
-  });
-
-  uhResumo.textContent =
-    `Total: ${total} | ` +
-    `Livre: ${cont.livre} | ` +
-    `Ocupado: ${cont.ocupado} | ` +
-    `Limpeza: ${cont.limpeza} | ` +
-    `Manutenção: ${cont.manutencao} | ` +
-    `Bloqueado: ${cont.bloqueado}`;
-}
-
-// ===================== SUBMIT FORM (CREATE / UPDATE) =====================
-
-uhForm?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const id = uhIdInput.value ? parseInt(uhIdInput.value, 10) : null;
-  const numeroRaw = numeroInput.value.trim();
-  const categoria = categoriaInput.value.trim();
-  const status = statusInput.value;
-  const preco = precoInput.value ? Number(precoInput.value) : null;
-
-  if (!numeroRaw) {
-    showError?.("Informe o número ou nome da UH.");
-    return;
-  }
-
-  // valida duplicidade
-  const jaExiste = await existsNumero(numeroRaw, id);
-  if (jaExiste) {
-    showError?.("Já existe uma UH com este número/nome.");
-    return;
-  }
-
-  let fotoBase64 = null;
-  if (fotoInput.files && fotoInput.files.length > 0) {
-    try {
-      fotoBase64 = await fileToBase64(fotoInput.files[0]);
-    } catch (err) {
-      console.error(err);
-      showError?.("Erro ao processar a foto da UH.");
-      return;
+    if (error) {
+        console.error("Erro ao carregar UHs:", error);
+        return;
     }
-  }
 
-  const payload = {
-    numero: numeroRaw,
-    categoria: categoria || null,
-    status: status || "livre",
-    preco: preco !== null && !isNaN(preco) ? preco : null,
-    foto: fotoBase64 || null,
-  };
+    montarGrid(data);
+    montarTabela(data);
+    uhResumo.textContent = `${data.length} UH(s)`;
+}
 
-  let error;
+loadUHs();
 
-  if (id) {
-    ({ error } = await supabase
-      .from("uhs")
-      .update(payload)
-      .eq("id", id));
-  } else {
-    ({ error } = await supabase
-      .from("uhs")
-      .insert([payload]));
-  }
 
-  if (error) {
-    console.error(error);
-    showError?.("Erro ao salvar UH.");
-    return;
-  }
+// ----------- GRID VISUAL ------------
+function montarGrid(lista) {
+    uhGrid.innerHTML = "";
 
-  showSuccess?.(id ? "UH atualizada com sucesso." : "UH cadastrada com sucesso.");
-  closeModal();
-  await loadUHs();
+    lista.forEach(uh => {
+        const card = document.createElement("div");
+        card.className = `uh-card status-${uh.status}`;
+
+        card.innerHTML = `
+            <h3>${uh.numero}</h3>
+            <p>${uh.categoria || "-"}</p>
+        `;
+
+        card.addEventListener("click", () => editarUH(uh));
+
+        uhGrid.appendChild(card);
+    });
+}
+
+
+// ----------- TABELA LISTA ------------
+function montarTabela(lista) {
+    uhTableBody.innerHTML = "";
+
+    lista.forEach(uh => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${uh.numero}</td>
+            <td>${uh.categoria ?? "-"}</td>
+            <td>${formatarStatus(uh.status)}</td>
+            <td>R$ ${Number(uh.preco ?? 0).toFixed(2)}</td>
+            <td>
+                <button class="btn-small btn-primary" onclick="editarUH(${uh.id})">Editar</button>
+                <button class="btn-small btn-danger" onclick="excluirUH(${uh.id})">Excluir</button>
+            </td>
+        `;
+
+        uhTableBody.appendChild(row);
+    });
+}
+
+function formatarStatus(s) {
+    const map = {
+        livre: "Livre",
+        ocupado: "Ocupado",
+        limpeza: "Limpeza",
+        manutencao: "Manutenção",
+        bloqueado: "Bloqueado"
+    };
+    return map[s] || "-";
+}
+
+
+// ----------- EDITAR ------------
+async function editarUH(id) {
+    // Se veio um objeto direto do grid
+    if (typeof id === "object") {
+        preencherModal(id);
+        return;
+    }
+
+    const { data, error } = await sb.from(TABLE).select("*").eq("id", id).single();
+
+    if (error) {
+        alert("Erro ao carregar UH!");
+        return;
+    }
+
+    preencherModal(data);
+}
+
+function preencherModal(uh) {
+    inputId.value = uh.id;
+    inputNumero.value = uh.numero;
+    inputCategoria.value = uh.categoria;
+    inputStatus.value = uh.status;
+    inputPreco.value = uh.preco || 0;
+
+    modalTitle.textContent = "Editar UH";
+    modalUH.classList.remove("hidden");
+}
+
+
+// ----------- SALVAR (CRIAR / ATUALIZAR) ------------
+formUH.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = inputId.value.trim();
+    const numero = inputNumero.value.trim();
+    const categoria = inputCategoria.value.trim();
+    const status = inputStatus.value;
+    const preco = parseFloat(inputPreco.value || 0);
+
+    // --------- VALIDAÇÃO DE DUPLICIDADE ----------
+    const { data: existentes } = await sb.from(TABLE)
+        .select("*")
+        .eq("numero", numero);
+
+    if (!id && existentes && existentes.length > 0) {
+        alert("Já existe uma UH com esse número!");
+        return;
+    }
+
+    let fotoURL = null;
+
+    // --------- UPLOAD DE FOTO (OPCIONAL) ----------
+    if (inputFoto.files.length > 0) {
+        const arquivo = inputFoto.files[0];
+        const nomeArquivo = `${Date.now()}-${arquivo.name}`;
+
+        const { error: uploadError } = await sb.storage
+            .from(STORAGE_BUCKET)
+            .upload(nomeArquivo, arquivo);
+
+        if (uploadError) {
+            console.warn("Erro no upload da foto:", uploadError);
+        } else {
+            fotoURL = `${nomeArquivo}`;
+        }
+    }
+
+    // -------- CRIAÇÃO OU ATUALIZAÇÃO --------
+    let payload = {
+        numero,
+        categoria,
+        status,
+        preco,
+    };
+
+    if (fotoURL) payload.foto = fotoURL;
+
+    let result;
+
+    if (id) {
+        result = await sb.from(TABLE).update(payload).eq("id", id);
+    } else {
+        result = await sb.from(TABLE).insert(payload);
+    }
+
+    if (result.error) {
+        alert("Erro ao salvar UH!");
+        console.error(result.error);
+        return;
+    }
+
+    modalUH.classList.add("hidden");
+    formUH.reset();
+    loadUHs();
+    alert("UH salva com sucesso!");
 });
 
-// ===================== EDITAR =====================
 
-async function handleEdit(id) {
-  const { data, error } = await supabase
-    .from("uhs")
-    .select("*")
-    .eq("id", id)
-    .single();
+// ----------- EXCLUIR ------------
+async function excluirUH(id) {
+    if (!confirm("Tem certeza que deseja excluir esta UH?")) return;
 
-  if (error) {
-    console.error(error);
-    showError?.("Erro ao carregar dados da UH.");
-    return;
-  }
+    const { error } = await sb.from(TABLE).delete().eq("id", id);
 
-  openModal(data);
+    if (error) {
+        alert("Erro ao excluir UH!");
+        return;
+    }
+
+    loadUHs();
+    alert("UH removida!");
 }
 
-// ===================== EXCLUIR =====================
-
-async function handleDelete(id) {
-  const confirmar = confirm("Deseja realmente excluir esta UH?");
-  if (!confirmar) return;
-
-  const { error } = await supabase
-    .from("uhs")
-    .delete()
-    .eq("id", id);
-
-  if (error) {
-    console.error(error);
-    showError?.("Erro ao excluir UH.");
-    return;
-  }
-
-  showSuccess?.("UH excluída com sucesso.");
-  await loadUHs();
-}
-
-// ===================== DUPLICIDADE =====================
-
-async function existsNumero(numero, ignoreId = null) {
-  const { data, error } = await supabase
-    .from("uhs")
-    .select("id, numero")
-    .eq("numero", numero)
-    .limit(1);
-
-  if (error) {
-    console.error(error);
-    return false; // em caso de erro, não bloqueia o cadastro
-  }
-
-  if (!data || data.length === 0) return false;
-
-  const found = data[0];
-
-  if (ignoreId && found.id === ignoreId) return false;
-
-  return true;
-}
-
-// ===================== HELPERS =====================
-
-function getStatusClass(status) {
-  const s = (status || "livre").toLowerCase();
-
-  switch (s) {
-    case "livre":
-      return "status-livre";
-    case "ocupado":
-      return "status-ocupado";
-    case "limpeza":
-      return "status-limpeza";
-    case "manutencao":
-      return "status-manutencao";
-    case "bloqueado":
-      return "status-bloqueado";
-    default:
-      return "status-livre";
-  }
-}
-
-function labelStatus(status) {
-  const s = (status || "livre").toLowerCase();
-
-  switch (s) {
-    case "livre":
-      return "Livre";
-    case "ocupado":
-      return "Ocupado";
-    case "limpeza":
-      return "Limpeza";
-    case "manutencao":
-      return "Manutenção";
-    case "bloqueado":
-      return "Bloqueado";
-    default:
-      return "Livre";
-  }
-}
-
-function formatPreco(valor) {
-  if (valor === null || valor === undefined || isNaN(Number(valor))) return "-";
-  return `R$ ${Number(valor).toFixed(2)}`;
-}
-
-// converter arquivo para base64
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (err) => reject(err);
-    reader.readAsDataURL(file);
-  });
-}
-
-// evitar XSS básico
-function escapeHtml(text) {
-  if (!text && text !== 0) return "";
-  return String(text)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-// ===================== INICIALIZAÇÃO =====================
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadUHs();
-});
