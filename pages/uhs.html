@@ -6,6 +6,7 @@
   <title>PMS Lite • Unidades Habitacionais (UHs) • MDE Hub</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
+
 <body class="page">
 
   <!-- TOPO -->
@@ -37,16 +38,21 @@
       <li><a href="lancamentos.html">Lançamentos</a></li>
       <li><a href="financeiro.html">Financeiro</a></li>
       <li><a href="relatorios.html">Relatórios</a></li>
-      <li><a href="#cadastroUH">Cadastro</a></li>
     </ul>
   </aside>
 
   <!-- CONTEÚDO -->
   <main class="content">
+
     <h1>Unidades Habitacionais (UHs)</h1>
     <p class="subtitle">
-      Controle visual das UHs: livre, ocupado, limpeza, manutenção, bloqueado.
+      Controle visual das UHs: livre, ocupado, limpeza, manutenção e bloqueado.
     </p>
+
+    <!-- BOTÃO ADICIONAR -->
+    <button id="btnAddUH" class="btn-primary mb">
+      + Nova UH
+    </button>
 
     <!-- LEGENDA -->
     <section class="card">
@@ -69,68 +75,71 @@
         <h2>Mapa simples</h2>
         <span class="badge-info" id="uhResumo"></span>
       </div>
+
       <div id="uhGrid" class="uh-grid">
-        <!-- Cards de UH montados pelo JS -->
+        <!-- UH cards criados dinamicamente -->
       </div>
     </section>
 
-    <!-- LISTA DE UHs -->
+    <!-- LISTA DE UHS -->
     <section class="card mt">
       <h2>Lista de UHs</h2>
+
       <table class="table">
         <thead>
           <tr>
             <th>UH</th>
-            <th>Tipo</th>
+            <th>Categoria</th>
             <th>Status</th>
-            <th>Previsão saída</th>
+            <th>Preço</th>
             <th>Ações</th>
           </tr>
         </thead>
+
         <tbody id="uhTableBody">
-          <!-- Linhas montadas pelo JS -->
+          <!-- Preenchido pelo JS -->
         </tbody>
       </table>
     </section>
 
-    <!-- CADASTRO DE UHs -->
-    <section id="cadastroUH" class="card mt">
-      <h2>Cadastro de Unidade</h2>
-      <p class="subtitle">
-        Use este cadastro rápido para incluir UHs no PMS Lite
-        (ex.: 101, 102, 201…).
-      </p>
-
-      <form id="uhForm" class="form-grid-3">
-        <div class="form-group">
-          <label>Número / Nome da UH</label>
-          <input type="text" id="uhNumero" required placeholder="Ex.: 101, 102, Suíte Master" />
-        </div>
-
-        <div class="form-group">
-          <label>Tipo</label>
-          <input type="text" id="uhTipo" placeholder="Standard, Luxo, Master..." />
-        </div>
-
-        <div class="form-group">
-          <label>Status inicial</label>
-          <select id="uhStatusInicial">
-            <option value="livre">Livre</option>
-            <option value="ocupado">Ocupado</option>
-            <option value="limpeza">Limpeza</option>
-            <option value="manutencao">Manutenção</option>
-            <option value="bloqueado">Bloqueado</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn-primary">
-          Salvar UH
-        </button>
-      </form>
-
-      <p id="uhFormStatus" class="msg-ok"></p>
-    </section>
   </main>
+
+  <!-- MODAL (Adicionar / Editar UH) -->
+  <div id="modalUH" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="modalTitle">Nova UH</h2>
+
+      <form id="uhForm" class="form-grid">
+        <input type="hidden" id="uhId">
+
+        <label>Número / Nome da UH</label>
+        <input type="text" id="numeroUH" required placeholder="Ex.: 101, Suíte 02">
+
+        <label>Categoria</label>
+        <input type="text" id="categoriaUH" placeholder="Standard, Luxo, Master">
+
+        <label>Status</label>
+        <select id="statusUH">
+          <option value="livre">Livre</option>
+          <option value="ocupado">Ocupado</option>
+          <option value="limpeza">Limpeza</option>
+          <option value="manutencao">Manutenção</option>
+          <option value="bloqueado">Bloqueado</option>
+        </select>
+
+        <label>Preço padrão (R$)</label>
+        <input type="number" step="0.01" id="precoUH" placeholder="0,00">
+
+        <label>Foto (opcional)</label>
+        <input type="file" id="fotoUH" accept="image/*">
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancel" class="btn-secondary">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script src="../js/supabase.js"></script>
   <script src="../js/app-common.js"></script>
