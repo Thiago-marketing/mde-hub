@@ -1,56 +1,43 @@
+// ===============================
+//  AUTH.JS — Login e fluxo seguro
+// ===============================
+
+import { supabase } from "/js/supabase.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Tema salvo
-  const body = document.body;
-  const toggleBtn = document.querySelector("[data-theme-toggle]");
+  const form = document.getElementById("loginForm");
+  if (!form) return;
 
-  const applyTheme = (theme) => {
-    body.classList.remove("theme-light", "theme-dark");
-    body.classList.add(theme);
-    localStorage.setItem("mdehub-theme", theme);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    if (toggleBtn) {
-      const icon = toggleBtn.querySelector(".theme-toggle-icon");
-      const label = toggleBtn.querySelector(".theme-toggle-label");
-      if (theme === "theme-dark" || theme === "dark") {
-        body.classList.remove("theme-light");
-        body.classList.add("theme-dark");
-        icon.textContent = "🌞";
-        label.textContent = "Modo claro";
-      } else {
-        body.classList.remove("theme-dark");
-        body.classList.add("theme-light");
-        icon.textContent = "🌙";
-        label.textContent = "Modo escuro";
-      }
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!email || !password) {
+      alert("Preencha e-mail e senha.");
+      return;
     }
-  };
 
-  // Definir tema inicial
-  const savedTheme = localStorage.getItem("mdehub-theme");
-  if (savedTheme === "theme-dark" || savedTheme === "dark") {
-    applyTheme("theme-dark");
-  } else {
-    applyTheme("theme-light");
-  }
-
-  // Toggle de tema
-  if (toggleBtn) {
-    toggleBtn.addEventListener("click", () => {
-      const isDark = body.classList.contains("theme-dark");
-      applyTheme(isDark ? "theme-light" : "theme-dark");
+    // Autenticar no Supabase
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     });
-  }
 
-  // Mostrar/ocultar senha
-  document.querySelectorAll("[data-password-toggle]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const inputId = btn.getAttribute("data-password-toggle");
-      const input = document.getElementById(inputId);
-      if (!input) return;
+    if (error) {
+      console.error("Erro no login:", error.message);
 
-      const isPassword = input.type === "password";
-      input.type = isPassword ? "text" : "password";
-      btn.textContent = isPassword ? "🙈" : "👁";
-    });
+      if (error.message.includes("Email not confirmed")) {
+        alert("Seu e-mail ainda não foi confirmado. Verifique sua caixa de entrada.");
+        return;
+      }
+
+      alert("E-mail ou senha incorretos.");
+      return;
+    }
+
+    // Login OK → Redirecionar
+    window.location.href = "/dashboard.html";
   });
 });
