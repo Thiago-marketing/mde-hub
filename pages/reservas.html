@@ -1,108 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PMS Lite • Reservas</title>
-  <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/theme.js"></script>
-</head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reservas • MDE Sistemas</title>
 
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+  <script defer src="/js/reservas.js"></script>
+</head>
 <body>
 
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
   <aside class="sidebar">
-    <h2>PMS Lite</h2>
+    <h3>Operação</h3>
     <nav>
-      <a href="/pages/dashboard.html">Dashboard</a>
-      <a href="/pages/uhs.html">Unidades</a>
+      <a href="/dashboard.html">Dashboard</a>
       <a href="/pages/reservas.html" class="active">Reservas</a>
       <a href="/pages/checkin.html">Check-in</a>
       <a href="/pages/checkout.html">Check-out</a>
-      <a href="/pages/lancamentos.html">Lançamentos</a>
+      <a href="/pages/uhs.html">Unidades Habitacionais</a>
       <a href="/pages/financeiro.html">Financeiro</a>
+      <a href="/pages/configuracoes.html">Configurações</a>
+    </nav>
+
+    <h3>CRM</h3>
+    <nav>
+      <a href="/pages/crm-dashboard.html">Painel CRM</a>
+      <a href="/pages/crm-leads.html">Leads</a>
+      <a href="/pages/crm-kanban.html">Kanban</a>
+      <a href="/pages/crm-atividades.html">Atividades</a>
+    </nav>
+
+    <h3>Admin</h3>
+    <nav>
+      <a href="/pages/checklist-governanca.html">Checklist Governança</a>
+      <a href="/pages/auditoria.html">Auditoria</a>
+      <a href="/pages/relatorios.html">Relatórios</a>
     </nav>
   </aside>
 
-  <main class="page-content">
-
-    <h1 class="page-title">Reservas</h1>
-    <p class="page-subtitle">Calendário visual semanal, organizado por unidade.</p>
+  <main class="content">
+    <h1>Reservas</h1>
 
     <section class="card">
+      <header class="card-header-inline">
+        <div>
+          <h2>Calendário de Reservas</h2>
+          <p>Visualize entradas, saídas e bloqueios por UH</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn-primary" id="novaReservaBtn">+ Nova reserva</button>
+        </div>
+      </header>
 
-      <div class="calendar-header">
-        <button id="btnPrev" class="btn-primary">◀ Semana anterior</button>
-        <h2 id="weekLabel">Carregando...</h2>
-        <button id="btnNext" class="btn-primary">Próxima semana ▶</button>
+      <div id="calendarioReservas" class="calendario-reservas">
+        <!-- gerado via reservas.js -->
       </div>
 
-      <div id="calendarGrid" class="calendar-grid"></div>
-
+      <div class="legenda-mapa mt-md">
+        <span class="tag tag-verde">Livre</span>
+        <span class="tag tag-vermelho">Ocupado</span>
+        <span class="tag tag-azul">Limpeza</span>
+        <span class="tag tag-cinza">Manutenção</span>
+        <span class="tag tag-preto">Bloqueado</span>
+        <span class="tag tag-rosa">Reserva prevista</span>
+        <span class="tag tag-verde-bolinha">Saída prevista</span>
+      </div>
     </section>
-
-    <!-- MODAL -->
-    <div id="modalReserva" class="modal hidden">
-      <div class="modal-content">
-
-        <h2 id="modalTitle">Nova Reserva</h2>
-
-        <form id="reservaForm" class="form-grid">
-
-          <input type="hidden" id="reservaId">
-
-          <div>
-            <label>UH</label>
-            <select id="reservaUH"></select>
-          </div>
-
-          <div>
-            <label>Hóspede</label>
-            <input type="text" id="reservaHospede">
-          </div>
-
-          <div>
-            <label>Telefone</label>
-            <input type="text" id="reservaTelefone">
-          </div>
-
-          <div>
-            <label>Origem</label>
-            <input type="text" id="reservaOrigem">
-          </div>
-
-          <div>
-            <label>Check-in</label>
-            <input type="date" id="reservaCheckin">
-          </div>
-
-          <div>
-            <label>Check-out</label>
-            <input type="date" id="reservaCheckout">
-          </div>
-
-          <div>
-            <label>Adultos</label>
-            <input type="number" id="reservaAdultos" value="1">
-          </div>
-
-          <div>
-            <label>Crianças</label>
-            <input type="number" id="reservaCriancas" value="0">
-          </div>
-
-          <button class="btn-primary">Salvar</button>
-          <button type="button" id="btnCancel" class="btn-danger">Cancelar</button>
-
-        </form>
-
-      </div>
-    </div>
-
   </main>
-
-  <script src="/js/supabase.js"></script>
-  <script src="/js/pms/reservas.js"></script>
 
 </body>
 </html>
