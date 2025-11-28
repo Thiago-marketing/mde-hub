@@ -77,7 +77,7 @@
       </div>
 
       <div id="uhGrid" class="uh-grid">
-        <!-- UH cards criados dinamicamente -->
+        <!-- UH cards criados pelo JS -->
       </div>
     </section>
 
@@ -97,19 +97,20 @@
         </thead>
 
         <tbody id="uhTableBody">
-          <!-- Preenchido pelo JS -->
+          <!-- conteúdo gerado pelo JS -->
         </tbody>
       </table>
     </section>
 
   </main>
 
-  <!-- MODAL (Adicionar / Editar UH) -->
+  <!-- MODAL DE CADASTRO / EDIÇÃO -->
   <div id="modalUH" class="modal hidden">
     <div class="modal-content">
       <h2 id="modalTitle">Nova UH</h2>
 
       <form id="uhForm" class="form-grid">
+
         <input type="hidden" id="uhId">
 
         <label>Número / Nome da UH</label>
@@ -137,10 +138,12 @@
           <button type="button" id="btnCancel" class="btn-secondary">Cancelar</button>
           <button type="submit" class="btn-primary">Salvar</button>
         </div>
+
       </form>
     </div>
   </div>
 
+  <!-- SCRIPTS -->
   <script src="../js/supabase.js"></script>
   <script src="../js/app-common.js"></script>
   <script src="../js/pms/uhs.js"></script>
