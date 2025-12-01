@@ -1,145 +1,107 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Simuladores • MDE Hub</title>
+
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body class="page">
-  <!-- TOPO -->
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">U</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
+<body class="hub-body" data-theme="dark">
+  <div class="hub-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="hub-sidebar" id="sidebar">
+      <div class="sidebar-logo">MDE Hub</div>
+
+      <nav class="sidebar-nav">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/reservas.html" class="nav-link">Reservas</a>
+        <a href="/uhs.html" class="nav-link">Unidades Habitacionais</a>
+        <a href="/financeiro.html" class="nav-link">Financeiro</a>
+
+        <div class="nav-section-title">CRM</div>
+        <a href="/crm.html" class="nav-link">Painel CRM</a>
+        <a href="/leads.html" class="nav-link">Leads</a>
+
+        <div class="nav-section-title">Ferramentas</div>
+        <a href="/simuladores.html" class="nav-link active">Simuladores</a>
+      </nav>
+    </aside>
+
+    <!-- OVERLAY MOBILE -->
+    <div class="hub-overlay" id="sidebarOverlay"></div>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="hub-main">
+
+      <!-- TOPBAR -->
+      <header class="hub-topbar">
+        <button class="btn-icon only-mobile" id="menuToggle">☰</button>
+
+        <div class="topbar-left">
+          <div class="user-chip">
+            <span class="user-avatar" id="userInitial">U</span>
+            <div class="user-info">
+              <span class="user-name" id="userName">Carregando usuário...</span>
+              <span class="user-email" id="userEmail"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn-outline" id="themeToggle">Modo claro/escuro</button>
+          <button class="btn-primary" id="logoutBtn">Sair</button>
+        </div>
+      </header>
+
+      <!-- CONTEÚDO -->
+      <main class="hub-content">
+
+        <h1 class="page-title">Simuladores MDE</h1>
+        <p class="page-subtitle">
+          Ferramentas gratuitas para ajudar sua hospedagem a crescer e tomar decisões melhores.
+        </p>
+
+        <section class="cards-grid">
+
+          <!-- Simulador de Faturamento -->
+          <article class="card">
+            <h2 class="card-title">Simulador de Faturamento</h2>
+            <p class="card-sub">Descubra o potencial mensal e anual de faturamento.</p>
+            <a href="/sim-faturamento.html" class="btn-primary btn-full">Abrir simulador</a>
+          </article>
+
+          <!-- Simulador OTA -->
+          <article class="card">
+            <h2 class="card-title">Custo OTA</h2>
+            <p class="card-sub">Veja quanto você paga por ano em comissões.</p>
+            <a href="/sim-ota.html" class="btn-primary btn-full">Abrir simulador</a>
+          </article>
+
+          <!-- ADR Ideal -->
+          <article class="card">
+            <h2 class="card-title">Tarifa Ideal (ADR)</h2>
+            <p class="card-sub">Calcule a diária ideal para atingir sua meta.</p>
+            <a href="/sim-adr-ideal.html" class="btn-primary btn-full">Abrir simulador</a>
+          </article>
+
+          <!-- RevPAR -->
+          <article class="card">
+            <h2 class="card-title">RevPAR</h2>
+            <p class="card-sub">Calcule a receita por unidade disponível.</p>
+            <a href="/sim-revpar.html" class="btn-primary btn-full">Abrir simulador</a>
+          </article>
+
+        </section>
+
+      </main>
+
     </div>
-
-    <div class="topbar-actions">
-      <a href="/dashboard.html" class="btn-secondary btn-small">
-        ← Voltar para o painel
-      </a>
-      <button id="toggleThemeBtn" class="btn-secondary btn-small">
-        🌓 Tema
-      </button>
-      <button id="logoutBtn" class="btn-sair">Sair</button>
-    </div>
-  </header>
-
-  <!-- MENU LATERAL -->
-  <aside class="sidebar">
-    <h3>Operação</h3>
-    <nav>
-      <a href="/dashboard.html">Dashboard</a>
-      <a href="/reservas.html">Reservas</a>
-      <a href="/checkin.html">Check-in</a>
-      <a href="/checkout.html">Check-out</a>
-      <a href="/lancamentos.html">Lançamentos</a>
-      <a href="/financeiro.html">Financeiro</a>
-      <a href="/relatorios.html">Relatórios</a>
-      <a href="/uhs.html">UHs</a>
-      <a href="/config.html">Configurações</a>
-    </nav>
-
-    <h3>Ferramentas</h3>
-    <nav>
-      <a href="/leads.html">Leads</a>
-      <a href="/premium.html">Plano Premium</a>
-      <a href="/simuladores.html" class="active">Simuladores</a>
-    </nav>
-  </aside>
-
-  <!-- CONTEÚDO -->
-  <main class="content">
-    <section class="page-header">
-      <h1>Simuladores MDE</h1>
-      <p class="muted">
-        Use os simuladores abaixo para entender melhor o potencial de faturamento,
-        ocupação e lucro da sua hospedagem.
-      </p>
-    </section>
-
-    <section class="grid grid-3">
-      <!-- Simulador de Faturamento -->
-      <article class="card">
-        <div class="card-header">
-          <h2>Simulador de Faturamento</h2>
-          <p class="muted">
-            Descubra quanto seu hotel pode faturar por mês e por ano com apoio das soluções MDE.
-          </p>
-        </div>
-        <div class="card-footer">
-          <a href="/sim-faturamento.html" class="btn btn-primary btn-full">
-            Abrir simulador
-          </a>
-        </div>
-      </article>
-
-      <!-- Simulador de Tarifa Ideal (placeholder) -->
-      <article class="card">
-        <div class="card-header">
-          <h2>Simulador de Tarifa Ideal</h2>
-          <p class="muted">
-            Calcule a diária média (ADR) ideal para bater sua meta de faturamento.
-          </p>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-disabled btn-full" disabled>
-            Em breve
-          </button>
-        </div>
-      </article>
-
-      <!-- Simulador de Custo OTA (placeholder) -->
-     <!-- Simulador de Custo OTA -->
-<article class="card">
-  <div class="card-header">
-    <h2>Simulador de Custo OTA</h2>
-    <p class="muted">
-      Veja quanto seu hotel paga de comissão por mês e por ano.
-    </p>
   </div>
-  <div class="card-footer">
-    <a href="/sim-ota.html" class="btn btn-primary btn-full">
-      Abrir simulador
-    </a>
-  </div>
-</article>
-   <!-- Simulador de Tarifa Ideal (ADR Ideal) -->
-<article class="card">
-  <div class="card-header">
-    <h2>Simulador de Tarifa Ideal (ADR Ideal)</h2>
-    <p class="muted">
-      Descubra qual diária mínima sua hospedagem deve cobrar.
-    </p>
-  </div>
-  <div class="card-footer">
-    <a href="/sim-adr-ideal.html" class="btn btn-primary btn-full">
-      Abrir simulador
-    </a>
-  </div>
-</article>
-   <!-- Simulador de RevPAR -->
-<article class="card">
-  <div class="card-header">
-    <h2>Simulador de RevPAR</h2>
-    <p class="muted">
-      Calcule a receita por unidade habitacional disponível.
-    </p>
-  </div>
-  <div class="card-footer">
-    <a href="/sim-revpar.html" class="btn btn-primary btn-full">
-      Abrir simulador
-    </a>
-  </div>
-</article>
-    </section>
-  </main>
 
-  <script src="/js/theme.js"></script>
-  <script src="/js/app.js"></script>
+  <!-- JS -->
+  <script src="/js/hub-ui.js"></script>
 </body>
 </html>
