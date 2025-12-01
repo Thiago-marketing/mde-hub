@@ -1,160 +1,190 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UHs • MDE Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PMS Lite • Unidades Habitacionais • MDE Hub</title>
 
-  <!-- CSS unificado -->
-  <link rel="stylesheet" href="/css/app.css">
+  <!-- CSS ÚNICO DO PROJETO -->
+  <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body class="hub-body" data-theme="dark">
-  <div class="hub-layout">
+<body class="page">
 
-    <!-- SIDEBAR -->
-    <aside class="hub-sidebar" id="sidebar">
-      <div class="sidebar-logo">MDE Hub</div>
+  <!-- TOPO -->
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Usuário de teste</p>
+        <p id="userEmail">teste@mdesistemas.com.br</p>
+      </div>
+    </div>
 
-      <nav class="sidebar-nav">
-        <a href="/dashboard.html" class="nav-link">Dashboard</a>
-        <a href="/reservas.html" class="nav-link">Reservas</a>
-        <a href="/checkin.html" class="nav-link">Check-in</a>
-        <a href="/checkout.html" class="nav-link">Check-out</a>
+    <div class="topbar-actions">
+      <a href="/dashboard.html" class="btn-secondary btn-small">
+        ← Voltar para o painel
+      </a>
+      <button id="toggleThemeBtn" class="btn-secondary btn-small">
+        🌓 Tema
+      </button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
 
-        <a href="/uhs.html" class="nav-link active">Unidades Habitacionais</a>
-        <a href="/financeiro.html" class="nav-link">Financeiro</a>
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <h3>Operação</h3>
+    <nav>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/reservas.html">Reservas</a>
+      <a href="/checkin.html">Check-in</a>
+      <a href="/checkout.html">Check-out</a>
+      <a href="/uhs.html" class="active">Unidades Habitacionais</a>
+      <a href="/financeiro.html">Financeiro</a>
+      <a href="/configuracoes.html">Configurações</a>
+    </nav>
 
-        <div class="nav-section-title">CRM</div>
-        <a href="/crm.html" class="nav-link">Painel CRM</a>
-        <a href="/leads.html" class="nav-link">Leads</a>
+    <h3>CRM</h3>
+    <nav>
+      <a href="/painel-crm.html">Painel CRM</a>
+      <a href="/leads.html">Leads</a>
+      <a href="/kanban.html">Kanban</a>
+      <a href="/atividades.html">Atividades</a>
+    </nav>
 
-        <div class="nav-section-title">Admin</div>
-        <a href="/config.html" class="nav-link">Configurações</a>
-      </nav>
-    </aside>
+    <h3>Admin</h3>
+    <nav>
+      <a href="/checklist-governanca.html">Checklist Governança</a>
+    </nav>
+  </aside>
 
-    <!-- OVERLAY MOBILE -->
-    <div class="hub-overlay" id="sidebarOverlay"></div>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="content">
 
-    <!-- ÁREA PRINCIPAL -->
-    <div class="hub-main">
+    <section class="page-header">
+      <div>
+        <h1>Unidades Habitacionais (UHs)</h1>
+        <p>Cadastre e gerencie os quartos do hotel. Essa base alimenta o mapa de reservas, check-in e financeiro.</p>
+      </div>
+      <button id="btnNovaUh" class="btn-primary">
+        + Nova UH
+      </button>
+    </section>
 
-      <!-- TOPBAR -->
-      <header class="hub-topbar">
-        <button class="btn-icon only-mobile" id="menuToggle">☰</button>
+    <!-- LEGENDA / STATUS -->
+    <section class="card mb-3">
+      <h2 class="card-title">Status das UHs</h2>
+      <p class="text-sm">
+        <span class="badge status-livre">Livre</span>
+        <span class="badge status-ocupado">Ocupado</span>
+        <span class="badge status-limpeza">Limpeza</span>
+        <span class="badge status-manutencao">Manutenção</span>
+        <span class="badge status-bloqueado">Bloqueado</span>
+      </p>
+    </section>
 
-        <div class="topbar-left">
-          <div class="user-chip">
-            <span class="user-avatar">U</span>
-            <div class="user-info">
-              <span class="user-name">Usuário de teste</span>
-              <span class="user-email">teste@mdesistemas.com.br</span>
-            </div>
-          </div>
+    <!-- LISTA DE UHs -->
+    <section class="card">
+      <div class="card-header">
+        <h2 class="card-title">Lista de UHs</h2>
+        <input
+          type="text"
+          id="filtroUh"
+          class="input"
+          placeholder="Filtrar por nome, tipo ou status..."
+        />
+      </div>
+
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>UH</th>
+              <th>Tipo</th>
+              <th>Capacidade</th>
+              <th>Status</th>
+              <th>Diária padrão</th>
+              <th style="width: 120px;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyUhs">
+            <!-- Linhas preenchidas via JS -->
+          </tbody>
+        </table>
+
+        <div id="estadoVazioUhs" class="estado-vazio" style="display: none;">
+          Nenhuma UH cadastrada ainda.
+          Clique em <strong>“+ Nova UH”</strong> para criar a primeira unidade.
         </div>
+      </div>
+    </section>
+  </main>
 
-        <div class="topbar-right">
-          <button class="btn-outline" id="themeToggle">Tema</button>
-          <button class="btn-primary" id="logoutBtn">Sair</button>
-        </div>
+  <!-- MODAL DE CADASTRO / EDIÇÃO -->
+  <div id="modalUh" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 id="modalUhTitulo">Nova UH</h2>
+        <button id="btnFecharModalUh" class="modal-close">&times;</button>
       </header>
 
-      <!-- CONTEÚDO -->
-      <main class="hub-content">
-        <h1 class="page-title">Unidades Habitacionais</h1>
+      <div class="modal-body">
+        <form id="formUh">
+          <input type="hidden" id="uhId" />
 
-        <!-- GRID DAS UHs -->
-        <section class="uh-grid">
-
-          <!-- UH LIVRE -->
-          <div class="uh-card status-livre">
-            <div class="uh-header">
-              <h3 class="uh-number">UH 01</h3>
-              <span class="uh-status-badge livre">Livre</span>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="uhNome">Nome da UH</label>
+              <input type="text" id="uhNome" class="input" placeholder="Ex.: Quarto 01, Suíte 04" required />
             </div>
 
-            <div class="uh-info">
-              <p><strong>Tipo:</strong> Standard</p>
-              <p><strong>Capacidade:</strong> 2 adultos</p>
+            <div class="form-group">
+              <label for="uhTipo">Tipo</label>
+              <input type="text" id="uhTipo" class="input" placeholder="Ex.: Casal, Família, Solteiro" />
             </div>
 
-            <div class="uh-actions">
-              <button class="btn-primary">Reservar</button>
-            </div>
-          </div>
-
-          <!-- UH OCUPADA -->
-          <div class="uh-card status-ocupado">
-            <div class="uh-header">
-              <h3 class="uh-number">UH 02</h3>
-              <span class="uh-status-badge ocupado">Ocupado</span>
+            <div class="form-group">
+              <label for="uhCapacidade">Capacidade</label>
+              <input type="number" id="uhCapacidade" class="input" min="1" value="2" />
             </div>
 
-            <div class="uh-info">
-              <p><strong>Hóspede:</strong> João Santana</p>
-              <p><strong>Saída prevista:</strong> hoje</p>
+            <div class="form-group">
+              <label for="uhStatus">Status</label>
+              <select id="uhStatus" class="input">
+                <option value="LIVRE">Livre</option>
+                <option value="OCUPADO">Ocupado</option>
+                <option value="LIMPEZA">Limpeza</option>
+                <option value="MANUTENCAO">Manutenção</option>
+                <option value="BLOQUEADO">Bloqueado</option>
+              </select>
             </div>
 
-            <div class="uh-actions">
-              <button class="btn-primary">Check-out</button>
+            <div class="form-group">
+              <label for="uhDiaria">Diária padrão (R$)</label>
+              <input type="number" id="uhDiaria" class="input" step="0.01" min="0" placeholder="Ex.: 250,00" />
             </div>
           </div>
 
-          <!-- UH LIMPEZA -->
-          <div class="uh-card status-limpeza">
-            <div class="uh-header">
-              <h3 class="uh-number">UH 03</h3>
-              <span class="uh-status-badge limpeza">Limpeza</span>
-            </div>
-
-            <div class="uh-info">
-              <p><strong>Observação:</strong> Aguardando camareira</p>
-            </div>
-
-            <div class="uh-actions">
-              <button class="btn-primary">Liberar</button>
-            </div>
+          <div class="form-group">
+            <label for="uhObservacoes">Observações</label>
+            <textarea id="uhObservacoes" class="input" rows="3"
+              placeholder="Ex.: Vista mar, cama king, perto da recepção..."></textarea>
           </div>
+        </form>
+      </div>
 
-          <!-- UH MANUTENÇÃO -->
-          <div class="uh-card status-manutencao">
-            <div class="uh-header">
-              <h3 class="uh-number">UH 04</h3>
-              <span class="uh-status-badge manutencao">Manutenção</span>
-            </div>
-
-            <div class="uh-info">
-              <p><strong>Problema:</strong> Ar-condicionado</p>
-            </div>
-
-            <div class="uh-actions">
-              <button class="btn-primary">Liberar</button>
-            </div>
-          </div>
-
-          <!-- UH BLOQUEADA -->
-          <div class="uh-card status-bloqueado">
-            <div class="uh-header">
-              <h3 class="uh-number">UH 05</h3>
-              <span class="uh-status-badge bloqueado">Bloqueado</span>
-            </div>
-
-            <div class="uh-info">
-              <p><strong>Motivo:</strong> Uso interno</p>
-            </div>
-
-            <div class="uh-actions">
-              <button class="btn-primary">Desbloquear</button>
-            </div>
-          </div>
-
-        </section>
-      </main>
-
+      <footer class="modal-footer">
+        <button id="btnCancelarUh" class="btn-secondary">Cancelar</button>
+        <button id="btnSalvarUh" class="btn-primary">Salvar UH</button>
+      </footer>
     </div>
   </div>
 
-  <script src="/js/hub-ui.js"></script>
+  <!-- SCRIPTS GLOBAIS (auth, tema, etc) -->
+  <!-- Ajuste esses imports conforme já estão nas outras páginas -->
+  <script src="/js/supabaseClient.js"></script>
+  <script src="/js/uhs.js"></script>
 </body>
 </html>
