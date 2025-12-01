@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simulador de Custo OTA • MDE Hub</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+
+<body class="page">
+
+  <!-- TOPO -->
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <a href="/simuladores.html" class="btn-secondary btn-small">
+        ← Voltar para Simuladores
+      </a>
+      <button id="toggleThemeBtn" class="btn-secondary btn-small">🌓 Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <h3>Operação</h3>
+    <nav>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/reservas.html">Reservas</a>
+      <a href="/checkin.html">Check-in</a>
+      <a href="/checkout.html">Check-out</a>
+      <a href="/lancamentos.html">Lançamentos</a>
+      <a href="/financeiro.html">Financeiro</a>
+      <a href="/relatorios.html">Relatórios</a>
+      <a href="/uhs.html">UHs</a>
+      <a href="/config.html">Configurações</a>
+    </nav>
+
+    <h3>Ferramentas</h3>
+    <nav>
+      <a href="/leads.html">Leads</a>
+      <a href="/premium.html">Plano Premium</a>
+      <a href="/simuladores.html" class="active">Simuladores</a>
+    </nav>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="content">
+    <section class="page-header">
+      <h1>Simulador de Custo OTA</h1>
+      <p class="muted">
+        Descubra quanto você paga por mês e por ano em comissões para OTAs como Booking, Airbnb e Expedia.
+      </p>
+    </section>
+
+    <section class="grid grid-2">
+      <!-- FORMULÁRIO -->
+      <form id="simOTA" class="card">
+        <div class="card-header">
+          <h2>Dados da hospedagem</h2>
+        </div>
+
+        <div class="card-body form-grid">
+
+          <div class="form-group">
+            <label for="uhCount">Nº de quartos (UH)</label>
+            <input type="number" id="uhCount" min="1" required placeholder="Ex: 20" />
+          </div>
+
+          <div class="form-group">
+            <label for="occupancy">Ocupação média mensal (%)</label>
+            <input type="number" id="occupancy" min="0" max="100" required placeholder="Ex: 65" />
+          </div>
+
+          <div class="form-group">
+            <label for="adr">Diária média (ADR) – R$</label>
+            <input type="text" id="adr" required placeholder="Ex: 350,00" />
+          </div>
+
+          <div class="form-group">
+            <label for="otaPct">% de reservas pelas OTAs</label>
+            <input type="number" id="otaPct" min="0" max="100" required placeholder="Ex: 60" />
+          </div>
+
+          <div class="form-group">
+            <label for="otaFee">Comissão OTA (%)</label>
+            <input type="number" id="otaFee" min="0" max="50" required placeholder="Ex: 18" />
+          </div>
+
+        </div>
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary btn-full">
+            Calcular custo OTA
+          </button>
+        </div>
+      </form>
+
+      <!-- RESULTADO -->
+      <section id="resultCard" class="card" style="display: none;">
+        <div class="card-header">
+          <h2>Resultado da simulação</h2>
+        </div>
+
+        <div class="card-body">
+
+          <h3>💸 Comissões pagas às OTAs</h3>
+          <p><strong>Comissão mensal:</strong> <span id="comissaoMensal"></span></p>
+          <p><strong>Comissão anual:</strong> <span id="comissaoAnual"></span></p>
+
+          <hr />
+
+          <h3>📊 Faturamento de base</h3>
+          <p><strong>Faturamento bruto mensal:</strong> <span id="fatBruto"></span></p>
+          <p><strong>Faturamento via OTA:</strong> <span id="fatOta"></span></p>
+
+          <div class="highlight-box">
+            <p style="font-size: 18px;">
+              💡 <strong>Reduzindo apenas 15 pontos das OTAs, você pode economizar até:</strong>
+            </p>
+            <p><strong>Por ano:</strong> <span id="economiaPotencial"></span></p>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button id="whatsBtn" class="btn btn-success btn-full">
+            Receber diagnóstico completo no WhatsApp
+          </button>
+          <p class="muted small">
+            Você será direcionado para o WhatsApp oficial da MDE (+55 11 94027-7447)
+            com o resumo desta simulação.
+          </p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+
+<script>
+  function parseBRLToNumber(value) {
+    if (!value) return 0;
+    return parseFloat(String(value).replace(/\./g, "").replace(",", ".")) || 0;
+  }
+
+  function formatBRL(value) {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(value || 0);
+  }
+
+  const form = document.getElementById("simOTA");
+  const resultCard = document.getElementById("resultCard");
+
+  const comissaoMensalEl = document.getElementById("comissaoMensal");
+  const comissaoAnualEl = document.getElementById("comissaoAnual");
+  const fatBrutoEl = document.getElementById("fatBruto");
+  const fatOtaEl = document.getElementById("fatOta");
+  const economiaPotencialEl = document.getElementById("economiaPotencial");
+
+  const whatsBtn = document.getElementById("whatsBtn");
+
+  let lastSimData = null;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const uh = parseInt(document.getElementById("uhCount").value || "0");
+    const occ = parseFloat(document.getElementById("occupancy").value || "0");
+    const adr = parseBRLToNumber(document.getElementById("adr").value);
+    const otaPct = parseFloat(document.getElementById("otaPct").value || "0");
+    const otaFee = parseFloat(document.getElementById("otaFee").value || "0");
+
+    if (!uh || !occ || !adr) {
+      alert("Preencha todos os dados.");
+      return;
+    }
+
+    const dias = 30;
+    const quartosVendidos = uh * (occ / 100) * dias;
+
+    const fatBruto = quartosVendidos * adr;
+    const fatOta = fatBruto * (otaPct / 100);
+    const comissaoMensal = fatOta * (otaFee / 100);
+    const comissaoAnual = comissaoMensal * 12;
+
+    const novaOta = Math.max(0, otaPct - 15);
+    const fatOtaNovo = fatBruto * (novaOta / 100);
+    const novasComissoes = fatOtaNovo * (otaFee / 100);
+    const economiaPotencial = comissaoAnual - novasComissoes * 12;
+
+    // Exibir
+    comissaoMensalEl.textContent = formatBRL(comissaoMensal);
+    comissaoAnualEl.textContent = formatBRL(comissaoAnual);
+    fatBrutoEl.textContent = formatBRL(fatBruto);
+    fatOtaEl.textContent = formatBRL(fatOta);
+    economiaPotencialEl.textContent = formatBRL(economiaPotencial);
+
+    resultCard.style.display = "block";
+
+    lastSimData = {
+      uh, occ, adr, otaPct, otaFee,
+      fatBruto, fatOta, comissaoMensal, comissaoAnual,
+      economiaPotencial
+    };
+  });
+
+  // Enviar para WhatsApp
+  whatsBtn.addEventListener("click", function () {
+    if (!lastSimData) return;
+
+    const msg = `
+Simulação de Custo OTA - MDE
+
+Quartos (UH): ${lastSimData.uh}
+Ocupação: ${lastSimData.occ}%
+ADR: ${formatBRL(lastSimData.adr)}
+
+Mix OTA: ${lastSimData.otaPct}%
+Comissão OTA: ${lastSimData.otaFee}%
+
+Faturamento bruto/mês: ${formatBRL(lastSimData.fatBruto)}
+Faturamento via OTA/mês: ${formatBRL(lastSimData.fatOta)}
+Comissão paga/mês: ${formatBRL(lastSimData.comissaoMensal)}
+Comissão paga/ano: ${formatBRL(lastSimData.comissaoAnual)}
+
+Economia potencial reduzindo dependência das OTAs:
+${formatBRL(lastSimData.economiaPotencial)} por ano.
+    `.trim();
+
+    window.open(
+      "https://wa.me/5511940277447?text=" + encodeURIComponent(msg),
+      "_blank"
+    );
+  });
+</script>
+
+<script src="/js/theme.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
