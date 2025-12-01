@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simulador de RevPAR • MDE Hub</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+
+<body class="page">
+
+  <!-- TOPO -->
+  <header class="topbar">
+    <div class="user-info">
+      <span id="userInitial">U</span>
+      <div>
+        <p id="userName">Carregando usuário...</p>
+        <p id="userEmail"></p>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <a href="/simuladores.html" class="btn-secondary btn-small">← Voltar</a>
+      <button id="toggleThemeBtn" class="btn-secondary btn-small">🌓 Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <h3>Operação</h3>
+    <nav>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/reservas.html">Reservas</a>
+      <a href="/checkin.html">Check-in</a>
+      <a href="/checkout.html">Check-out</a>
+      <a href="/lancamentos.html">Lançamentos</a>
+      <a href="/financeiro.html">Financeiro</a>
+      <a href="/relatorios.html">Relatórios</a>
+      <a href="/uhs.html">UHs</a>
+      <a href="/config.html">Configurações</a>
+    </nav>
+
+    <h3>Ferramentas</h3>
+    <nav>
+      <a href="/leads.html">Leads</a>
+      <a href="/premium.html">Plano Premium</a>
+      <a href="/simuladores.html" class="active">Simuladores</a>
+    </nav>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="content">
+    <section class="page-header">
+      <h1>Simulador de RevPAR</h1>
+      <p class="muted">
+        Calcule a receita por unidade disponível e veja como melhorar o desempenho da sua hospedagem.
+      </p>
+    </section>
+
+    <section class="grid grid-2">
+
+      <!-- FORMULÁRIO -->
+      <form id="simRevpar" class="card">
+        <div class="card-header">
+          <h2>Dados do hotel</h2>
+        </div>
+
+        <div class="card-body form-grid">
+
+          <div class="form-group">
+            <label for="uhCount">Nº de quartos (UH)</label>
+            <input type="number" id="uhCount" min="1" required placeholder="Ex: 20" />
+          </div>
+
+          <div class="form-group">
+            <label for="occupancy">Ocupação média (%)</label>
+            <input type="number" id="occupancy" min="0" max="100" required placeholder="Ex: 65" />
+          </div>
+
+          <div class="form-group">
+            <label for="adr">Diária média (ADR) – R$</label>
+            <input type="text" id="adr" required placeholder="Ex: 350,00" />
+          </div>
+
+          <div class="form-group">
+            <label for="revparMeta">Meta de RevPAR (opcional)</label>
+            <input type="text" id="revparMeta" placeholder="Ex: 220,00" />
+          </div>
+
+        </div>
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary btn-full">
+            Calcular RevPAR
+          </button>
+        </div>
+      </form>
+
+      <!-- RESULTADO -->
+      <section id="resultCard" class="card" style="display: none;">
+        <div class="card-header">
+          <h2>Resultado</h2>
+        </div>
+
+        <div class="card-body">
+
+          <h3>📈 RevPAR Atual</h3>
+          <p><strong>RevPAR = </strong> <span id="revparResult"></span></p>
+
+          <hr />
+
+          <h3>📊 Potencial de melhoria</h3>
+          <p><strong>ADR:</strong> <span id="adrAtual"></span></p>
+          <p><strong>Ocupação:</strong> <span id="occAtual"></span></p>
+          <p><strong>Faturamento mensal estimado:</strong> <span id="fatMensal"></span></p>
+
+          <div id="analiseBox" class="highlight-box"></div>
+
+        </div>
+
+        <div class="card-footer">
+          <button id="whatsBtn" class="btn btn-success btn-full">
+            Receber análise no WhatsApp
+          </button>
+          <p class="muted small">
+            Você será direcionado para o WhatsApp oficial da MDE (+55 11 94027-7447).
+          </p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+<script>
+  function parseBRL(val) {
+    if (!val) return 0;
+    return parseFloat(val.replace(/\./g, "").replace(",", ".")) || 0;
+  }
+
+  function formatBRL(v) {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRBR"
+    }).format(v || 0);
+  }
+
+  const form = document.getElementById("simRevpar");
+  const resultCard = document.getElementById("resultCard");
+
+  const revparEl = document.getElementById("revparResult");
+  const adrAtualEl = document.getElementById("adrAtual");
+  const occAtualEl = document.getElementById("occAtual");
+  const fatMensalEl = document.getElementById("fatMensal");
+  const analiseBoxEl = document.getElementById("analiseBox");
+
+  const whatsBtn = document.getElementById("whatsBtn");
+
+  let lastSim = null;
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const uh = parseInt(document.getElementById("uhCount").value);
+    const occ = parseFloat(document.getElementById("occupancy").value);
+    const adr = parseBRL(document.getElementById("adr").value);
+    const metaRevpar = parseBRL(document.getElementById("revparMeta").value);
+
+    const revpar = adr * (occ / 100);
+    const dias = 30;
+    const fatMensal = uh * (occ / 100) * dias * adr;
+
+    revparEl.textContent = formatBRL(revpar);
+    adrAtualEl.textContent = formatBRL(adr);
+    occAtualEl.textContent = occ + "%";
+    fatMensalEl.textContent = formatBRL(fatMensal);
+
+    let analise = "";
+
+    if (metaRevpar > 0) {
+      if (revpar >= metaRevpar) {
+        analise += `<p><strong>Excelente!</strong> Seu RevPAR atual já é superior à meta definida.</p>`;
+      } else {
+        const dif = metaRevpar - revpar;
+        analise += `<p><strong>Diferença para meta:</strong> ${formatBRL(dif)}</p>`;
+        analise += `<p>Para atingir essa meta, você precisará aumentar ADR, ocupação ou ambos.</p>`;
+      }
+    } else {
+      analise += `<p>Melhore RevPAR aumentando reservas diretas e reduzindo dependência de OTAs.</p>`;
+    }
+
+    analiseBoxEl.innerHTML = analise;
+
+    resultCard.style.display = "block";
+
+    lastSim = { uh, occ, adr, revpar, fatMensal, metaRevpar };
+  });
+
+  whatsBtn.addEventListener("click", function() {
+    if (!lastSim) return;
+
+    const msg = `
+Simulação RevPAR - MDE
+
+UH: ${lastSim.uh}
+Ocupação: ${lastSim.occ}%
+ADR: ${formatBRL(lastSim.adr)}
+
+RevPAR atual: ${formatBRL(lastSim.revpar)}
+Faturamento mensal estimado: ${formatBRL(lastSim.fatMensal)}
+Meta RevPAR: ${formatBRL(lastSim.metaRevpar)}
+
+Solicito análise completa.
+    `.trim();
+
+    window.open(
+      "https://wa.me/5511940277447?text=" + encodeURIComponent(msg),
+      "_blank"
+    );
+  });
+</script>
+
+<script src="/js/theme.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
