@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Painel CRM • MDE Sistemas</title>
+  <title>Painel CRM • MDE Hub</title>
 
   <link rel="stylesheet" href="/css/app.css" />
   <script defer src="/js/app.js"></script>
-  <script defer src="/js/crm-dashboard.js"></script>
+  <script defer src="/js/crm/dashboard.js"></script>
 </head>
-<body>
-  <!-- topo + sidebar com seção CRM ativa -->
-  <!-- ... -->
 
+<body class="page">
+
+  <!-- TOPO -->
   <header class="topbar">
     <div class="user-info">
       <span id="userInitial">U</span>
@@ -21,12 +21,14 @@
         <p id="userEmail"></p>
       </div>
     </div>
+
     <div class="topbar-actions">
       <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
       <button id="logoutBtn" class="btn-sair">Sair</button>
     </div>
   </header>
 
+  <!-- MENU LATERAL -->
   <aside class="sidebar">
     <h3>Operação</h3>
     <nav>
@@ -38,13 +40,15 @@
       <a href="/financeiro.html">Financeiro</a>
       <a href="/configuracoes.html">Configurações</a>
     </nav>
+
     <h3>CRM</h3>
     <nav>
       <a href="/crm-dashboard.html" class="active">Painel CRM</a>
-      <a href="/crm-leads.html">Leads</a>
+      <a href="/leads.html">Leads</a>
       <a href="/crm-kanban.html">Kanban</a>
       <a href="/crm-atividades.html">Atividades</a>
     </nav>
+
     <h3>Admin</h3>
     <nav>
       <a href="/checklist-governanca.html">Checklist Governança</a>
@@ -53,32 +57,44 @@
     </nav>
   </aside>
 
+  <!-- CONTEÚDO -->
   <main class="content">
     <h1>Painel CRM</h1>
 
-    <section class="grid-3">
-      <article class="card metric">
-        <h2>Novos leads</h2>
-        <p class="metric-value" id="crmNovosLeads">--</p>
-        <p class="metric-detail">Últimos 7 dias</p>
-      </article>
-      <article class="card metric">
-        <h2>Propostas enviadas</h2>
-        <p class="metric-value" id="crmPropostas">--</p>
-        <p class="metric-detail">Mês atual</p>
-      </article>
-      <article class="card metric">
-        <h2>Taxa de conversão</h2>
-        <p class="metric-value" id="crmConversao">-- %</p>
-        <p class="metric-detail">Leads ganhas / total</p>
-      </article>
+    <!-- CARDS SUPERIORES -->
+    <section class="cards-grid">
+      <div class="card">
+        <h3>Total de Leads</h3>
+        <p id="cardTotalLeads" class="card-number">0</p>
+      </div>
+
+      <div class="card">
+        <h3>Novos Hoje</h3>
+        <p id="cardNovosHoje" class="card-number">0</p>
+      </div>
+
+      <div class="card">
+        <h3>Em Negociação</h3>
+        <p id="cardNegociando" class="card-number">0</p>
+      </div>
+
+      <div class="card">
+        <h3>Fechados</h3>
+        <p id="cardFechados" class="card-number">0</p>
+      </div>
     </section>
 
-    <section class="card mt-lg">
-      <h2>Funil de vendas</h2>
-      <div id="graficoFunil" class="grafico-placeholder">
-        <!-- pode virar gráfico no futuro -->
-        <p>Em breve: gráfico de funil.</p>
+    <!-- TABELA DE ATIVIDADES RECENTES -->
+    <section class="card">
+      <header class="card-header-inline">
+        <div>
+          <h2>Atividades Recentes</h2>
+          <p>Movimentações do CRM nas últimas horas</p>
+        </div>
+      </header>
+
+      <div id="listaAtividades" class="tabela-simples">
+        <!-- preenchido pelo dashboard.js -->
       </div>
     </section>
   </main>
