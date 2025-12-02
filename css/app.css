@@ -798,3 +798,145 @@ textarea:focus {
     padding: 18px 16px;
   }
 }
+
+/* =========================================================
+   HUB MDE — APP.JS GLOBAL
+   Controla tema, sidebar mobile, usuário e navegação
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* =========================================================
+     1. CONTROLE DO MENU MOBILE (Sidebar)
+  ========================================================== */
+  const menuToggle = document.querySelector(".menu-toggle");
+  const sidebar = document.querySelector(".sidebar");
+
+  if (menuToggle && sidebar) {
+    menuToggle.addEventListener("click", () => {
+      document.body.classList.toggle("sidebar-open");
+    });
+  }
+
+  // Fechar sidebar ao clicar fora (mobile)
+  document.addEventListener("click", (e) => {
+    if (
+      document.body.classList.contains("sidebar-open") &&
+      !sidebar.contains(e.target) &&
+      !menuToggle.contains(e.target)
+    ) {
+      document.body.classList.remove("sidebar-open");
+    }
+  });
+
+
+  /* =========================================================
+     2. TEMA DARK / CLEAN
+     Salvo localmente – aplicado em todas as páginas
+  ========================================================== */
+  const html = document.documentElement;
+  const themeBtn = document.getElementById("toggleTheme");
+
+  // Carregar tema salvo
+  const savedTheme = localStorage.getItem("hubTheme");
+
+  if (savedTheme) {
+    html.setAttribute("data-theme", savedTheme);
+  } else {
+    html.setAttribute("data-theme", "dark");
+  }
+
+  // Trocar tema ao clicar
+  if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+      const current = html.getAttribute("data-theme");
+      const next = current === "dark" ? "clean" : "dark";
+
+      html.setAttribute("data-theme", next);
+      localStorage.setItem("hubTheme", next);
+
+      themeBtn.textContent =
+        next === "dark" ? "Modo claro" : "Modo escuro";
+    });
+  }
+
+
+  /* =========================================================
+     3. DESTAQUE DA SIDEBAR (item ativo pela URL)
+  ========================================================== */
+  const links = document.querySelectorAll(".sidebar a.href, .sidebar a");
+
+  const currentUrl = window.location.pathname
+    .replace("/pages", "")        // segurança extra
+    .replace("/mde-hub", "");     // antigo resquício
+
+  links.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href) return;
+
+    if (currentUrl.endsWith(href)) {
+      link.classList.add("active");
+      link.setAttribute("aria-current", "page");
+    }
+  });
+
+
+  /* =========================================================
+     4. CARREGAR USUÁRIO (nome, email, inicial)
+     Em TODAS as páginas
+  ========================================================== */
+  async function carregarUsuario() {
+    try {
+      const userInitial = document.getElementById("userInitial");
+      const userName = document.getElementById("userName");
+      const userEmail = document.getElementById("userEmail");
+
+      if (!userInitial && !userName && !userEmail) return;
+
+      // Busca usuário logado no Supabase
+      const { data, error } = await supabase.auth.getUser();
+
+      if (error || !data.user) {
+        window.location.href = "/login.html";
+        return;
+      }
+
+      const email = data.user.email;
+      const name = data.user.user_metadata.nome || "Usuário";
+      const initial = name.charAt(0).toUpperCase();
+
+      if (userInitial) userInitial.textContent = initial;
+      if (userName) userName.textContent = name;
+      if (userEmail) userEmail.textContent = email;
+
+    } catch (err) {
+      console.error("Erro ao carregar usuário:", err);
+    }
+  }
+
+  carregarUsuario();
+
+
+  /* =========================================================
+     5. BOTÃO SAIR (logout universal)
+  ========================================================== */
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "/login.html";
+    });
+  }
+
+
+  /* =========================================================
+     6. FIX – PREVENIR ERROS EM PÁGINAS SEM SIDEBAR/TOPBAR
+  ========================================================== */
+  if (!sidebar) {
+    console.warn("Sidebar não encontrada nesta página (ok).");
+  }
+  if (!menuToggle) {
+    console.warn("Menu mobile não precisa nesta página.");
+  }
+});
