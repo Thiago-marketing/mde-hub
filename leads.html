@@ -7,12 +7,12 @@
 
   <link rel="stylesheet" href="/css/app.css" />
   <script defer src="/js/app.js"></script>
-  <script defer src="/js/crm-leads.js"></script>
+  <script defer src="/js/crm/leads.js"></script>
 </head>
-<body>
-  <!-- topo + sidebar (Leads ativo) -->
-  <!-- ... estrutura igual ... -->
 
+<body class="page">
+
+  <!-- TOPO -->
   <header class="topbar">
     <div class="user-info">
       <span id="userInitial">U</span>
@@ -21,12 +21,14 @@
         <p id="userEmail"></p>
       </div>
     </div>
+
     <div class="topbar-actions">
       <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
       <button id="logoutBtn" class="btn-sair">Sair</button>
     </div>
   </header>
 
+  <!-- MENU LATERAL -->
   <aside class="sidebar">
     <h3>Operação</h3>
     <nav>
@@ -38,13 +40,15 @@
       <a href="/financeiro.html">Financeiro</a>
       <a href="/configuracoes.html">Configurações</a>
     </nav>
+
     <h3>CRM</h3>
     <nav>
-      <a href="/pages/crm-dashboard.html">Painel CRM</a>
-      <a href="/pages/crm-leads.html" class="active">Leads</a>
-      <a href="/pages/crm-kanban.html">Kanban</a>
-      <a href="/pages/crm-atividades.html">Atividades</a>
+      <a href="/crm-dashboard.html">Painel CRM</a>
+      <a href="/leads.html" class="active">Leads</a>
+      <a href="/crm-kanban.html">Kanban</a>
+      <a href="/crm-atividades.html">Atividades</a>
     </nav>
+
     <h3>Admin</h3>
     <nav>
       <a href="/checklist-governanca.html">Checklist Governança</a>
@@ -53,25 +57,56 @@
     </nav>
   </aside>
 
+  <!-- CONTEÚDO -->
   <main class="content">
     <h1>Leads</h1>
 
     <section class="card">
       <header class="card-header-inline">
         <div>
-          <h2>Lista de leads</h2>
-          <p>Organize oportunidades de venda</p>
+          <h2>Lista de Leads</h2>
+          <p>Organize oportunidades comerciais e acompanhe o funil.</p>
         </div>
         <div class="card-actions">
-          <button class="btn-primary" id="novoLeadBtn">+ Novo lead</button>
+          <button class="btn-primary" id="novoLeadBtn">+ Novo Lead</button>
         </div>
       </header>
 
       <div id="tabelaLeads" class="tabela-simples">
-        <!-- via crm-leads.js -->
+        <!-- Leads serão carregados aqui via leads.js -->
       </div>
     </section>
   </main>
+
+  <!-- MODAL NOVO LEAD -->
+  <div class="modal" id="modalNovoLead">
+    <div class="modal-content">
+      <h2>Novo Lead</h2>
+
+      <label>Nome</label>
+      <input type="text" id="leadNome" placeholder="Ex: Pousada Sol e Mar" />
+
+      <label>Contato</label>
+      <input type="text" id="leadContato" placeholder="WhatsApp, telefone ou e-mail" />
+
+      <label>Interesse</label>
+      <input type="text" id="leadInteresse" placeholder="Ex: PMS, Hub Lite, Motor de Reservas" />
+
+      <label>Origem</label>
+      <select id="leadOrigem">
+        <option value="WhatsApp">WhatsApp</option>
+        <option value="Site">Site</option>
+        <option value="Indicação">Indicação</option>
+        <option value="Ligação">Ligação</option>
+        <option value="Presencial">Presencial</option>
+      </select>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" id="cancelarLead">Cancelar</button>
+        <button class="btn-primary" id="salvarLead">Salvar Lead</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
