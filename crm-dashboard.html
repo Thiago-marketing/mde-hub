@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="/css/app.css" />
   <script defer src="/js/app.js"></script>
-  <script defer src="/js/crm/dashboard.js"></script>
+  <!-- se quiser futuramente, cria /js/crm/dashboard.js -->
 </head>
 
 <body class="page">
@@ -66,35 +66,67 @@
       <div class="card">
         <h3>Total de Leads</h3>
         <p id="cardTotalLeads" class="card-number">0</p>
+        <p class="muted">Base ativa cadastrada no Hub.</p>
       </div>
 
       <div class="card">
         <h3>Novos Hoje</h3>
         <p id="cardNovosHoje" class="card-number">0</p>
+        <p class="muted">Leads criados nas últimas 24h.</p>
       </div>
 
       <div class="card">
         <h3>Em Negociação</h3>
         <p id="cardNegociando" class="card-number">0</p>
+        <p class="muted">Oportunidades em andamento.</p>
       </div>
 
       <div class="card">
         <h3>Fechados</h3>
         <p id="cardFechados" class="card-number">0</p>
+        <p class="muted">Negócios ganhos no período.</p>
       </div>
     </section>
 
-    <!-- TABELA DE ATIVIDADES RECENTES -->
+    <!-- FUNIL RESUMIDO -->
+    <section class="card">
+      <header class="card-header-inline">
+        <div>
+          <h2>Resumo do Funil</h2>
+          <p>Etapas principais das oportunidades.</p>
+        </div>
+      </header>
+
+      <div class="grid-2">
+        <div>
+          <ul class="lista-etapas">
+            <li><strong>Novos:</strong> <span id="etapaNovos">0</span></li>
+            <li><strong>Contato Feito:</strong> <span id="etapaContato">0</span></li>
+            <li><strong>Proposta Enviada:</strong> <span id="etapaProposta">0</span></li>
+            <li><strong>Negociação:</strong> <span id="etapaNegociacao">0</span></li>
+            <li><strong>Fechados:</strong> <span id="etapaGanho">0</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="muted">
+            Use o CRM para registrar todos os contatos: WhatsApp, ligação, indicação e feiras.
+            O objetivo é ter histórico claro por hotel, pousada ou hostel, e depois direcionar esses clientes para o PMS Cloud.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATIVIDADES RECENTES -->
     <section class="card">
       <header class="card-header-inline">
         <div>
           <h2>Atividades Recentes</h2>
-          <p>Movimentações do CRM nas últimas horas</p>
+          <p>Últimas ações registradas no CRM.</p>
         </div>
       </header>
 
       <div id="listaAtividades" class="tabela-simples">
-        <!-- preenchido pelo dashboard.js -->
+        <p class="muted">Nenhuma atividade registrada ainda.</p>
       </div>
     </section>
   </main>
