@@ -1,60 +1,119 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Checklist Governança • MDE Hub</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checklist de Governança • PMS Lite • MDE Hub</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+  <!-- Futuro:
+  <script defer src="/js/pms/checklist.js"></script>
+  -->
 </head>
 
 <body class="page">
 
+  <!-- TOPO -->
   <header class="topbar">
     <div class="user-info">
-      <span id="userInitial">T</span>
+      <span id="userInitial">U</span>
       <div>
         <p id="userName">Carregando usuário...</p>
         <p id="userEmail"></p>
       </div>
     </div>
-    <button id="logoutBtn" class="btn-sair">Sair</button>
+
+    <div class="topbar-actions">
+      <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
+      <button id="logoutBtn" class="btn-sair">Sair</button>
+    </div>
   </header>
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <h3>Menu</h3>
-    <ul>
-      <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="sim-checkin.html">Simulador Check-in</a></li>
-      <li><a href="sim-tarifa.html">Simulador de Tarifas</a></li>
-      <li class="active"><a href="checklist-governanca.html">Checklist Governança</a></li>
-    </ul>
+    <h3>Operação</h3>
+    <nav>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/reservas.html">Reservas</a>
+      <a href="/checkin.html">Check-in</a>
+      <a href="/checkout.html">Check-out</a>
+      <a href="/uhs.html">Unidades Habitacionais</a>
+      <a href="/financeiro.html">Financeiro</a>
+      <a href="/config.html">Configurações</a>
+    </nav>
+
+    <h3>CRM</h3>
+    <nav>
+      <a href="/crm-dashboard.html">Painel CRM</a>
+      <a href="/leads.html">Leads</a>
+      <a href="/crm-kanban.html">Kanban</a>
+      <a href="/crm-atividades.html">Atividades</a>
+    </nav>
+
+    <h3>Admin</h3>
+    <nav>
+      <a href="/checklist-governanca.html" class="active">Checklist Governança</a>
+      <a href="/auditoria.html">Auditoria</a>
+      <a href="/relatorios.html">Relatórios</a>
+    </nav>
   </aside>
 
+  <!-- CONTEÚDO -->
   <main class="content">
     <h1>Checklist de Governança</h1>
-    <p class="subtitle">Registre a limpeza de forma prática e rápida.</p>
+    <p class="muted">Registre limpeza, manutenção e pendências de cada UH de forma rápida e organizada.</p>
 
-    <div class="card">
-      <ul class="checklist">
-        <li><label><input type="checkbox"> Trocar roupa de cama</label></li>
-        <li><label><input type="checkbox"> Higienizar banheiro</label></li>
-        <li><label><input type="checkbox"> Aspirar o quarto</label></li>
-        <li><label><input type="checkbox"> Repor toalhas</label></li>
-        <li><label><input type="checkbox"> Descartar lixo</label></li>
-      </ul>
-
-      <button id="btnSalvar" class="btn-primary">Salvar Checklist</button>
-      <p id="statusMsg" class="msg-ok"></p>
+    <!-- BOTÃO NOVO REGISTRO -->
+    <div class="mb-2">
+      <button id="novoChecklistBtn" class="btn-primary">+ Novo Registro</button>
     </div>
+
+    <!-- LISTA DE REGISTROS -->
+    <section class="card mt-2">
+      <header class="card-header-inline">
+        <div>
+          <h2>Registros do dia</h2>
+          <p>Limpezas, manutenções e verificações realizadas.</p>
+        </div>
+      </header>
+
+      <div id="tabelaChecklist" class="tabela-simples">
+        <p class="muted">Carregando registros...</p>
+      </div>
+    </section>
   </main>
 
-  <script src="js/supabase.js"></script>
-  <script src="js/app-common.js"></script>
-  <script>
-    document.getElementById("btnSalvar").onclick = () => {
-      statusMsg.textContent = "Checklist salvo com sucesso!";
-      setTimeout(() => statusMsg.textContent = "", 2500);
-    };
-  </script>
+  <!-- MODAL NOVO REGISTRO -->
+  <div class="modal" id="modalChecklist">
+    <div class="modal-content">
+      <h2>Novo Registro</h2>
+
+      <label>Unidade Habitacional</label>
+      <select id="chkUh">
+        <option value="">Selecione...</option>
+        <!-- JS vai carregar UHs automaticamente -->
+      </select>
+
+      <label>Tipo de Registro</label>
+      <select id="chkTipo">
+        <option value="Limpeza">Limpeza</option>
+        <option value="Manutenção">Manutenção</option>
+        <option value="Inspeção">Inspeção</option>
+      </select>
+
+      <label>Descrição</label>
+      <textarea id="chkDesc" placeholder="Observações da limpeza, manutenção ou inspeção..."></textarea>
+
+      <label>Responsável</label>
+      <input type="text" id="chkResp" placeholder="Ex: Camareira Ana" />
+
+      <div class="modal-actions mt-2">
+        <button class="btn-secondary btn-small" id="cancelarChecklist">Cancelar</button>
+        <button class="btn-primary btn-small" id="salvarChecklist">Salvar Registro</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
