@@ -1,114 +1,141 @@
-// crm-leads.js
+// js/crm/leads.js
 document.addEventListener("DOMContentLoaded", () => {
-  carregarUsuario();
-  carregarLeads();
+  const modal = document.getElementById("modalNovoLead");
+  const btnNovoLead = document.getElementById("novoLeadBtn");
+  const btnCancelar = document.getElementById("cancelarLead");
+  const btnSalvar = document.getElementById("salvarLead");
+  const tabelaLeads = document.getElementById("tabelaLeads");
 
-  document.getElementById("leadForm").addEventListener("submit", salvarLead);
-  document.getElementById("filtroEtapa").addEventListener("change", carregarLeads);
-  document.getElementById("filtroResponsavel").addEventListener("input", carregarLeads);
-});
+  const inputNome = document.getElementById("leadNome");
+  const inputContato = document.getElementById("leadContato");
+  const inputInteresse = document.getElementById("leadInteresse");
+  const selectOrigem = document.getElementById("leadOrigem");
 
-async function carregarLeads() {
-  const { data: leads, error } = await supa
-    .from("leads")
-    .select("*")
-    .order("created_at", { ascending: false });
+  let leads = []; // por enquanto em memória; depois plugamos no Supabase
 
-  if (error) {
-    console.error("Erro ao buscar leads:", error);
-    return;
+  function abrirModal() {
+    if (!modal) return;
+    modal.style.display = "flex"; // garante exibição mesmo se o CSS usar display none
   }
 
-  const etapaFiltro = document.getElementById("filtroEtapa").value;
-  const respFiltro  = document.getElementById("filtroResponsavel").value.toLowerCase();
+  function fecharModal() {
+    if (!modal) return;
+    modal.style.display = "none";
+    limparFormulario();
+  }
 
-  const filtrados = leads.filter(l => {
-    const etapaOk = etapaFiltro ? l.etapa === etapaFiltro : true;
-    const respOk  = respFiltro ? (l.responsavel || "").toLowerCase().includes(respFiltro) : true;
-    return etapaOk && respOk;
-  });
+  function limparFormulario() {
+    if (inputNome) inputNome.value = "";
+    if (inputContato) inputContato.value = "";
+    if (inputInteresse) inputInteresse.value = "";
+    if (selectOrigem) selectOrigem.value = "WhatsApp";
+  }
 
-  const tbody = document.getElementById("leadsTableBody");
-  tbody.innerHTML = "";
+  function renderizarTabela() {
+    if (!tabelaLeads) return;
 
-  filtrados.forEach(l => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${l.nome || "-"}</td>
-      <td>${l.origem || "-"}</td>
-      <td>
-        <select onchange="alterarEtapa(${l.id}, this.value)">
-          ${opcaoEtapa("novo", "Novo", l.etapa)}
-          ${opcaoEtapa("qualificando", "Qualificando", l.etapa)}
-          ${opcaoEtapa("proposta", "Proposta", l.etapa)}
-          ${opcaoEtapa("negociando", "Negociando", l.etapa)}
-          ${opcaoEtapa("ganho", "Ganho", l.etapa)}
-          ${opcaoEtapa("perdido", "Perdido", l.etapa)}
-        </select>
-      </td>
-      <td>
-        <input type="text" value="${l.responsavel || ""}"
-               onchange="alterarResponsavel(${l.id}, this.value)">
-      </td>
-      <td>R$ ${l.valor_estimado ? l.valor_estimado.toFixed(2) : "0,00"}</td>
-      <td>${l.status || "aberto"}</td>
-      <td>
-        <button class="btn-small" onclick="marcarGanho(${l.id})">Ganho</button>
-        <button class="btn-small secondary" onclick="marcarPerdido(${l.id})">Perdido</button>
-      </td>
+    if (leads.length === 0) {
+      tabelaLeads.innerHTML = `
+        <p class="muted">Nenhum lead cadastrado ainda.</p>
+      `;
+      return;
+    }
+
+    let linhas = leads
+      .map(
+        (lead) => `
+        <tr>
+          <td>${lead.nome}</td>
+          <td>${lead.contato}</td>
+          <td>${lead.interesse}</td>
+          <td>${lead.origem}</td>
+          <td>${lead.data}</td>
+        </tr>
+      `
+      )
+      .join("");
+
+    tabelaLeads.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Contato</th>
+            <th>Interesse</th>
+            <th>Origem</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${linhas}
+        </tbody>
+      </table>
     `;
-    tbody.appendChild(tr);
-  });
-}
-
-function opcaoEtapa(valor, label, etapaAtual) {
-  const sel = etapaAtual === valor ? "selected" : "";
-  return `<option value="${valor}" ${sel}>${label}</option>`;
-}
-
-async function salvarLead(e) {
-  e.preventDefault();
-
-  const payload = {
-    nome: document.getElementById("leadNome").value,
-    telefone: document.getElementById("leadTelefone").value,
-    email: document.getElementById("leadEmail").value,
-    origem: document.getElementById("leadOrigem").value,
-    responsavel: document.getElementById("leadResponsavel").value,
-    valor_estimado: parseFloat(document.getElementById("leadValor").value || 0),
-    etapa: "novo",
-    status: "aberto"
-  };
-
-  const { error } = await supa.from("leads").insert(payload);
-
-  if (error) {
-    console.error("Erro ao salvar lead:", error);
-    alert("Erro ao salvar lead");
-    return;
   }
 
-  document.getElementById("leadForm").reset();
-  document.getElementById("leadStatus").innerText = "Lead salvo com sucesso!";
-  setTimeout(() => (document.getElementById("leadStatus").innerText = ""), 2500);
+  async function salvarLead() {
+    const nome = inputNome?.value.trim();
+    const contato = inputContato?.value.trim();
+    const interesse = inputInteresse?.value.trim();
+    const origem = selectOrigem?.value || "WhatsApp";
 
-  carregarLeads();
-}
+    if (!nome || !contato) {
+      alert("Preencha pelo menos Nome e Contato.");
+      return;
+    }
 
-async function alterarEtapa(id, etapa) {
-  await supa.from("leads").update({ etapa }).eq("id", id);
-}
+    const novoLead = {
+      nome,
+      contato,
+      interesse: interesse || "-",
+      origem,
+      data: new Date().toLocaleDateString("pt-BR"),
+    };
 
-async function alterarResponsavel(id, responsavel) {
-  await supa.from("leads").update({ responsavel }).eq("id", id);
-}
+    // 🔹 Por enquanto, só em memória + tela
+    leads.push(novoLead);
+    renderizarTabela();
+    fecharModal();
 
-async function marcarGanho(id) {
-  await supa.from("leads").update({ etapa: "ganho", status: "fechado" }).eq("id", id);
-  carregarLeads();
-}
+    // 🔹 FUTURO: salvar no Supabase
+    // try {
+    //   const { data, error } = await supabase
+    //     .from("leads")
+    //     .insert([{ ...novoLead, user_id, hotel_id }]);
+    //   if (error) console.error("Erro ao salvar no Supabase:", error);
+    // } catch (err) {
+    //   console.error("Erro inesperado:", err);
+    // }
+  }
 
-async function marcarPerdido(id) {
-  await supa.from("leads").update({ etapa: "perdido", status: "fechado" }).eq("id", id);
-  carregarLeads();
-}
+  // Eventos
+  if (btnNovoLead) {
+    btnNovoLead.addEventListener("click", abrirModal);
+  }
+
+  if (btnCancelar) {
+    btnCancelar.addEventListener("click", (e) => {
+      e.preventDefault();
+      fecharModal();
+    });
+  }
+
+  if (btnSalvar) {
+    btnSalvar.addEventListener("click", (e) => {
+      e.preventDefault();
+      salvarLead();
+    });
+  }
+
+  // Fecha ao clicar fora do conteúdo
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        fecharModal();
+      }
+    });
+  }
+
+  // Inicializa tabela vazia
+  renderizarTabela();
+});
