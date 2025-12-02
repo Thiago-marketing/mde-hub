@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kanban • CRM MDE</title>
+  <title>Kanban de Leads • CRM MDE</title>
 
   <link rel="stylesheet" href="/css/app.css" />
   <script defer src="/js/app.js"></script>
-  <script defer src="/js/crm-kanban.js"></script>
+  <script defer src="/js/crm/kanban.js"></script>
 </head>
-<body>
-  <!-- topo + sidebar (Kanban ativo) -->
-  <!-- ... -->
 
+<body class="page">
+
+  <!-- TOPO -->
   <header class="topbar">
     <div class="user-info">
       <span id="userInitial">U</span>
@@ -21,12 +21,14 @@
         <p id="userEmail"></p>
       </div>
     </div>
+
     <div class="topbar-actions">
       <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
       <button id="logoutBtn" class="btn-sair">Sair</button>
     </div>
   </header>
 
+  <!-- MENU LATERAL -->
   <aside class="sidebar">
     <h3>Operação</h3>
     <nav>
@@ -36,15 +38,17 @@
       <a href="/checkout.html">Check-out</a>
       <a href="/uhs.html">Unidades Habitacionais</a>
       <a href="/financeiro.html">Financeiro</a>
-      <a href="/configuracoes.html">Configurações</a>
+      <a href="/config.html">Configurações</a>
     </nav>
+
     <h3>CRM</h3>
     <nav>
       <a href="/crm-dashboard.html">Painel CRM</a>
-      <a href="/crm-leads.html">Leads</a>
+      <a href="/leads.html">Leads</a>
       <a href="/crm-kanban.html" class="active">Kanban</a>
       <a href="/crm-atividades.html">Atividades</a>
     </nav>
+
     <h3>Admin</h3>
     <nav>
       <a href="/checklist-governanca.html">Checklist Governança</a>
@@ -53,13 +57,61 @@
     </nav>
   </aside>
 
+  <!-- CONTEÚDO PRINCIPAL -->
   <main class="content">
-    <h1>Kanban de vendas</h1>
+    <h1>Kanban de Leads</h1>
+    <p class="muted">Organize visualmente todas as oportunidades em etapas.</p>
 
-    <section id="kanbanBoard" class="kanban-board">
-      <!-- colunas e cards gerados via crm-kanban.js -->
+    <section class="kanban-board">
+
+      <!-- COLUNA 1 -->
+      <div class="kanban-column">
+        <h2>Novo</h2>
+        <div class="kanban-column-body" id="col-novo">
+          <p class="muted">Carregando...</p>
+        </div>
+      </div>
+
+      <!-- COLUNA 2 -->
+      <div class="kanban-column">
+        <h2>Contato Feito</h2>
+        <div class="kanban-column-body" id="col-contato">
+        </div>
+      </div>
+
+      <!-- COLUNA 3 -->
+      <div class="kanban-column">
+        <h2>Avaliação</h2>
+        <div class="kanban-column-body" id="col-avaliacao">
+        </div>
+      </div>
+
+      <!-- COLUNA 4 -->
+      <div class="kanban-column">
+        <h2>Fechado / Ganho</h2>
+        <div class="kanban-column-body" id="col-fechado">
+        </div>
+      </div>
+
     </section>
   </main>
+
+  <!-- MODAL VISUALIZAR LEAD -->
+  <div class="modal" id="modalLead">
+    <div class="modal-content">
+      <h2>Detalhes do Lead</h2>
+
+      <p><b>Nome:</b> <span id="leadNome"></span></p>
+      <p><b>Contato:</b> <span id="leadContato"></span></p>
+      <p><b>Interesse:</b> <span id="leadInteresse"></span></p>
+      <p><b>Origem:</b> <span id="leadOrigem"></span></p>
+      <p><b>Etapa:</b> <span id="leadEtapa"></span></p>
+
+      <div class="modal-actions">
+        <button class="btn-secondary btn-small" id="fecharLead">Fechar</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
