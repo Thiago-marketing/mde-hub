@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Configurações • MDE Sistemas</title>
+  <title>Configurações do Hotel • MDE Hub</title>
 
   <link rel="stylesheet" href="/css/app.css" />
   <script defer src="/js/app.js"></script>
-  <script defer src="/js/configuracoes.js"></script>
+  <!-- futuro:
+  <script defer src="/js/pms/configuracoes.js"></script>
+  -->
 </head>
-<body>
-  <!-- topo + sidebar; menu Configurações ativo -->
-  <!-- ... mesma estrutura dos anteriores ... -->
 
+<body class="page">
+
+  <!-- TOPO -->
   <header class="topbar">
     <div class="user-info">
       <span id="userInitial">U</span>
@@ -21,12 +23,14 @@
         <p id="userEmail"></p>
       </div>
     </div>
+
     <div class="topbar-actions">
       <button id="toggleTheme" class="btn-secondary btn-small">Tema</button>
       <button id="logoutBtn" class="btn-sair">Sair</button>
     </div>
   </header>
 
+  <!-- MENU LATERAL -->
   <aside class="sidebar">
     <h3>Operação</h3>
     <nav>
@@ -38,13 +42,15 @@
       <a href="/financeiro.html">Financeiro</a>
       <a href="/configuracoes.html" class="active">Configurações</a>
     </nav>
+
     <h3>CRM</h3>
     <nav>
       <a href="/crm-dashboard.html">Painel CRM</a>
-      <a href="/crm-leads.html">Leads</a>
+      <a href="/leads.html">Leads</a>
       <a href="/crm-kanban.html">Kanban</a>
       <a href="/crm-atividades.html">Atividades</a>
     </nav>
+
     <h3>Admin</h3>
     <nav>
       <a href="/checklist-governanca.html">Checklist Governança</a>
@@ -53,29 +59,109 @@
     </nav>
   </aside>
 
+  <!-- CONTEÚDO -->
   <main class="content">
-    <h1>Configurações</h1>
+    <h1>Configurações do Hotel</h1>
+    <p class="muted">Defina as informações administrativas, operacionais e visuais do hotel.</p>
 
-    <section class="card">
-      <h2>Dados do hotel</h2>
-      <form id="configHotelForm" class="form-grid">
-        <div class="form-group">
-          <label for="hotelNome">Nome do hotel</label>
-          <input id="hotelNome" type="text" />
+    <!-- DADOS DO HOTEL -->
+    <section class="card mt-2">
+      <h2>Dados do Hotel</h2>
+      <p class="muted">Informações básicas utilizadas em relatórios, recibos e vouchers.</p>
+
+      <div class="grid-2">
+        <div>
+          <label>Nome do Hotel</label>
+          <input type="text" placeholder="Ex: Pousada Sol e Mar" id="hotelNome" />
+
+          <label>Telefone / WhatsApp</label>
+          <input type="text" placeholder="(00) 90000-0000" id="hotelFone" />
+
+          <label>E-mail</label>
+          <input type="email" placeholder="contato@hotel.com.br" id="hotelEmail" />
+
+          <label>CNPJ (opcional)</label>
+          <input type="text" placeholder="00.000.000/0000-00" id="hotelCnpj" />
         </div>
-        <div class="form-group">
-          <label for="hotelDocumento">CNPJ / CPF</label>
-          <input id="hotelDocumento" type="text" />
+
+        <div>
+          <label>Endereço</label>
+          <input type="text" placeholder="Rua, número..." id="hotelEndereco" />
+
+          <label>Cidade</label>
+          <input type="text" placeholder="Cidade" id="hotelCidade" />
+
+          <label>Estado (UF)</label>
+          <input type="text" placeholder="SP" id="hotelUf" />
+
+          <label>CEP</label>
+          <input type="text" placeholder="00000-000" id="hotelCep" />
         </div>
-        <div class="form-group">
-          <label for="hotelTelefone">Telefone / WhatsApp</label>
-          <input id="hotelTelefone" type="tel" />
+      </div>
+
+      <div class="modal-actions mt-2">
+        <button class="btn-primary btn-small" id="salvarHotelDados">Salvar alterações</button>
+      </div>
+    </section>
+
+    <!-- LOGO DO HOTEL -->
+    <section class="card mt-2">
+      <h2>Logo e Identidade</h2>
+      <p class="muted">Defina a logo utilizada nos relatórios e no painel.</p>
+
+      <div class="flex-between mt-1">
+        <div>
+          <label>Logo atual</label>
+          <div class="logo-preview">
+            <p class="muted">Nenhuma logo enviada ainda.</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="hotelEmail">E-mail</label>
-          <input id="hotelEmail" type="email" />
+        <div>
+          <button class="btn-primary btn-small">Enviar nova logo</button>
         </div>
-      </form>
+      </div>
+    </section>
+
+    <!-- HORÁRIOS -->
+    <section class="card mt-2">
+      <h2>Horários e Políticas</h2>
+
+      <div class="grid-2">
+        <div>
+          <label>Horário de Check-in</label>
+          <input type="time" id="hotelCheckin" />
+
+          <label>Horário de Check-out</label>
+          <input type="time" id="hotelCheckout" />
+        </div>
+
+        <div>
+          <label>Políticas do Hotel</label>
+          <textarea id="hotelPoliticas" placeholder="Regras gerais, informações importantes..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-actions mt-2">
+        <button class="btn-primary btn-small">Salvar Políticas</button>
+      </div>
+    </section>
+
+    <!-- USUÁRIOS -->
+    <section class="card mt-2">
+      <h2>Usuários do Sistema</h2>
+      <p class="muted">Gerencie permissões da equipe (recepção, financeiro, limpeza, gerente).</p>
+
+      <p class="muted">* Recursos avançados serão liberados na Fase 2.</p>
+
+      <button class="btn-secondary btn-small mt-1">+ Adicionar Usuário</button>
+    </section>
+
+    <!-- PRODUTOS -->
+    <section class="card mt-2 mb-4">
+      <h2>Produtos e Itens</h2>
+      <p class="muted">Itens utilizados em lançamentos e consumo do hóspede.</p>
+
+      <button class="btn-secondary btn-small mt-1">+ Novo Produto</button>
     </section>
   </main>
 
