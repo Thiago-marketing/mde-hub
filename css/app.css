@@ -1,942 +1,397 @@
-/* =========================================================
-   RESET BÁSICO
-========================================================= */
+/* -------------------------------------------------------------------
+   RESET + BASE
+------------------------------------------------------------------- */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html,
+html[data-theme="dark"] {
+    --bg: #0c0f16;
+    --bg2: #11141d;
+    --bg3: #151924;
+    --card: #171c27;
+    --text: #e8ecf4;
+    --text2: #bfc6d5;
+    --border: #1e2533;
+    --accent: #2dd4ff;
+    --accent2: #5f89ff;
+    --danger: #e66a6a;
+    --success: #4ade80;
+    --muted: #6b7280;
+}
+
+html[data-theme="clean"] {
+    --bg: #f6f8fc;
+    --bg2: #ffffff;
+    --bg3: #f0f0f5;
+    --card: #ffffff;
+    --text: #1f2937;
+    --text2: #4b5563;
+    --border: #e5e7eb;
+    --accent: #0ea5e9;
+    --accent2: #1d4ed8;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --muted: #6b7280;
+}
+
 body {
-  margin: 0;
-  padding: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
 }
 
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, sans-serif;
-  background-color: #020617;
-  color: #e5e7eb;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Remove estilo padrão de links, botões etc */
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font: inherit;
-  border: none;
-  cursor: pointer;
-  background: none;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* =========================================================
-   VARIÁVEIS DE TEMA
-========================================================= */
-
-:root {
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-
-  --sidebar-width: 260px;
-
-  --transition-fast: 0.15s ease-out;
-  --transition-default: 0.2s ease-in-out;
-
-  --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.6);
-  --shadow-light: 0 10px 25px rgba(15, 23, 42, 0.25);
-
-  --font-xs: 0.75rem;
-  --font-sm: 0.875rem;
-  --font-md: 1rem;
-  --font-lg: 1.125rem;
-  --font-xl: 1.5rem;
-  --font-2xl: 2rem;
-}
-
-/* ---------------- DARK ---------------- */
-
-[data-theme="dark"] {
-  --bg-body: #020617;          /* fundo geral */
-  --bg-elevated: #020617;      /* cartões grandes */
-  --bg-card: #020617;
-  --bg-soft: #020617;
-  --bg-input: #020617;
-
-  --text-primary: #e5e7eb;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
-
-  --border-subtle: rgba(148, 163, 184, 0.35);
-  --border-strong: rgba(148, 163, 184, 0.7);
-
-  --accent: #2563eb;
-  --accent-soft: rgba(37, 99, 235, 0.12);
-
-  --danger: #f97373;
-  --success: #22c55e;
-}
-
-/* ---------------- CLEAN (CLARO) ------------- */
-
-[data-theme="clean"] {
-  --bg-body: #f3f4f6;
-  --bg-elevated: #ffffff;
-  --bg-card: #ffffff;
-  --bg-soft: #f9fafb;
-  --bg-input: #ffffff;
-
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
-
-  --border-subtle: rgba(156, 163, 175, 0.5);
-  --border-strong: rgba(75, 85, 99, 0.9);
-
-  --accent: #2563eb;
-  --accent-soft: rgba(37, 99, 235, 0.1);
-
-  --danger: #b91c1c;
-  --success: #15803d;
-}
-
-/* =========================================================
-   LAYOUT GERAL – GRID (TOPO + SIDEBAR + CONTEÚDO)
-========================================================= */
-
-.page {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr);
-  grid-template-areas:
-    "topbar topbar"
-    "sidebar content";
-  background: radial-gradient(circle at top, #020617 0%, #020617 45%, #020617 100%);
-  background-color: var(--bg-body);
-  color: var(--text-primary);
-}
-
-/* =========================================================
-   TOPBAR
-========================================================= */
-
-.topbar {
-  grid-area: topbar;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 24px;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
-  backdrop-filter: blur(16px);
-  background: linear-gradient(
-    to right,
-    rgba(15, 23, 42, 0.85),
-    rgba(15, 23, 42, 0.9)
-  );
-  position: sticky;
-  top: 0;
-  z-index: 40;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.user-info #userInitial,
-.user-badge {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: var(--font-md);
-  background: radial-gradient(circle at 30% 0%, #38bdf8, #1e3a8a);
-  color: white;
-}
-
-.user-info p {
-  margin: 0;
-  line-height: 1.2;
-}
-
-.user-info #userName {
-  font-weight: 600;
-  font-size: var(--font-sm);
-}
-
-.user-info #userEmail {
-  font-size: var(--font-xs);
-  color: var(--text-secondary);
-}
-
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Botão hamburguer opcional */
-.topbar .menu-toggle {
-  display: none;
-}
-
-/* =========================================================
+/* -------------------------------------------------------------------
    SIDEBAR
-========================================================= */
+------------------------------------------------------------------- */
 
 .sidebar {
-  grid-area: sidebar;
-  padding: 24px 20px 32px;
-  border-right: 1px solid rgba(148, 163, 184, 0.25);
-  background: linear-gradient(to bottom, #020617, #020617);
-  color: var(--text-secondary);
-  position: relative;
-  z-index: 30;
+    width: 240px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.sidebar h3 {
-  font-size: var(--font-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  margin: 20px 0 8px;
+.sidebar-logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
 }
 
-.sidebar nav {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.sidebar .nav-section {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.sidebar a {
-  font-size: var(--font-sm);
-  padding: 8px 10px;
-  border-radius: 999px;
-  display: block;
-  color: var(--text-secondary);
-  transition: background-color var(--transition-fast),
-    color var(--transition-fast), transform 0.07s ease-out;
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.sidebar a:hover {
-  background: rgba(148, 163, 184, 0.15);
-  color: var(--text-primary);
-  transform: translateX(1px);
+.nav-item {
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: var(--text2);
+    font-size: 15px;
+    text-decoration: none;
+    transition: 0.2s;
 }
 
-.sidebar a.active,
-.sidebar a[aria-current="page"] {
-  background: var(--accent);
-  color: #f9fafb;
+.nav-item:hover {
+    background: var(--bg3);
+    color: var(--accent);
 }
 
-/* =========================================================
-   CONTEÚDO PRINCIPAL
-========================================================= */
-
-.content {
-  grid-area: content;
-  padding: 24px 32px 40px;
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
+.nav-item.active {
+    background: var(--accent2);
+    color: white;
+    font-weight: 600;
 }
 
-.content h1 {
-  font-size: var(--font-2xl);
-  margin: 0 0 16px;
+.nav-item.disabled {
+    opacity: 0.45;
+    pointer-events: none;
+    position: relative;
 }
 
-.content p.muted,
-.muted {
-  font-size: var(--font-sm);
-  color: var(--text-muted);
+.tag-dev {
+    background: var(--muted);
+    color: white;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 11px;
+    margin-left: 8px;
 }
 
-/* =========================================================
-   CARDS / SEÇÕES
-========================================================= */
+/* -------------------------------------------------------------------
+   MAIN CONTENT
+------------------------------------------------------------------- */
+
+.main-area {
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 35px 45px;
+}
+
+/* Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.page-sub {
+    margin-top: 5px;
+    font-size: 15px;
+    color: var(--text2);
+}
+
+.user-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-initial {
+    width: 40px;
+    height: 40px;
+    background: var(--accent2);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+
+.user-info small {
+    color: var(--text2);
+}
+
+/* -------------------------------------------------------------------
+   CARDS
+------------------------------------------------------------------- */
 
 .card {
-  background: radial-gradient(circle at top left, #020617 0%, #020617 40%, #020617 100%);
-  background-color: var(--bg-card);
-  border-radius: 18px;
-  padding: 20px 22px;
-  box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(15, 23, 42, 0.7);
-  margin-bottom: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
 }
 
-.card-header-inline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
+/* Indicators */
+.indicators h2 {
+    margin-bottom: 10px;
 }
 
-.card-header-inline h2 {
-  margin: 0 0 4px;
-  font-size: var(--font-lg);
+.ind-small {
+    color: var(--text2);
+    margin-bottom: 20px;
 }
 
-.card-header-inline p {
-  margin: 0;
-  font-size: var(--font-sm);
-  color: var(--text-muted);
+.indicators-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
 }
 
-.card-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.ind-card {
+    background: var(--bg2);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
 }
 
-/* =========================================================
-   BOTÕES
-========================================================= */
-
-.btn-primary,
-.btn-sair,
-.btn-secondary,
-.btn-outline {
-  border-radius: 999px;
-  padding: 9px 16px;
-  font-size: var(--font-sm);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: background-color var(--transition-fast),
-    color var(--transition-fast), box-shadow var(--transition-fast),
-    transform 0.08s ease-out;
+.ind-label {
+    font-size: 13px;
+    color: var(--text2);
 }
 
-.btn-small {
-  padding: 7px 13px;
-  font-size: var(--font-xs);
+.ind-value {
+    display: block;
+    font-size: 22px;
+    margin-top: 5px;
+    font-weight: 600;
 }
 
-/* primário (azul) */
-.btn-primary {
-  background: linear-gradient(to right, #2563eb, #1d4ed8);
-  color: #f9fafb;
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+.ind-diff {
+    font-size: 12px;
+    margin-top: 4px;
 }
 
-.btn-primary:hover {
-  background: linear-gradient(to right, #1d4ed8, #1e40af);
-  transform: translateY(-1px);
+.ind-diff.pos {
+    color: var(--success);
 }
 
-/* secundário (cinza) */
-.btn-secondary {
-  background: rgba(15, 23, 42, 0.85);
-  color: var(--text-secondary);
-  border: 1px solid rgba(148, 163, 184, 0.4);
+.ind-diff.neg {
+    color: var(--danger);
 }
 
-.btn-secondary:hover {
-  background: rgba(30, 41, 59, 0.95);
-  color: var(--text-primary);
+.chart-placeholder {
+    height: 140px;
+    background: radial-gradient(circle at 30% 50%, var(--accent2) 0%, transparent 60%);
+    border-radius: 12px;
+    opacity: 0.35;
 }
 
-/* sair */
-.btn-sair {
-  background: rgba(239, 68, 68, 0.16);
-  color: #fecaca;
-  border: 1px solid rgba(248, 113, 113, 0.5);
+/* -------------------------------------------------------------------
+   2 Columns Layout
+------------------------------------------------------------------- */
+
+.dashboard-2col {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 25px;
 }
 
-.btn-sair:hover {
-  background: rgba(239, 68, 68, 0.22);
-}
-
-/* outline genérico */
-.btn-outline {
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-}
-
-.btn-outline:hover {
-  background: rgba(148, 163, 184, 0.1);
-}
-
-/* =========================================================
-   FORMULÁRIOS / INPUTS
-========================================================= */
-
-label {
-  display: block;
-  font-size: var(--font-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-input);
-  color: var(--text-primary);
-  font-size: var(--font-sm);
-  outline: none;
-  transition: border-color var(--transition-fast),
-    box-shadow var(--transition-fast), background-color var(--transition-fast);
-}
-
-textarea {
-  border-radius: 12px;
-  min-height: 96px;
-  resize: vertical;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--text-muted);
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: rgba(37, 99, 235, 0.8);
-  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.55);
-}
-
-/* grupos em grid para simuladores / formulários maiores */
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* =========================================================
-   TABELAS SIMPLES / LISTAS
-========================================================= */
-
-.tabela-simples {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.tabela-simples table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--font-sm);
-}
-
-.tabela-simples th,
-.tabela-simples td {
-  padding: 10px 10px;
-  text-align: left;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
-}
-
-.tabela-simples th {
-  font-size: var(--font-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-}
-
-.tabela-simples tr:hover td {
-  background: rgba(15, 23, 42, 0.4);
-}
-
-/* =========================================================
-   BADGES / PILLS / STATUS
-========================================================= */
-
-.badge,
-.status-pill {
-  padding: 4px 9px;
-  border-radius: 999px;
-  font-size: var(--font-xs);
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.badge-muted {
-  background: rgba(148, 163, 184, 0.16);
-  color: var(--text-secondary);
-}
-
-.badge-success {
-  background: rgba(34, 197, 94, 0.18);
-  color: var(--success);
-}
-
-.badge-danger {
-  background: rgba(248, 113, 113, 0.18);
-  color: var(--danger);
-}
-
-/* cores de status de UH / reservas etc */
-.status-livre {
-  background: rgba(34, 197, 94, 0.12);
-  color: var(--success);
-}
-.status-ocupado {
-  background: rgba(248, 113, 113, 0.14);
-  color: #fecaca;
-}
-.status-limpeza {
-  background: rgba(56, 189, 248, 0.16);
-}
-.status-manutencao {
-  background: rgba(234, 179, 8, 0.18);
-}
-.status-bloqueado {
-  background: rgba(148, 163, 184, 0.18);
-}
-
-/* =========================================================
-   KANBAN CRM
-========================================================= */
-
-.kanban-board {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  overflow-x: auto;
-}
-
-.kanban-column {
-  min-width: 240px;
-  max-width: 260px;
-  flex: 1;
-}
-
-.kanban-column h2 {
-  font-size: var(--font-sm);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-
-.kanban-column-body {
-  background: var(--bg-soft);
-  border-radius: 14px;
-  padding: 10px;
-  border: 1px dashed rgba(148, 163, 184, 0.5);
-  min-height: 120px;
-}
-
-/* card de lead no kanban */
-.kanban-card {
-  background: var(--bg-card);
-  border-radius: 14px;
-  padding: 10px 11px;
-  margin-bottom: 8px;
-  box-shadow: var(--shadow-light);
-  border: 1px solid rgba(15, 23, 42, 0.75);
-  cursor: grab;
-}
-
-.kanban-card h3 {
-  margin: 0 0 4px;
-  font-size: var(--font-sm);
-}
-
-.kanban-card p {
-  margin: 0;
-  font-size: var(--font-xs);
-  color: var(--text-muted);
-}
-
-/* =========================================================
-   MODAL GENÉRICO
-========================================================= */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.8);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 60;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.modal-content {
-  width: 100%;
-  max-width: 480px;
-  background: var(--bg-card);
-  border-radius: 18px;
-  padding: 22px 22px 18px;
-  box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(15, 23, 42, 0.8);
-}
-
-.modal-content h2 {
-  margin-top: 0;
-  margin-bottom: 12px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-/* =========================================================
-   SIMULADORES – CARDS E BOTÕES GRANDES
-========================================================= */
-
-.sim-header {
-  margin-bottom: 18px;
-}
-
-.sim-subtitle {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: var(--font-sm);
-}
-
-.sim-card {
-  margin-top: 12px;
-}
-
-/* cards de listagem de simuladores (tela simuladores.html) */
-.sim-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 16px;
-}
-
-.sim-item {
-  background: var(--bg-card);
-  border-radius: 14px;
-  padding: 14px 14px 12px;
-  border: 1px solid rgba(15, 23, 42, 0.7);
-  cursor: pointer;
-  transition: transform var(--transition-fast),
-    box-shadow var(--transition-fast), border-color var(--transition-fast);
-}
-
-.sim-item:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-light);
-  border-color: rgba(37, 99, 235, 0.8);
-}
-
-.sim-item h3 {
-  margin: 0 0 4px;
-  font-size: var(--font-md);
-}
-
-.sim-item p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: var(--font-sm);
-}
-
-/* =========================================================
-   DASHBOARD (CARDS DE MÉTRICAS)
-========================================================= */
-
-.metric-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.metric-card {
-  background: var(--bg-card);
-  border-radius: 16px;
-  padding: 16px 18px;
-  border: 1px solid rgba(15, 23, 42, 0.8);
-  box-shadow: var(--shadow-light);
-}
-
-.metric-label {
-  font-size: var(--font-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-}
-
-.metric-value {
-  margin-top: 6px;
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-/* =========================================================
-   RESPONSIVIDADE GERAL (MOBILE)
-========================================================= */
-
-@media (max-width: 900px) {
-  .page {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
-    grid-template-areas:
-      "topbar"
-      "content";
-  }
-
-  /* Topbar reorganizada no mobile */
-  .topbar {
-    padding: 10px 14px;
-    flex-wrap: wrap;
-    row-gap: 8px;
-  }
-
-  .topbar .menu-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-  }
-
-  /* Sidebar vira off-canvas */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: -270px;
-    width: var(--sidebar-width);
-    max-width: 80%;
-    box-shadow: 20px 0 45px rgba(15, 23, 42, 0.85);
-    transition: left var(--transition-default);
-  }
-
-  /* opções de classe para abrir – depende do JS */
-  body.sidebar-open .sidebar,
-  .page.sidebar-open .sidebar,
-  .sidebar.open {
-    left: 0;
-  }
-
-  .content {
-    padding: 18px 16px 28px;
-    max-width: 100%;
-  }
-
-  .card {
-    padding: 16px 14px;
-    border-radius: 16px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .metric-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .kanban-board {
-    flex-direction: row;
-    overflow-x: auto;
-  }
-
-  .kanban-column {
-    min-width: 220px;
-  }
-}
-
-/* =========================================================
-   AJUSTES EXTRAS PARA TELAS MUITO PEQUENAS
-========================================================= */
-
-@media (max-width: 480px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .topbar-actions {
-    align-self: stretch;
+/* MODULE BOX */
+.module-head {
+    display: flex;
     justify-content: space-between;
-  }
-
-  .user-info {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .modal-content {
-    margin: 0 12px;
-    padding: 18px 16px;
-  }
 }
 
-/* =========================================================
-   HUB MDE — APP.JS GLOBAL
-   Controla tema, sidebar mobile, usuário e navegação
-========================================================= */
+.tag-ready {
+    background: var(--success);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+}
 
-document.addEventListener("DOMContentLoaded", () => {
+.mod-desc {
+    color: var(--text2);
+    margin: 10px 0 18px;
+}
 
-  /* =========================================================
-     1. CONTROLE DO MENU MOBILE (Sidebar)
-  ========================================================== */
-  const menuToggle = document.querySelector(".menu-toggle");
-  const sidebar = document.querySelector(".sidebar");
+.module-item {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--bg2);
+    margin-bottom: 8px;
+    color: var(--text);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: 0.2s;
+}
 
-  if (menuToggle && sidebar) {
-    menuToggle.addEventListener("click", () => {
-      document.body.classList.toggle("sidebar-open");
-    });
-  }
+.module-item:hover {
+    background: var(--accent2);
+    color: white;
+}
 
-  // Fechar sidebar ao clicar fora (mobile)
-  document.addEventListener("click", (e) => {
-    if (
-      document.body.classList.contains("sidebar-open") &&
-      !sidebar.contains(e.target) &&
-      !menuToggle.contains(e.target)
-    ) {
-      document.body.classList.remove("sidebar-open");
+.module-more {
+    display: inline-block;
+    margin-top: 12px;
+    color: var(--accent);
+}
+
+/* Next Steps */
+
+.step-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.step-list li {
+    line-height: 1.4;
+}
+
+.tag-progress {
+    background: var(--accent);
+    color: #000;
+    padding: 2px 6px;
+    margin-left: 6px;
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+.tag-sql {
+    background: var(--accent2);
+    color: white;
+    padding: 2px 6px;
+    margin-left: 6px;
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+.tag-later {
+    background: var(--muted);
+    color: white;
+    padding: 2px 6px;
+    margin-left: 6px;
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+/* -------------------------------------------------------------------
+   FUTURE MODULES
+------------------------------------------------------------------- */
+
+.future-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.future-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.future-item p {
+    margin: 10px 0 15px;
+    color: var(--text2);
+}
+
+.tag-dev-big {
+    background: var(--muted);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* -------------------------------------------------------------------
+   RESPONSIVE
+------------------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+    .dashboard-2col {
+        grid-template-columns: 1fr;
     }
-  });
 
-
-  /* =========================================================
-     2. TEMA DARK / CLEAN
-     Salvo localmente – aplicado em todas as páginas
-  ========================================================== */
-  const html = document.documentElement;
-  const themeBtn = document.getElementById("toggleTheme");
-
-  // Carregar tema salvo
-  const savedTheme = localStorage.getItem("hubTheme");
-
-  if (savedTheme) {
-    html.setAttribute("data-theme", savedTheme);
-  } else {
-    html.setAttribute("data-theme", "dark");
-  }
-
-  // Trocar tema ao clicar
-  if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-      const current = html.getAttribute("data-theme");
-      const next = current === "dark" ? "clean" : "dark";
-
-      html.setAttribute("data-theme", next);
-      localStorage.setItem("hubTheme", next);
-
-      themeBtn.textContent =
-        next === "dark" ? "Modo claro" : "Modo escuro";
-    });
-  }
-
-
-  /* =========================================================
-     3. DESTAQUE DA SIDEBAR (item ativo pela URL)
-  ========================================================== */
-  const links = document.querySelectorAll(".sidebar a.href, .sidebar a");
-
-  const currentUrl = window.location.pathname
-    .replace("/pages", "")        // segurança extra
-    .replace("/mde-hub", "");     // antigo resquício
-
-  links.forEach((link) => {
-    const href = link.getAttribute("href");
-    if (!href) return;
-
-    if (currentUrl.endsWith(href)) {
-      link.classList.add("active");
-      link.setAttribute("aria-current", "page");
+    .future-grid {
+        grid-template-columns: 1fr;
     }
-  });
 
-
-  /* =========================================================
-     4. CARREGAR USUÁRIO (nome, email, inicial)
-     Em TODAS as páginas
-  ========================================================== */
-  async function carregarUsuario() {
-    try {
-      const userInitial = document.getElementById("userInitial");
-      const userName = document.getElementById("userName");
-      const userEmail = document.getElementById("userEmail");
-
-      if (!userInitial && !userName && !userEmail) return;
-
-      // Busca usuário logado no Supabase
-      const { data, error } = await supabase.auth.getUser();
-
-      if (error || !data.user) {
-        window.location.href = "/login.html";
-        return;
-      }
-
-      const email = data.user.email;
-      const name = data.user.user_metadata.nome || "Usuário";
-      const initial = name.charAt(0).toUpperCase();
-
-      if (userInitial) userInitial.textContent = initial;
-      if (userName) userName.textContent = name;
-      if (userEmail) userEmail.textContent = email;
-
-    } catch (err) {
-      console.error("Erro ao carregar usuário:", err);
+    .sidebar {
+        width: 200px;
     }
-  }
+}
 
-  carregarUsuario();
+@media (max-width: 800px) {
+    body {
+        flex-direction: column;
+    }
 
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 15px;
+    }
 
-  /* =========================================================
-     5. BOTÃO SAIR (logout universal)
-  ========================================================== */
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      window.location.href = "/login.html";
-    });
-  }
-
-
-  /* =========================================================
-     6. FIX – PREVENIR ERROS EM PÁGINAS SEM SIDEBAR/TOPBAR
-  ========================================================== */
-  if (!sidebar) {
-    console.warn("Sidebar não encontrada nesta página (ok).");
-  }
-  if (!menuToggle) {
-    console.warn("Menu mobile não precisa nesta página.");
-  }
-});
+    .main-area {
+        padding: 20px;
+    }
+}
