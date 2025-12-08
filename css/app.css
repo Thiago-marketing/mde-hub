@@ -252,6 +252,7 @@ body {
 .module-head {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .tag-ready {
@@ -277,6 +278,7 @@ body {
     border: 1px solid var(--border);
     text-decoration: none;
     transition: 0.2s;
+    font-size: 14px;
 }
 
 .module-item:hover {
@@ -361,6 +363,143 @@ body {
 }
 
 /* -------------------------------------------------------------------
+   CRM / TABELAS / BADGES
+------------------------------------------------------------------- */
+
+.table-wrapper {
+    margin-top: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--bg2);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.table thead {
+    background: var(--bg3);
+}
+
+.table th,
+.table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.table th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text2);
+}
+
+.table tr:hover td {
+    background: rgba(15, 23, 42, 0.45);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+}
+
+.badge.lead-open {
+    background: rgba(37, 99, 235, 0.15);
+    border-color: var(--accent2);
+    color: var(--accent2);
+}
+
+.badge.lead-won {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.badge.lead-lost {
+    background: rgba(248, 113, 113, 0.15);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+/* Botões */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.18s;
+}
+
+.btn-primary {
+    background: var(--accent2);
+    color: #ffffff;
+    border-color: var(--accent2);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text2);
+    border-color: var(--border);
+}
+
+.btn-ghost:hover {
+    background: var(--bg3);
+}
+
+/* Filtros / topo de lista */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.list-header-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.list-header small {
+    color: var(--text2);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group select,
+.filter-group input {
+    background: var(--bg2);
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    color: var(--text);
+    font-size: 13px;
+}
+
+/* -------------------------------------------------------------------
    RESPONSIVE
 ------------------------------------------------------------------- */
 
@@ -381,6 +520,8 @@ body {
 @media (max-width: 800px) {
     body {
         flex-direction: column;
+        height: auto;
+        overflow: auto;
     }
 
     .sidebar {
@@ -393,5 +534,6 @@ body {
 
     .main-area {
         padding: 20px;
+        height: auto;
     }
 }
