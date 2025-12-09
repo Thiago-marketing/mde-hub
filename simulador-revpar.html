@@ -1,85 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Simulador de RevPAR</title>
-  <link rel="stylesheet" href="/css/app.css">
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
-<div class="layout">
 
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="avatar">M</div>
-      <span>MDE Hub</span>
-    </div>
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
 
-    <nav class="sidebar-menu">
-      <a href="/dashboard.html">📊 Dashboard</a>
-      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🔑 Reservas</a>
-      <a href="/financeiro.html">💰 Financeiro</a>
-      <a class="active" href="/simuladores.html">📐 Simuladores</a>
-      <a>📘 CRM Hoteleiro • Em breve</a>
-      <a>📄 Proposta IA • Em breve</a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <a id="logoutBtn">🚪 Sair</a>
-    </div>
-  </aside>
-
-  <main class="content">
-    <div class="top-right">
-      <select class="hotel-select"><option>Carregando hotéis...</option></select>
-      <div class="user-badge">U</div>
-    </div>
-
-    <h1>Simulador de RevPAR</h1>
-    <p class="content-subtitle">
-      Calcule o RevPAR combinando ocupação e ADR em um único indicador.
-    </p>
-
-    <div class="grid grid-2">
-
-      <div class="card">
-        <div class="card-title">Parâmetros</div>
-        <form id="formRevpar" class="form-grid">
-          <label>
-            Receita de hospedagem (R$)
-            <input type="number" id="rv_receita" min="0" step="0.01" required>
-          </label>
-
-          <label>
-            UHs disponíveis
-            <input type="number" id="rv_uhs" min="1" step="1" required>
-          </label>
-
-          <label>
-            Período (dias)
-            <input type="number" id="rv_dias" min="1" step="1" required>
-          </label>
-
-          <button type="submit" class="btn-primary full">Calcular RevPAR</button>
-        </form>
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div class="logo">
+      <span class="logo-avatar">M</span>
+      <div class="logo-text">
+        <strong>MDE Hub</strong>
+        <span>Simuladores</span>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">Resultado</div>
-        <div class="card-value" id="rv_resultado">R$ --</div>
-        <p class="text-muted" id="rv_resumo">
-          RevPAR = Receita / (UHs disponíveis × dias)
+    <div class="nav-section">
+      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+      <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+      <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+      <a href="/fechamento.html" class="nav-item">🧾 Fechamento</a>
+      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+      <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
+      <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa UHs</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Simuladores</div>
+      <a href="/simuladores.html" class="nav-item">🧮 Todos os Simuladores</a>
+      <a href="/simulador-adr.html" class="nav-item">📏 ADR</a>
+      <a href="/simulador-revpar.html" class="nav-item active">📈 RevPAR</a>
+      <a href="/simulador-diarias.html" class="nav-item">📅 Diárias Vendidas</a>
+      <a href="/simulador-ocupacao.html" class="nav-item">🏨 Ocupação</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">CRM Hoteleiro</div>
+      <a class="nav-item disabled">📘 Em breve</a>
+      <a class="nav-item disabled">📄 Proposta Hoteleira</a>
+    </div>
+
+    <div class="nav-section nav-exit">
+      <a href="/logout.html" class="nav-item">🚪 Sair</a>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Simulador de RevPAR</h1>
+        <p class="page-subtitle">
+          Calcule o Revenue per Available Room (RevPAR) e entenda a performance real do seu hotel.
         </p>
       </div>
 
-    </div>
-  </main>
+      <div class="topbar-right">
+        <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+        <div class="user-pill">
+          <div class="user-avatar">H</div>
+          <div class="user-info">
+            <span class="user-name">Hotel Exemplo</span>
+            <span class="user-email">contato@hotelexemplo.com</span>
+          </div>
+        </div>
+      </div>
+    </header>
 
-</div>
+    <!-- CONTEÚDO -->
+    <section class="content-section">
 
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
+      <div class="grid">
+
+        <!-- EXPLICAÇÃO -->
+        <div class="card">
+          <div class="card-title">O que é RevPAR?</div>
+          <p class="card-desc">
+            RevPAR (Revenue per Available Room) mede a <strong>receita média por unidade
+            habitacional disponível</strong>, combinando ocupação e preço.
+          </p>
+          <p class="card-desc" style="margin-top:10px;">
+            Fórmula básica:
+            <br />
+            <strong>RevPAR = Faturamento de Hospedagem ÷ UHs Disponíveis</strong>
+          </p>
+          <p class="card-desc" style="margin-top:10px;">
+            É um dos indicadores mais importantes para entender se o hotel está
+            usando bem sua capacidade de gerar receita.
+          </p>
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <div class="card">
+          <div class="card-title">Preencha os dados</div>
+
+          <label for="rev_uhsDisponiveis">UHs Disponíveis no período</label>
+          <input
+            type="number"
+            id="rev_uhsDisponiveis"
+            min="0"
+            placeholder="Ex: 40"
+          />
+
+          <label for="rev_faturamentoHospedagem">
+            Faturamento de Hospedagem (R$)
+          </label>
+          <input
+            type="number"
+            id="rev_faturamentoHospedagem"
+            min="0"
+            step="0.01"
+            placeholder="Ex: 18.500,00"
+          />
+
+          <button id="btnCalcularRevpar" class="btn-primary" style="margin-top:10px;">
+            Calcular RevPAR
+          </button>
+        </div>
+
+        <!-- RESULTADO -->
+        <div class="card">
+          <div class="card-title">Resultado</div>
+
+          <p class="card-desc">RevPAR calculado para o período:</p>
+          <div class="card-value" id="revparResultado">R$ --</div>
+
+          <p class="card-desc" id="revparResumo" style="margin-top: 12px;">
+            Preencha os dados ao lado e clique em "Calcular RevPAR".
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- SCRIPT DO SIMULADOR (SIMPLES) -->
+  <script>
+    const btnCalcularRevpar = document.getElementById("btnCalcularRevpar");
+    const inputRevUHsDisp = document.getElementById("rev_uhsDisponiveis");
+    const inputRevFat = document.getElementById("rev_faturamentoHospedagem");
+    const revparResultado = document.getElementById("revparResultado");
+    const revparResumo = document.getElementById("revparResumo");
+
+    function formatCurrencyRev(value) {
+      if (isNaN(value)) return "R$ --";
+      return value.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        maximumFractionDigits: 2
+      });
+    }
+
+    btnCalcularRevpar.addEventListener("click", () => {
+      const uhsDisponiveis = parseFloat(
+        (inputRevUHsDisp.value || "").replace(",", ".")
+      ) || 0;
+
+      const faturamento = parseFloat(
+        (inputRevFat.value || "").replace(",", ".")
+      ) || 0;
+
+      if (uhsDisponiveis <= 0 || faturamento <= 0) {
+        revparResultado.textContent = "R$ --";
+        revparResumo.textContent =
+          "Informe um número válido de UHs disponíveis e um faturamento maior que zero.";
+        return;
+      }
+
+      const revpar = faturamento / uhsDisponiveis;
+      revparResultado.textContent = formatCurrencyRev(revpar);
+
+      // Interpretação simples (pode ser ajustada depois)
+      let comentario = "RevPAR calculado com sucesso.";
+      if (revpar < 150) {
+        comentario = "RevPAR baixo: avalie se é possível melhorar tarifas, ocupação ou ambos.";
+      } else if (revpar >= 150 && revpar < 300) {
+        comentario = "RevPAR em faixa saudável. Compare com metas e histórico do hotel.";
+      } else {
+        comentario = "RevPAR alto: excelente performance. Garanta que isso não esteja sacrificando ocupação.";
+      }
+
+      revparResumo.textContent = comentario;
+    });
+  </script>
+
 </body>
 </html>
