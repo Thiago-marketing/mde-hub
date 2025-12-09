@@ -1,104 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MDE Hub • Simuladores</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <link rel="stylesheet" href="/css/app.css">
 </head>
 
 <body>
+<div class="layout">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <div class="user-initial">M</div>
-      <div class="sidebar-brand">MDE Hub</div>
+      <div class="avatar">M</div>
+      <span>MDE Hub</span>
     </div>
 
-    <nav class="sidebar-nav">
-      <a href="/dashboard.html"><span class="icon">📊</span> Dashboard</a>
-      <a href="/painel-proprietario.html"><span class="icon">🏨</span> Painel do Proprietário</a>
-      <a href="/reservas.html"><span class="icon">🛎️</span> Reservas</a>
-      <a href="/financeiro.html"><span class="icon">💰</span> Financeiro</a>
-
-      <a class="active" href="/simuladores.html">
-        <span class="icon">🧮</span> Simuladores
-      </a>
-
-      <div class="separator"></div>
-
-      <a href="/crm.html" class="disabled"><span class="icon">📘</span> CRM Hoteleiro • Em breve</a>
-      <a href="/proposta.html" class="disabled"><span class="icon">📝</span> Proposta IA • Em breve</a>
-
-      <div class="separator"></div>
-      <a href="#" id="logoutBtn" class="logout"><span class="icon">🚪</span> Sair</a>
+    <nav class="sidebar-menu">
+      <a href="/dashboard.html">📊 Dashboard</a>
+      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">🔑 Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a class="active" href="/simuladores.html">📐 Simuladores</a>
+      <a>📘 CRM Hoteleiro • Em breve</a>
+      <a>📄 Proposta IA • Em breve</a>
     </nav>
+
+    <div class="sidebar-footer">
+      <a id="logoutBtn">🚪 Sair</a>
+    </div>
   </aside>
 
-  <!-- MAIN -->
-  <main class="main">
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <h1 class="page-title">Simuladores MDE</h1>
-        <p class="page-subtitle">Ferramentas gratuitas para apoiar decisões de receita</p>
-      </div>
+  <main class="content">
 
-      <div class="topbar-right">
-        <select id="hotelSelect" class="hotel-select">
-          <option>Carregando hotéis...</option>
-        </select>
+    <div class="top-right">
+      <select class="hotel-select"><option>Carregando hotéis...</option></select>
+      <div class="user-badge">U</div>
+    </div>
 
-        <div class="user-profile">
-          <span id="userInitial">U</span>
-          <div>
-            <p id="userName">Carregando...</p>
-            <p id="userEmail"></p>
-          </div>
-        </div>
-      </div>
-    </header>
+    <h1>Simuladores MDE</h1>
+    <p class="content-subtitle">Ferramentas gratuitas para decisões de receita</p>
 
-    <!-- SIMULATORS GRID -->
-    <section class="panel">
-      <h2>Escolha um simulador</h2>
+    <div class="grid grid-2">
 
-      <div class="sim-grid">
+      <a href="/simulador-adr.html" class="card btn-clean">
+        <div class="card-title">Simulador de ADR</div>
+        <p class="text-muted">Calcule a tarifa média ideal</p>
+      </a>
 
-        <a href="/simulador-adr.html" class="sim-card">
-          <div class="sim-icon">💵</div>
-          <h3>Simulador de ADR</h3>
-          <p>Calcule tarifas médias ideais com base nas diárias vendidas.</p>
-        </a>
+      <a href="/simulador-diarias.html" class="card btn-clean">
+        <div class="card-title">Diárias Necessárias</div>
+        <p class="text-muted">Descubra quantas diárias você precisa vender</p>
+      </a>
 
-        <a href="/simulador-diarias.html" class="sim-card">
-          <div class="sim-icon">📅</div>
-          <h3>Simulador de Diárias Necessárias</h3>
-          <p>Descubra quantas diárias são necessárias para atingir uma meta.</p>
-        </a>
+      <a href="/simulador-ocupacao.html" class="card btn-clean">
+        <div class="card-title">Simulador de Ocupação</div>
+        <p class="text-muted">Projete cenários de ocupação</p>
+      </a>
 
-        <a href="/simulador-ocupacao.html" class="sim-card">
-          <div class="sim-icon">🏨</div>
-          <h3>Simulador de Ocupação</h3>
-          <p>Projete ocupação com base em oferta e demanda.</p>
-        </a>
+      <a href="/simulador-revpar.html" class="card btn-clean">
+        <div class="card-title">Simulador de RevPAR</div>
+        <p class="text-muted">Calcule o impacto de tarifas e ocupação</p>
+      </a>
 
-        <a href="/simulador-revpar.html" class="sim-card">
-          <div class="sim-icon">📈</div>
-          <h3>Simulador de RevPAR</h3>
-          <p>Calcule RevPAR e impacto de tarifas e ocupação.</p>
-        </a>
-
-      </div>
-
-    </section>
+    </div>
 
   </main>
 
-  <script src="/js/supabase.js"></script>
-  <script src="/js/app.js"></script>
+</div>
 
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>
