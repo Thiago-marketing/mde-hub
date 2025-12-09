@@ -1,68 +1,175 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Início</title>
-  <link rel="stylesheet" href="/css/app.css">
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
-<div class="layout">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="avatar">M</div>
-      <span>MDE Hub</span>
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
+
+  <!-- SIDEBAR HÍBRIDA -->
+  <div id="sidebar">
+    <div class="logo">
+      <span class="logo-avatar">M</span>
+      <div class="logo-text">
+        <strong>Web MDE</strong>
+        <span>Painel Gerencial</span>
+      </div>
     </div>
 
-    <nav class="sidebar-menu">
-      <a href="/dashboard.html">📊 Dashboard</a>
-      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🔑 Reservas</a>
-      <a href="/financeiro.html">💰 Financeiro</a>
-      <a href="/simuladores.html">📐 Simuladores</a>
-      <a>📘 CRM Hoteleiro • Em breve</a>
-      <a>📄 Proposta Hoteleira IA • Em breve</a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <a href="#" id="logoutBtn">🚪 Sair</a>
-    </div>
-  </aside>
-
-  <!-- CONTENT -->
-  <main class="content">
-    <div class="top-right">
-      <select class="hotel-select"><option>Carregando hotéis...</option></select>
-      <div class="user-badge">U</div>
+    <div class="nav-section">
+      <a href="/index.html" class="nav-item active">🏠 Início</a>
+      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
     </div>
 
-    <h1>Bem-vindo ao MDE Hub</h1>
-    <div class="content-subtitle">Selecione um módulo no menu ao lado</div>
-
-    <div class="grid grid-3">
-      <a href="/dashboard.html" class="card btn-clean">
-        <h2 class="card-title">📊 Dashboard</h2>
-        <p class="text-muted">Indicadores em tempo real</p>
-      </a>
-
-      <a href="/reservas.html" class="card btn-clean">
-        <h2 class="card-title">🔑 Reservas</h2>
-        <p class="text-muted">Entradas, saídas e hóspedes atuais</p>
-      </a>
-
-      <a href="/financeiro.html" class="card btn-clean">
-        <h2 class="card-title">💰 Financeiro</h2>
-        <p class="text-muted">Fluxo de caixa consolidado</p>
-      </a>
+    <div class="nav-section">
+      <div class="nav-title">Operação</div>
+      <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa de UHs</a>
+      <a href="/fechamento.html" class="nav-item">🧾 Fechamento de Caixa</a>
+      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
     </div>
 
-  </main>
-</div>
+    <div class="nav-section">
+      <div class="nav-title">Financeiro & Vendas</div>
+      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+      <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+      <a class="nav-item disabled">📘 CRM Hoteleiro (em breve)</a>
+      <a class="nav-item disabled">📄 Proposta Hoteleira (em breve)</a>
+    </div>
 
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
+    <div class="nav-section nav-exit">
+      <a href="/logout.html" class="nav-item">🚪 Sair</a>
+    </div>
+  </div>
+
+  <!-- ÁREA PRINCIPAL -->
+  <div class="main">
+
+    <!-- TOPBAR PREMIUM -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Bem-vindo ao MDE Hub</h1>
+        <p class="page-subtitle">
+          Sua central moderna de gerenciamento hoteleiro — indicadores, finanças, estoque e operação em um único lugar.
+        </p>
+      </div>
+
+      <div class="topbar-right">
+        <div class="hotel-select-wrapper">
+          <span class="label">Hotel</span>
+          <select id="hotelSelector">
+            <option>Carregando...</option>
+          </select>
+        </div>
+
+        <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+
+        <div class="user-pill">
+          <div class="user-avatar">H</div>
+          <div class="user-info">
+            <span class="user-name">Hotel Exemplo</span>
+            <span class="user-email">contato@hotelexemplo.com</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <section class="content-section">
+
+      <!-- LINHA 1 — Status rápido da operação -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Ocupação Atual</div>
+          <div class="card-value" id="idx_ocupacao">--%</div>
+          <div class="card-desc">Situação atual das unidades</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Receita de Hoje</div>
+          <div class="card-value" id="idx_receitaHoje">R$ --</div>
+          <div class="card-desc">Hospedagem + adicionais</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Entradas Hoje</div>
+          <div class="card-value" id="idx_checkins">--</div>
+          <div class="card-desc">Chegadas previstas</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Saídas Hoje</div>
+          <div class="card-value" id="idx_checkouts">--</div>
+          <div class="card-desc">Hóspedes deixando o hotel</div>
+        </div>
+      </div>
+
+      <!-- LINHA 2 — Acesso rápido aos módulos -->
+      <div class="grid">
+
+        <a href="/dashboard.html" class="card card-link">
+          <div class="card-title">📊 Dashboard Gerencial</div>
+          <div class="card-desc">Visão rápida da operação e do financeiro</div>
+        </a>
+
+        <a href="/mapa-uh.html" class="card card-link">
+          <div class="card-title">🛏️ Mapa de UHs</div>
+          <div class="card-desc">Status e ocupação das unidades</div>
+        </a>
+
+        <a href="/fechamento.html" class="card card-link">
+          <div class="card-title">🧾 Fechamento de Caixa</div>
+          <div class="card-desc">Movimentos, métodos de pagamento e resumo diário</div>
+        </a>
+
+        <a href="/estoque.html" class="card card-link">
+          <div class="card-title">📦 Estoque</div>
+          <div class="card-desc">Itens críticos, reposição e consumo</div>
+        </a>
+
+      </div>
+
+      <!-- LINHA 3 — Tabelas principais -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Próximas Reservas</div>
+          <table class="table">
+            <thead>
+              <tr><th>Reserva</th><th>Hóspede</th><th>UH</th><th>Data</th></tr>
+            </thead>
+            <tbody id="idx_proximasReservas">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Movimentos Recentes</div>
+          <table class="table">
+            <thead>
+              <tr><th>Hora</th><th>Tipo</th><th>Descrição</th><th>Valor</th></tr>
+            </thead>
+            <tbody id="idx_movRecentes">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
 </body>
 </html>
