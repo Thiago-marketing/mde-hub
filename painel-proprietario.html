@@ -1,150 +1,92 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Painel do Proprietário • MDE Hub</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MDE Hub • Painel do Proprietário</title>
+  <link rel="stylesheet" href="/css/app.css">
 </head>
 
 <body>
+<div class="layout">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-logo">M</div>
+      <div class="avatar">M</div>
       <span>MDE Hub</span>
     </div>
 
     <nav class="sidebar-menu">
-      <a href="dashboard.html">📊 Dashboard</a>
-      <a href="reservas.html">🛎 Reservas</a>
-      <a href="financeiro.html">💰 Financeiro</a>
-      <a href="simuladores.html">🧮 Simuladores</a>
-
-      <div class="sidebar-divider"></div>
-
-      <a href="crm.html" class="disabled">🚀 CRM Hoteleiro 5.0 • Em breve</a>
-      <a href="proposta.html" class="disabled">🧠 Proposta IA • Em breve</a>
-
-      <div class="sidebar-divider"></div>
-
-      <a href="#" id="logoutBtn" class="logout">Sair</a>
+      <a href="/dashboard.html">📊 Dashboard</a>
+      <a class="active" href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">🔑 Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a href="/simuladores.html">📐 Simuladores</a>
+      <a>📘 CRM Hoteleiro • Em breve</a>
+      <a>📄 Proposta IA • Em breve</a>
     </nav>
+
+    <div class="sidebar-footer">
+      <a id="logoutBtn">🚪 Sair</a>
+    </div>
   </aside>
 
+
   <!-- MAIN -->
-  <main class="main">
+  <main class="content">
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <div>
-        <div class="topbar-title">Painel do Proprietário</div>
-        <div class="topbar-sub">Indicadores gerais do hotel em tempo real</div>
-      </div>
+    <div class="top-right">
+      <select class="hotel-select" id="hotelSelect"></select>
+      <div class="user-badge" id="userBadge">U</div>
+    </div>
 
-      <div class="topbar-right">
-        <select id="hotelSelector">
-          <option>Hotel Central</option>
-        </select>
+    <h1>Painel do Proprietário</h1>
+    <div class="content-subtitle">Visão geral operacional e estratégica</div>
 
-        <div class="user-box">
-          <div class="user-initial" id="userInitial">U</div>
-          <span id="userName">Carregando...</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- DASHBOARD GRID -->
-    <section class="dashboard-grid">
+    <div class="grid grid-3">
 
       <div class="card">
-        <div class="card-title">Ocupação</div>
-        <div class="card-value" id="ocupacao">--%</div>
-        <div class="card-desc">Atualizado automaticamente</div>
+        <div class="card-title">Ocupação Atual</div>
+        <div class="card-value" id="pp_ocupacao">--%</div>
+        <p class="text-muted">Status geral das UHs</p>
       </div>
 
       <div class="card">
-        <div class="card-title">Receita Total (Hoje)</div>
-        <div class="card-value" id="receitaHoje">R$ --</div>
-        <div class="card-desc">Hospedagem + Extras</div>
+        <div class="card-title">Receita do Dia</div>
+        <div class="card-value" id="pp_receita_dia">R$ --</div>
+        <p class="text-muted">Hospedagens + extras</p>
       </div>
 
       <div class="card">
-        <div class="card-title">Check-ins Previstos</div>
-        <div class="card-value" id="checkinsPrevistos">--</div>
-        <div class="card-desc">Para hoje</div>
+        <div class="card-title">Saldo Financeiro</div>
+        <div class="card-value" id="pp_saldo">R$ --</div>
+        <p class="text-muted">Entradas - Saídas</p>
+      </div>
+
+    </div>
+
+    <div class="grid grid-2" style="margin-top:30px;">
+
+      <div class="card">
+        <div class="card-title">Previsões de Entrada & Saída</div>
+        <p class="text-muted">Baseado em reservas confirmadas</p>
+        <div id="pp_previsoes">Gráfico / Tabela aqui</div>
       </div>
 
       <div class="card">
-        <div class="card-title">Check-outs Previstos</div>
-        <div class="card-value" id="checkoutsPrevistos">--</div>
-        <div class="card-desc">Para hoje</div>
+        <div class="card-title">Estoque & Itens Críticos</div>
+        <p class="text-muted">Itens abaixo do mínimo</p>
+        <div id="pp_estoque">Nenhum item carregado...</div>
       </div>
 
-    </section>
-
-
-    <!-- PAINÉIS DE GRÁFICOS -->
-    <section class="panel-row">
-
-      <div class="panel">
-        <h2>Ocupação • Últimos 7 dias</h2>
-        <div class="chart-placeholder">Gráfico aqui</div>
-      </div>
-
-      <div class="panel">
-        <h2>Receita por Centro de Custo</h2>
-        <div class="chart-placeholder">Gráfico aqui</div>
-      </div>
-
-    </section>
-
-
-    <!-- ESTOQUE E ABASTECIMENTO -->
-    <section class="panel" style="margin-top: 24px;">
-      <h2>Estoque e Itens Críticos</h2>
-      <p class="card-desc">Itens com estoque baixo ou próximos do mínimo definido.</p>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Quantidade</th>
-            <th>Mínimo</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="estoqueLista">
-          <tr>
-            <td colspan="4" style="text-align:center; opacity:0.5;">Carregando estoque...</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-
-    <!-- TABELA DE MOVIMENTAÇÃO FINANCEIRA -->
-    <section class="panel" style="margin-top: 24px;">
-      <h2>Movimentação Financeira (Hoje)</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Hora</th>
-            <th>Tipo</th>
-            <th>Descrição</th>
-            <th>Valor</th>
-          </tr>
-        </thead>
-        <tbody id="financeiroHoje">
-          <tr><td colspan="4" style="text-align:center; opacity:0.5;">Carregando...</td></tr>
-        </tbody>
-      </table>
-    </section>
+    </div>
 
   </main>
 
-  <script src="/js/app.js"></script>
+</div>
 
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>
