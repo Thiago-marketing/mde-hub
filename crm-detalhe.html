@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Lead</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+
+  <style>
+    .lead-header {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .lead-name {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .lead-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #fff;
+      background: var(--primary);
+      font-weight: 600;
+    }
+
+    .timeline {
+      margin-top: 20px;
+      border-left: 2px solid var(--border);
+      padding-left: 18px;
+    }
+
+    .timeline-item {
+      margin-bottom: 18px;
+    }
+
+    .timeline-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .timeline-desc {
+      opacity: .8;
+      font-size: 14px;
+      margin-top: 3px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 25px 0 10px 0;
+      color: var(--text);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .info-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .ai-box {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 25px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo">🏨 MDE Hub</div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
+    <a href="/simuladores.html" class="nav-item">📐 Simuladores</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a href="/crm.html" class="nav-item">📘 CRM</a>
+    <a href="/crm-detalhe.html" class="nav-item active">👤 Lead</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="topbar">
+    <button id="btnThemeToggle">🌓</button>
+    <div class="user-badge" id="userInitial">U</div>
+  </div>
+
+  <!-- HEADER DO LEAD -->
+  <div class="lead-header">
+    <div>
+      <div class="lead-name">João Mendes</div>
+      <div class="lead-tags">
+        <span class="tag">WhatsApp</span>
+        <span class="tag">Morno</span>
+        <span class="tag">Em Conversa</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-outline">Mover no Funil</button>
+      <button class="btn btn-outline">Registrar Follow-up</button>
+      <button class="btn btn-primary">Enviar WhatsApp</button>
+      <button class="btn btn-primary">Gerar Proposta IA</button>
+    </div>
+  </div>
+
+  <!-- INFORMAÇÕES -->
+  <h2 class="section-title">Informações do Lead</h2>
+
+  <div class="info-grid">
+    <div class="info-box">
+      <strong>Check-in:</strong><br> 12/01/2026
+    </div>
+    <div class="info-box">
+      <strong>Check-out:</strong><br> 15/01/2026
+    </div>
+    <div class="info-box">
+      <strong>Hóspedes:</strong><br> 2 adultos
+    </div>
+    <div class="info-box">
+      <strong>Tipo de Quarto:</strong><br> Luxo Casal
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <h2 class="section-title">Linha do Tempo</h2>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-title">Mensagem recebida</div>
+      <div class="timeline-desc">"Olá, gostaria de saber valores para janeiro."</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-title">Resposta enviada</div>
+      <div class="timeline-desc">Informações iniciais enviadas pelo atendente.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-title">Lead movido para Em Conversa</div>
+      <div class="timeline-desc">O interesse aumentou após respostas sobre o quarto.</div>
+    </div>
+
+  </div>
+
+  <!-- INSIGHTS DA IA -->
+  <h2 class="section-title">Insights Inteligentes (IA Whis)</h2>
+
+  <div class="ai-box">
+    <p><strong>Probabilidade de Conversão:</strong> 62%</p>
+    <p><strong>Sugestão:</strong> Envie uma proposta personalizada com benefício de reserva antecipada.</p>
+    <p><strong>Objeções prováveis:</strong> Preço e flexibilidade de cancelamento.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
