@@ -11,122 +11,101 @@
 
 <body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">M</div>
-      <span>MDE Hub</span>
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
+
+  <!-- SIDEBAR NOVA (compatível com app.css) -->
+  <div id="sidebar">
+    <div class="logo">🏨 MDE Hub</div>
+
+    <div class="nav-section">
+      <a href="/dashboard.html" class="nav-item active">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+      <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
     </div>
 
-    <nav class="sidebar-menu">
-      <a class="active" href="/dashboard.html">
-        <span>📊</span> Dashboard
-      </a>
-      <a href="/painel-proprietario.html">
-        <span>🏨</span> Painel do Proprietário
-      </a>
-      <a href="/reservas.html">
-        <span>🧳</span> Reservas
-      </a>
-      <a href="/financeiro.html">
-        <span>💰</span> Financeiro
-      </a>
-      <a href="/simuladores.html">
-        <span>🧮</span> Simuladores
-      </a>
+    <div class="nav-section">
+      <div class="nav-title">Financeiro</div>
+      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+    </div>
 
-      <div class="sidebar-divider"></div>
+    <div class="nav-section">
+      <div class="nav-title">Simuladores</div>
+      <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+    </div>
 
-      <a class="disabled">
-        <span>🌀</span> CRM Hoteleiro • Em breve
-      </a>
-      <a class="disabled">
-        <span>📄</span> Proposta Hoteleira IA • Em breve
-      </a>
+    <div class="nav-section">
+      <div class="nav-title">CRM Hoteleiro</div>
+      <a href="#" class="nav-item disabled">📘 Em breve</a>
+      <a href="#" class="nav-item disabled">📄 Proposta Hoteleira</a>
+    </div>
 
-      <div class="sidebar-divider"></div>
+    <div class="nav-section nav-exit">
+      <a href="/logout.html" class="nav-item">🚪 Sair</a>
+    </div>
+  </div>
 
-      <a class="logout" id="logoutBtn">
-        <span>🚪</span> Sair
-      </a>
-    </nav>
-  </aside>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="main">
 
-  <!-- MAIN -->
-  <main class="main">
+    <!-- TOPBAR NOVA (compatível com app.css) -->
+    <div class="topbar">
+      <button id="btnThemeToggle">🌓</button>
+      <div class="user-badge" id="userInitial">U</div>
+    </div>
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <h1 class="topbar-title">Dashboard</h1>
-        <p class="topbar-sub">Indicadores gerais do hotel em tempo real</p>
-      </div>
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Indicadores gerais do hotel em tempo real</p>
 
-      <div class="topbar-right">
-        <select id="hotelSelector">
-          <option>Carregando hotéis...</option>
-        </select>
+    <!-- GRID DE CARDS -->
+    <div class="grid">
 
-        <div class="user-box" id="userBox">
-          <span class="user-initial">U</span>
-          <span id="userName">Carregando...</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- CONTENT -->
-    <section class="dashboard-grid">
-
-      <!-- CARD 1 -->
       <div class="card">
-        <h3>Ocupação Atual</h3>
-        <p class="card-value" id="ocupacaoAtual">--%</p>
-        <span class="card-desc">Atualizado em tempo real</span>
+        <div class="card-title">Ocupação Atual</div>
+        <div class="card-value" id="ocupacaoAtual">--%</div>
+        <div class="card-desc">Atualizado em tempo real</div>
       </div>
 
-      <!-- CARD 2 -->
       <div class="card">
-        <h3>Entradas Hoje</h3>
-        <p class="card-value" id="entradasHoje">--</p>
-        <span class="card-desc">Hóspedes realizando check-in</span>
+        <div class="card-title">Entradas Hoje</div>
+        <div class="card-value" id="entradasHoje">--</div>
+        <div class="card-desc">Hóspedes realizando check-in</div>
       </div>
 
-      <!-- CARD 3 -->
       <div class="card">
-        <h3>Saídas Hoje</h3>
-        <p class="card-value" id="saidasHoje">--</p>
-        <span class="card-desc">Hóspedes realizando check-out</span>
+        <div class="card-title">Saídas Hoje</div>
+        <div class="card-value" id="saidasHoje">--</div>
+        <div class="card-desc">Hóspedes realizando check-out</div>
       </div>
 
-      <!-- CARD 4 -->
       <div class="card">
-        <h3>Receita de Hoje</h3>
-        <p class="card-value" id="receitaHoje">R$ --</p>
-        <span class="card-desc">Hospedagens + Extras</span>
+        <div class="card-title">Receita de Hoje</div>
+        <div class="card-value" id="receitaHoje">R$ --</div>
+        <div class="card-desc">Hospedagens + Extras</div>
       </div>
 
-    </section>
+    </div>
 
-    <!-- ROW 2 -->
-    <section class="panel-row">
+    <!-- GRÁFICOS -->
+    <div class="grid">
 
-      <div class="panel">
-        <h3>Ocupação • Últimos 7 dias</h3>
+      <div class="card">
+        <div class="card-title">Ocupação • Últimos 7 dias</div>
         <div class="chart-placeholder">Gráfico aqui</div>
       </div>
 
-      <div class="panel">
-        <h3>Receita por Centro de Custo</h3>
+      <div class="card">
+        <div class="card-title">Receita por Centro de Custo</div>
         <div class="chart-placeholder">Gráfico aqui</div>
       </div>
 
-    </section>
+    </div>
 
-    <!-- ROW 3 -->
-    <section class="panel-row">
+    <!-- TABELAS -->
+    <div class="grid">
 
-      <div class="panel">
-        <h3>Próximas Chegadas</h3>
+      <div class="card">
+        <div class="card-title">Próximas Chegadas</div>
         <table class="table">
           <thead>
             <tr><th>Reserva</th><th>Hóspede</th><th>UH</th><th>Chegada</th><th>Status</th></tr>
@@ -137,8 +116,8 @@
         </table>
       </div>
 
-      <div class="panel">
-        <h3>Movimento do Caixa (Hoje)</h3>
+      <div class="card">
+        <div class="card-title">Movimento do Caixa (Hoje)</div>
         <table class="table">
           <thead>
             <tr><th>Hora</th><th>Tipo</th><th>Descrição</th><th>Valor</th></tr>
@@ -149,9 +128,9 @@
         </table>
       </div>
 
-    </section>
+    </div>
 
-  </main>
+  </div>
 
 </body>
 </html>
