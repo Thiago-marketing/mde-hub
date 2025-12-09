@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Dashboard</title>
 
-  <!-- CSS principal -->
   <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
@@ -14,117 +14,144 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <span class="logo-mark">M</span>
-      <span class="logo-text">MDE Hub</span>
+      <div class="sidebar-logo">M</div>
+      <span>MDE Hub</span>
     </div>
 
-    <nav class="menu">
-      <a href="/dashboard.html" class="active">📊 Dashboard</a>
-      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">📅 Reservas</a>
-      <a href="/financeiro.html">💰 Financeiro</a>
-      <a href="/simuladores.html">🧮 Simuladores</a>
-
-      <div class="menu-divider"></div>
-
-      <a href="/crm.html" class="disabled-item">
-        🌀 CRM Hoteleiro <span class="tag-soon">Em breve</span>
+    <nav class="sidebar-menu">
+      <a class="active" href="/dashboard.html">
+        <span>📊</span> Dashboard
+      </a>
+      <a href="/painel-proprietario.html">
+        <span>🏨</span> Painel do Proprietário
+      </a>
+      <a href="/reservas.html">
+        <span>🧳</span> Reservas
+      </a>
+      <a href="/financeiro.html">
+        <span>💰</span> Financeiro
+      </a>
+      <a href="/simuladores.html">
+        <span>🧮</span> Simuladores
       </a>
 
-      <a href="/proposta.html" class="disabled-item">
-        🧾 Proposta Hoteleira IA <span class="tag-soon">Em breve</span>
+      <div class="sidebar-divider"></div>
+
+      <a class="disabled">
+        <span>🌀</span> CRM Hoteleiro • Em breve
+      </a>
+      <a class="disabled">
+        <span>📄</span> Proposta Hoteleira IA • Em breve
       </a>
 
-      <div class="menu-divider"></div>
+      <div class="sidebar-divider"></div>
 
-      <a id="btnLogout">🚪 Sair</a>
+      <a class="logout" id="logoutBtn">
+        <span>🚪</span> Sair
+      </a>
     </nav>
   </aside>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
+  <!-- MAIN -->
+  <main class="main">
 
     <!-- TOPBAR -->
     <header class="topbar">
       <div class="topbar-left">
-        <h1>Dashboard</h1>
+        <h1 class="topbar-title">Dashboard</h1>
+        <p class="topbar-sub">Indicadores gerais do hotel em tempo real</p>
       </div>
 
       <div class="topbar-right">
-        <button id="themeToggle" class="theme-btn">🌓</button>
-        <div class="user-box">
-          <span id="userInitial">U</span>
-          <div>
-            <p id="userName">Carregando...</p>
-            <small id="userEmail"></small>
-          </div>
+        <select id="hotelSelector">
+          <option>Carregando hotéis...</option>
+        </select>
+
+        <div class="user-box" id="userBox">
+          <span class="user-initial">U</span>
+          <span id="userName">Carregando...</span>
         </div>
       </div>
     </header>
 
-    <!-- DASHBOARD GRID -->
-    <section class="grid">
+    <!-- CONTENT -->
+    <section class="dashboard-grid">
 
       <!-- CARD 1 -->
       <div class="card">
         <h3>Ocupação Atual</h3>
-        <p class="value" id="occNow">--%</p>
-        <small>Atualizado em tempo real</small>
+        <p class="card-value" id="ocupacaoAtual">--%</p>
+        <span class="card-desc">Atualizado em tempo real</span>
       </div>
 
       <!-- CARD 2 -->
       <div class="card">
         <h3>Entradas Hoje</h3>
-        <p class="value" id="checkinsToday">--</p>
-        <small>Hóspedes realizando check-in</small>
+        <p class="card-value" id="entradasHoje">--</p>
+        <span class="card-desc">Hóspedes realizando check-in</span>
       </div>
 
       <!-- CARD 3 -->
       <div class="card">
         <h3>Saídas Hoje</h3>
-        <p class="value" id="checkoutsToday">--</p>
-        <small>Hóspedes realizando check-out</small>
+        <p class="card-value" id="saidasHoje">--</p>
+        <span class="card-desc">Hóspedes realizando check-out</span>
       </div>
 
       <!-- CARD 4 -->
       <div class="card">
-        <h3>Receita do Dia</h3>
-        <p class="value" id="revenueToday">R$ --</p>
-        <small>Entradas no financeiro</small>
+        <h3>Receita de Hoje</h3>
+        <p class="card-value" id="receitaHoje">R$ --</p>
+        <span class="card-desc">Hospedagens + Extras</span>
       </div>
 
     </section>
 
-    <!-- SECTION 2 -->
-    <section class="panel">
-      <h2>Resumo Operacional</h2>
+    <!-- ROW 2 -->
+    <section class="panel-row">
 
-      <div class="panel-grid">
-
-        <!-- LEFT -->
-        <div class="panel-box">
-          <h3>Próximos Check-ins</h3>
-          <ul class="list" id="nextCheckins">
-            <li>Carregando...</li>
-          </ul>
-        </div>
-
-        <!-- RIGHT -->
-        <div class="panel-box">
-          <h3>Próximos Check-outs</h3>
-          <ul class="list" id="nextCheckouts">
-            <li>Carregando...</li>
-          </ul>
-        </div>
-
+      <div class="panel">
+        <h3>Ocupação • Últimos 7 dias</h3>
+        <div class="chart-placeholder">Gráfico aqui</div>
       </div>
+
+      <div class="panel">
+        <h3>Receita por Centro de Custo</h3>
+        <div class="chart-placeholder">Gráfico aqui</div>
+      </div>
+
+    </section>
+
+    <!-- ROW 3 -->
+    <section class="panel-row">
+
+      <div class="panel">
+        <h3>Próximas Chegadas</h3>
+        <table class="table">
+          <thead>
+            <tr><th>Reserva</th><th>Hóspede</th><th>UH</th><th>Chegada</th><th>Status</th></tr>
+          </thead>
+          <tbody id="tabelaChegadas">
+            <tr><td colspan="5">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h3>Movimento do Caixa (Hoje)</h3>
+        <table class="table">
+          <thead>
+            <tr><th>Hora</th><th>Tipo</th><th>Descrição</th><th>Valor</th></tr>
+          </thead>
+          <tbody id="tabelaCaixa">
+            <tr><td colspan="4">Carregando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
     </section>
 
   </main>
-
-  <!-- JS -->
-  <script type="module" src="/js/supabase.js"></script>
-  <script type="module" src="/js/app.js"></script>
 
 </body>
 </html>
