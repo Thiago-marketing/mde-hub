@@ -1,288 +1,340 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Painel do Proprietário • MDE Hub</title>
-
-  <meta name="robots" content="noindex,nofollow" />
-
+  <title>MDE Hub • Painel do Proprietário</title>
   <link rel="stylesheet" href="/css/app.css" />
 </head>
-
 <body>
-
-  <div class="layout">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <span class="sidebar-logo">MDE Hub</span>
-        <button class="sidebar-toggle" id="btnSidebarToggle">☰</button>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">M</div>
+        <div class="logo-text">
+          <span class="logo-title">MDE Hub</span>
+          <span class="logo-subtitle">Plataforma em nuvem</span>
+        </div>
       </div>
 
       <nav class="sidebar-nav">
-
-        <a href="/index.html" class="nav-item">
-          <span class="nav-icon">🏠</span>
-          <span class="nav-text">Início</span>
+        <p class="nav-label">Navegação</p>
+        <a href="/index.html" class="nav-link">
+          <span class="nav-dot"></span>
+          Início / Painel Geral
+        </a>
+        <a href="/painel-proprietario.html" class="nav-link active">
+          <span class="nav-dot"></span>
+          Painel do Proprietário
+        </a>
+        <a href="/financeiro.html" class="nav-link">
+          <span class="nav-dot"></span>
+          Financeiro
+        </a>
+        <a href="/reservas.html" class="nav-link">
+          <span class="nav-dot"></span>
+          Reservas
+        </a>
+        <a href="/crm.html" class="nav-link">
+          <span class="nav-dot"></span>
+          CRM Hoteleiro
+        </a>
+        <a href="/proposta.html" class="nav-link">
+          <span class="nav-dot"></span>
+          Proposta Hoteleira (IA)
         </a>
 
-        <a href="/painel-proprietario.html" class="nav-item active">
-          <span class="nav-icon">📊</span>
-          <span class="nav-text">Painel do Proprietário</span>
+        <p class="nav-label">Simuladores MDE</p>
+        <a href="/simulador-revpar.html" class="nav-link">
+          <span class="nav-dot"></span>
+          RevPAR
         </a>
-
-        <a href="/simuladores.html" class="nav-item">
-          <span class="nav-icon">🧮</span>
-          <span class="nav-text">Simuladores</span>
+        <a href="/simulador-adr.html" class="nav-link">
+          <span class="nav-dot"></span>
+          ADR
         </a>
-
-        <div class="nav-separator">Em desenvolvimento</div>
-
-        <a href="/crm.html" class="nav-item disabled">
-          <span class="nav-icon">📁</span>
-          <span class="nav-text">Vendas Diretas CRM</span>
-          <span class="nav-badge">Futuro</span>
+        <a href="/simulador-diarias.html" class="nav-link">
+          <span class="nav-dot"></span>
+          Diárias necessárias
         </a>
-
-        <a href="/proposta.html" class="nav-item disabled">
-          <span class="nav-icon">🧠</span>
-          <span class="nav-text">Proposta Hoteleira IA</span>
-          <span class="nav-badge">Futuro</span>
+        <a href="/simulador-ocupacao.html" class="nav-link">
+          <span class="nav-dot"></span>
+          Ocupação
         </a>
-
       </nav>
 
       <div class="sidebar-footer">
-        <p>MDE Sistemas<br><span class="footer-sub">Plataforma Hub</span></p>
+        <p class="sidebar-env">
+          Painel do Proprietário – (Solução WebMDE)
+        </p>
       </div>
     </aside>
 
-    <!-- MAIN -->
-    <main class="main">
-
-      <!-- TOPBAR -->
+    <div class="main-area">
       <header class="topbar">
-        <div class="topbar-left">
-          <h1 class="topbar-title">Painel do Proprietário</h1>
-          <p class="topbar-subtitle">Visão gerencial da operação hoteleira</p>
+        <div class="topbar-breadcrumb">
+          <span class="crumb-section">MDE Hub</span>
+          <span class="crumb-separator">•</span>
+          <span class="crumb-page">Painel do Proprietário</span>
         </div>
 
-        <div class="topbar-right">
-          <button id="btnThemeToggle" class="theme-toggle">🌓</button>
-          <div class="user-box">
+        <div class="topbar-actions">
+          <button class="chip ghost" id="themeToggle">
+            <span class="chip-dot"></span>
+            Tema
+          </button>
+          <div class="env-pill">
+            <span class="env-label">Ambiente</span>
+            <span class="env-value">Demo</span>
+          </div>
+          <div class="user-pill">
             <div class="user-avatar">BR</div>
-            <div class="user-info">
-              <span class="user-name">Usuário</span>
-              <span class="user-role">Proprietário</span>
+            <div class="user-meta">
+              <span class="user-name">Bruno</span>
+              <span class="user-role">Diretoria</span>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- CONTENT -->
-      <section class="content">
-
-        <!-- ========== KPIs PRINCIPAIS ========= -->
-        <div class="grid-cards">
-
-          <!-- Receita Prevista -->
-          <div class="card kpi-card">
-            <div class="card-icon">💰</div>
-            <div class="card-title">Receita Prevista (30 dias)</div>
-            <h2 class="metric-value">R$ 482.300</h2>
-            <p class="metric-delta positive">+12,4% vs mês anterior</p>
-
-            <div class="progress-bar">
-              <div class="progress positive" style="width: 72%;"></div>
-            </div>
-          </div>
-
-          <!-- Ocupação -->
-          <div class="card kpi-card">
-            <div class="card-icon">🏨</div>
-            <div class="card-title">Ocupação Média</div>
-            <h2 class="metric-value">78%</h2>
-            <p class="metric-delta positive">+4,1 pts</p>
-
-            <div class="progress-bar">
-              <div class="progress positive" style="width: 78%;"></div>
-            </div>
-          </div>
-
-          <!-- ADR -->
-          <div class="card kpi-card">
-            <div class="card-icon">📈</div>
-            <div class="card-title">ADR (Tarifa Média)</div>
-            <h2 class="metric-value">R$ 389,00</h2>
-            <p class="metric-delta neutral">Hoje / Semana / Mês</p>
-
-            <div class="mini-sparkline">
-              ▄▅█▆▅▄▂
-            </div>
-          </div>
-
-          <!-- Canais -->
-          <div class="card kpi-card">
-            <div class="card-icon">🔗</div>
-            <div class="card-title">Distribuição por Canais</div>
-
-            <div class="channel-row">
-              <span>Diretas</span>
-              <strong>31%</strong>
-            </div>
-
-            <div class="channel-row">
-              <span>Booking</span>
-              <strong>44%</strong>
-            </div>
-
-            <div class="channel-row">
-              <span>Expedia</span>
-              <strong>25%</strong>
-            </div>
-
-            <p class="metric-delta warning">Meta: 45%+ diretas</p>
-          </div>
-
-        </div>
-
-
-        <!-- ========== ENTRADAS / SAÍDAS / UHs ========== -->
-        <div class="grid-cards" style="margin-top: 30px;">
-
-          <div class="card">
-            <div class="card-title">Entradas Hoje</div>
-            <h2 class="metric-value">27 check-ins</h2>
-            <p class="metric-delta positive">Fluxo dentro da média</p>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Saídas Hoje</div>
-            <h2 class="metric-value">19 check-outs</h2>
-            <p class="metric-delta neutral">Sem atrasos</p>
-          </div>
-
-          <div class="card">
-            <div class="card-title">UHs Ocupadas</div>
-            <h2 class="metric-value">63 / 80</h2>
-            <p class="metric-delta positive">78%</p>
-
-            <div class="progress-bar">
-              <div class="progress positive" style="width: 78%;"></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">UHs em Manutenção</div>
-            <h2 class="metric-value">2 UHs</h2>
-            <p class="metric-delta warning">Revisar status</p>
-          </div>
-
-        </div>
-
-
-        <!-- ========== VISÃO DE ESTOQUE & CAFÉ DA MANHÃ ========== -->
-        <div class="grid-cards" style="margin-top: 30px;">
-
-          <!-- Resumo de Estoque -->
-          <div class="card">
-            <div class="card-title">Resumo de Estoque</div>
-            <p class="card-desc">
-              Visão consolidada dos principais insumos do hotel.
-              <br><small>(dados serão lidos do estoque MDE / MoviEstoque via Acumulador)</small>
-            </p>
-
-            <ul class="event-list">
-              <li>Estoque total estimado: <strong>R$ 18.750,00</strong></li>
-              <li>Itens dentro do mínimo: <strong>42</strong></li>
-              <li>Itens abaixo do mínimo: <strong>7</strong></li>
-              <li>Itens críticos (zerando em breve): <strong>3</strong></li>
-            </ul>
-          </div>
-
-          <!-- Itens abaixo do mínimo -->
-          <div class="card">
-            <div class="card-title">Itens Abaixo do Mínimo</div>
-            <p class="card-desc">Insumos que exigem atenção imediata.</p>
-
-            <ul class="event-list">
-              <li>☕ Café em pó — 18% do mínimo</li>
-              <li>🥐 Pão francês — 25% do mínimo</li>
-              <li>🥚 Ovos — 22% do mínimo</li>
-              <li>🧻 Papel higiênico — 30% do mínimo</li>
-            </ul>
-          </div>
-
-          <!-- Lista de Café da Manhã -->
-          <div class="card">
-            <div class="card-title">Lista de Café da Manhã</div>
-            <p class="card-desc">
-              Itens essenciais para o café de amanhã cedo.
-            </p>
-
-            <ul class="event-list">
-              <li>✔️ Pães variados (francês, forma, integral)</li>
-              <li>✔️ Frios (presunto, queijo, muçarela)</li>
-              <li>✔️ Frutas (mamão, banana, maçã)</li>
-              <li>⚠️ Suco de laranja — verificar estoque</li>
-              <li>⚠️ Iogurte — reposição sugerida</li>
-            </ul>
-          </div>
-
-        </div>
-
-
-        <!-- ========== MAPA OPERACIONAL DE UHs ========= -->
-        <div class="card" style="margin-top: 30px;">
-          <div class="card-title">Mapa Operacional de UHs</div>
-          <p class="card-desc">
-            Visualização da ocupação, manutenções e status em tempo real.  
-            <br>Este módulo será alimentado pelo <strong>Acumulador Lite MDE Sistemas</strong> (SQL Server → PostgreSQL).
+      <main class="content">
+        <section class="page-header">
+          <h1>Painel do Proprietário</h1>
+          <p>
+            Visão consolidada para donos e gestores: caixa, ocupação, reservas, estoque e previsão
+            dos próximos dias em um único painel.
           </p>
+        </section>
 
-          <div class="placeholder-box large">
-            <div class="placeholder-content">Mapa Operacional (aguardando integração)</div>
+        <!-- KPIs do Proprietário -->
+        <section class="section">
+          <div class="kpi-grid">
+            <article class="card kpi-card">
+              <header>
+                <p class="kpi-label">Caixa do dia</p>
+              </header>
+              <p class="kpi-value">R$ 18.420</p>
+              <p class="kpi-meta">Entradas líquidas de hoje (hóspedes + extras).</p>
+            </article>
+
+            <article class="card kpi-card">
+              <header>
+                <p class="kpi-label">Previsão próximos 7 dias</p>
+              </header>
+              <p class="kpi-value">R$ 96.800</p>
+              <p class="kpi-meta">Somando reservas confirmadas no período.</p>
+            </article>
+
+            <article class="card kpi-card">
+              <header>
+                <p class="kpi-label">Ocupação hoje</p>
+              </header>
+              <p class="kpi-value">74%</p>
+              <p class="kpi-meta">Comparativo com capacidade total do hotel.</p>
+            </article>
+
+            <article class="card kpi-card">
+              <header>
+                <p class="kpi-label">Itens de estoque sensível</p>
+              </header>
+              <p class="kpi-value">5 itens</p>
+              <p class="kpi-meta">Itens abaixo do nível mínimo recomendado.</p>
+            </article>
           </div>
+        </section>
+
+        <!-- GRID PRINCIPAL -->
+        <div class="grid-2">
+          <!-- Mapa de UHs -->
+          <section class="section">
+            <div class="section-header">
+              <h2>Mapa rápido de UHs</h2>
+              <p class="section-subtitle">
+                Resumo da situação atual dos apartamentos, agrupados por tipo.
+              </p>
+            </div>
+
+            <div class="card table-card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tipo de UH</th>
+                    <th>Disponíveis</th>
+                    <th>Ocupadas</th>
+                    <th>Manutenção</th>
+                    <th>Ocupação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Standard</td>
+                    <td>12</td>
+                    <td>18</td>
+                    <td>1</td>
+                    <td>60%</td>
+                  </tr>
+                  <tr>
+                    <td>Luxo</td>
+                    <td>4</td>
+                    <td>10</td>
+                    <td>0</td>
+                    <td>71%</td>
+                  </tr>
+                  <tr>
+                    <td>Master</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>83%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Chegadas / Saídas -->
+          <section class="section">
+            <div class="section-header">
+              <h2>Chegadas e saídas</h2>
+              <p class="section-subtitle">
+                Próximos movimentos que impactam limpeza, recepção e caixa.
+              </p>
+            </div>
+
+            <div class="card table-card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Movimento</th>
+                    <th>Reservas</th>
+                    <th>Hóspedes previstos</th>
+                    <th>Impacto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Hoje</td>
+                    <td>Check-ins</td>
+                    <td>9</td>
+                    <td>24</td>
+                    <td><span class="status-pill status-in-progress">alto fluxo</span></td>
+                  </tr>
+                  <tr>
+                    <td>Hoje</td>
+                    <td>Check-outs</td>
+                    <td>7</td>
+                    <td>19</td>
+                    <td><span class="status-pill status-planned">organizar limpeza</span></td>
+                  </tr>
+                  <tr>
+                    <td>Amanhã</td>
+                    <td>Check-ins</td>
+                    <td>11</td>
+                    <td>31</td>
+                    <td><span class="status-pill status-warning">atenção recepção</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
         </div>
 
+        <!-- ESTOQUE + FINANCEIRO RÁPIDO -->
+        <div class="grid-2">
+          <!-- Estoque -->
+          <section class="section">
+            <div class="section-header">
+              <h2>Estoque e consumo</h2>
+              <p class="section-subtitle">
+                Visão dos principais itens ligados à experiência do hóspede.
+              </p>
+            </div>
 
-        <!-- ========== FLUXO OPERACIONAL DO DIA ========= -->
-        <div class="card" style="margin-top: 30px;">
-          <div class="card-title">Fluxo Operacional do Dia</div>
+            <div class="card table-card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Estoque atual</th>
+                    <th>Mínimo</th>
+                    <th>Consumo médio</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Café em pó</td>
+                    <td>18 kg</td>
+                    <td>20 kg</td>
+                    <td>3 kg / semana</td>
+                    <td><span class="status-pill status-warning">repor em breve</span></td>
+                  </tr>
+                  <tr>
+                    <td>Pães especiais</td>
+                    <td>140 un.</td>
+                    <td>120 un.</td>
+                    <td>80 un. / dia</td>
+                    <td><span class="status-pill status-ok">dentro da meta</span></td>
+                  </tr>
+                  <tr>
+                    <td>Enxoval (jogos de lençol)</td>
+                    <td>62 jogos</td>
+                    <td>60 jogos</td>
+                    <td>14 trocas / dia</td>
+                    <td><span class="status-pill status-ok">ok</span></td>
+                  </tr>
+                  <tr>
+                    <td>Amenities (kit banho)</td>
+                    <td>90 kits</td>
+                    <td>150 kits</td>
+                    <td>40 kits / dia</td>
+                    <td><span class="status-pill status-critical">crítico</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
 
-          <ul class="event-list">
-            <li>08:12 — Fechamento de caixa concluído.</li>
-            <li>09:05 — 12 novas reservas registradas.</li>
-            <li>10:00 — Previsão de 3 check-ins em breve.</li>
-            <li>11:18 — UH 204 marcada como manutenção.</li>
-            <li>12:42 — Encerramento parcial do financeiro.</li>
-          </ul>
+          <!-- Resumo financeiro -->
+          <section class="section">
+            <div class="section-header">
+              <h2>Resumo financeiro rápido</h2>
+              <p class="section-subtitle">
+                Indicadores enxutos para decisão diária do proprietário.
+              </p>
+            </div>
+
+            <div class="card">
+              <ul class="stats-list">
+                <li>
+                  <span class="stats-label">Receita hospedagem (mês)</span>
+                  <span class="stats-value">R$ 328.900</span>
+                </li>
+                <li>
+                  <span class="stats-label">Receita extras (mês)</span>
+                  <span class="stats-value">R$ 42.300</span>
+                </li>
+                <li>
+                  <span class="stats-label">Despesas registradas</span>
+                  <span class="stats-value negative">R$ 189.700</span>
+                </li>
+                <li>
+                  <span class="stats-label">Resultado parcial do mês</span>
+                  <span class="stats-value positive">R$ 181.500</span>
+                </li>
+              </ul>
+              <p class="card-note">
+                *Valores demonstrativos. Na integração real, estes dados virão do Letoh/Letom via
+                Acumulador Hub Windows.
+              </p>
+            </div>
+          </section>
         </div>
-
-
-        <!-- ========== ROADMAP ========= -->
-        <div class="roadmap-block">
-          <h2>Próximos Passos — Integração MDE Sistemas</h2>
-          <ul>
-            <li>✔️ Layout WebMDE Lite integrado ao MDE Hub</li>
-            <li>🔄 Indicadores operacionais e financeiros via Acumulador (Fase 1)</li>
-            <li>⏳ Mapa Operacional + Estoque em tempo real (Fase 2)</li>
-            <li>🧩 Previsão de contas e saldos em aberto (Fase 3)</li>
-            <li>🥐 Lista de Café da Manhã conectada ao estoque mínimo (Fase 3)</li>
-          </ul>
-        </div>
-
-      </section>
-
-    </main>
-
+      </main>
+    </div>
   </div>
 
   <script src="/js/app.js"></script>
 </body>
-
 </html>
