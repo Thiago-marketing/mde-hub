@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Hóspedes</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+</head>
+
+<body>
+
+<!-- BOTÃO MOBILE -->
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR OFICIAL -->
+<div id="sidebar">
+  <div class="logo">🏨 MDE Hub</div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+    <a href="/hospedes.html" class="nav-item active">👤 Hóspedes</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">Financeiro</div>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">Simuladores</div>
+    <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a class="nav-item disabled">📘 Em breve</a>
+    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button id="btnThemeToggle">🌓</button>
+    <div class="user-badge" id="userInitial">U</div>
+  </div>
+
+  <h1 class="page-title">Hóspedes</h1>
+  <p class="page-subtitle">Lista completa dos hóspedes hospedados e históricos</p>
+
+  <!-- FILTROS -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Filtro Rápido</div>
+
+      <label for="filtroNome">Nome do Hóspede</label>
+      <input type="text" id="filtroNome" placeholder="Ex: Ana Souza">
+
+      <label for="filtroStatus">Status</label>
+      <select id="filtroStatus">
+        <option value="">Todos</option>
+        <option value="hospedado">Hospedado</option>
+        <option value="futuro">Reserva Futura</option>
+        <option value="finalizado">Finalizado</option>
+      </select>
+
+      <label for="filtroDocumento">Documento</label>
+      <input type="text" id="filtroDocumento" placeholder="CPF / RG">
+
+      <button id="btnFiltrar">Aplicar Filtros</button>
+    </div>
+  </div>
+
+  <!-- TABELA PRINCIPAL -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Lista de Hóspedes</div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Hóspede</th>
+            <th>Documento</th>
+            <th>UH</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="listaHospedes">
+          <tr><td colspan="6">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- SCRIPT FUTURO (mock temporário) -->
+<script>
+  const hospedesMock = [
+    { nome: "Ana Souza", doc: "123.456.789-00", uh: "202", entrada: "2025-12-10", saida: "2025-12-12", status: "hospedado" },
+    { nome: "Carlos Lima", doc: "987.321.456-00", uh: "305", entrada: "2025-12-11", saida: "2025-12-15", status: "futuro" },
+    { nome: "Família Oliveira", doc: "465.897.123-55", uh: "401", entrada: "2025-12-01", saida: "2025-12-07", status: "finalizado" },
+  ];
+
+  function formatStatus(s) {
+    const map = {
+      "hospedado": "<span class='badge blue'>Hospedado</span>",
+      "futuro": "<span class='badge yellow'>Reserva futura</span>",
+      "finalizado": "<span class='badge green'>Finalizado</span>",
+    };
+    return map[s] || s;
+  }
+
+  function renderHospedes() {
+    const tbody = document.getElementById("listaHospedes");
+    tbody.innerHTML = "";
+
+    hospedesMock.forEach(h => {
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${h.nome}</td>
+        <td>${h.doc}</td>
+        <td>${h.uh}</td>
+        <td>${new Date(h.entrada).toLocaleDateString()}</td>
+        <td>${new Date(h.saida).toLocaleDateString()}</td>
+        <td>${formatStatus(h.status)}</td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  renderHospedes();
+</script>
+
+</body>
+</html>
