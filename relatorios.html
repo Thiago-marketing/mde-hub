@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Relatórios</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+</head>
+
+<body>
+
+<!-- BOTÃO MOBILE -->
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo">🏨 MDE Hub</div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+    <a href="/fechamento.html" class="nav-item">🧾 Fechamento de Caixa</a>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+    <a href="/relatorios.html" class="nav-item active">📑 Relatórios</a>
+    <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa de UHs</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">Simuladores</div>
+    <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a class="nav-item disabled">📘 Em breve</a>
+    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button id="btnThemeToggle">🌓</button>
+    <div class="user-badge" id="userInitial">U</div>
+  </div>
+
+  <h1 class="page-title">Relatórios</h1>
+  <p class="page-subtitle">Geração de relatórios operacionais, financeiros e gerenciais</p>
+
+  <!-- FILTROS -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Filtros de Período</div>
+
+      <label>Data Inicial</label>
+      <input type="date" id="dataInicial">
+
+      <label>Data Final</label>
+      <input type="date" id="dataFinal">
+
+      <label>Tipo de Relatório</label>
+      <select id="tipoRelatorio">
+        <option value="">Selecione...</option>
+        <option value="ocupacao">Ocupação</option>
+        <option value="financeiro">Financeiro</option>
+        <option value="reservas">Reservas</option>
+        <option value="hospedes">Hóspedes</option>
+        <option value="uhs">Unidades Habitacionais</option>
+        <option value="tarifas">Tarifas</option>
+      </select>
+
+      <button class="btn-primary full" id="btnGerarRelatorio">Gerar Relatório</button>
+    </div>
+  </div>
+
+  <!-- CARDS DOS TIPOS DE RELATÓRIO -->
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-title">Relatório de Ocupação</div>
+      <p class="card-desc">Taxas por período, tendências e picos de hospedagem.</p>
+      <button class="btn-primary" onclick="gerar('ocupacao')">Ver relatório</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Relatório Financeiro</div>
+      <p class="card-desc">Entradas, saídas, saldos, centros de custo e tendências.</p>
+      <button class="btn-primary" onclick="gerar('financeiro')">Ver relatório</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Relatório de Reservas</div>
+      <p class="card-desc">Volumes de reservas, cancelamentos e conversões.</p>
+      <button class="btn-primary" onclick="gerar('reservas')">Ver relatório</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Relatório de Hóspedes</div>
+      <p class="card-desc">Históricos, estadias, retornos e comportamento.</p>
+      <button class="btn-primary" onclick="gerar('hospedes')">Ver relatório</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Relatório de UHs</div>
+      <p class="card-desc">Situação das unidades, performance e manutenção.</p>
+      <button class="btn-primary" onclick="gerar('uhs')">Ver relatório</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Relatório de Tarifas</div>
+      <p class="card-desc">Histórico, variações e comparativos tarifários.</p>
+      <button class="btn-primary" onclick="gerar('tarifas')">Ver relatório</button>
+    </div>
+
+  </div>
+
+  <!-- ÁREA DINÂMICA DO RELATÓRIO -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Resultado</div>
+      <div id="resultadoRelatorio" class="card-desc">
+        Escolha um relatório para visualizar os dados.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function gerar(tipo) {
+    document.getElementById("resultadoRelatorio").innerHTML =
+      "Gerando relatório de <b>" + tipo + "</b>... (integração futura)";
+  }
+</script>
+
+</body>
+</html>
