@@ -136,92 +136,42 @@
 <!-- BOTÃO DO MENU MOBILE -->
 <div id="btnSidebarToggle">☰</div>
 
-<!-- SIDEBAR -->
-<div id="sidebar">
-  <div class="logo">🏨 MDE Hub</div>
+<div id="sidebar-container"></div>
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="main-area">
 
-  <div class="nav-section">
-    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
-    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
-    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
-    <a href="/simuladores.html" class="nav-item">📐 Simuladores</a>
-  </div>
+  <header class="page-header">
+    <h1 class="page-title">📌 Atividades</h1>
+    <p class="page-subtitle">Veja todas as interações, eventos, follow-ups e compromissos do CRM.</p>
+  </header>
 
-  <div class="nav-section">
-    <div class="nav-title">CRM Hoteleiro</div>
-    <a href="/crm.html" class="nav-item">📘 CRM</a>
-    <a class="nav-item active">📝 Atividades</a>
-  </div>
+  <section class="card">
+    <h2 class="card-title">Atividades Recentes</h2>
 
-  <div class="nav-section nav-exit">
-    <a href="/logout.html" class="nav-item">🚪 Sair</a>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-  <div class="topbar">
-    <button id="btnThemeToggle">🌓</button>
-    <div class="user-badge" id="userInitial">U</div>
-  </div>
-
-  <!-- HEADER -->
-  <div class="page-header">
-    <h1>Atividades do CRM</h1>
-
-    <div class="filters">
-      <button class="filter-btn active">Hoje</button>
-      <button class="filter-btn">Atrasadas</button>
-      <button class="filter-btn">Futuras</button>
-      <button class="filter-btn">Todas</button>
+    <div class="activity-list">
+      <!-- placeholder -->
+      <p class="muted">Nenhuma atividade registrada ainda.</p>
     </div>
-  </div>
+  </section>
 
-  <!-- LISTA DE ATIVIDADES -->
-  <div class="task-list">
+</main>
 
-    <div class="task">
-      <div class="task-info">
-        <strong>Retornar orçamento enviado</strong>
-        <div class="task-tags">
-          <span class="tag">Lead: João Mendes</span>
-          <span class="tag">WhatsApp</span>
-          <span class="tag-red">Hoje 14:00</span>
-        </div>
-      </div>
+<!-- SCRIPTS -->
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/crm.js"></script>
 
-      <div class="task-actions">
-        <button class="btn btn-complete">Concluir</button>
-        <button class="btn btn-open">Abrir</button>
-      </div>
-    </div>
+<!-- INCLUIR SIDEBAR -->
+<script>
+  fetch("/partials/sidebar.html")
+    .then(res => res.text())
+    .then(html => {
+      document.querySelector("#sidebar-container").innerHTML = html;
+    });
+</script>
 
-    <div class="task">
-      <div class="task-info">
-        <strong>Confirmar reserva pendente</strong>
-        <div class="task-tags">
-          <span class="tag">Lead: Marina L.</span>
-          <span class="tag-green">Amanhã</span>
-        </div>
-      </div>
-
-      <div class="task-actions">
-        <button class="btn btn-complete">Concluir</button>
-        <button class="btn btn-open">Abrir</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- BOTÃO FLUTUANTE -->
-  <button class="btn-add">＋ Nova Atividade</button>
-
-</div>
+</body>
+</html>
 
 </body>
 </html>
