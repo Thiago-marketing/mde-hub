@@ -3,320 +3,172 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simulador de Faturamento • MDE Hub</title>
+  <title>MDE Hub • Financeiro</title>
   <link rel="stylesheet" href="/css/app.css" />
 </head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <!-- mesma sidebar das outras páginas -->
+      <!-- (pode copiar da index/painel) -->
+      <!-- Início / Painel Geral / Painel do Proprietário / Financeiro... -->
+    </aside>
 
-<body class="page">
-  <!-- TOPO -->
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">U</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
-    </div>
-
-    <div class="topbar-actions">
-      <a href="/simuladores.html" class="btn-secondary btn-small">
-        ← Voltar para Simuladores
-      </a>
-      <button id="toggleThemeBtn" class="btn-secondary btn-small">
-        🌓 Tema
-      </button>
-      <button id="logoutBtn" class="btn-sair">Sair</button>
-    </div>
-  </header>
-
-  <!-- MENU LATERAL -->
-<aside class="sidebar">
-
-  <h3>Operação</h3>
-  <nav>
-    <a href="/dashboard.html">Dashboard</a>
-    <a href="/reservas.html">Reservas</a>
-    <a href="/checkin.html">Check-in</a>
-    <a href="/checkout.html">Check-out</a>
-    <a href="/uhs.html">Unidades Habitacionais</a>
-    <a href="/financeiro.html">Financeiro</a>
-    <a href="/config.html">Configurações</a>
-  </nav>
-
-  <h3>Simuladores</h3>
-  <nav>
-    <a href="/simuladores.html">Tela Principal</a>
-    <a href="/sim-faturamento.html">Simulador de Faturamento</a>
-    <a href="/sim-ota.html">Simulador OTA</a>
-    <a href="/sim-tarifa.html">Simulador Tarifa Ideal</a>
-    <a href="/sim-adr-ideal.html">Simulador ADR Ideal</a>
-    <a href="/sim-revpar.html">Simulador RevPAR</a>
-    <a href="/sim-checkin.html">Simulador Check-in (Tempo/Custo)</a>
-
-    <!-- Pendentes – serão criados amanhã -->
-    <a href="/sim-margem.html">Simulador Margem de Lucro</a>
-    <a href="/sim-breakeven.html">Simulador Break-even</a>
-    <a href="/sim-ocupacao-meta.html">Simulador Ocupação Meta</a>
-    <a href="/sim-conversao.html">Simulador Conversão WhatsApp</a>
-  </nav>
-
-  <h3>CRM</h3>
-  <nav>
-    <a href="/crm-dashboard.html">Painel CRM</a>
-    <a href="/leads.html">Leads</a>
-    <a href="/crm-kanban.html">Kanban</a>
-    <a href="/crm-atividades.html">Atividades</a>
-  </nav>
-
-  <h3>Admin</h3>
-  <nav>
-    <a href="/checklist-governanca.html">Checklist Governança</a>
-    <a href="/auditoria.html">Auditoria</a>
-    <a href="/relatorios.html">Relatórios</a>
-  </nav>
-
-</aside>
-
-  <!-- CONTEÚDO -->
-  <main class="content">
-    <section class="page-header">
-      <h1>Simulador de Faturamento</h1>
-      <p class="muted">
-        Preencha os dados da sua hospedagem e veja o potencial de faturamento mensal e anual,
-        além do ganho estimado ao utilizar as soluções MDE.
-      </p>
-    </section>
-
-    <section class="grid grid-2">
-      <!-- FORMULÁRIO -->
-      <form id="simForm" class="card">
-        <div class="card-header">
-          <h2>Dados do hotel</h2>
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-breadcrumb">
+          <span class="crumb-section">MDE Hub</span>
+          <span class="crumb-separator">•</span>
+          <span class="crumb-page">Financeiro</span>
         </div>
-
-        <div class="card-body form-grid">
-          <div class="form-group">
-            <label for="uhCount">Nº de quartos (UH)</label>
-            <input type="number" id="uhCount" min="1" required placeholder="Ex: 20" />
-          </div>
-
-          <div class="form-group">
-            <label for="occupancy">Ocupação média mensal (%)</label>
-            <input type="number" id="occupancy" min="0" max="100" required placeholder="Ex: 65" />
-          </div>
-
-          <div class="form-group">
-            <label for="adr">Diária média (ADR) – R$</label>
-            <input type="text" id="adr" required placeholder="Ex: 350,00" />
-          </div>
-
-          <div class="form-group">
-            <label for="directPct">Reservas diretas (%)</label>
-            <input type="number" id="directPct" min="0" max="100" required placeholder="Ex: 40" />
-          </div>
-
-          <div class="form-group">
-            <label for="otaPct">Reservas via OTAs (%)</label>
-            <input type="number" id="otaPct" min="0" max="100" required placeholder="Ex: 60" />
-          </div>
-
-          <div class="form-group">
-            <label for="otaFee">Comissão média das OTAs (%)</label>
-            <input type="number" id="otaFee" min="0" max="50" required placeholder="Ex: 18" />
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <button type="submit" class="btn btn-primary btn-full">
-            Calcular faturamento
+        <div class="topbar-actions">
+          <button class="chip ghost" id="themeToggle">
+            <span class="chip-dot"></span>
+            Tema
           </button>
-        </div>
-      </form>
-
-      <!-- RESULTADO -->
-      <section class="card" id="resultCard" style="display: none;">
-        <div class="card-header">
-          <h2>Resultado da simulação</h2>
-        </div>
-        <div class="card-body">
-          <h3>📊 Cenário atual</h3>
-          <p><strong>Faturamento bruto mensal:</strong> <span id="fatBruto"></span></p>
-          <p><strong>Comissões OTAs / mês:</strong> <span id="comissoes"></span></p>
-          <p><strong>Faturamento líquido atual:</strong> <span id="fatLiquido"></span></p>
-
-          <hr />
-
-          <h3>🚀 Com MDE Sistemas</h3>
-          <p><strong>Reservas diretas estimadas:</strong> <span id="novasDiretas"></span></p>
-          <p><strong>Dependência de OTAs reduzida para:</strong> <span id="novasOtas"></span></p>
-          <p><strong>Faturamento líquido estimado:</strong> <span id="fatMde"></span></p>
-
-          <div class="highlight-box">
-            <p><strong>Ganho mensal estimado:</strong> <span id="ganhoMensal"></span></p>
-            <p><strong>Ganho anual estimado:</strong> <span id="ganhoAnual"></span></p>
+          <div class="env-pill">
+            <span class="env-label">Ambiente</span>
+            <span class="env-value">Demo</span>
+          </div>
+          <div class="user-pill">
+            <div class="user-avatar">BR</div>
+            <div class="user-meta">
+              <span class="user-name">Bruno</span>
+              <span class="user-role">Diretoria</span>
+            </div>
           </div>
         </div>
+      </header>
 
-        <div class="card-footer">
-          <button id="whatsBtn" class="btn btn-success btn-full">
-            Receber diagnóstico completo no WhatsApp
-          </button>
-          <p class="muted small">
-            Você será direcionado para o WhatsApp oficial da MDE (+55 11 94027-7447)
-            com o resumo desta simulação.
+      <main class="content">
+        <section class="page-header">
+          <h1>Painel Financeiro</h1>
+          <p>
+            Visão de faturamento, despesas e resultado operacional do hotel. Na versão real,
+            estes dados serão alimentados automaticamente pelo Acumulador Hub.
           </p>
+        </section>
+
+        <!-- KPIs -->
+        <section class="section">
+          <div class="kpi-grid">
+            <article class="card kpi-card">
+              <header><p class="kpi-label">Faturamento do mês</p></header>
+              <p class="kpi-value">R$ 371.200</p>
+              <p class="kpi-meta">Hospedagem + extras já lançados.</p>
+            </article>
+            <article class="card kpi-card">
+              <header><p class="kpi-label">Despesas do mês</p></header>
+              <p class="kpi-value">R$ 212.400</p>
+              <p class="kpi-meta">Custos operacionais e administrativos.</p>
+            </article>
+            <article class="card kpi-card">
+              <header><p class="kpi-label">Resultado operacional</p></header>
+              <p class="kpi-value">R$ 158.800</p>
+              <p class="kpi-meta">Antes de impostos e depreciação.</p>
+            </article>
+            <article class="card kpi-card">
+              <header><p class="kpi-label">Caixa projetado (30 dias)</p></header>
+              <p class="kpi-value">R$ 204.500</p>
+              <p class="kpi-meta">Com base nas reservas futuras e despesas previstas.</p>
+            </article>
+          </div>
+        </section>
+
+        <div class="grid-2">
+          <!-- Gráfico fictício -->
+          <section class="section">
+            <div class="section-header">
+              <h2>Curva de faturamento</h2>
+              <p class="section-subtitle">
+                Distribuição do faturamento ao longo do mês (mock visual).
+              </p>
+            </div>
+            <div class="card chart-card">
+              <div class="chart-placeholder">
+                Gráfico de linha — Faturamento diário (mock)
+              </div>
+            </div>
+          </section>
+
+          <!-- Faturamento x despesas -->
+          <section class="section">
+            <div class="section-header">
+              <h2>Estrutura de despesas</h2>
+              <p class="section-subtitle">
+                Percentual por categoria (alimentos, pessoal, manutenção, marketing...).
+              </p>
+            </div>
+            <div class="card chart-card">
+              <div class="chart-placeholder">
+                Gráfico de pizza / barras — Composição de custos (mock)
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
-    </section>
-  </main>
 
-  <script>
-    function parseBRLToNumber(value) {
-      if (!value) return 0;
-      return parseFloat(
-        String(value).replace(/\./g, '').replace(',', '.')
-      ) || 0;
-    }
+        <!-- Tabela de lançamentos -->
+        <section class="section">
+          <div class="section-header">
+            <h2>Lançamentos recentes</h2>
+            <p class="section-subtitle">
+              Exemplo de como a listagem financeira será apresentada no Hub.
+            </p>
+          </div>
 
-    function formatBRL(value) {
-      return new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      }).format(value || 0);
-    }
+          <div class="card table-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Tipo</th>
+                  <th>Descrição</th>
+                  <th>Centro de custo</th>
+                  <th>Valor</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>09/12</td>
+                  <td>Receita</td>
+                  <td>Diárias – final de semana</td>
+                  <td>Hospedagem</td>
+                  <td>R$ 28.400</td>
+                  <td><span class="status-pill status-ok">confirmado</span></td>
+                </tr>
+                <tr>
+                  <td>09/12</td>
+                  <td>Despesa</td>
+                  <td>Compra de alimentos café da manhã</td>
+                  <td>Alimentos</td>
+                  <td>R$ 4.780</td>
+                  <td><span class="status-pill status-in-progress">a compensar</span></td>
+                </tr>
+                <tr>
+                  <td>08/12</td>
+                  <td>Despesa</td>
+                  <td>Folha de pagamento</td>
+                  <td>Pessoal</td>
+                  <td>R$ 39.900</td>
+                  <td><span class="status-pill status-ok">pago</span></td>
+                </tr>
+                <tr>
+                  <td>07/12</td>
+                  <td>Receita</td>
+                  <td>Eventos corporativos</td>
+                  <td>Eventos</td>
+                  <td>R$ 21.300</td>
+                  <td><span class="status-pill status-ok">confirmado</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
 
-    const form = document.getElementById('simForm');
-    const resultCard = document.getElementById('resultCard');
-    const fatBrutoEl = document.getElementById('fatBruto');
-    const comissoesEl = document.getElementById('comissoes');
-    const fatLiquidoEl = document.getElementById('fatLiquido');
-    const novasDiretasEl = document.getElementById('novasDiretas');
-    const novasOtasEl = document.getElementById('novasOtas');
-    const fatMdeEl = document.getElementById('fatMde');
-    const ganhoMensalEl = document.getElementById('ganhoMensal');
-    const ganhoAnualEl = document.getElementById('ganhoAnual');
-    const whatsBtn = document.getElementById('whatsBtn');
-
-    let lastSimData = null;
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const uhCount = parseInt(document.getElementById('uhCount').value || '0', 10);
-      const occupancy = parseFloat(document.getElementById('occupancy').value || '0');
-      const adr = parseBRLToNumber(document.getElementById('adr').value);
-      const directPct = parseFloat(document.getElementById('directPct').value || '0');
-      const otaPct = parseFloat(document.getElementById('otaPct').value || '0');
-      const otaFee = parseFloat(document.getElementById('otaFee').value || '0');
-
-      if (!uhCount || !occupancy || !adr) {
-        alert('Preencha pelo menos nº de quartos, ocupação e diária média.');
-        return;
-      }
-
-      // Garantir que diretas + OTAs somem 100
-      let totalMix = directPct + otaPct;
-      let adjDirect = directPct;
-      let adjOta = otaPct;
-
-      if (totalMix === 0) {
-        adjDirect = 50;
-        adjOta = 50;
-      } else if (totalMix !== 100) {
-        adjDirect = (directPct / totalMix) * 100;
-        adjOta = (otaPct / totalMix) * 100;
-      }
-
-      const diasMes = 30;
-      const quartosVendidosMes = uhCount * (occupancy / 100) * diasMes;
-      const faturamentoBruto = quartosVendidosMes * adr;
-
-      const fatOtaAtual = faturamentoBruto * (adjOta / 100);
-      const comissoes = fatOtaAtual * (otaFee / 100);
-      const fatLiquidoAtual = faturamentoBruto - comissoes;
-
-      // Cenário MDE: +15 p.p. em reservas diretas, -15 p.p. em OTAs
-      let newDirect = Math.min(100, adjDirect + 15);
-      let newOta = Math.max(0, adjOta - 15);
-
-      const newTotal = newDirect + newOta;
-      if (newTotal !== 100 && newTotal > 0) {
-        newDirect = (newDirect / newTotal) * 100;
-        newOta = (newOta / newTotal) * 100;
-      }
-
-      const fatOtaNovo = faturamentoBruto * (newOta / 100);
-      const novasComissoes = fatOtaNovo * (otaFee / 100);
-      const fatLiquidoMde = faturamentoBruto - novasComissoes;
-
-      const ganhoMensal = fatLiquidoMde - fatLiquidoAtual;
-      const ganhoAnual = ganhoMensal * 12;
-
-      // Preenche na tela
-      fatBrutoEl.textContent = formatBRL(faturamentoBruto);
-      comissoesEl.textContent = formatBRL(comissoes);
-      fatLiquidoEl.textContent = formatBRL(fatLiquidoAtual);
-      novasDiretasEl.textContent = newDirect.toFixed(1) + '%';
-      novasOtasEl.textContent = newOta.toFixed(1) + '%';
-      fatMdeEl.textContent = formatBRL(fatLiquidoMde);
-      ganhoMensalEl.textContent = formatBRL(ganhoMensal);
-      ganhoAnualEl.textContent = formatBRL(ganhoAnual);
-
-      resultCard.style.display = 'block';
-
-      lastSimData = {
-        uhCount,
-        occupancy,
-        adr,
-        directPct: adjDirect,
-        otaPct: adjOta,
-        otaFee,
-        faturamentoBruto,
-        comissoes,
-        fatLiquidoAtual,
-        newDirect,
-        newOta,
-        fatLiquidoMde,
-        ganhoMensal,
-        ganhoAnual
-      };
-    });
-
-    whatsBtn.addEventListener('click', function () {
-      if (!lastSimData) return;
-
-      const msg = `
-Simulação de Faturamento MDE
-
-Quartos (UH): ${lastSimData.uhCount}
-Ocupação média: ${lastSimData.occupancy}% 
-ADR: ${formatBRL(lastSimData.adr)}
-
-Mix atual:
-- Diretas: ${lastSimData.directPct.toFixed(1)}%
-- OTAs: ${lastSimData.otaPct.toFixed(1)}%
-Comissão OTAs: ${lastSimData.otaFee}%
-
-Cenário atual:
-- Faturamento bruto: ${formatBRL(lastSimData.faturamentoBruto)}
-- Comissões OTAs/mês: ${formatBRL(lastSimData.comissoes)}
-- Faturamento líquido atual: ${formatBRL(lastSimData.fatLiquidoAtual)}
-
-Com MDE (estimado):
-- Diretas: ${lastSimData.newDirect.toFixed(1)}%
-- OTAs: ${lastSimData.newOta.toFixed(1)}%
-- Faturamento líquido: ${formatBRL(lastSimData.fatLiquidoMde)}
-- Ganho mensal: ${formatBRL(lastSimData.ganhoMensal)}
-- Ganho anual: ${formatBRL(lastSimData.ganhoAnual)}
-`.trim();
-
-      const phone = '5511940277447'; // WhatsApp oficial MDE
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
-    });
-  </script>
-
-  <script src="/js/theme.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>
