@@ -1,179 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Simulador de RevPAR • MDE Hub</title>
-
-  <link rel="stylesheet" href="/css/app.css">
-
-  <meta name="robots" content="noindex,nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Simulador de RevPAR</title>
+  <link rel="stylesheet" href="/css/app.css" />
 </head>
-
 <body>
-
-  <div class="layout">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <span class="sidebar-logo">MDE Hub</span>
-        <button class="sidebar-toggle" id="btnSidebarToggle">☰</button>
-      </div>
-
-      <nav class="sidebar-nav">
-
-        <a href="/index.html" class="nav-item">
-          <span class="nav-icon">🏠</span>
-          <span class="nav-text">Início</span>
-        </a>
-
-        <a href="/painel-proprietario.html" class="nav-item">
-          <span class="nav-icon">📊</span>
-          <span class="nav-text">Painel do Proprietário</span>
-        </a>
-
-        <a href="/simuladores.html" class="nav-item active">
-          <span class="nav-icon">🧮</span>
-          <span class="nav-text">Simuladores</span>
-        </a>
-
-        <div class="nav-separator">Em desenvolvimento</div>
-
-        <a href="/crm.html" class="nav-item disabled">
-          <span class="nav-icon">📁</span>
-          <span class="nav-text">Vendas Diretas CRM</span>
-          <span class="nav-badge">Futuro</span>
-        </a>
-
-        <a href="/proposta.html" class="nav-item disabled">
-          <span class="nav-icon">🧠</span>
-          <span class="nav-text">Proposta Hoteleira IA</span>
-          <span class="nav-badge">Futuro</span>
-        </a>
-
-      </nav>
-
-      <div class="sidebar-footer">
-        <p>MDE Sistemas<br><span class="footer-sub">Plataforma Hub</span></p>
-      </div>
-
+  <div class="app-shell">
+    <aside class="sidebar">
+      <!-- mesma sidebar -->
     </aside>
 
-    <!-- MAIN -->
-    <main class="main">
-
-      <!-- TOPBAR -->
+    <div class="main-area">
       <header class="topbar">
-        <div class="topbar-left">
-          <h1 class="topbar-title">Simulador de RevPAR</h1>
-          <p class="topbar-subtitle">Calcule o RevPAR conforme ocupação e tarifa média</p>
+        <div class="topbar-breadcrumb">
+          <span class="crumb-section">MDE Hub</span>
+          <span class="crumb-separator">•</span>
+          <span class="crumb-page">Simulador de RevPAR</span>
         </div>
-
-        <div class="topbar-right">
-          <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+        <div class="topbar-actions">
+          <button class="chip ghost" id="themeToggle">
+            <span class="chip-dot"></span>
+            Tema
+          </button>
         </div>
       </header>
 
+      <main class="content">
+        <section class="page-header">
+          <h1>Simulador de RevPAR</h1>
+          <p>
+            Calcule rapidamente a receita por apartamento disponível
+            (Revenue per Available Room).
+          </p>
+        </section>
 
-      <!-- CONTENT -->
-      <section class="content">
+        <div class="grid-2">
+          <!-- Formulário -->
+          <section class="section">
+            <div class="card form-card">
+              <div class="form-group">
+                <label for="revpar_uh_disponiveis">UHs disponíveis no período</label>
+                <input type="number" id="revpar_uh_disponiveis" min="1" value="40" />
+              </div>
+              <div class="form-group">
+                <label for="revpar_uh_ocupadas">UHs ocupadas (ou diárias vendidas)</label>
+                <input type="number" id="revpar_uh_ocupadas" min="0" value="28" />
+              </div>
+              <div class="form-group">
+                <label for="revpar_receita">Receita total de hospedagem (R$)</label>
+                <input type="number" id="revpar_receita" min="0" step="0.01" value="14500" />
+              </div>
 
-        <!-- FORM CARD -->
-        <div class="card" style="max-width: 600px; margin: auto;">
+              <button id="btnCalcularRevpar" class="btn-primary full">
+                Calcular RevPAR
+              </button>
+            </div>
+          </section>
 
-          <div class="card-title">Preencha os dados</div>
-
-          <label class="form-label">Tarifa Média (ADR)</label>
-          <input type="number" id="adr" class="form-input" placeholder="Ex: 350" />
-
-          <label class="form-label">Ocupação (%)</label>
-          <input type="number" id="ocupacao" class="form-input" placeholder="Ex: 78" />
-
-          <label class="form-label">Número de UHs</label>
-          <input type="number" id="uhs" class="form-input" placeholder="Ex: 42" />
-
-          <button class="btn-primary" id="btnCalcular">Calcular RevPAR</button>
-
-        </div>
-
-
-        <!-- RESULTADO -->
-        <div id="resultado" style="display:none; margin-top:30px;">
-
-          <div class="grid-cards">
-
-            <div class="card">
-              <div class="card-title">RevPAR</div>
-              <h2 class="metric-value" id="revparValor">R$ 0,00</h2>
-              <p class="metric-delta neutral">Receita por UH disponível</p>
+          <!-- Resultado -->
+          <section class="section">
+            <div class="card kpi-card big">
+              <header>
+                <p class="kpi-label">RevPAR estimado</p>
+              </header>
+              <p class="kpi-value" id="revpar_resultado">R$ 362,50</p>
+              <p class="kpi-meta">
+                RevPAR = Receita de hospedagem ÷ UHs disponíveis no período.
+              </p>
             </div>
 
             <div class="card">
-              <div class="card-title">Receita Total Estimada</div>
-              <h2 class="metric-value" id="receitaTotal">R$ 0,00</h2>
-              <p class="metric-delta positive">Baseada na ocupação e ADR</p>
+              <p class="card-note">
+                Dica: compare o RevPAR de períodos diferentes para medir o impacto de
+                campanhas, tarifas e canais de venda.
+              </p>
             </div>
-
-            <div class="card">
-              <div class="card-title">UHs Ocupadas</div>
-              <h2 class="metric-value" id="uhsOcupadas">0</h2>
-              <p class="metric-delta">Projeção operacional</p>
-            </div>
-
-          </div>
-
+          </section>
         </div>
-
-
-        <!-- RODAPÉ INFORMATIVO -->
-        <div class="roadmap-block">
-          <h2>Como este simulador funciona</h2>
-          <ul>
-            <li>✔️ Cálculo instantâneo da performance de vendas</li>
-            <li>✔️ Indicador essencial para gestão de receita</li>
-            <li>🔄 No futuro: leitura automática do SQL Server via Acumulador</li>
-            <li>📊 Se integra ao Painel do Proprietário (WebMDE Lite)</li>
-          </ul>
-        </div>
-
-      </section>
-
-    </main>
+      </main>
+    </div>
   </div>
 
   <script src="/js/app.js"></script>
-
-  <!-- SCRIPT DO SIMULADOR -->
   <script>
-    document.getElementById("btnCalcular").addEventListener("click", function () {
+    document.getElementById('btnCalcularRevpar').addEventListener('click', function () {
+      const disp = Number(document.getElementById('revpar_uh_disponiveis').value) || 0;
+      const receita = Number(document.getElementById('revpar_receita').value) || 0;
 
-      const adr = parseFloat(document.getElementById("adr").value);
-      const ocup = parseFloat(document.getElementById("ocupacao").value);
-      const uhs = parseFloat(document.getElementById("uhs").value);
-
-      if (!adr || !ocup || !uhs) {
-        alert("Preencha todos os campos!");
+      if (!disp || disp <= 0) {
+        alert('Informe a quantidade de UHs disponíveis.');
         return;
       }
 
-      // Cálculos
-      const ocupadas = Math.round((ocup / 100) * uhs);
-      const receita = ocupadas * adr;
-      const revpar = receita / uhs;
-
-      // Exibir
-      document.getElementById("uhsOcupadas").textContent = ocupadas;
-      document.getElementById("receitaTotal").textContent = "R$ " + receita.toFixed(2);
-      document.getElementById("revparValor").textContent = "R$ " + revpar.toFixed(2);
-
-      document.getElementById("resultado").style.display = "block";
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-
+      const revpar = receita / disp;
+      document.getElementById('revpar_resultado').textContent =
+        'R$ ' + revpar.toFixed(2).replace('.', ',');
     });
   </script>
-
 </body>
 </html>
