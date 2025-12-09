@@ -1,1 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Painel do Proprietário • MDE Hub</title>
+
+  <meta name="robots" content="noindex,nofollow" />
+
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-logo">MDE Hub</span>
+        <button class="sidebar-toggle" id="btnSidebarToggle">☰</button>
+      </div>
+
+      <nav class="sidebar-nav">
+
+        <a href="/index.html" class="nav-item">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Início</span>
+        </a>
+
+        <a href="/painel-proprietario.html" class="nav-item active">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Painel do Proprietário</span>
+        </a>
+
+        <a href="/simuladores.html" class="nav-item">
+          <span class="nav-icon">🧮</span>
+          <span class="nav-text">Simuladores</span>
+        </a>
+
+        <div class="nav-separator">Em desenvolvimento</div>
+
+        <a href="/crm.html" class="nav-item disabled">
+          <span class="nav-icon">📁</span>
+          <span class="nav-text">Vendas Diretas CRM</span>
+          <span class="nav-badge">Futuro</span>
+        </a>
+
+        <a href="/proposta.html" class="nav-item disabled">
+          <span class="nav-icon">🧠</span>
+          <span class="nav-text">Proposta Hoteleira IA</span>
+          <span class="nav-badge">Futuro</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>MDE Sistemas<br><span class="footer-sub">Plataforma Hub</span></p>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="topbar-title">Painel do Proprietário</h1>
+          <p class="topbar-subtitle">Visão gerencial da operação hoteleira</p>
+        </div>
+
+        <div class="topbar-right">
+          <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+          <div class="user-box">
+            <div class="user-avatar">BR</div>
+            <div class="user-info">
+              <span class="user-name">Usuário</span>
+              <span class="user-role">Proprietário</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <section class="content">
+
+        <!-- ========== INDICADORES ========= -->
+        <div class="grid-cards">
+
+          <div class="card">
+            <div class="card-icon">💰</div>
+            <div class="card-title">Receita Prevista</div>
+            <p class="card-desc">Próximos 30 dias</p>
+            <h2 class="metric-value">R$ 482.300</h2>
+            <p class="metric-delta positive">+12,4% vs mês anterior</p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🏨</div>
+            <div class="card-title">Ocupação Média</div>
+            <p class="card-desc">Últimos 7 dias</p>
+            <h2 class="metric-value">78%</h2>
+            <p class="metric-delta positive">+4,1 pts</p>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">📈</div>
+            <div class="card-title">Canais Diretos</div>
+            <p class="card-desc">Reservas pelo próprio hotel</p>
+            <h2 class="metric-value">31%</h2>
+            <p class="metric-delta warning">Meta: 45%+</p>
+          </div>
+
+        </div>
+
+        <!-- ========== GRÁFICO / MAPA PLACEHOLDER ========== -->
+        <div class="card" style="margin-top: 30px;">
+          <div class="card-title">Mapa de UHs + Fluxo de Reservas</div>
+          <p class="card-desc">
+            Esta área exibirá o mapa operacional, ocupação, status das UHs e entradas previstas.  
+            Os dados serão fornecidos pelo <strong>Acumulador Lite MDE Sistemas (Windows)</strong>.
+          </p>
+
+          <div class="placeholder-box">
+            <div class="placeholder-content">Visual Gerencial (Aguardando Acumulador)</div>
+          </div>
+        </div>
+
+        <!-- ========== LISTA DE EVENTOS / CHECKLIST ========== -->
+        <div class="card" style="margin-top: 30px;">
+          <div class="card-title">Atividades Operacionais</div>
+          <p class="card-desc">Últimas ações e alertas da operação</p>
+
+          <ul class="event-list">
+            <li>✔️ Fechamento de caixa atualizado hoje às 08h12.</li>
+            <li>✔️ 12 reservas novas na última hora.</li>
+            <li>🔄 3 check-ins previstos em até 1 hora.</li>
+            <li>⚠️ 1 UH em manutenção — revisar status.</li>
+          </ul>
+        </div>
+
+        <!-- ========== ROADMAP ========= -->
+        <div class="roadmap-block">
+          <h2>Conexões com WebMDE (versão Lite)</h2>
+          <ul>
+            <li>✔️ Layout integrado ao Hub</li>
+            <li>🔄 Indicadores conectados — fase Acumulador</li>
+            <li>⏳ Mapa operacional — leitura SQL Server</li>
+            <li>🧩 Financeiro básico — leitura futura de Movimentos</li>
+          </ul>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+
+</html>
 
