@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Saindo…</title>
+
+  <link rel="stylesheet" href="/css/auth.css" />
+
+  <style>
+    .logout-card {
+      padding: 40px;
+      background: var(--bg-card);
+      border-radius: 16px;
+      text-align: center;
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .logout-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      opacity: .9;
+    }
+
+    .logout-title {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .logout-text {
+      font-size: 15px;
+      opacity: .8;
+      margin-bottom: 25px;
+    }
+
+    .logout-loading {
+      margin-top: 15px;
+      font-size: 13px;
+      opacity: .6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-wrapper">
+    <div class="logout-card">
+
+      <div class="logout-icon">🚪</div>
+
+      <div class="logout-title">Saindo do MDE Hub…</div>
+      <div class="logout-text">Estamos finalizando sua sessão com segurança.</div>
+
+      <div class="logout-loading">Aguarde, você será redirecionado.</div>
+
+    </div>
+  </div>
+
+  <!-- Executa o logout real via Supabase -->
+  <script type="module">
+    import { supabase } from "/js/supabase.js";
+
+    async function fazerLogout() {
+      await supabase.auth.signOut();
+
+      // Aguarda 2 segundos para animação e UX
+      setTimeout(() => {
+        window.location.href = "/login.html";
+      }, 1800);
+    }
+
+    fazerLogout();
+  </script>
+</body>
+</html>
