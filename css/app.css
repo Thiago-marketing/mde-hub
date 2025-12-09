@@ -455,3 +455,20 @@ footer {
     flex-wrap: wrap;
   }
 }
+/* =========================================================
+   AJUSTE MOBILE – Evitar sobreposição do botão Menu
+========================================================= */
+@media (max-width: 830px) {
+
+  /* Adiciona espaço para o botão ficar acima do conteúdo */
+  .main {
+    padding-top: 65px !important;
+  }
+
+  /* Deixa o botão alinhado corretamente */
+  #btnSidebarToggle {
+    top: 18px;
+    left: 18px;
+    z-index: 300; /* acima do conteúdo, abaixo de popups */
+  }
+}
