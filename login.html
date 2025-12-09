@@ -1,44 +1,54 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Login</title>
+
   <link rel="stylesheet" href="/css/auth.css" />
 </head>
 
 <body>
-  <div class="auth-wrapper">
-    <div class="auth-card">
 
-      <div class="auth-logo">
-        <span class="auth-logo-mark">M</span>
-        <span class="auth-logo-text">MDE Hub</span>
+<div class="auth-container">
+
+  <div class="login-card">
+
+    <!-- LOGO -->
+    <div class="logo-area">
+      <div class="logo-mark">M</div>
+      <div class="logo-text">MDE Hub</div>
+    </div>
+
+    <h1 class="login-title">Acessar sua conta</h1>
+    <p class="login-subtitle">Bem-vindo(a)! Entre para acessar seu painel.</p>
+
+    <!-- FORM -->
+    <form id="loginForm" class="login-form">
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" placeholder="seuemail@exemplo.com" required />
       </div>
 
-      <h1>Acessar MDE Hub</h1>
-      <p class="auth-subtitle">Use seu e-mail e senha para entrar.</p>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input id="password" type="password" placeholder="••••••••" required />
+      </div>
 
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input id="email" type="email" autocomplete="email" required />
-        </div>
+      <button type="submit" class="btn-primary full">Entrar</button>
 
-        <div class="form-group">
-          <label for="password">Senha</label>
-          <input id="password" type="password" autocomplete="current-password" required />
-        </div>
+    </form>
 
-        <button type="submit" class="btn-primary full">Entrar</button>
-      </form>
+    <p class="login-footer">© 2025 • MDE Hub • Sistema Hoteleiro</p>
 
-      <p class="auth-footer">Versão demo • Supabase Auth + MDE Hub</p>
-    </div>
   </div>
 
-  <!-- Ordem correta dos scripts -->
-  <script type="module" src="/js/supabase.js"></script>
-  <script type="module" src="/js/auth.js"></script>
+</div>
+
+<!-- JS -->
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/auth.js"></script>
+
 </body>
 </html>
