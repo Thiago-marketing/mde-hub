@@ -18,11 +18,6 @@
       gap: 10px;
     }
 
-    .page-header h1 {
-      font-size: 28px;
-      font-weight: 700;
-    }
-
     .filters {
       display: flex;
       gap: 10px;
@@ -85,36 +80,8 @@
       font-weight: 600;
     }
 
-    .tag-red {
-      background: #d9534f;
-    }
-
-    .tag-green {
-      background: #5cb85c;
-    }
-
-    .task-actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn {
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      border: none;
-    }
-
-    .btn-complete {
-      background: #5cb85c;
-      color: #fff;
-    }
-
-    .btn-open {
-      background: var(--primary);
-      color: #fff;
-    }
+    .tag-red { background: #d9534f; }
+    .tag-green { background: #5cb85c; }
 
     .btn-add {
       position: fixed;
@@ -133,22 +100,26 @@
 
 <body>
 
-<!-- BOTÃO DO MENU MOBILE -->
+<!-- BOTÃO MOBILE -->
 <div id="btnSidebarToggle">☰</div>
 
+<!-- SIDEBAR DINÂMICA -->
 <div id="sidebar-container"></div>
-<!-- CONTEÚDO PRINCIPAL -->
+
+<!-- ÁREA PRINCIPAL -->
 <main class="main-area">
 
   <header class="page-header">
-    <h1 class="page-title">📌 Atividades</h1>
-    <p class="page-subtitle">Veja todas as interações, eventos, follow-ups e compromissos do CRM.</p>
+    <div>
+      <h1 class="page-title">📌 Atividades</h1>
+      <p class="page-subtitle">Veja todas as interações, eventos, follow-ups e compromissos do CRM.</p>
+    </div>
   </header>
 
   <section class="card">
     <h2 class="card-title">Atividades Recentes</h2>
 
-    <div class="activity-list">
+    <div class="task-list" id="crmAtividades">
       <!-- placeholder -->
       <p class="muted">Nenhuma atividade registrada ainda.</p>
     </div>
@@ -161,7 +132,7 @@
 <script type="module" src="/js/app.js"></script>
 <script type="module" src="/js/crm.js"></script>
 
-<!-- INCLUIR SIDEBAR -->
+<!-- CARREGAR SIDEBAR -->
 <script>
   fetch("/partials/sidebar.html")
     .then(res => res.text())
@@ -169,9 +140,6 @@
       document.querySelector("#sidebar-container").innerHTML = html;
     });
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
