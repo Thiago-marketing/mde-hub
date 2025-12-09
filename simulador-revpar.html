@@ -1,269 +1,179 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Simulador de RevPAR • MDE Hub</title>
 
-  <!-- CSS principal do Hub -->
-  <link rel="stylesheet" href="/css/app.css" />
+  <link rel="stylesheet" href="/css/app.css">
+
+  <meta name="robots" content="noindex,nofollow" />
 </head>
 
-<body class="hub-body" data-theme="dark">
-  <div class="hub-layout">
+<body>
+
+  <div class="layout">
 
     <!-- SIDEBAR -->
-<aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-logo">MDE Hub</span>
+        <button class="sidebar-toggle" id="btnSidebarToggle">☰</button>
+      </div>
 
-  <h3>Operação</h3>
-  <nav>
-    <a href="/dashboard.html">Dashboard</a>
-    <a href="/reservas.html">Reservas</a>
-    <a href="/checkin.html">Check-in</a>
-    <a href="/checkout.html">Check-out</a>
-    <a href="/uhs.html">Unidades Habitacionais</a>
-    <a href="/financeiro.html">Financeiro</a>
-    <a href="/config.html">Configurações</a>
-  </nav>
+      <nav class="sidebar-nav">
 
-  <h3>Simuladores</h3>
-  <nav>
-    <a href="/simuladores.html">Tela Principal</a>
-    <a href="/sim-faturamento.html">Simulador de Faturamento</a>
-    <a href="/sim-ota.html">Simulador OTA</a>
-    <a href="/sim-tarifa.html">Simulador Tarifa Ideal</a>
-    <a href="/sim-adr-ideal.html">Simulador ADR Ideal</a>
-    <a href="/sim-revpar.html">Simulador RevPAR</a>
-    <a href="/sim-checkin.html">Simulador Check-in (Tempo/Custo)</a>
+        <a href="/index.html" class="nav-item">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Início</span>
+        </a>
 
-    <!-- Pendentes – serão criados amanhã -->
-    <a href="/sim-margem.html">Simulador Margem de Lucro</a>
-    <a href="/sim-breakeven.html">Simulador Break-even</a>
-    <a href="/sim-ocupacao-meta.html">Simulador Ocupação Meta</a>
-    <a href="/sim-conversao.html">Simulador Conversão WhatsApp</a>
-  </nav>
+        <a href="/painel-proprietario.html" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Painel do Proprietário</span>
+        </a>
 
-  <h3>CRM</h3>
-  <nav>
-    <a href="/crm-dashboard.html">Painel CRM</a>
-    <a href="/leads.html">Leads</a>
-    <a href="/crm-kanban.html">Kanban</a>
-    <a href="/crm-atividades.html">Atividades</a>
-  </nav>
+        <a href="/simuladores.html" class="nav-item active">
+          <span class="nav-icon">🧮</span>
+          <span class="nav-text">Simuladores</span>
+        </a>
 
-  <h3>Admin</h3>
-  <nav>
-    <a href="/checklist-governanca.html">Checklist Governança</a>
-    <a href="/auditoria.html">Auditoria</a>
-    <a href="/relatorios.html">Relatórios</a>
-  </nav>
+        <div class="nav-separator">Em desenvolvimento</div>
 
-</aside>
+        <a href="/crm.html" class="nav-item disabled">
+          <span class="nav-icon">📁</span>
+          <span class="nav-text">Vendas Diretas CRM</span>
+          <span class="nav-badge">Futuro</span>
+        </a>
 
-    <!-- OVERLAY MOBILE -->
-    <div class="hub-overlay" id="sidebarOverlay"></div>
+        <a href="/proposta.html" class="nav-item disabled">
+          <span class="nav-icon">🧠</span>
+          <span class="nav-text">Proposta Hoteleira IA</span>
+          <span class="nav-badge">Futuro</span>
+        </a>
 
-    <!-- ÁREA PRINCIPAL -->
-    <div class="hub-main">
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>MDE Sistemas<br><span class="footer-sub">Plataforma Hub</span></p>
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
 
       <!-- TOPBAR -->
-      <header class="hub-topbar">
-        <!-- botão mobile -->
-        <button class="btn-icon only-mobile" id="menuToggle" aria-label="Abrir menu">
-          ☰
-        </button>
-
+      <header class="topbar">
         <div class="topbar-left">
-          <div class="user-chip">
-            <span class="user-avatar" id="userInitial">U</span>
-            <div class="user-info">
-              <span class="user-name" id="userName">Usuário de teste</span>
-              <span class="user-email" id="userEmail">teste@mdesistemas.com.br</span>
-            </div>
-          </div>
+          <h1 class="topbar-title">Simulador de RevPAR</h1>
+          <p class="topbar-subtitle">Calcule o RevPAR conforme ocupação e tarifa média</p>
         </div>
 
         <div class="topbar-right">
-          <button class="btn-outline" id="themeToggle">Modo claro/escuro</button>
-          <button class="btn-primary" id="logoutBtn">Sair</button>
+          <button id="btnThemeToggle" class="theme-toggle">🌓</button>
         </div>
       </header>
 
-      <!-- CONTEÚDO -->
-      <main class="hub-content">
 
-        <h1 class="page-title">Simulador de RevPAR</h1>
-        <p class="page-subtitle">
-          Calcule a receita por unidade disponível e veja como melhorar o desempenho da sua hospedagem.
-        </p>
+      <!-- CONTENT -->
+      <section class="content">
 
-        <section class="cards-grid">
-          <!-- FORMULÁRIO -->
-          <article class="card">
-            <h2 class="card-title">Dados do hotel</h2>
+        <!-- FORM CARD -->
+        <div class="card" style="max-width: 600px; margin: auto;">
 
-            <form id="simRevpar" style="margin-top: 16px; display: flex; flex-direction: column; gap: 16px;">
-              <div class="form-grid-2">
-                <div>
-                  <label for="uhCount">Nº de quartos (UH)</label>
-                  <input type="number" id="uhCount" min="1" required placeholder="Ex: 20" />
-                </div>
+          <div class="card-title">Preencha os dados</div>
 
-                <div>
-                  <label for="occupancy">Ocupação média (%)</label>
-                  <input type="number" id="occupancy" min="0" max="100" required placeholder="Ex: 65" />
-                </div>
-              </div>
+          <label class="form-label">Tarifa Média (ADR)</label>
+          <input type="number" id="adr" class="form-input" placeholder="Ex: 350" />
 
-              <div class="form-grid-2">
-                <div>
-                  <label for="adr">Diária média (ADR) – R$</label>
-                  <input type="text" id="adr" required placeholder="Ex: 350,00" />
-                </div>
+          <label class="form-label">Ocupação (%)</label>
+          <input type="number" id="ocupacao" class="form-input" placeholder="Ex: 78" />
 
-                <div>
-                  <label for="revparMeta">Meta de RevPAR (opcional)</label>
-                  <input type="text" id="revparMeta" placeholder="Ex: 220,00" />
-                </div>
-              </div>
+          <label class="form-label">Número de UHs</label>
+          <input type="number" id="uhs" class="form-input" placeholder="Ex: 42" />
 
-              <button type="submit" class="btn-primary" style="width: 100%; margin-top: 8px;">
-                Calcular RevPAR
-              </button>
-            </form>
-          </article>
+          <button class="btn-primary" id="btnCalcular">Calcular RevPAR</button>
 
-          <!-- RESULTADO -->
-          <article id="resultCard" class="card" style="display: none;">
-            <h2 class="card-title">Resultado</h2>
+        </div>
 
-            <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
-              <div>
-                <h3 style="font-size: 15px; margin-bottom: 4px;">📈 RevPAR Atual</h3>
-                <p><strong>RevPAR = </strong> <span id="revparResult"></span></p>
-              </div>
 
-              <hr style="border-color: rgba(255,255,255,0.06);" />
+        <!-- RESULTADO -->
+        <div id="resultado" style="display:none; margin-top:30px;">
 
-              <div>
-                <h3 style="font-size: 15px; margin-bottom: 4px;">📊 Potencial de melhoria</h3>
-                <p><strong>ADR:</strong> <span id="adrAtual"></span></p>
-                <p><strong>Ocupação:</strong> <span id="occAtual"></span></p>
-                <p><strong>Faturamento mensal estimado:</strong> <span id="fatMensal"></span></p>
-              </div>
+          <div class="grid-cards">
 
-              <div id="analiseBox" style="margin-top: 8px; font-size: 14px;"></div>
+            <div class="card">
+              <div class="card-title">RevPAR</div>
+              <h2 class="metric-value" id="revparValor">R$ 0,00</h2>
+              <p class="metric-delta neutral">Receita por UH disponível</p>
             </div>
 
-            <div style="margin-top: 16px;">
-              <button id="whatsBtn" class="btn-primary" style="width: 100%; background:#22c55e; box-shadow:none;">
-                Receber análise no WhatsApp
-              </button>
-              <p style="font-size: 12px; opacity: 0.7; margin-top: 6px;">
-                Você será direcionado para o WhatsApp oficial da MDE (+55 11 94027-7447).
-              </p>
+            <div class="card">
+              <div class="card-title">Receita Total Estimada</div>
+              <h2 class="metric-value" id="receitaTotal">R$ 0,00</h2>
+              <p class="metric-delta positive">Baseada na ocupação e ADR</p>
             </div>
-          </article>
-        </section>
 
-      </main>
-    </div>
+            <div class="card">
+              <div class="card-title">UHs Ocupadas</div>
+              <h2 class="metric-value" id="uhsOcupadas">0</h2>
+              <p class="metric-delta">Projeção operacional</p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- RODAPÉ INFORMATIVO -->
+        <div class="roadmap-block">
+          <h2>Como este simulador funciona</h2>
+          <ul>
+            <li>✔️ Cálculo instantâneo da performance de vendas</li>
+            <li>✔️ Indicador essencial para gestão de receita</li>
+            <li>🔄 No futuro: leitura automática do SQL Server via Acumulador</li>
+            <li>📊 Se integra ao Painel do Proprietário (WebMDE Lite)</li>
+          </ul>
+        </div>
+
+      </section>
+
+    </main>
   </div>
 
-  <!-- JS de layout (menu + tema) -->
-  <script src="/js/hub-ui.js"></script>
+  <script src="/js/app.js"></script>
 
-  <!-- JS do simulador -->
+  <!-- SCRIPT DO SIMULADOR -->
   <script>
-    function parseBRL(val) {
-      if (!val) return 0;
-      return parseFloat(val.replace(/\./g, "").replace(",", ".")) || 0;
-    }
+    document.getElementById("btnCalcular").addEventListener("click", function () {
 
-    function formatBRL(v) {
-      return new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-      }).format(v || 0);
-    }
+      const adr = parseFloat(document.getElementById("adr").value);
+      const ocup = parseFloat(document.getElementById("ocupacao").value);
+      const uhs = parseFloat(document.getElementById("uhs").value);
 
-    const form = document.getElementById("simRevpar");
-    const resultCard = document.getElementById("resultCard");
+      if (!adr || !ocup || !uhs) {
+        alert("Preencha todos os campos!");
+        return;
+      }
 
-    const revparEl = document.getElementById("revparResult");
-    const adrAtualEl = document.getElementById("adrAtual");
-    const occAtualEl = document.getElementById("occAtual");
-    const fatMensalEl = document.getElementById("fatMensal");
-    const analiseBoxEl = document.getElementById("analiseBox");
-    const whatsBtn = document.getElementById("whatsBtn");
+      // Cálculos
+      const ocupadas = Math.round((ocup / 100) * uhs);
+      const receita = ocupadas * adr;
+      const revpar = receita / uhs;
 
-    let lastSim = null;
+      // Exibir
+      document.getElementById("uhsOcupadas").textContent = ocupadas;
+      document.getElementById("receitaTotal").textContent = "R$ " + receita.toFixed(2);
+      document.getElementById("revparValor").textContent = "R$ " + revpar.toFixed(2);
 
-    if (form) {
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
+      document.getElementById("resultado").style.display = "block";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 
-        const uh = parseInt(document.getElementById("uhCount").value);
-        const occ = parseFloat(document.getElementById("occupancy").value);
-        const adr = parseBRL(document.getElementById("adr").value);
-        const metaRevpar = parseBRL(document.getElementById("revparMeta").value);
-
-        if (!uh || !occ || !adr) return;
-
-        const revpar = adr * (occ / 100);
-        const dias = 30;
-        const fatMensal = uh * (occ / 100) * dias * adr;
-
-        revparEl.textContent = formatBRL(revpar);
-        adrAtualEl.textContent = formatBRL(adr);
-        occAtualEl.textContent = occ + "%";
-        fatMensalEl.textContent = formatBRL(fatMensal);
-
-        let analise = "";
-
-        if (metaRevpar > 0) {
-          if (revpar >= metaRevpar) {
-            analise += `<p><strong>Excelente!</strong> Seu RevPAR atual já é superior ou igual à meta definida.</p>`;
-          } else {
-            const dif = metaRevpar - revpar;
-            analise += `<p><strong>Diferença para meta:</strong> ${formatBRL(dif)}</p>`;
-            analise += `<p>Para atingir essa meta, você precisará aumentar ADR, ocupação ou ambos. Um consultor MDE pode te ajudar a encontrar o melhor caminho.</p>`;
-          }
-        } else {
-          analise += `<p>Para melhorar o RevPAR, combine aumento de reservas diretas, redução de dependência de OTAs e uma estratégia de tarifas inteligente.</p>`;
-        }
-
-        analiseBoxEl.innerHTML = analise;
-        resultCard.style.display = "block";
-
-        lastSim = { uh, occ, adr, revpar, fatMensal, metaRevpar };
-      });
-    }
-
-    if (whatsBtn) {
-      whatsBtn.addEventListener("click", function () {
-        if (!lastSim) return;
-
-        const msg = `
-Simulação RevPAR - MDE
-
-UH: ${lastSim.uh}
-Ocupação: ${lastSim.occ}%
-ADR: ${formatBRL(lastSim.adr)}
-
-RevPAR atual: ${formatBRL(lastSim.revpar)}
-Faturamento mensal estimado: ${formatBRL(lastSim.fatMensal)}
-Meta RevPAR: ${formatBRL(lastSim.metaRevpar)}
-
-Solicito análise completa.
-        `.trim();
-
-        window.open(
-          "https://wa.me/5511940277447?text=" + encodeURIComponent(msg),
-          "_blank"
-        );
-      });
-    }
+    });
   </script>
+
 </body>
 </html>
