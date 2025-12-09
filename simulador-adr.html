@@ -1,88 +1,92 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Simulador ADR</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MDE Hub • Simulador de ADR</title>
+  <link rel="stylesheet" href="/css/app.css">
 </head>
+
 <body>
+<div class="layout">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="sidebar-header"><div class="user-initial">M</div><div class="sidebar-brand">MDE Hub</div></div>
-    <nav class="sidebar-nav">
+    <div class="sidebar-header">
+      <div class="avatar">M</div>
+      <span>MDE Hub</span>
+    </div>
+
+    <nav class="sidebar-menu">
       <a href="/dashboard.html">📊 Dashboard</a>
       <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🛎️ Reservas</a>
+      <a href="/reservas.html">🔑 Reservas</a>
       <a href="/financeiro.html">💰 Financeiro</a>
-      <a href="/simuladores.html" class="active">🧮 Simuladores</a>
-      <div class="separator"></div>
-      <a class="disabled" href="#">📘 CRM Hoteleiro • Em breve</a>
-      <a class="disabled" href="#">📝 Proposta IA • Em breve</a>
-      <div class="separator"></div>
-      <a href="#" id="logoutBtn" class="logout">🚪 Sair</a>
+      <a class="active" href="/simuladores.html">📐 Simuladores</a>
+      <a>📘 CRM Hoteleiro • Em breve</a>
+      <a>📄 Proposta IA • Em breve</a>
     </nav>
+
+    <div class="sidebar-footer">
+      <a id="logoutBtn">🚪 Sair</a>
+    </div>
   </aside>
 
+
   <!-- MAIN -->
-  <main class="main">
+  <main class="content">
+    <div class="top-right">
+      <select class="hotel-select"><option>Carregando hotéis...</option></select>
+      <div class="user-badge">U</div>
+    </div>
 
-    <header class="topbar">
-      <div>
-        <h1 class="page-title">Simulador ADR</h1>
-        <p class="page-subtitle">Calcule a tarifa média ideal com base nas diárias vendidas.</p>
+    <h1>Simulador de ADR</h1>
+    <p class="content-subtitle">
+      Calcule a tarifa média diária (ADR) ideal com base na receita e nas diárias vendidas.
+    </p>
+
+    <div class="grid grid-2">
+
+      <div class="card">
+        <div class="card-title">Parâmetros</div>
+        <form id="formAdr" class="form-grid">
+          <label>
+            Receita do período (R$)
+            <input type="number" id="adr_receita" min="0" step="0.01" required>
+          </label>
+
+          <label>
+            Diárias vendidas (nº)
+            <input type="number" id="adr_diarias" min="1" step="1" required>
+          </label>
+
+          <label>
+            Período analisado
+            <select id="adr_periodo">
+              <option value="dia">Dia</option>
+              <option value="semana">Semana</option>
+              <option value="mes">Mês</option>
+            </select>
+          </label>
+
+          <button type="submit" class="btn-primary full">Calcular ADR</button>
+        </form>
       </div>
 
-      <div class="topbar-right">
-        <select id="hotelSelect" class="hotel-select"><option>Carregando hotéis...</option></select>
-        <div class="user-profile"><span id="userInitial">U</span><div><p id="userName">Carregando...</p><p id="userEmail"></p></div></div>
-      </div>
-    </header>
-
-    <section class="panel">
-      <h2>Preencha os dados</h2>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Total de Receita (R$)</label>
-          <input type="number" id="receita" placeholder="Ex: 15.000" />
-        </div>
-
-        <div class="form-group">
-          <label>Diárias Vendidas</label>
-          <input type="number" id="diarias" placeholder="Ex: 120" />
-        </div>
+      <div class="card">
+        <div class="card-title">Resultado</div>
+        <div class="card-value" id="adr_resultado">R$ --</div>
+        <p class="text-muted" id="adr_resumo">
+          Preencha os campos ao lado e clique em calcular.
+        </p>
       </div>
 
-      <button class="btn-primary" onclick="calcADR()">Calcular ADR</button>
-
-      <div class="result-box" id="resultADR"></div>
-    </section>
-
+    </div>
   </main>
 
-  <script>
-    function calcADR() {
-      const receita = parseFloat(document.getElementById('receita').value);
-      const diarias = parseFloat(document.getElementById('diarias').value);
+</div>
 
-      if (!receita || !diarias) {
-        document.getElementById('resultADR').innerHTML = "<p class='error'>Preencha todos os campos.</p>";
-        return;
-      }
-
-      const adr = receita / diarias;
-
-      document.getElementById('resultADR').innerHTML = `
-        <h3>Resultado</h3>
-        <p class='value-highlight'>ADR: R$ ${adr.toFixed(2)}</p>
-      `;
-    }
-  </script>
-
-  <script src="/js/supabase.js"></script>
-  <script src="/js/app.js"></script>
-
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>
