@@ -1,92 +1,169 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Painel do Proprietário</title>
-  <link rel="stylesheet" href="/css/app.css">
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
-<div class="layout">
+
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
 
   <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="avatar">M</div>
-      <span>MDE Hub</span>
+  <div id="sidebar">
+    <div class="logo">
+      <span class="logo-avatar">M</span>
+      <div class="logo-text">
+        <strong>Web MDE</strong>
+        <span>Painel Gerencial</span>
+      </div>
     </div>
 
-    <nav class="sidebar-menu">
-      <a href="/dashboard.html">📊 Dashboard</a>
-      <a class="active" href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🔑 Reservas</a>
-      <a href="/financeiro.html">💰 Financeiro</a>
-      <a href="/simuladores.html">📐 Simuladores</a>
-      <a>📘 CRM Hoteleiro • Em breve</a>
-      <a>📄 Proposta IA • Em breve</a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <a id="logoutBtn">🚪 Sair</a>
-    </div>
-  </aside>
-
-
-  <!-- MAIN -->
-  <main class="content">
-
-    <div class="top-right">
-      <select class="hotel-select" id="hotelSelect"></select>
-      <div class="user-badge" id="userBadge">U</div>
+    <div class="nav-section">
+      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item active">🧭 Painel do Proprietário</a>
     </div>
 
-    <h1>Painel do Proprietário</h1>
-    <div class="content-subtitle">Visão geral operacional e estratégica</div>
-
-    <div class="grid grid-3">
-
-      <div class="card">
-        <div class="card-title">Ocupação Atual</div>
-        <div class="card-value" id="pp_ocupacao">--%</div>
-        <p class="text-muted">Status geral das UHs</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Receita do Dia</div>
-        <div class="card-value" id="pp_receita_dia">R$ --</div>
-        <p class="text-muted">Hospedagens + extras</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Saldo Financeiro</div>
-        <div class="card-value" id="pp_saldo">R$ --</div>
-        <p class="text-muted">Entradas - Saídas</p>
-      </div>
-
+    <div class="nav-section">
+      <div class="nav-title">Operação</div>
+      <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa de UHs</a>
+      <a href="/fechamento.html" class="nav-item">🧾 Fechamento de Caixa</a>
+      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
     </div>
 
-    <div class="grid grid-2" style="margin-top:30px;">
-
-      <div class="card">
-        <div class="card-title">Previsões de Entrada & Saída</div>
-        <p class="text-muted">Baseado em reservas confirmadas</p>
-        <div id="pp_previsoes">Gráfico / Tabela aqui</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Estoque & Itens Críticos</div>
-        <p class="text-muted">Itens abaixo do mínimo</p>
-        <div id="pp_estoque">Nenhum item carregado...</div>
-      </div>
-
+    <div class="nav-section">
+      <div class="nav-title">Financeiro & Vendas</div>
+      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+      <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+      <a class="nav-item disabled">📘 CRM Hoteleiro (em breve)</a>
+      <a class="nav-item disabled">📄 Proposta Hoteleira (em breve)</a>
     </div>
 
-  </main>
+    <div class="nav-section nav-exit">
+      <a href="/logout.html" class="nav-item">🚪 Sair</a>
+    </div>
+  </div>
 
-</div>
+  <!-- ÁREA PRINCIPAL -->
+  <div class="main">
 
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Painel do Proprietário</h1>
+        <p class="page-subtitle">Visão avançada da operação, financeiro e estoque</p>
+      </div>
+
+      <div class="topbar-right">
+        <div class="hotel-select-wrapper">
+          <span class="label">Hotel</span>
+          <select id="hotelSelector">
+            <option>Carregando hotéis...</option>
+          </select>
+        </div>
+
+        <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+
+        <div class="user-pill">
+          <div class="user-avatar">H</div>
+          <div class="user-info">
+            <span class="user-name">Hotel Exemplo</span>
+            <span class="user-email">contato@hotelexemplo.com</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <section class="content-section">
+
+      <!-- CARDS PRINCIPAIS -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Ocupação Atual</div>
+          <div class="card-value" id="pp_ocupacao">--%</div>
+          <div class="card-desc">Taxa atual de ocupação</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Receita de Hoje</div>
+          <div class="card-value" id="pp_receita">R$ --</div>
+          <div class="card-desc">Hospedagem + Extras</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Entradas Hoje</div>
+          <div class="card-value" id="pp_checkins">--</div>
+          <div class="card-desc">Hóspedes realizando check-in</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Saídas Hoje</div>
+          <div class="card-value" id="pp_checkouts">--</div>
+          <div class="card-desc">Hóspedes realizando check-out</div>
+        </div>
+
+      </div>
+
+      <!-- ESTOQUE + PREVISÕES -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Estoque Crítico</div>
+          <table class="table">
+            <thead><tr><th>Item</th><th>Qtd</th><th>Mín</th></tr></thead>
+            <tbody id="pp_estoqueCritico">
+              <tr><td colspan="3">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Previsão de Contas</div>
+          <table class="table">
+            <thead><tr><th>Tipo</th><th>Valor</th><th>Data</th></tr></thead>
+            <tbody id="pp_contasPrevistas">
+              <tr><td colspan="3">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- MOVIMENTAÇÕES + HÓSPEDES -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Próximas Chegadas</div>
+          <table class="table">
+            <thead><tr><th>Reserva</th><th>Hóspede</th><th>UH</th><th>Chegada</th></tr></thead>
+            <tbody id="pp_proximasChegadas">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Próximas Saídas</div>
+          <table class="table">
+            <thead><tr><th>Reserva</th><th>Hóspede</th><th>UH</th><th>Saída</th></tr></thead>
+            <tbody id="pp_proximasSaidas">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
 </body>
 </html>
