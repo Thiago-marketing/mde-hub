@@ -1,85 +1,183 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Simulador de Ocupação</title>
-  <link rel="stylesheet" href="/css/app.css">
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
-<div class="layout">
 
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="avatar">M</div>
-      <span>MDE Hub</span>
+<!-- BOTÃO MOBILE -->
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo">
+    <span class="logo-avatar">M</span>
+    <div class="logo-text">
+      <strong>MDE Hub</strong>
+      <span>Simuladores</span>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+    <a href="/fechamento.html" class="nav-item">🧾 Fechamento</a>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
+    <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa UHs</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">Simuladores</div>
+    <a href="/simuladores.html" class="nav-item">🧮 Todos os Simuladores</a>
+    <a href="/simulador-adr.html" class="nav-item">📏 ADR</a>
+    <a href="/simulador-revpar.html" class="nav-item">📈 RevPAR</a>
+    <a href="/simulador-diarias.html" class="nav-item">📅 Diárias Vendidas</a>
+    <a href="/simulador-ocupacao.html" class="nav-item active">🏨 Ocupação</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a class="nav-item disabled">📘 Em breve</a>
+    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 class="page-title">Simulador de Ocupação</h1>
+      <p class="page-subtitle">
+        Descubra a taxa de ocupação do seu hotel com base no período analisado.
+      </p>
     </div>
 
-    <nav class="sidebar-menu">
-      <a href="/dashboard.html">📊 Dashboard</a>
-      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🔑 Reservas</a>
-      <a href="/financeiro.html">💰 Financeiro</a>
-      <a class="active" href="/simuladores.html">📐 Simuladores</a>
-      <a>📘 CRM Hoteleiro • Em breve</a>
-      <a>📄 Proposta IA • Em breve</a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <a id="logoutBtn">🚪 Sair</a>
+    <div class="topbar-right">
+      <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+      <div class="user-pill">
+        <div class="user-avatar">H</div>
+        <div class="user-info">
+          <span class="user-name">Hotel Exemplo</span>
+          <span class="user-email">contato@hotelexemplo.com</span>
+        </div>
+      </div>
     </div>
-  </aside>
+  </header>
 
-  <main class="content">
-    <div class="top-right">
-      <select class="hotel-select"><option>Carregando hotéis...</option></select>
-      <div class="user-badge">U</div>
-    </div>
+  <!-- CONTEÚDO -->
+  <section class="content-section">
 
-    <h1>Simulador de Ocupação</h1>
-    <p class="content-subtitle">
-      Projete cenários de ocupação a partir de UHs disponíveis e diárias vendidas.
-    </p>
+    <div class="grid">
 
-    <div class="grid grid-2">
-
+      <!-- EXPLICAÇÃO -->
       <div class="card">
-        <div class="card-title">Parâmetros</div>
-        <form id="formOcupacao" class="form-grid">
-          <label>
-            UHs disponíveis
-            <input type="number" id="oc_uhs" min="1" step="1" required>
-          </label>
-
-          <label>
-            Período (dias)
-            <input type="number" id="oc_dias" min="1" step="1" required>
-          </label>
-
-          <label>
-            Diárias vendidas no período
-            <input type="number" id="oc_diarias_vendidas" min="0" step="1" required>
-          </label>
-
-          <button type="submit" class="btn-primary full">Calcular Ocupação</button>
-        </form>
+        <div class="card-title">Como funciona a Ocupação?</div>
+        <p class="card-desc">
+          A taxa de ocupação mostra a proporção de UHs ocupadas em relação ao total disponível.
+        </p>
+        <p class="card-desc" style="margin-top:10px;">
+          Fórmula básica:
+          <br />
+          <strong>Ocupação = (UHs Ocupadas ÷ UHs Disponíveis) × 100</strong>
+        </p>
       </div>
 
+      <!-- FORMULÁRIO -->
+      <div class="card">
+        <div class="card-title">Preencha os dados</div>
+
+        <label for="ocp_uhsDisponiveis">UHs Disponíveis no período</label>
+        <input
+          type="number"
+          id="ocp_uhsDisponiveis"
+          min="0"
+          placeholder="Ex: 40"
+        />
+
+        <label for="ocp_uhsOcupadas">
+          UHs Ocupadas no período
+        </label>
+        <input
+          type="number"
+          id="ocp_uhsOcupadas"
+          min="0"
+          placeholder="Ex: 28"
+        />
+
+        <button id="btnCalcularOcupacao" class="btn-primary" style="margin-top:10px;">
+          Calcular Ocupação
+        </button>
+      </div>
+
+      <!-- RESULTADO -->
       <div class="card">
         <div class="card-title">Resultado</div>
-        <div class="card-value" id="oc_resultado">--%</div>
-        <p class="text-muted" id="oc_resumo">
-          Informe UHs, dias e diárias vendidas para projetar a ocupação.
+
+        <p class="card-desc">Taxa de ocupação:</p>
+        <div class="card-value" id="ocupacaoResultado">--%</div>
+
+        <p class="card-desc" id="ocupacaoResumo" style="margin-top: 12px;">
+          Preencha os dados ao lado e clique em "Calcular".
         </p>
       </div>
 
     </div>
-  </main>
+
+  </section>
 
 </div>
 
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
+<!-- SCRIPT DO SIMULADOR -->
+<script>
+  const btnOcp = document.getElementById("btnCalcularOcupacao");
+  const inputDisp = document.getElementById("ocp_uhsDisponiveis");
+  const inputOcup = document.getElementById("ocp_uhsOcupadas");
+  const campoOcpResultado = document.getElementById("ocupacaoResultado");
+  const campoOcpResumo = document.getElementById("ocupacaoResumo");
+
+  btnOcp.addEventListener("click", () => {
+    const disp = parseFloat((inputDisp.value || "").replace(",", ".")) || 0;
+    const ocup = parseFloat((inputOcup.value || "").replace(",", ".")) || 0;
+
+    if (disp <= 0 || ocup < 0) {
+      campoOcpResultado.textContent = "--%";
+      campoOcpResumo.textContent = "Informe valores válidos para UHs disponíveis e ocupadas.";
+      return;
+    }
+
+    const taxa = (ocup / disp) * 100;
+    campoOcpResultado.textContent = taxa.toFixed(1) + "%";
+
+    // interpretação
+    let comentario = "Ocupação calculada com sucesso.";
+
+    if (taxa < 40) {
+      comentario = "Ocupação baixa: ideal para ações promocionais e campanhas.";
+    } else if (taxa >= 40 && taxa < 70) {
+      comentario = "Ocupação moderada: desempenho aceitável para períodos normais.";
+    } else {
+      comentario = "Ocupação alta: excelente performance no período!";
+    }
+
+    campoOcpResumo.textContent = comentario;
+  });
+</script>
+
 </body>
 </html>
