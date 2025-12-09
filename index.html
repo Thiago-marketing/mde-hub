@@ -1,67 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MDE Hub • Início</title>
+  <link rel="stylesheet" href="/css/app.css">
 </head>
 
 <body>
+<div class="layout">
 
-  <!-- SIDEBAR PREMIUM -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-logo">M</div>
+      <div class="avatar">M</div>
       <span>MDE Hub</span>
     </div>
 
     <nav class="sidebar-menu">
-      <a href="dashboard.html">📊 Dashboard</a>
-      <a href="painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="reservas.html">🛎 Reservas</a>
-      <a href="financeiro.html">💰 Financeiro</a>
-      <a href="simuladores.html">🧮 Simuladores</a>
-
-      <div class="sidebar-divider"></div>
-      <a class="disabled">🚀 CRM Hoteleiro 5.0 — Em breve</a>
-      <a class="disabled">🧠 Proposta IA — Em breve</a>
-
-      <div class="sidebar-divider"></div>
-      <a href="#" id="logoutBtn" class="logout">Sair</a>
+      <a href="/dashboard.html">📊 Dashboard</a>
+      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">🔑 Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a href="/simuladores.html">📐 Simuladores</a>
+      <a>📘 CRM Hoteleiro • Em breve</a>
+      <a>📄 Proposta Hoteleira IA • Em breve</a>
     </nav>
+
+    <div class="sidebar-footer">
+      <a href="#" id="logoutBtn">🚪 Sair</a>
+    </div>
   </aside>
 
-  <!-- MAIN WRAPPER -->
-  <main class="main">
+  <!-- CONTENT -->
+  <main class="content">
+    <div class="top-right">
+      <select class="hotel-select"><option>Carregando hotéis...</option></select>
+      <div class="user-badge">U</div>
+    </div>
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <div>
-        <div class="topbar-title">Bem-vindo ao MDE Hub</div>
-        <div class="topbar-sub">Escolha um módulo no menu ao lado</div>
-      </div>
+    <h1>Bem-vindo ao MDE Hub</h1>
+    <div class="content-subtitle">Selecione um módulo no menu ao lado</div>
 
-      <div class="topbar-right">
-        <div class="user-box">
-          <div class="user-initial" id="userInitial">U</div>
-          <span id="userName">Carregando...</span>
-        </div>
-      </div>
-    </header>
+    <div class="grid grid-3">
+      <a href="/dashboard.html" class="card btn-clean">
+        <h2 class="card-title">📊 Dashboard</h2>
+        <p class="text-muted">Indicadores em tempo real</p>
+      </a>
 
-    <!-- WELCOME PANEL -->
-    <section class="panel">
-      <h2>Plataforma MDE Hub</h2>
-      <p>
-        Seu ambiente integrado com Dashboard do Proprietário, Financeiro, Reservas,
-        Simuladores MDE e mais.  
-        Módulos avançados de CRM e Proposta IA serão liberados em breve.
-      </p>
-    </section>
+      <a href="/reservas.html" class="card btn-clean">
+        <h2 class="card-title">🔑 Reservas</h2>
+        <p class="text-muted">Entradas, saídas e hóspedes atuais</p>
+      </a>
+
+      <a href="/financeiro.html" class="card btn-clean">
+        <h2 class="card-title">💰 Financeiro</h2>
+        <p class="text-muted">Fluxo de caixa consolidado</p>
+      </a>
+    </div>
 
   </main>
+</div>
 
-  <script src="/js/app.js"></script>
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>
