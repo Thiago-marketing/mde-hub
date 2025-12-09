@@ -1,9 +1,130 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Dashboard</title>
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="/css/app.css" />
 </head>
-<body></body>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="logo-mark">M</span>
+      <span class="logo-text">MDE Hub</span>
+    </div>
+
+    <nav class="menu">
+      <a href="/dashboard.html" class="active">📊 Dashboard</a>
+      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">📅 Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a href="/simuladores.html">🧮 Simuladores</a>
+
+      <div class="menu-divider"></div>
+
+      <a href="/crm.html" class="disabled-item">
+        🌀 CRM Hoteleiro <span class="tag-soon">Em breve</span>
+      </a>
+
+      <a href="/proposta.html" class="disabled-item">
+        🧾 Proposta Hoteleira IA <span class="tag-soon">Em breve</span>
+      </a>
+
+      <div class="menu-divider"></div>
+
+      <a id="btnLogout">🚪 Sair</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1>Dashboard</h1>
+      </div>
+
+      <div class="topbar-right">
+        <button id="themeToggle" class="theme-btn">🌓</button>
+        <div class="user-box">
+          <span id="userInitial">U</span>
+          <div>
+            <p id="userName">Carregando...</p>
+            <small id="userEmail"></small>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD GRID -->
+    <section class="grid">
+
+      <!-- CARD 1 -->
+      <div class="card">
+        <h3>Ocupação Atual</h3>
+        <p class="value" id="occNow">--%</p>
+        <small>Atualizado em tempo real</small>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="card">
+        <h3>Entradas Hoje</h3>
+        <p class="value" id="checkinsToday">--</p>
+        <small>Hóspedes realizando check-in</small>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="card">
+        <h3>Saídas Hoje</h3>
+        <p class="value" id="checkoutsToday">--</p>
+        <small>Hóspedes realizando check-out</small>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="card">
+        <h3>Receita do Dia</h3>
+        <p class="value" id="revenueToday">R$ --</p>
+        <small>Entradas no financeiro</small>
+      </div>
+
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="panel">
+      <h2>Resumo Operacional</h2>
+
+      <div class="panel-grid">
+
+        <!-- LEFT -->
+        <div class="panel-box">
+          <h3>Próximos Check-ins</h3>
+          <ul class="list" id="nextCheckins">
+            <li>Carregando...</li>
+          </ul>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="panel-box">
+          <h3>Próximos Check-outs</h3>
+          <ul class="list" id="nextCheckouts">
+            <li>Carregando...</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JS -->
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
+
+</body>
 </html>
