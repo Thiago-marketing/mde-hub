@@ -3,199 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CRM Hoteleiro • Dashboard</title>
+  <title>MDE Hub • CRM Dashboard</title>
 
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body class="page">
+<body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <span class="logo-mark">M</span>
-      <span class="logo-text">Web MDE</span>
+<!-- BOTÃO DO MENU MOBILE -->
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR DINÂMICA -->
+<div id="sidebar-container"></div>
+
+<!-- ÁREA PRINCIPAL -->
+<main class="main-area">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">📊 Dashboard do CRM</h1>
+      <p class="page-subtitle">Indicadores de performance comercial do hotel</p>
     </div>
 
-    <nav class="menu">
+    <div class="topbar-right">
+      <select id="hotelSelect"></select>
+      <button id="btnThemeToggle">🌓</button>
+      <div class="user-badge" id="userMini">U</div>
+    </div>
+  </header>
 
-      <div class="menu-section">
-        <p class="menu-title">CRM</p>
-        <a href="/crm-dashboard.html" class="active strong">📊 Dashboard</a>
-        <a href="/crm-kanban.html">🗂 Funil Kanban</a>
-        <a href="/crm.html">📁 Leads</a>
-        <a href="/crm-propostas.html">📄 Propostas</a>
-        <a href="/crm-atividades.html">📝 Atividades</a>
-        <a href="/crm-contatos.html">👥 Contatos</a>
-      </div>
+  <!-- GRID DE INDICADORES -->
+  <section class="grid">
 
-      <div class="menu-section">
-        <p class="menu-title">Ferramentas</p>
-        <a href="/simuladores.html">🧮 Simuladores</a>
-      </div>
+    <div class="card">
+      <div class="card-title">Leads no mês</div>
+      <div class="card-value" id="crm_leads_mes">--</div>
+      <div class="card-desc">Total capturado no CRM</div>
+    </div>
 
-      <div class="menu-section">
-        <p class="menu-title">Sistema</p>
-        <a href="/crm-config.html">⚙️ Configurações</a>
-        <a href="/logout.html" class="logout">🚪 Sair</a>
-      </div>
+    <div class="card">
+      <div class="card-title">Taxa de Conversão</div>
+      <div class="card-value" id="crm_conversao">--%</div>
+      <div class="card-desc">Leads que viraram reservas</div>
+    </div>
 
-    </nav>
-  </aside>
+    <div class="card">
+      <div class="card-title">Propostas enviadas</div>
+      <div class="card-value" id="crm_propostas_enviadas">--</div>
+      <div class="card-desc">Total no período</div>
+    </div>
 
-  <!-- MAIN AREA -->
-  <main class="main-area">
+    <div class="card">
+      <div class="card-title">Propostas aceitas</div>
+      <div class="card-value" id="crm_propostas_aceitas">--</div>
+      <div class="card-desc">Conversões efetivas</div>
+    </div>
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <button id="btnSidebar" class="btn-icon">☰</button>
+  </section>
 
-      <div class="topbar-title">
-        <h1>Dashboard do CRM</h1>
-        <p>Indicadores de performance comercial do hotel</p>
-      </div>
+  <!-- GRÁFICOS -->
+  <section class="grid">
 
-      <div class="topbar-actions">
-        <select id="hotelSelect"></select>
-        <button id="btnThemeToggle" class="btn-icon">🌓</button>
-        <div class="user-mini"><span id="userMini">U</span></div>
-      </div>
-    </header>
+    <div class="card">
+      <div class="card-title">Leads por Etapa</div>
+      <div id="graf_leads_etapas" class="chart-placeholder">Gráfico aqui…</div>
+    </div>
 
-    <!-- DASHBOARD GRID -->
-    <section class="grid">
+    <div class="card">
+      <div class="card-title">Propostas por Status</div>
+      <div id="graf_propostas" class="chart-placeholder">Gráfico aqui…</div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">Leads no mês</div>
-        <div class="card-value" id="crm_leads_mes">--</div>
-        <p class="card-desc">Total capturado no CRM</p>
-      </div>
+  </section>
 
-      <div class="card">
-        <div class="card-title">Taxa de Conversão</div>
-        <div class="card-value" id="crm_conversao">--%</div>
-        <p class="card-desc">Leads que viraram reservas</p>
-      </div>
+  <!-- ATIVIDADES RECENTES -->
+  <section class="card">
+    <div class="card-title">Atividades Recentes</div>
 
-      <div class="card">
-        <div class="card-title">Propostas enviadas</div>
-        <div class="card-value" id="crm_propostas_enviadas">--</div>
-        <p class="card-desc">Total no período</p>
-      </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Lead</th>
+          <th>Ação</th>
+          <th>Descrição</th>
+          <th>Quando</th>
+        </tr>
+      </thead>
 
-      <div class="card">
-        <div class="card-title">Propostas aceitas</div>
-        <div class="card-value" id="crm_propostas_aceitas">--</div>
-        <p class="card-desc">Conversões efetivas</p>
-      </div>
+      <tbody id="crm_atividades_list">
+        <tr><td colspan="4">Carregando atividades...</td></tr>
+      </tbody>
+    </table>
+  </section>
 
-    </section>
+</main>
 
-    <!-- GRÁFICOS -->
-    <section class="grid">
+<!-- JS -->
+<script type="module">
+  import { supabase } from "/js/supabase.js";
 
-      <div class="card">
-        <div class="card-title">Leads por Etapa</div>
-        <div id="graf_leads_etapas" class="chart-placeholder">Gráfico aqui...</div>
-      </div>
+  async function carregarDashboardCRM() {
+    const hotelId = sessionStorage.getItem("hotel_id");
 
-      <div class="card">
-        <div class="card-title">Propostas por Status</div>
-        <div id="graf_propostas" class="chart-placeholder">Gráfico aqui...</div>
-      </div>
+    // LEADS DO MÊS
+    const { data: leadsMes } = await supabase
+      .from("leads")
+      .select("id")
+      .eq("hotel_id", hotelId)
+      .gte("created_at", new Date().toISOString().slice(0, 7) + "-01");
 
-    </section>
+    document.getElementById("crm_leads_mes").innerText = leadsMes?.length ?? 0;
 
-    <!-- LISTA DE ATIVIDADES RECENTES -->
-    <section class="card">
-      <div class="card-title">Atividades Recentes</div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Lead</th>
-            <th>Ação</th>
-            <th>Descrição</th>
-            <th>Quando</th>
-          </tr>
-        </thead>
-        <tbody id="crm_atividades_list">
-          <tr><td colspan="4">Carregando atividades...</td></tr>
-        </tbody>
-      </table>
-    </section>
+    // TAXA DE CONVERSÃO
+    const { data: ganhos } = await supabase
+      .from("leads")
+      .select("id")
+      .eq("hotel_id", hotelId)
+      .eq("etapa", "ganho");
 
-  </main>
+    const conversao = leadsMes?.length
+      ? Math.round((ganhos.length / leadsMes.length) * 100)
+      : 0;
 
-  <!-- JS -->
-  <script type="module">
-    import { supabase } from "/js/supabase.js";
-    import {
-      carregarPropostasLead,
-      carregarMapaPropostasPorLead
-    } from "/js/crm.js";
+    document.getElementById("crm_conversao").innerText = conversao + "%";
 
-    async function carregarDashboardCRM() {
-      const hotelId = sessionStorage.getItem("hotel_id");
+    // PROPOSTAS ENVIADAS
+    const { data: propostas } = await supabase
+      .from("propostas")
+      .select("id, status")
+      .eq("hotel_id", hotelId);
 
-      // Carrega leads do mês
-      const { data: leadsMes } = await supabase
-        .from("leads")
-        .select("id")
-        .eq("hotel_id", hotelId)
-        .gte("created_at", new Date().toISOString().slice(0, 7) + "-01");
+    document.getElementById("crm_propostas_enviadas").innerText =
+      propostas?.length ?? 0;
 
-      document.getElementById("crm_leads_mes").innerText = leadsMes?.length ?? 0;
+    // PROPOSTAS ACEITAS
+    const aceitas = propostas?.filter(p => p.status === "aceita").length ?? 0;
+    document.getElementById("crm_propostas_aceitas").innerText = aceitas;
 
-      // Taxa de conversão
-      const { data: ganhos } = await supabase
-        .from("leads")
-        .select("id")
-        .eq("hotel_id", hotelId)
-        .eq("etapa", "ganho");
+    // ATIVIDADES RECENTES
+    const { data: atividades } = await supabase
+      .from("atividades")
+      .select("*, leads(nome)")
+      .eq("hotel_id", hotelId)
+      .order("created_at", { ascending: false })
+      .limit(20);
 
-      const conversao = leadsMes?.length
-        ? Math.round((ganhos.length / leadsMes.length) * 100)
-        : 0;
+    const tbody = document.getElementById("crm_atividades_list");
+    tbody.innerHTML = "";
 
-      document.getElementById("crm_conversao").innerText = conversao + "%";
+    atividades?.forEach(a => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${a.leads?.nome ?? "--"}</td>
+          <td>${a.tipo}</td>
+          <td>${a.descricao}</td>
+          <td>${new Date(a.created_at).toLocaleString("pt-BR")}</td>
+        </tr>
+      `;
+    });
+  }
 
-      // Propostas enviadas
-      const { data: propostas } = await supabase
-        .from("propostas")
-        .select("id, status")
-        .eq("hotel_id", hotelId);
+  carregarDashboardCRM();
+</script>
 
-      document.getElementById("crm_propostas_enviadas").innerText = propostas?.length ?? 0;
-
-      // Propostas aceitas
-      const aceitas = propostas?.filter(p => p.status === "aceita").length ?? 0;
-      document.getElementById("crm_propostas_aceitas").innerText = aceitas;
-
-      // Atividades recentes
-      const { data: atividades } = await supabase
-        .from("atividades")
-        .select("*, leads(nome)")
-        .eq("hotel_id", hotelId)
-        .order("created_at", { ascending: false })
-        .limit(20);
-
-      const tbody = document.getElementById("crm_atividades_list");
-      tbody.innerHTML = "";
-
-      atividades?.forEach(a => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${a.leads?.nome ?? "--"}</td>
-            <td>${a.tipo}</td>
-            <td>${a.descricao}</td>
-            <td>${new Date(a.created_at).toLocaleString("pt-BR")}</td>
-          </tr>
-        `;
-      });
-    }
-
-    carregarDashboardCRM();
-  </script>
+<!-- IMPORTAÇÃO SIDEBAR -->
+<script>
+  fetch("/partials/sidebar.html")
+    .then(r => r.text())
+    .then(html => {
+      document.querySelector("#sidebar-container").innerHTML = html;
+    });
+</script>
 
 </body>
 </html>
