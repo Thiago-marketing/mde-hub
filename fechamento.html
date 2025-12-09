@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Fechamento de Caixa</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+</head>
+
+<body>
+
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div class="logo">
+      <span class="logo-avatar">M</span>
+      <div class="logo-text">
+        <strong>Web MDE</strong>
+        <span>Painel Gerencial</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <a href="/index.html" class="nav-item">🏠 Início</a>
+      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Operação</div>
+      <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa de UHs</a>
+      <a href="/fechamento.html" class="nav-item active">🧾 Fechamento de Caixa</a>
+      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Financeiro & Vendas</div>
+      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+      <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+      <a class="nav-item disabled">📘 CRM Hoteleiro (em breve)</a>
+      <a class="nav-item disabled">📄 Proposta Hoteleira (em breve)</a>
+    </div>
+
+    <div class="nav-section nav-exit">
+      <a href="/logout.html" class="nav-item">🚪 Sair</a>
+    </div>
+  </div>
+
+  <!-- MAIN AREA -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Fechamento de Caixa</h1>
+        <p class="page-subtitle">Resumo financeiro do dia, movimentos e formas de pagamento</p>
+      </div>
+
+      <div class="topbar-right">
+        <div class="hotel-select-wrapper">
+          <span class="label">Hotel</span>
+          <select id="hotelSelector">
+            <option>Carregando...</option>
+          </select>
+        </div>
+
+        <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+
+        <div class="user-pill">
+          <div class="user-avatar">H</div>
+          <div class="user-info">
+            <span class="user-name">Hotel Exemplo</span>
+            <span class="user-email">contato@hotelexemplo.com</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <section class="content-section">
+
+      <!-- LINHA 1 — RESUMO PRINCIPAL -->
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">Total Recebido (Hoje)</div>
+          <div class="card-value" id="fc_totalRecebido">R$ --</div>
+          <div class="card-desc">Soma de todas as entradas do dia</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Total Pago (Hoje)</div>
+          <div class="card-value" id="fc_totalPago">R$ --</div>
+          <div class="card-desc">Contas e despesas quitadas</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Saldo Final do Dia</div>
+          <div class="card-value" id="fc_saldoFinal">R$ --</div>
+          <div class="card-desc">Entradas - Saídas</div>
+        </div>
+      </div>
+
+      <!-- LINHA 2 — FORMAS DE PAGAMENTO -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Formas de Pagamento</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Método</th>
+                <th>Valor</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody id="fc_metodos">
+              <tr><td colspan="3">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Resumo por Centro de Custo</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Centro</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody id="fc_centros">
+              <tr><td colspan="2">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- LINHA 3 — MOVIMENTAÇÕES DO DIA -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Movimentações do Caixa</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Hora</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody id="fc_movimentos">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- LINHA 4 — RESUMO FINAL -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Resumo Final do Fechamento</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody id="fc_resumoFinal">
+              <tr><td colspan="2">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</body>
+</html>
