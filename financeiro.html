@@ -11,33 +11,36 @@
 
 <body>
 
-  <!-- BOTÃO MOBILE -->
   <div id="btnSidebarToggle">☰</div>
 
-  <!-- SIDEBAR OFICIAL -->
+  <!-- SIDEBAR -->
   <div id="sidebar">
-    <div class="logo">🏨 MDE Hub</div>
+    <div class="logo">
+      <span class="logo-avatar">M</span>
+      <div class="logo-text">
+        <strong>Web MDE</strong>
+        <span>Painel Gerencial</span>
+      </div>
+    </div>
 
     <div class="nav-section">
       <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
       <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-      <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
     </div>
 
     <div class="nav-section">
-      <div class="nav-title">Financeiro</div>
+      <div class="nav-title">Operação</div>
+      <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa de UHs</a>
+      <a href="/fechamento.html" class="nav-item">🧾 Fechamento de Caixa</a>
+      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Financeiro & Vendas</div>
       <a href="/financeiro.html" class="nav-item active">💰 Financeiro</a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-title">Simuladores</div>
       <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-title">CRM Hoteleiro</div>
-      <a href="#" class="nav-item disabled">📘 Em breve</a>
-      <a href="#" class="nav-item disabled">📄 Proposta Hoteleira</a>
+      <a class="nav-item disabled">📘 CRM Hoteleiro (em breve)</a>
+      <a class="nav-item disabled">📄 Proposta Hoteleira (em breve)</a>
     </div>
 
     <div class="nav-section nav-exit">
@@ -48,73 +51,93 @@
   <!-- MAIN -->
   <div class="main">
 
-    <!-- TOPBAR OFICIAL -->
-    <div class="topbar">
-      <button id="btnThemeToggle">🌓</button>
-      <div class="user-badge" id="userInitial">U</div>
-    </div>
-
-    <!-- TÍTULO -->
-    <h1 class="page-title">Financeiro</h1>
-    <p class="page-subtitle">Fluxos financeiros consolidados do hotel</p>
-
-    <!-- CARDS FINANCEIROS -->
-    <div class="grid">
-
-      <div class="card">
-        <div class="card-title">Entradas (Hoje)</div>
-        <div class="card-value" id="f_entradas">R$ --</div>
-        <div class="card-desc">Recebimentos totais</div>
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Financeiro</h1>
+        <p class="page-subtitle">Fluxos financeiros consolidados do hotel</p>
       </div>
 
-      <div class="card">
-        <div class="card-title">Saídas (Hoje)</div>
-        <div class="card-value" id="f_saidas">R$ --</div>
-        <div class="card-desc">Pagamentos realizados</div>
+      <div class="topbar-right">
+        <div class="hotel-select-wrapper">
+          <span class="label">Hotel</span>
+          <select id="hotelSelector">
+            <option>Carregando...</option>
+          </select>
+        </div>
+
+        <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+
+        <div class="user-pill">
+          <div class="user-avatar">H</div>
+          <div class="user-info">
+            <span class="user-name">Hotel Exemplo</span>
+            <span class="user-email">contato@hotelexemplo.com</span>
+          </div>
+        </div>
       </div>
+    </header>
 
-      <div class="card">
-        <div class="card-title">Saldo do Dia</div>
-        <div class="card-value" id="f_saldo">R$ --</div>
-        <div class="card-desc">Entradas - Saídas</div>
-      </div>
+    <!-- CARDS -->
+    <section class="content-section">
 
-    </div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">Entradas (Hoje)</div>
+          <div class="card-value" id="f_entradas">R$ --</div>
+          <div class="card-desc">Recebimentos totais</div>
+        </div>
 
-    <!-- MOVIMENTAÇÕES + GRÁFICO -->
-    <div class="grid">
+        <div class="card">
+          <div class="card-title">Saídas (Hoje)</div>
+          <div class="card-value" id="f_saidas">R$ --</div>
+          <div class="card-desc">Pagamentos realizados</div>
+        </div>
 
-      <div class="card">
-        <div class="card-title">Movimentações do Dia</div>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Hora</th>
-              <th>Tipo</th>
-              <th>Descrição</th>
-              <th>Valor</th>
-            </tr>
-          </thead>
-          <tbody id="f_mov">
-            <tr><td colspan="4">Carregando...</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Tendência Financeira</div>
-        <div class="chart-placeholder" id="f_grafico">
-          Gráfico aqui...
+        <div class="card">
+          <div class="card-title">Saldo do Dia</div>
+          <div class="card-value" id="f_saldo">R$ --</div>
+          <div class="card-desc">Entradas - Saídas</div>
         </div>
       </div>
 
-    </div>
+      <!-- MÉTODOS DE RECEBIMENTO -->
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">Formas de Recebimento</div>
+          <table class="table">
+            <thead><tr><th>Método</th><th>Valor</th><th>%</th></tr></thead>
+            <tbody id="f_metodos">
+              <tr><td colspan="3">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
 
-  </div> <!-- fim main -->
+        <div class="card">
+          <div class="card-title">Totais do Período</div>
+          <table class="table">
+            <thead><tr><th>Descrição</th><th>Valor</th></tr></thead>
+            <tbody id="f_totais">
+              <tr><td colspan="2">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-  <!-- Se quiser manter o Supabase -->
-  <script type="module" src="/js/supabase.js"></script>
+      <!-- MOVIMENTAÇÕES -->
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">Movimentações do Dia</div>
+          <table class="table">
+            <thead><tr><th>Hora</th><th>Tipo</th><th>Descrição</th><th>Valor</th></tr></thead>
+            <tbody id="f_mov">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </div>
 
 </body>
 </html>
