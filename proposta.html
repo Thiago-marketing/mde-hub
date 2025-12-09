@@ -1,101 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MDE Hub • Proposta Hoteleira IA</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <link rel="stylesheet" href="/css/app.css">
 </head>
+
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <!-- mesma sidebar -->
-    </aside>
+<div class="layout">
 
-    <div class="main-area">
-      <header class="topbar">
-        <div class="topbar-breadcrumb">
-          <span class="crumb-section">MDE Hub</span>
-          <span class="crumb-separator">•</span>
-          <span class="crumb-page">Proposta Hoteleira (IA)</span>
-        </div>
-        <div class="topbar-actions">
-          <button class="chip ghost" id="themeToggle">
-            <span class="chip-dot"></span>
-            Tema
-          </button>
-          <div class="env-pill">
-            <span class="env-label">Fase</span>
-            <span class="env-value">3 • PropostaIA</span>
-          </div>
-          <div class="user-pill">
-            <div class="user-avatar">BR</div>
-            <div class="user-meta">
-              <span class="user-name">Bruno</span>
-              <span class="user-role">Diretoria</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main class="content">
-        <section class="page-header">
-          <h1>Proposta Hoteleira — IA</h1>
-          <p>
-            Módulo focado em criar propostas inteligentes, bonitas e vendedoras, conectadas ao
-            CRM, simuladores e reservas diretas.
-          </p>
-        </section>
-
-        <section class="section">
-          <div class="card attention-banner">
-            <h2>Módulo em desenvolvimento</h2>
-            <p>
-              Esta é uma <strong>pré-visualização</strong> do que será o PropostaIA
-              dentro do Hub MDE. Ideal para apresentar visão de produto e aprovar roadmap.
-            </p>
-          </div>
-        </section>
-
-        <div class="grid-2">
-          <section class="section">
-            <div class="section-header">
-              <h2>Estrutura da proposta</h2>
-            </div>
-            <div class="card">
-              <ul class="bullet-list">
-                <li>Resumo da oferta com storytelling do hotel.</li>
-                <li>Comparação de planos (ex.: Standard, Luxo, Experiência Romântica).</li>
-                <li>Benefícios exclusivos para reservas diretas.</li>
-                <li>Bloco de preço claro e objetivo (sem “pegadinha”).</li>
-                <li>CTA com link para confirmação imediata.</li>
-              </ul>
-            </div>
-          </section>
-
-          <section class="section">
-            <div class="section-header">
-              <h2>IA a favor da conversão</h2>
-            </div>
-            <div class="card">
-              <p>A PropostaIA deverá:</p>
-              <ul class="bullet-list">
-                <li>Gerar texto sob medida para o perfil do hóspede.</li>
-                <li>Adaptar o tom (família, casal, corporativo, grupo).</li>
-                <li>Recomendar upgrades e experiências adicionais.</li>
-                <li>Registrar abertura, cliques e conversão da proposta.</li>
-              </ul>
-              <p class="card-note">
-                Até entrar em produção, esta tela serve como referência visual e funcional para
-                o escopo do módulo.
-              </p>
-            </div>
-          </section>
-        </div>
-      </main>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="avatar">M</div>
+      <span>MDE Hub</span>
     </div>
-  </div>
 
-  <script src="/js/app.js"></script>
+    <nav class="sidebar-menu">
+      <a href="/dashboard.html">📊 Dashboard</a>
+      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">🔑 Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a href="/simuladores.html">📐 Simuladores</a>
+      <a href="/crm.html">📘 CRM Hoteleiro</a>
+      <a class="active">📄 Proposta IA</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a id="logoutBtn">🚪 Sair</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="top-right">
+      <select class="hotel-select"><option>Carregando hotéis...</option></select>
+      <div class="user-badge">U</div>
+    </div>
+
+    <h1>Proposta Hoteleira IA <span class="tag">Em construção</span></h1>
+    <p class="content-subtitle">
+      Geração de propostas inteligentes, personalizadas e focadas em conversão.
+    </p>
+
+    <div class="card">
+      <div class="card-title">Visão do módulo</div>
+      <p class="text-muted">
+        Este módulo será responsável por criar propostas com storytelling, gatilhos
+        emocionais e cross-selling automático, conectadas ao CRM Hoteleiro.
+      </p>
+
+      <ul class="feature-list">
+        <li>Modelos de proposta por tipo de hotel e cenário</li>
+        <li>Simulação de preços com base em ADR, ocupação e margem</li>
+        <li>Landing de proposta com link rastreável para o hóspede</li>
+        <li>Acompanhamento de abertura, cliques e resposta</li>
+      </ul>
+
+      <p class="text-muted">
+        No momento, a tela existe apenas como <strong>preview interno</strong> da Fase 3.
+      </p>
+    </div>
+
+  </main>
+
+</div>
+
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>
