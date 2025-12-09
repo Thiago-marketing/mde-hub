@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Estoque</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+</head>
+
+<body>
+
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div class="logo">
+      <span class="logo-avatar">M</span>
+      <div class="logo-text">
+        <strong>Web MDE</strong>
+        <span>Painel Gerencial</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <a href="/index.html" class="nav-item">🏠 Início</a>
+      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Operação</div>
+      <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa de UHs</a>
+      <a href="/fechamento.html" class="nav-item">🧾 Fechamento de Caixa</a>
+      <a href="/estoque.html" class="nav-item active">📦 Estoque</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">Financeiro & Vendas</div>
+      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+      <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+      <a class="nav-item disabled">📘 CRM Hoteleiro (em breve)</a>
+      <a class="nav-item disabled">📄 Proposta Hoteleira (em breve)</a>
+    </div>
+
+    <div class="nav-section nav-exit">
+      <a href="/logout.html" class="nav-item">🚪 Sair</a>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Estoque</h1>
+        <p class="page-subtitle">Níveis de estoque, itens críticos e movimentações</p>
+      </div>
+
+      <div class="topbar-right">
+        <div class="hotel-select-wrapper">
+          <span class="label">Hotel</span>
+          <select id="hotelSelector">
+            <option>Carregando...</option>
+          </select>
+        </div>
+
+        <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+
+        <div class="user-pill">
+          <div class="user-avatar">H</div>
+          <div class="user-info">
+            <span class="user-name">Hotel Exemplo</span>
+            <span class="user-email">contato@hotelexemplo.com</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <section class="content-section">
+
+      <!-- CARDS RESUMO -->
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-title">Itens em Estoque</div>
+          <div class="card-value" id="est_total">--</div>
+          <div class="card-desc">Quantidade total de itens cadastrados</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Itens Abaixo do Mínimo</div>
+          <div class="card-value" id="est_criticos">--</div>
+          <div class="card-desc">Itens que precisam de reposição urgente</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Rupturas (Zerados)</div>
+          <div class="card-value" id="est_zerados">--</div>
+          <div class="card-desc">Itens completamente sem estoque</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Giro do Estoque</div>
+          <div class="card-value" id="est_giro">--</div>
+          <div class="card-desc">Consumo médio dos últimos 30 dias</div>
+        </div>
+
+      </div>
+
+      <!-- LINHA 2: Tabelas principais -->
+      <div class="grid">
+
+        <!-- TABELA - ESTOQUE ATUAL -->
+        <div class="card">
+          <div class="card-title">Estoque Atual</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantidade</th>
+                <th>Mínimo</th>
+                <th>Categoria</th>
+              </tr>
+            </thead>
+            <tbody id="est_lista">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- TABELA - ITENS CRÍTICOS -->
+        <div class="card">
+          <div class="card-title">Itens Abaixo do Mínimo</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qtd</th>
+                <th>Mínimo</th>
+                <th>Reposição</th>
+              </tr>
+            </thead>
+            <tbody id="est_minimos">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- LINHA 3: Movimentações -->
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">Últimas Movimentações</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Item</th>
+                <th>Qtd</th>
+                <th>Responsável</th>
+              </tr>
+            </thead>
+            <tbody id="est_mov">
+              <tr><td colspan="5">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+</body>
+</html>
