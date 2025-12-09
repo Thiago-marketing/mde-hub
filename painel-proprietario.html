@@ -3,338 +3,148 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Painel do Proprietário</title>
+  <title>Painel do Proprietário • MDE Hub</title>
   <link rel="stylesheet" href="/css/app.css" />
 </head>
+
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <div class="logo-mark">M</div>
-        <div class="logo-text">
-          <span class="logo-title">MDE Hub</span>
-          <span class="logo-subtitle">Plataforma em nuvem</span>
-        </div>
-      </div>
 
-      <nav class="sidebar-nav">
-        <p class="nav-label">Navegação</p>
-        <a href="/index.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Início / Painel Geral
-        </a>
-        <a href="/painel-proprietario.html" class="nav-link active">
-          <span class="nav-dot"></span>
-          Painel do Proprietário
-        </a>
-        <a href="/financeiro.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Financeiro
-        </a>
-        <a href="/reservas.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Reservas
-        </a>
-        <a href="/crm.html" class="nav-link">
-          <span class="nav-dot"></span>
-          CRM Hoteleiro
-        </a>
-        <a href="/proposta.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Proposta Hoteleira (IA)
-        </a>
-
-        <p class="nav-label">Simuladores MDE</p>
-        <a href="/simulador-revpar.html" class="nav-link">
-          <span class="nav-dot"></span>
-          RevPAR
-        </a>
-        <a href="/simulador-adr.html" class="nav-link">
-          <span class="nav-dot"></span>
-          ADR
-        </a>
-        <a href="/simulador-diarias.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Diárias necessárias
-        </a>
-        <a href="/simulador-ocupacao.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Ocupação
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <p class="sidebar-env">
-          Painel do Proprietário – (Solução WebMDE)
-        </p>
-      </div>
-    </aside>
-
-    <div class="main-area">
-      <header class="topbar">
-        <div class="topbar-breadcrumb">
-          <span class="crumb-section">MDE Hub</span>
-          <span class="crumb-separator">•</span>
-          <span class="crumb-page">Painel do Proprietário</span>
-        </div>
-
-        <div class="topbar-actions">
-          <button class="chip ghost" id="themeToggle">
-            <span class="chip-dot"></span>
-            Tema
-          </button>
-          <div class="env-pill">
-            <span class="env-label">Ambiente</span>
-            <span class="env-value">Demo</span>
-          </div>
-          <div class="user-pill">
-            <div class="user-avatar">BR</div>
-            <div class="user-meta">
-              <span class="user-name">Bruno</span>
-              <span class="user-role">Diretoria</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main class="content">
-        <section class="page-header">
-          <h1>Painel do Proprietário</h1>
-          <p>
-            Visão consolidada para donos e gestores: caixa, ocupação, reservas, estoque e previsão
-            dos próximos dias em um único painel.
-          </p>
-        </section>
-
-        <!-- KPIs do Proprietário -->
-        <section class="section">
-          <div class="kpi-grid">
-            <article class="card kpi-card">
-              <header>
-                <p class="kpi-label">Caixa do dia</p>
-              </header>
-              <p class="kpi-value">R$ 18.420</p>
-              <p class="kpi-meta">Entradas líquidas de hoje (hóspedes + extras).</p>
-            </article>
-
-            <article class="card kpi-card">
-              <header>
-                <p class="kpi-label">Previsão próximos 7 dias</p>
-              </header>
-              <p class="kpi-value">R$ 96.800</p>
-              <p class="kpi-meta">Somando reservas confirmadas no período.</p>
-            </article>
-
-            <article class="card kpi-card">
-              <header>
-                <p class="kpi-label">Ocupação hoje</p>
-              </header>
-              <p class="kpi-value">74%</p>
-              <p class="kpi-meta">Comparativo com capacidade total do hotel.</p>
-            </article>
-
-            <article class="card kpi-card">
-              <header>
-                <p class="kpi-label">Itens de estoque sensível</p>
-              </header>
-              <p class="kpi-value">5 itens</p>
-              <p class="kpi-meta">Itens abaixo do nível mínimo recomendado.</p>
-            </article>
-          </div>
-        </section>
-
-        <!-- GRID PRINCIPAL -->
-        <div class="grid-2">
-          <!-- Mapa de UHs -->
-          <section class="section">
-            <div class="section-header">
-              <h2>Mapa rápido de UHs</h2>
-              <p class="section-subtitle">
-                Resumo da situação atual dos apartamentos, agrupados por tipo.
-              </p>
-            </div>
-
-            <div class="card table-card">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Tipo de UH</th>
-                    <th>Disponíveis</th>
-                    <th>Ocupadas</th>
-                    <th>Manutenção</th>
-                    <th>Ocupação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Standard</td>
-                    <td>12</td>
-                    <td>18</td>
-                    <td>1</td>
-                    <td>60%</td>
-                  </tr>
-                  <tr>
-                    <td>Luxo</td>
-                    <td>4</td>
-                    <td>10</td>
-                    <td>0</td>
-                    <td>71%</td>
-                  </tr>
-                  <tr>
-                    <td>Master</td>
-                    <td>1</td>
-                    <td>5</td>
-                    <td>0</td>
-                    <td>83%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!-- Chegadas / Saídas -->
-          <section class="section">
-            <div class="section-header">
-              <h2>Chegadas e saídas</h2>
-              <p class="section-subtitle">
-                Próximos movimentos que impactam limpeza, recepção e caixa.
-              </p>
-            </div>
-
-            <div class="card table-card">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Data</th>
-                    <th>Movimento</th>
-                    <th>Reservas</th>
-                    <th>Hóspedes previstos</th>
-                    <th>Impacto</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Hoje</td>
-                    <td>Check-ins</td>
-                    <td>9</td>
-                    <td>24</td>
-                    <td><span class="status-pill status-in-progress">alto fluxo</span></td>
-                  </tr>
-                  <tr>
-                    <td>Hoje</td>
-                    <td>Check-outs</td>
-                    <td>7</td>
-                    <td>19</td>
-                    <td><span class="status-pill status-planned">organizar limpeza</span></td>
-                  </tr>
-                  <tr>
-                    <td>Amanhã</td>
-                    <td>Check-ins</td>
-                    <td>11</td>
-                    <td>31</td>
-                    <td><span class="status-pill status-warning">atenção recepção</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
-
-        <!-- ESTOQUE + FINANCEIRO RÁPIDO -->
-        <div class="grid-2">
-          <!-- Estoque -->
-          <section class="section">
-            <div class="section-header">
-              <h2>Estoque e consumo</h2>
-              <p class="section-subtitle">
-                Visão dos principais itens ligados à experiência do hóspede.
-              </p>
-            </div>
-
-            <div class="card table-card">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Item</th>
-                    <th>Estoque atual</th>
-                    <th>Mínimo</th>
-                    <th>Consumo médio</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Café em pó</td>
-                    <td>18 kg</td>
-                    <td>20 kg</td>
-                    <td>3 kg / semana</td>
-                    <td><span class="status-pill status-warning">repor em breve</span></td>
-                  </tr>
-                  <tr>
-                    <td>Pães especiais</td>
-                    <td>140 un.</td>
-                    <td>120 un.</td>
-                    <td>80 un. / dia</td>
-                    <td><span class="status-pill status-ok">dentro da meta</span></td>
-                  </tr>
-                  <tr>
-                    <td>Enxoval (jogos de lençol)</td>
-                    <td>62 jogos</td>
-                    <td>60 jogos</td>
-                    <td>14 trocas / dia</td>
-                    <td><span class="status-pill status-ok">ok</span></td>
-                  </tr>
-                  <tr>
-                    <td>Amenities (kit banho)</td>
-                    <td>90 kits</td>
-                    <td>150 kits</td>
-                    <td>40 kits / dia</td>
-                    <td><span class="status-pill status-critical">crítico</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!-- Resumo financeiro -->
-          <section class="section">
-            <div class="section-header">
-              <h2>Resumo financeiro rápido</h2>
-              <p class="section-subtitle">
-                Indicadores enxutos para decisão diária do proprietário.
-              </p>
-            </div>
-
-            <div class="card">
-              <ul class="stats-list">
-                <li>
-                  <span class="stats-label">Receita hospedagem (mês)</span>
-                  <span class="stats-value">R$ 328.900</span>
-                </li>
-                <li>
-                  <span class="stats-label">Receita extras (mês)</span>
-                  <span class="stats-value">R$ 42.300</span>
-                </li>
-                <li>
-                  <span class="stats-label">Despesas registradas</span>
-                  <span class="stats-value negative">R$ 189.700</span>
-                </li>
-                <li>
-                  <span class="stats-label">Resultado parcial do mês</span>
-                  <span class="stats-value positive">R$ 181.500</span>
-                </li>
-              </ul>
-              <p class="card-note">
-                *Valores demonstrativos. Na integração real, estes dados virão do Letoh/Letom via
-                Acumulador Hub Windows.
-              </p>
-            </div>
-          </section>
-        </div>
-      </main>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">M</div>
+      <span>MDE Hub</span>
     </div>
-  </div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html">📊 Dashboard</a>
+      <a href="reservas.html">🛎 Reservas</a>
+      <a href="financeiro.html">💰 Financeiro</a>
+      <a href="simuladores.html">🧮 Simuladores</a>
+
+      <div class="sidebar-divider"></div>
+
+      <a href="crm.html" class="disabled">🚀 CRM Hoteleiro 5.0 • Em breve</a>
+      <a href="proposta.html" class="disabled">🧠 Proposta IA • Em breve</a>
+
+      <div class="sidebar-divider"></div>
+
+      <a href="#" id="logoutBtn" class="logout">Sair</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div>
+        <div class="topbar-title">Painel do Proprietário</div>
+        <div class="topbar-sub">Indicadores gerais do hotel em tempo real</div>
+      </div>
+
+      <div class="topbar-right">
+        <select id="hotelSelector">
+          <option>Hotel Central</option>
+        </select>
+
+        <div class="user-box">
+          <div class="user-initial" id="userInitial">U</div>
+          <span id="userName">Carregando...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD GRID -->
+    <section class="dashboard-grid">
+
+      <div class="card">
+        <div class="card-title">Ocupação</div>
+        <div class="card-value" id="ocupacao">--%</div>
+        <div class="card-desc">Atualizado automaticamente</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Receita Total (Hoje)</div>
+        <div class="card-value" id="receitaHoje">R$ --</div>
+        <div class="card-desc">Hospedagem + Extras</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Check-ins Previstos</div>
+        <div class="card-value" id="checkinsPrevistos">--</div>
+        <div class="card-desc">Para hoje</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Check-outs Previstos</div>
+        <div class="card-value" id="checkoutsPrevistos">--</div>
+        <div class="card-desc">Para hoje</div>
+      </div>
+
+    </section>
+
+
+    <!-- PAINÉIS DE GRÁFICOS -->
+    <section class="panel-row">
+
+      <div class="panel">
+        <h2>Ocupação • Últimos 7 dias</h2>
+        <div class="chart-placeholder">Gráfico aqui</div>
+      </div>
+
+      <div class="panel">
+        <h2>Receita por Centro de Custo</h2>
+        <div class="chart-placeholder">Gráfico aqui</div>
+      </div>
+
+    </section>
+
+
+    <!-- ESTOQUE E ABASTECIMENTO -->
+    <section class="panel" style="margin-top: 24px;">
+      <h2>Estoque e Itens Críticos</h2>
+      <p class="card-desc">Itens com estoque baixo ou próximos do mínimo definido.</p>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantidade</th>
+            <th>Mínimo</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="estoqueLista">
+          <tr>
+            <td colspan="4" style="text-align:center; opacity:0.5;">Carregando estoque...</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+
+    <!-- TABELA DE MOVIMENTAÇÃO FINANCEIRA -->
+    <section class="panel" style="margin-top: 24px;">
+      <h2>Movimentação Financeira (Hoje)</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Hora</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody id="financeiroHoje">
+          <tr><td colspan="4" style="text-align:center; opacity:0.5;">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
 
   <script src="/js/app.js"></script>
+
 </body>
 </html>
