@@ -1,89 +1,188 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MDE Hub • Diárias Necessárias</title>
-  <link rel="stylesheet" href="/css/app.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Simulador de Diárias Vendidas</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
-<div class="layout">
 
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="avatar">M</div>
-      <span>MDE Hub</span>
+<!-- BOTÃO MOBILE -->
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo">
+    <span class="logo-avatar">M</span>
+    <div class="logo-text">
+      <strong>MDE Hub</strong>
+      <span>Simuladores</span>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+    <a href="/fechamento.html" class="nav-item">🧾 Fechamento</a>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
+    <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa UHs</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">Simuladores</div>
+    <a href="/simuladores.html" class="nav-item">🧮 Todos os Simuladores</a>
+    <a href="/simulador-adr.html" class="nav-item">📏 ADR</a>
+    <a href="/simulador-revpar.html" class="nav-item">📈 RevPAR</a>
+    <a href="/simulador-diarias.html" class="nav-item active">📅 Diárias Vendidas</a>
+    <a href="/simulador-ocupacao.html" class="nav-item">🏨 Ocupação</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a class="nav-item disabled">📘 Em breve</a>
+    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 class="page-title">Simulador de Diárias Vendidas</h1>
+      <p class="page-subtitle">
+        Veja quantas diárias são necessárias para atingir metas de faturamento.
+      </p>
     </div>
 
-    <nav class="sidebar-menu">
-      <a href="/dashboard.html">📊 Dashboard</a>
-      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🔑 Reservas</a>
-      <a href="/financeiro.html">💰 Financeiro</a>
-      <a class="active" href="/simuladores.html">📐 Simuladores</a>
-      <a>📘 CRM Hoteleiro • Em breve</a>
-      <a>📄 Proposta IA • Em breve</a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <a id="logoutBtn">🚪 Sair</a>
+    <div class="topbar-right">
+      <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+      <div class="user-pill">
+        <div class="user-avatar">H</div>
+        <div class="user-info">
+          <span class="user-name">Hotel Exemplo</span>
+          <span class="user-email">contato@hotelexemplo.com</span>
+        </div>
+      </div>
     </div>
-  </aside>
+  </header>
 
-  <main class="content">
-    <div class="top-right">
-      <select class="hotel-select"><option>Carregando hotéis...</option></select>
-      <div class="user-badge">U</div>
-    </div>
+  <!-- CONTEÚDO -->
+  <section class="content-section">
 
-    <h1>Diárias Necessárias</h1>
-    <p class="content-subtitle">
-      Descubra quantas diárias precisa vender para atingir uma meta de faturamento.
-    </p>
+    <div class="grid">
 
-    <div class="grid grid-2">
-
+      <!-- EXPLICAÇÃO -->
       <div class="card">
-        <div class="card-title">Parâmetros</div>
-        <form id="formDiarias" class="form-grid">
-          <label>
-            Meta de faturamento (R$)
-            <input type="number" id="dn_meta" min="0" step="0.01" required>
-          </label>
+        <div class="card-title">O que esse simulador faz?</div>
+        <p class="card-desc">
+          Este simulador calcula <strong>quantas diárias você precisa vender</strong>
+          para atingir sua meta de faturamento, considerando sua ADR estimada.
+        </p>
 
-          <label>
-            ADR estimada (R$)
-            <input type="number" id="dn_adr" min="0" step="0.01" required>
-          </label>
-
-          <label>
-            Período da meta
-            <select id="dn_periodo">
-              <option value="dia">Dia</option>
-              <option value="semana">Semana</option>
-              <option value="mes">Mês</option>
-            </select>
-          </label>
-
-          <button type="submit" class="btn-primary full">Calcular Diárias</button>
-        </form>
+        <p class="card-desc" style="margin-top:10px;">
+          Fórmula básica:
+          <br />
+          <strong>Diárias Necessárias = Meta ÷ ADR</strong>
+        </p>
       </div>
 
+      <!-- FORMULÁRIO -->
+      <div class="card">
+        <div class="card-title">Preencha os dados</div>
+
+        <label for="metaFaturamento">Meta de Faturamento (R$)</label>
+        <input
+          type="number"
+          id="metaFaturamento"
+          min="0"
+          step="0.01"
+          placeholder="Ex: 50.000,00"
+        />
+
+        <label for="adrEstimado">ADR Estimada (R$)</label>
+        <input
+          type="number"
+          id="adrEstimado"
+          min="0"
+          step="0.01"
+          placeholder="Ex: 250,00"
+        />
+
+        <button id="btnCalcularDiarias" class="btn-primary" style="margin-top:10px;">
+          Calcular Diárias Necessárias
+        </button>
+      </div>
+
+      <!-- RESULTADO -->
       <div class="card">
         <div class="card-title">Resultado</div>
-        <div class="card-value" id="dn_resultado">-- diárias</div>
-        <p class="text-muted" id="dn_resumo">
-          Informe meta e ADR para ver o volume mínimo de diárias.
+
+        <p class="card-desc">Quantidade mínima de diárias necessárias:</p>
+        <div class="card-value" id="diariasResultado">--</div>
+
+        <p class="card-desc" id="diariasResumo" style="margin-top: 12px;">
+          Preencha os dados ao lado e clique em "Calcular".
         </p>
       </div>
 
     </div>
-  </main>
+
+  </section>
 
 </div>
 
-<script type="module" src="/js/supabase.js"></script>
-script type="module" src="/js/app.js"></script>
+<!-- SCRIPT DO SIMULADOR -->
+<script>
+  const btnDiarias = document.getElementById("btnCalcularDiarias");
+  const inputMeta = document.getElementById("metaFaturamento");
+  const inputADR = document.getElementById("adrEstimado");
+  const campoResultado = document.getElementById("diariasResultado");
+  const campoResumo = document.getElementById("diariasResumo");
+
+  btnDiarias.addEventListener("click", () => {
+    const meta = parseFloat((inputMeta.value || "").replace(",", ".")) || 0;
+    const adr = parseFloat((inputADR.value || "").replace(",", ".")) || 0;
+
+    if (meta <= 0 || adr <= 0) {
+      campoResultado.textContent = "--";
+      campoResumo.textContent =
+        "Informe valores válidos para a meta e a ADR estimada.";
+      return;
+    }
+
+    const diarias = meta / adr;
+    const diariasFormatadas = Math.ceil(diarias);
+
+    campoResultado.textContent = diariasFormatadas;
+
+    // comentários inteligentes
+    let comentario = "Cálculo realizado com sucesso.";
+
+    if (diariasFormatadas < 100) {
+      comentario = "Meta relativamente fácil de atingir com boa ocupação.";
+    } else if (diariasFormatadas >= 100 && diariasFormatadas < 300) {
+      comentario = "Meta moderada. Avalie campanhas e distribuição.";
+    } else {
+      comentario = "Meta alta: considere revisar tarifas, canais e sazonalidade.";
+    }
+
+    campoResumo.textContent = comentario;
+  });
+</script>
+
 </body>
 </html>
