@@ -111,13 +111,42 @@
   </div>
 </div>
 
-<!-- MAIN -->
-<div class="main">
+<!-- BOTÃO DO MENU MOBILE -->
+<div id="btnSidebarToggle">☰</div>
 
-  <div class="topbar">
-    <button id="btnThemeToggle">🌓</button>
-    <div class="user-badge" id="userInitial">U</div>
-  </div>
+<div id="sidebar-container"></div>
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="main-area">
+
+  <header class="page-header">
+    <h1 class="page-title">📌 Atividades</h1>
+    <p class="page-subtitle">Veja todas as interações, eventos, follow-ups e compromissos do CRM.</p>
+  </header>
+
+  <section class="card">
+    <h2 class="card-title">Atividades Recentes</h2>
+
+    <div class="activity-list">
+      <!-- placeholder -->
+      <p class="muted">Nenhuma atividade registrada ainda.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- SCRIPTS -->
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/crm.js"></script>
+
+<!-- INCLUIR SIDEBAR -->
+<script>
+  fetch("/partials/sidebar.html")
+    .then(res => res.text())
+    .then(html => {
+      document.querySelector("#sidebar-container").innerHTML = html;
+    });
+</script>
 
   <h1 class="page-title">Configurações do CRM</h1>
   <p class="page-subtitle">Personalize seu funil, automações e preferências</p>
