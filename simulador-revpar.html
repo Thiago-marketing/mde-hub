@@ -1,95 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Simulador RevPAR</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MDE Hub • Simulador de RevPAR</title>
+  <link rel="stylesheet" href="/css/app.css">
 </head>
-<body>
 
-  <!-- SIDEBAR -->
+<body>
+<div class="layout">
+
   <aside class="sidebar">
-    <div class="sidebar-header"><div class="user-initial">M</div><div class="sidebar-brand">MDE Hub</div></div>
-    <nav class="sidebar-nav">
+    <div class="sidebar-header">
+      <div class="avatar">M</div>
+      <span>MDE Hub</span>
+    </div>
+
+    <nav class="sidebar-menu">
       <a href="/dashboard.html">📊 Dashboard</a>
       <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🛎️ Reservas</a>
+      <a href="/reservas.html">🔑 Reservas</a>
       <a href="/financeiro.html">💰 Financeiro</a>
-      <a href="/simuladores.html" class="active">🧮 Simuladores</a>
-      <div class="separator"></div>
-      <a class="disabled">📘 CRM Hoteleiro • Em breve</a>
-      <a class="disabled">📝 Proposta IA • Em breve</a>
-      <div class="separator"></div>
-      <a href="#" id="logoutBtn" class="logout">🚪 Sair</a>
+      <a class="active" href="/simuladores.html">📐 Simuladores</a>
+      <a>📘 CRM Hoteleiro • Em breve</a>
+      <a>📄 Proposta IA • Em breve</a>
     </nav>
+
+    <div class="sidebar-footer">
+      <a id="logoutBtn">🚪 Sair</a>
+    </div>
   </aside>
 
-  <main class="main">
+  <main class="content">
+    <div class="top-right">
+      <select class="hotel-select"><option>Carregando hotéis...</option></select>
+      <div class="user-badge">U</div>
+    </div>
 
-    <header class="topbar">
-      <div>
-        <h1 class="page-title">Simulador de RevPAR</h1>
-        <p class="page-subtitle">Calcule RevPAR e impacto da receita por apartamento disponível.</p>
+    <h1>Simulador de RevPAR</h1>
+    <p class="content-subtitle">
+      Calcule o RevPAR combinando ocupação e ADR em um único indicador.
+    </p>
+
+    <div class="grid grid-2">
+
+      <div class="card">
+        <div class="card-title">Parâmetros</div>
+        <form id="formRevpar" class="form-grid">
+          <label>
+            Receita de hospedagem (R$)
+            <input type="number" id="rv_receita" min="0" step="0.01" required>
+          </label>
+
+          <label>
+            UHs disponíveis
+            <input type="number" id="rv_uhs" min="1" step="1" required>
+          </label>
+
+          <label>
+            Período (dias)
+            <input type="number" id="rv_dias" min="1" step="1" required>
+          </label>
+
+          <button type="submit" class="btn-primary full">Calcular RevPAR</button>
+        </form>
       </div>
 
-      <div class="topbar-right">
-        <select id="hotelSelect" class="hotel-select"><option>Carregando hotéis...</option></select>
-        <div class="user-profile"><span id="userInitial">U</span><div><p id="userName">Carregando...</p><p id="userEmail"></p></div></div>
-      </div>
-    </header>
-
-    <section class="panel">
-      <h2>Preencha os dados</h2>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Receita Total (R$)</label>
-          <input type="number" id="receita" placeholder="Ex: 18.000" />
-        </div>
-
-        <div class="form-group">
-          <label>Total de UHs</label>
-          <input type="number" id="total" placeholder="Ex: 40" />
-        </div>
-
-        <div class="form-group">
-          <label>UH Ocupadas</label>
-          <input type="number" id="ocupadas" placeholder="Ex: 28" />
-        </div>
+      <div class="card">
+        <div class="card-title">Resultado</div>
+        <div class="card-value" id="rv_resultado">R$ --</div>
+        <p class="text-muted" id="rv_resumo">
+          RevPAR = Receita / (UHs disponíveis × dias)
+        </p>
       </div>
 
-      <button class="btn-primary" onclick="calcRevpar()">Calcular RevPAR</button>
-
-      <div class="result-box" id="resultRevpar"></div>
-    </section>
-
+    </div>
   </main>
 
-  <script>
-    function calcRevpar() {
-      const receita = parseFloat(document.getElementById('receita').value);
-      const total = parseFloat(document.getElementById('total').value);
-      const ocupadas = parseFloat(document.getElementById('ocupadas').value);
+</div>
 
-      if (!receita || !total || !ocupadas) {
-        document.getElementById('resultRevpar').innerHTML = "<p class='error'>Preencha todos os campos.</p>";
-        return;
-      }
-
-      const adr = receita / ocupadas;
-      const ocupacao = ocupadas / total;
-      const revpar = adr * ocupacao;
-
-      document.getElementById('resultRevpar').innerHTML = `
-        <h3>Resultado</h3>
-        <p class='value-highlight'>RevPAR: R$ ${revpar.toFixed(2)}</p>
-      `;
-    }
-  </script>
-
-  <script src="/js/supabase.js"></script>
-  <script src="/js/app.js"></script>
-
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>
