@@ -4,13 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CRM Hoteleiro • Kanban</title>
+
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body class="page">
+<body class="page page-crm-kanban">
 
   <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-header">
       <span class="logo-mark">M</span>
       <span class="logo-text">Web MDE</span>
@@ -20,19 +21,18 @@
       <a href="/dashboard.html">🏠 Início</a>
       <a href="/crm.html" class="active">📊 CRM</a>
       <a href="/crm-dashboard.html">📈 Dashboard CRM</a>
-      <a href="/crm-kanban.html" class="active strong">🗂 Funil Kanban</a>
+      <a href="/crm-kanban.html" class="strong active">🗂 Funil Kanban</a>
       <a href="/crm-propostas.html">📄 Propostas</a>
       <a href="/crm-contatos.html">👥 Contatos</a>
       <a href="/crm-atividades.html">📝 Atividades</a>
       <a href="/crm-config.html">⚙️ Configurações</a>
 
       <hr />
-
       <a href="/logout.html" class="logout">Sair</a>
     </nav>
   </aside>
 
-  <!-- MAIN -->
+  <!-- MAIN AREA -->
   <main class="main-area">
 
     <!-- TOPBAR -->
@@ -41,7 +41,7 @@
 
       <div class="topbar-title">
         <h1>Funil Kanban</h1>
-        <p>Gerencie o fluxo de leads e oportunidades de venda</p>
+        <p>Gerencie o fluxo de leads e oportunidades</p>
       </div>
 
       <div class="topbar-actions">
@@ -57,113 +57,122 @@
       </div>
     </header>
 
-    <!-- KANBAN CONTAINER -->
-    <section class="kanban-wrapper">
+    <!-- KANBAN BOARD -->
+    <section class="kanban-board">
 
-      <!-- COLUNA: NOVOS -->
-      <div class="kanban-column">
+      <!-- COLUNA — NOVO -->
+      <div class="kanban-column" data-etapa="novo">
         <h2>Novo</h2>
-        <p class="kanban-subtitle">Leads recém cadastrados</p>
-
-        <div class="kanban-items" id="col-novo">
-          <!-- EXEMPLO -->
-          <div class="kanban-card" draggable="true">
+        <div class="kanban-list">
+          <div class="kanban-card" data-lead-id="1">
             <h3>Maria Souza</h3>
-            <p>Interesse em suíte luxo</p>
-            <span class="tag">WhatsApp</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- COLUNA: EM CONVERSA -->
-      <div class="kanban-column">
-        <h2>Em Conversa</h2>
-        <p class="kanban-subtitle">Troca de mensagens ativa</p>
-
-        <div class="kanban-items" id="col-conversa">
-          <div class="kanban-card" draggable="true">
-            <h3>João Pereira</h3>
             <p>Solicitou valores para janeiro</p>
-            <span class="tag blue">Médio interesse</span>
+            <div class="lead-proposta-info"></div>
           </div>
         </div>
       </div>
 
-      <!-- COLUNA: PROPOSTA ENVIADA -->
-      <div class="kanban-column">
-        <h2>Proposta Enviada</h2>
+      <!-- COLUNA — CONTATO -->
+      <div class="kanban-column" data-etapa="contato">
+        <h2>Em Contato</h2>
+        <div class="kanban-list">
+          <div class="kanban-card" data-lead-id="2">
+            <h3>João Cunha</h3>
+            <p>WhatsApp respondido</p>
+            <div class="lead-proposta-info"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA — QUALIFICADO -->
+      <div class="kanban-column" data-etapa="qualificado">
+        <h2>Qualificado</h2>
+        <div class="kanban-list">
+          <div class="kanban-card" data-lead-id="3">
+            <h3>Luciana Prado</h3>
+            <p>Interesse alto</p>
+            <div class="lead-proposta-info"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA — PROPOSTA -->
+      <div class="kanban-column" data-etapa="proposta">
+        <h2>Proposta</h2>
         <p class="kanban-subtitle">Aguardando retorno</p>
 
-        <div class="kanban-items" id="col-proposta">
-          <div class="kanban-card" draggable="true">
+        <div class="kanban-list">
+          <div class="kanban-card" data-lead-id="4">
             <h3>Carla Menezes</h3>
             <p>Enviada hoje às 14h</p>
-            <span class="tag yellow">Aguardando</span>
+            <div class="lead-proposta-info"></div>
           </div>
         </div>
       </div>
 
-      <!-- COLUNA: FOLLOW-UP -->
-      <div class="kanban-column">
+      <!-- COLUNA — FOLLOW-UP -->
+      <div class="kanban-column" data-etapa="follow_up">
         <h2>Follow-up</h2>
-        <p class="kanban-subtitle">Retorno pendente</p>
-
-        <div class="kanban-items" id="col-followup">
-          <div class="kanban-card" draggable="true">
+        <div class="kanban-list">
+          <div class="kanban-card" data-lead-id="5">
             <h3>Ricardo Lima</h3>
             <p>Revisando disponibilidade</p>
-            <span class="tag orange">Follow-up</span>
+            <div class="lead-proposta-info"></div>
           </div>
         </div>
       </div>
 
-      <!-- COLUNA: FECHADO -->
-      <div class="kanban-column">
-        <h2>Fechado</h2>
-        <p class="kanban-subtitle">Ganhos & perdidos</p>
-
-        <div class="kanban-items" id="col-fechado">
-          <div class="kanban-card success" draggable="true">
+      <!-- COLUNA — FECHADO (GANHO/PERDIDO) -->
+      <div class="kanban-column" data-etapa="ganho">
+        <h2>Ganho</h2>
+        <div class="kanban-list">
+          <div class="kanban-card sucesso" data-lead-id="6">
             <h3>Ana Ribeiro</h3>
             <p>Reserva confirmada</p>
-            <span class="tag green">Ganhou</span>
+            <div class="lead-proposta-info"></div>
           </div>
+        </div>
+      </div>
 
-          <div class="kanban-card danger" draggable="true">
+      <div class="kanban-column" data-etapa="perdido">
+        <h2>Perdido</h2>
+        <div class="kanban-list">
+          <div class="kanban-card perdido" data-lead-id="7">
             <h3>Caio Mendes</h3>
             <p>Escolheu outro hotel</p>
-            <span class="tag red">Perdeu</span>
+            <div class="lead-proposta-info"></div>
           </div>
         </div>
       </div>
 
     </section>
-
   </main>
 
+  <!-- MODAL DE PROPOSTA (abre ao arrastar lead p/ coluna Proposta) -->
+  <div id="modalProposta" class="modal">
+    <div class="modal-content">
+      <h2>Gerar proposta para este lead?</h2>
+      <p>Você moveu o lead para a etapa “Proposta”. Deseja criar uma nova proposta?</p>
+
+      <input type="hidden" name="lead_id" />
+
+      <div class="modal-actions">
+        <a id="btnCriarProposta" class="btn-primary">Criar Proposta</a>
+        <button class="btn-secondary" onclick="document.getElementById('modalProposta').classList.remove('open')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
   <!-- SCRIPTS -->
-  <script src="/js/app.js"></script>
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="/js/crm.js"></script>
 
   <script>
-    /* Drag & Drop básico (preparado p/ integração Supabase) */
-    const cards = document.querySelectorAll(".kanban-card");
-    const columns = document.querySelectorAll(".kanban-items");
-
-    cards.forEach(card => {
-      card.addEventListener("dragstart", () => {
-        card.classList.add("dragging");
-      });
-      card.addEventListener("dragend", () => {
-        card.classList.remove("dragging");
-      });
-    });
-
-    columns.forEach(col => {
-      col.addEventListener("dragover", e => {
-        e.preventDefault();
-        const dragging = document.querySelector(".dragging");
-        col.appendChild(dragging);
-      });
+    // Abre a tela de proposta
+    document.getElementById("btnCriarProposta").addEventListener("click", () => {
+      const idLead = document.querySelector("#modalProposta input[name='lead_id']").value;
+      window.location.href = "/crm-proposta-lite.html?lead=" + idLead;
     });
   </script>
 
