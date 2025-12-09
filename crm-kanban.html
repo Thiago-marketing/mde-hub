@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRM Hoteleiro • Kanban</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+
+<body class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="logo-mark">M</span>
+      <span class="logo-text">Web MDE</span>
+    </div>
+
+    <nav class="menu">
+      <a href="/dashboard.html">🏠 Início</a>
+      <a href="/crm.html" class="active">📊 CRM</a>
+      <a href="/crm-dashboard.html">📈 Dashboard CRM</a>
+      <a href="/crm-kanban.html" class="active strong">🗂 Funil Kanban</a>
+      <a href="/crm-propostas.html">📄 Propostas</a>
+      <a href="/crm-contatos.html">👥 Contatos</a>
+      <a href="/crm-atividades.html">📝 Atividades</a>
+      <a href="/crm-config.html">⚙️ Configurações</a>
+
+      <hr />
+
+      <a href="/logout.html" class="logout">Sair</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-area">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <button id="btnSidebar" class="btn-icon">☰</button>
+
+      <div class="topbar-title">
+        <h1>Funil Kanban</h1>
+        <p>Gerencie o fluxo de leads e oportunidades de venda</p>
+      </div>
+
+      <div class="topbar-actions">
+        <select id="hotelSelect">
+          <option>Carregando hotéis...</option>
+        </select>
+
+        <button id="btnThemeToggle" class="btn-icon">🌓</button>
+
+        <div class="user-mini">
+          <span id="userMini">U</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- KANBAN CONTAINER -->
+    <section class="kanban-wrapper">
+
+      <!-- COLUNA: NOVOS -->
+      <div class="kanban-column">
+        <h2>Novo</h2>
+        <p class="kanban-subtitle">Leads recém cadastrados</p>
+
+        <div class="kanban-items" id="col-novo">
+          <!-- EXEMPLO -->
+          <div class="kanban-card" draggable="true">
+            <h3>Maria Souza</h3>
+            <p>Interesse em suíte luxo</p>
+            <span class="tag">WhatsApp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA: EM CONVERSA -->
+      <div class="kanban-column">
+        <h2>Em Conversa</h2>
+        <p class="kanban-subtitle">Troca de mensagens ativa</p>
+
+        <div class="kanban-items" id="col-conversa">
+          <div class="kanban-card" draggable="true">
+            <h3>João Pereira</h3>
+            <p>Solicitou valores para janeiro</p>
+            <span class="tag blue">Médio interesse</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA: PROPOSTA ENVIADA -->
+      <div class="kanban-column">
+        <h2>Proposta Enviada</h2>
+        <p class="kanban-subtitle">Aguardando retorno</p>
+
+        <div class="kanban-items" id="col-proposta">
+          <div class="kanban-card" draggable="true">
+            <h3>Carla Menezes</h3>
+            <p>Enviada hoje às 14h</p>
+            <span class="tag yellow">Aguardando</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA: FOLLOW-UP -->
+      <div class="kanban-column">
+        <h2>Follow-up</h2>
+        <p class="kanban-subtitle">Retorno pendente</p>
+
+        <div class="kanban-items" id="col-followup">
+          <div class="kanban-card" draggable="true">
+            <h3>Ricardo Lima</h3>
+            <p>Revisando disponibilidade</p>
+            <span class="tag orange">Follow-up</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA: FECHADO -->
+      <div class="kanban-column">
+        <h2>Fechado</h2>
+        <p class="kanban-subtitle">Ganhos & perdidos</p>
+
+        <div class="kanban-items" id="col-fechado">
+          <div class="kanban-card success" draggable="true">
+            <h3>Ana Ribeiro</h3>
+            <p>Reserva confirmada</p>
+            <span class="tag green">Ganhou</span>
+          </div>
+
+          <div class="kanban-card danger" draggable="true">
+            <h3>Caio Mendes</h3>
+            <p>Escolheu outro hotel</p>
+            <span class="tag red">Perdeu</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="/js/app.js"></script>
+
+  <script>
+    /* Drag & Drop básico (preparado p/ integração Supabase) */
+    const cards = document.querySelectorAll(".kanban-card");
+    const columns = document.querySelectorAll(".kanban-items");
+
+    cards.forEach(card => {
+      card.addEventListener("dragstart", () => {
+        card.classList.add("dragging");
+      });
+      card.addEventListener("dragend", () => {
+        card.classList.remove("dragging");
+      });
+    });
+
+    columns.forEach(col => {
+      col.addEventListener("dragover", e => {
+        e.preventDefault();
+        const dragging = document.querySelector(".dragging");
+        col.appendChild(dragging);
+      });
+    });
+  </script>
+
+</body>
+</html>
