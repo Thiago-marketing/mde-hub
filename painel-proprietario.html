@@ -86,69 +86,193 @@
       <!-- CONTENT -->
       <section class="content">
 
-        <!-- ========== INDICADORES ========= -->
+        <!-- ========== KPIs PRINCIPAIS ========= -->
         <div class="grid-cards">
 
-          <div class="card">
+          <!-- Receita Prevista -->
+          <div class="card kpi-card">
             <div class="card-icon">💰</div>
-            <div class="card-title">Receita Prevista</div>
-            <p class="card-desc">Próximos 30 dias</p>
+            <div class="card-title">Receita Prevista (30 dias)</div>
             <h2 class="metric-value">R$ 482.300</h2>
             <p class="metric-delta positive">+12,4% vs mês anterior</p>
+
+            <div class="progress-bar">
+              <div class="progress positive" style="width: 72%;"></div>
+            </div>
           </div>
 
-          <div class="card">
+          <!-- Ocupação -->
+          <div class="card kpi-card">
             <div class="card-icon">🏨</div>
             <div class="card-title">Ocupação Média</div>
-            <p class="card-desc">Últimos 7 dias</p>
             <h2 class="metric-value">78%</h2>
             <p class="metric-delta positive">+4,1 pts</p>
+
+            <div class="progress-bar">
+              <div class="progress positive" style="width: 78%;"></div>
+            </div>
+          </div>
+
+          <!-- ADR -->
+          <div class="card kpi-card">
+            <div class="card-icon">📈</div>
+            <div class="card-title">ADR (Tarifa Média)</div>
+            <h2 class="metric-value">R$ 389,00</h2>
+            <p class="metric-delta neutral">Hoje / Semana / Mês</p>
+
+            <div class="mini-sparkline">
+              ▄▅█▆▅▄▂
+            </div>
+          </div>
+
+          <!-- Canais -->
+          <div class="card kpi-card">
+            <div class="card-icon">🔗</div>
+            <div class="card-title">Distribuição por Canais</div>
+
+            <div class="channel-row">
+              <span>Diretas</span>
+              <strong>31%</strong>
+            </div>
+
+            <div class="channel-row">
+              <span>Booking</span>
+              <strong>44%</strong>
+            </div>
+
+            <div class="channel-row">
+              <span>Expedia</span>
+              <strong>25%</strong>
+            </div>
+
+            <p class="metric-delta warning">Meta: 45%+ diretas</p>
+          </div>
+
+        </div>
+
+
+        <!-- ========== ENTRADAS / SAÍDAS / UHs ========== -->
+        <div class="grid-cards" style="margin-top: 30px;">
+
+          <div class="card">
+            <div class="card-title">Entradas Hoje</div>
+            <h2 class="metric-value">27 check-ins</h2>
+            <p class="metric-delta positive">Fluxo dentro da média</p>
           </div>
 
           <div class="card">
-            <div class="card-icon">📈</div>
-            <div class="card-title">Canais Diretos</div>
-            <p class="card-desc">Reservas pelo próprio hotel</p>
-            <h2 class="metric-value">31%</h2>
-            <p class="metric-delta warning">Meta: 45%+</p>
+            <div class="card-title">Saídas Hoje</div>
+            <h2 class="metric-value">19 check-outs</h2>
+            <p class="metric-delta neutral">Sem atrasos</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">UHs Ocupadas</div>
+            <h2 class="metric-value">63 / 80</h2>
+            <p class="metric-delta positive">78%</p>
+
+            <div class="progress-bar">
+              <div class="progress positive" style="width: 78%;"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">UHs em Manutenção</div>
+            <h2 class="metric-value">2 UHs</h2>
+            <p class="metric-delta warning">Revisar status</p>
           </div>
 
         </div>
 
-        <!-- ========== GRÁFICO / MAPA PLACEHOLDER ========== -->
+
+        <!-- ========== VISÃO DE ESTOQUE & CAFÉ DA MANHÃ ========== -->
+        <div class="grid-cards" style="margin-top: 30px;">
+
+          <!-- Resumo de Estoque -->
+          <div class="card">
+            <div class="card-title">Resumo de Estoque</div>
+            <p class="card-desc">
+              Visão consolidada dos principais insumos do hotel.
+              <br><small>(dados serão lidos do estoque MDE / MoviEstoque via Acumulador)</small>
+            </p>
+
+            <ul class="event-list">
+              <li>Estoque total estimado: <strong>R$ 18.750,00</strong></li>
+              <li>Itens dentro do mínimo: <strong>42</strong></li>
+              <li>Itens abaixo do mínimo: <strong>7</strong></li>
+              <li>Itens críticos (zerando em breve): <strong>3</strong></li>
+            </ul>
+          </div>
+
+          <!-- Itens abaixo do mínimo -->
+          <div class="card">
+            <div class="card-title">Itens Abaixo do Mínimo</div>
+            <p class="card-desc">Insumos que exigem atenção imediata.</p>
+
+            <ul class="event-list">
+              <li>☕ Café em pó — 18% do mínimo</li>
+              <li>🥐 Pão francês — 25% do mínimo</li>
+              <li>🥚 Ovos — 22% do mínimo</li>
+              <li>🧻 Papel higiênico — 30% do mínimo</li>
+            </ul>
+          </div>
+
+          <!-- Lista de Café da Manhã -->
+          <div class="card">
+            <div class="card-title">Lista de Café da Manhã</div>
+            <p class="card-desc">
+              Itens essenciais para o café de amanhã cedo.
+            </p>
+
+            <ul class="event-list">
+              <li>✔️ Pães variados (francês, forma, integral)</li>
+              <li>✔️ Frios (presunto, queijo, muçarela)</li>
+              <li>✔️ Frutas (mamão, banana, maçã)</li>
+              <li>⚠️ Suco de laranja — verificar estoque</li>
+              <li>⚠️ Iogurte — reposição sugerida</li>
+            </ul>
+          </div>
+
+        </div>
+
+
+        <!-- ========== MAPA OPERACIONAL DE UHs ========= -->
         <div class="card" style="margin-top: 30px;">
-          <div class="card-title">Mapa de UHs + Fluxo de Reservas</div>
+          <div class="card-title">Mapa Operacional de UHs</div>
           <p class="card-desc">
-            Esta área exibirá o mapa operacional, ocupação, status das UHs e entradas previstas.  
-            Os dados serão fornecidos pelo <strong>Acumulador Lite MDE Sistemas (Windows)</strong>.
+            Visualização da ocupação, manutenções e status em tempo real.  
+            <br>Este módulo será alimentado pelo <strong>Acumulador Lite MDE Sistemas</strong> (SQL Server → PostgreSQL).
           </p>
 
-          <div class="placeholder-box">
-            <div class="placeholder-content">Visual Gerencial (Aguardando Acumulador)</div>
+          <div class="placeholder-box large">
+            <div class="placeholder-content">Mapa Operacional (aguardando integração)</div>
           </div>
         </div>
 
-        <!-- ========== LISTA DE EVENTOS / CHECKLIST ========== -->
+
+        <!-- ========== FLUXO OPERACIONAL DO DIA ========= -->
         <div class="card" style="margin-top: 30px;">
-          <div class="card-title">Atividades Operacionais</div>
-          <p class="card-desc">Últimas ações e alertas da operação</p>
+          <div class="card-title">Fluxo Operacional do Dia</div>
 
           <ul class="event-list">
-            <li>✔️ Fechamento de caixa atualizado hoje às 08h12.</li>
-            <li>✔️ 12 reservas novas na última hora.</li>
-            <li>🔄 3 check-ins previstos em até 1 hora.</li>
-            <li>⚠️ 1 UH em manutenção — revisar status.</li>
+            <li>08:12 — Fechamento de caixa concluído.</li>
+            <li>09:05 — 12 novas reservas registradas.</li>
+            <li>10:00 — Previsão de 3 check-ins em breve.</li>
+            <li>11:18 — UH 204 marcada como manutenção.</li>
+            <li>12:42 — Encerramento parcial do financeiro.</li>
           </ul>
         </div>
 
+
         <!-- ========== ROADMAP ========= -->
         <div class="roadmap-block">
-          <h2>Conexões com WebMDE (versão Lite)</h2>
+          <h2>Próximos Passos — Integração MDE Sistemas</h2>
           <ul>
-            <li>✔️ Layout integrado ao Hub</li>
-            <li>🔄 Indicadores conectados — fase Acumulador</li>
-            <li>⏳ Mapa operacional — leitura SQL Server</li>
-            <li>🧩 Financeiro básico — leitura futura de Movimentos</li>
+            <li>✔️ Layout WebMDE Lite integrado ao MDE Hub</li>
+            <li>🔄 Indicadores operacionais e financeiros via Acumulador (Fase 1)</li>
+            <li>⏳ Mapa Operacional + Estoque em tempo real (Fase 2)</li>
+            <li>🧩 Previsão de contas e saldos em aberto (Fase 3)</li>
+            <li>🥐 Lista de Café da Manhã conectada ao estoque mínimo (Fase 3)</li>
           </ul>
         </div>
 
@@ -162,4 +286,3 @@
 </body>
 
 </html>
-
