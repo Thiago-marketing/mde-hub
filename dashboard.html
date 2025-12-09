@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Dashboard</title>
+  <title>MDE Hub • Painel do Proprietário</title>
 
   <link rel="stylesheet" href="/css/app.css" />
   <script defer src="/js/app.js"></script>
@@ -14,13 +14,13 @@
   <!-- BOTÃO MOBILE -->
   <div id="btnSidebarToggle">☰</div>
 
-  <!-- SIDEBAR NOVA (compatível com app.css) -->
+  <!-- SIDEBAR OFICIAL -->
   <div id="sidebar">
     <div class="logo">🏨 MDE Hub</div>
 
     <div class="nav-section">
-      <a href="/dashboard.html" class="nav-item active">📊 Dashboard</a>
-      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item active">🧭 Painel do Proprietário</a>
       <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
     </div>
 
@@ -48,81 +48,110 @@
   <!-- CONTEÚDO PRINCIPAL -->
   <div class="main">
 
-    <!-- TOPBAR NOVA (compatível com app.css) -->
+    <!-- TOPBAR OFICIAL -->
     <div class="topbar">
       <button id="btnThemeToggle">🌓</button>
       <div class="user-badge" id="userInitial">U</div>
     </div>
 
-    <h1 class="page-title">Dashboard</h1>
-    <p class="page-subtitle">Indicadores gerais do hotel em tempo real</p>
+    <h1 class="page-title">Painel do Proprietário</h1>
+    <p class="page-subtitle">Indicadores avançados em tempo real: ocupação, receita, previsões e estoque</p>
 
-    <!-- GRID DE CARDS -->
+    <!-- PRIMEIRA LINHA — INDICADORES GERAIS -->
     <div class="grid">
 
       <div class="card">
         <div class="card-title">Ocupação Atual</div>
-        <div class="card-value" id="ocupacaoAtual">--%</div>
-        <div class="card-desc">Atualizado em tempo real</div>
+        <div class="card-value" id="pp_ocupacao">--%</div>
+        <div class="card-desc">Situação geral das UHs agora</div>
       </div>
 
       <div class="card">
-        <div class="card-title">Entradas Hoje</div>
-        <div class="card-value" id="entradasHoje">--</div>
-        <div class="card-desc">Hóspedes realizando check-in</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Saídas Hoje</div>
-        <div class="card-value" id="saidasHoje">--</div>
-        <div class="card-desc">Hóspedes realizando check-out</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Receita de Hoje</div>
-        <div class="card-value" id="receitaHoje">R$ --</div>
+        <div class="card-title">Receita Hoje</div>
+        <div class="card-value" id="pp_receitaHoje">R$ --</div>
         <div class="card-desc">Hospedagens + Extras</div>
       </div>
 
-    </div>
-
-    <!-- GRÁFICOS -->
-    <div class="grid">
-
       <div class="card">
-        <div class="card-title">Ocupação • Últimos 7 dias</div>
-        <div class="chart-placeholder">Gráfico aqui</div>
+        <div class="card-title">Entradas Amanhã</div>
+        <div class="card-value" id="pp_entradasAmanha">--</div>
+        <div class="card-desc">Previsão para o próximo dia</div>
       </div>
 
       <div class="card">
-        <div class="card-title">Receita por Centro de Custo</div>
-        <div class="chart-placeholder">Gráfico aqui</div>
+        <div class="card-title">Saídas Amanhã</div>
+        <div class="card-value" id="pp_saidasAmanha">--</div>
+        <div class="card-desc">Previsão de check-outs</div>
       </div>
 
     </div>
 
-    <!-- TABELAS -->
+    <!-- SEGUNDA LINHA — ESTOQUE + ITENS CRÍTICOS -->
+    <h2 class="page-title" style="margin-top: 40px;">Estoque • Indicadores</h2>
+    <p class="page-subtitle">Níveis de estoque, consumo, reposição e itens críticos</p>
+
     <div class="grid">
 
       <div class="card">
-        <div class="card-title">Próximas Chegadas</div>
+        <div class="card-title">Itens em Estoque</div>
+        <div class="card-value" id="pp_totalEstoque">--</div>
+        <div class="card-desc">Quantidade total cadastrada</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Itens com Estoque Baixo</div>
+        <div class="card-value" id="pp_estoqueBaixo">--</div>
+        <div class="card-desc">Abaixo do estoque mínimo</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Previsão de Reposição</div>
+        <div class="card-value" id="pp_previsaoReposicao">-- itens</div>
+        <div class="card-desc">Itens que faltam para atingir o nível ideal</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Consumo Médio Diário</div>
+        <div class="card-value" id="pp_consumoDiario">--</div>
+        <div class="card-desc">Com base nos últimos 30 dias</div>
+      </div>
+
+    </div>
+
+    <!-- TABELAS DETALHADAS -->
+    <div class="grid">
+
+      <!-- Itens críticos -->
+      <div class="card">
+        <div class="card-title">Itens Críticos (abaixo do mínimo)</div>
         <table class="table">
           <thead>
-            <tr><th>Reserva</th><th>Hóspede</th><th>UH</th><th>Chegada</th><th>Status</th></tr>
+            <tr>
+              <th>Item</th>
+              <th>Qtd Atual</th>
+              <th>Mínimo</th>
+              <th>Reposição</th>
+            </tr>
           </thead>
-          <tbody id="tabelaChegadas">
-            <tr><td colspan="5">Carregando...</td></tr>
+          <tbody id="pp_itensCriticos">
+            <tr><td colspan="4">Carregando...</td></tr>
           </tbody>
         </table>
       </div>
 
+      <!-- Movimentações de estoque -->
       <div class="card">
-        <div class="card-title">Movimento do Caixa (Hoje)</div>
+        <div class="card-title">Movimentações Recentes</div>
         <table class="table">
           <thead>
-            <tr><th>Hora</th><th>Tipo</th><th>Descrição</th><th>Valor</th></tr>
+            <tr>
+              <th>Data</th>
+              <th>Tipo</th>
+              <th>Item</th>
+              <th>Qtd</th>
+            </tr>
           </thead>
-          <tbody id="tabelaCaixa">
+          <tbody id="pp_movEstoque">
             <tr><td colspan="4">Carregando...</td></tr>
           </tbody>
         </table>
