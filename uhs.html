@@ -1,1 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Mapa de UHs</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="user-initial">M</div>
+      <div class="sidebar-brand">MDE Hub</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="/dashboard.html">📊 Dashboard</a>
+      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">🛎️ Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a href="/simuladores.html">🧮 Simuladores</a>
+
+      <a href="/uhs.html" class="active">🛏️ Unidades Habitacionais (UH)</a>
+
+      <div class="separator"></div>
+      <a class="disabled">📘 CRM Hoteleiro • Em breve</a>
+      <a class="disabled">📝 Proposta IA • Em breve</a>
+
+      <div class="separator"></div>
+      <a href="#" id="logoutBtn" class="logout">🚪 Sair</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div>
+        <h1 class="page-title">Mapa de UHs</h1>
+        <p class="page-subtitle">Situação atual de cada unidade habitacional.</p>
+      </div>
+
+      <div class="topbar-right">
+        <select id="hotelSelect" class="hotel-select">
+          <option>Carregando hotéis...</option>
+        </select>
+
+        <div class="user-profile">
+          <span id="userInitial">U</span>
+          <div>
+            <p id="userName">Carregando...</p>
+            <p id="userEmail"></p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- STATUS LEGEND -->
+    <section class="panel">
+      <h2>Legenda de Status</h2>
+
+      <div class="legend-row">
+        <span class="legend status-clean">Limpo</span>
+        <span class="legend status-dirty">Sujo</span>
+        <span class="legend status-occupied">Ocupado</span>
+        <span class="legend status-maintenance">Manutenção</span>
+        <span class="legend status-inspection">Inspeção</span>
+      </div>
+    </section>
+
+    <!-- MAPA DE UHS -->
+    <section class="panel">
+      <h2>Unidades Habitacionais</h2>
+
+      <div class="uh-grid">
+
+        <!-- EXEMPLOS – serão substituídos pelo SQL futuramente -->
+
+        <div class="uh-card status-clean">
+          <h3>UH 101</h3>
+          <p class="uh-type">Standard</p>
+          <span class="status-badge clean">LIMPO</span>
+        </div>
+
+        <div class="uh-card status-occupied">
+          <h3>UH 102</h3>
+          <p class="uh-type">Luxo</p>
+          <span class="status-badge occupied">OCUPADO</span>
+        </div>
+
+        <div class="uh-card status-dirty">
+          <h3>UH 103</h3>
+          <p class="uh-type">Standard</p>
+          <span class="status-badge dirty">SUJO</span>
+        </div>
+
+        <div class="uh-card status-maintenance">
+          <h3>UH 104</h3>
+          <p class="uh-type">Master</p>
+          <span class="status-badge maintenance">MANUTENÇÃO</span>
+        </div>
+
+        <div class="uh-card status-clean">
+          <h3>UH 105</h3>
+          <p class="uh-type">Standard</p>
+          <span class="status-badge clean">LIMPO</span>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/supabase.js"></script>
+  <script src="/js/app.js"></script>
+
+</body>
+</html>
 
