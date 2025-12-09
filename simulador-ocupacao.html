@@ -1,84 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MDE Hub • Simulador de Ocupação</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <link rel="stylesheet" href="/css/app.css">
 </head>
+
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <!-- sidebar -->
-    </aside>
+<div class="layout">
 
-    <div class="main-area">
-      <header class="topbar">
-        <div class="topbar-breadcrumb">
-          <span class="crumb-section">MDE Hub</span>
-          <span class="crumb-separator">•</span>
-          <span class="crumb-page">Simulador de Ocupação</span>
-        </div>
-        <div class="topbar-actions">
-          <button class="chip ghost" id="themeToggle">
-            <span class="chip-dot"></span>
-            Tema
-          </button>
-        </div>
-      </header>
-
-      <main class="content">
-        <section class="page-header">
-          <h1>Simulador de Ocupação</h1>
-          <p>Projeção rápida de ocupação do hotel em um período específico.</p>
-        </section>
-
-        <div class="grid-2">
-          <section class="section">
-            <div class="card form-card">
-              <div class="form-group">
-                <label for="oc_uh_total">UHs disponíveis</label>
-                <input type="number" id="oc_uh_total" min="1" value="40" />
-              </div>
-              <div class="form-group">
-                <label for="oc_uh_ocupadas">UHs ocupadas (ou diárias vendidas)</label>
-                <input type="number" id="oc_uh_ocupadas" min="0" value="30" />
-              </div>
-              <button id="btnCalcularOcupacao" class="btn-primary full">
-                Calcular ocupação
-              </button>
-            </div>
-          </section>
-
-          <section class="section">
-            <div class="card kpi-card big">
-              <header><p class="kpi-label">Ocupação estimada</p></header>
-              <p class="kpi-value" id="oc_resultado">75%</p>
-              <p class="kpi-meta">
-                Ocupação = UHs ocupadas ÷ UHs disponíveis.
-              </p>
-            </div>
-          </section>
-        </div>
-      </main>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="avatar">M</div>
+      <span>MDE Hub</span>
     </div>
-  </div>
 
-  <script src="/js/app.js"></script>
-  <script>
-    document.getElementById('btnCalcularOcupacao').addEventListener('click', function () {
-      const total = Number(document.getElementById('oc_uh_total').value) || 0;
-      const ocupadas = Number(document.getElementById('oc_uh_ocupadas').value) || 0;
+    <nav class="sidebar-menu">
+      <a href="/dashboard.html">📊 Dashboard</a>
+      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">🔑 Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a class="active" href="/simuladores.html">📐 Simuladores</a>
+      <a>📘 CRM Hoteleiro • Em breve</a>
+      <a>📄 Proposta IA • Em breve</a>
+    </nav>
 
-      if (!total || total <= 0) {
-        alert('Informe a quantidade de UHs disponíveis.');
-        return;
-      }
+    <div class="sidebar-footer">
+      <a id="logoutBtn">🚪 Sair</a>
+    </div>
+  </aside>
 
-      const taxa = (ocupadas / total) * 100;
-      document.getElementById('oc_resultado').textContent =
-        taxa.toFixed(1).replace('.', ',') + '%';
-    });
-  </script>
+  <main class="content">
+    <div class="top-right">
+      <select class="hotel-select"><option>Carregando hotéis...</option></select>
+      <div class="user-badge">U</div>
+    </div>
+
+    <h1>Simulador de Ocupação</h1>
+    <p class="content-subtitle">
+      Projete cenários de ocupação a partir de UHs disponíveis e diárias vendidas.
+    </p>
+
+    <div class="grid grid-2">
+
+      <div class="card">
+        <div class="card-title">Parâmetros</div>
+        <form id="formOcupacao" class="form-grid">
+          <label>
+            UHs disponíveis
+            <input type="number" id="oc_uhs" min="1" step="1" required>
+          </label>
+
+          <label>
+            Período (dias)
+            <input type="number" id="oc_dias" min="1" step="1" required>
+          </label>
+
+          <label>
+            Diárias vendidas no período
+            <input type="number" id="oc_diarias_vendidas" min="0" step="1" required>
+          </label>
+
+          <button type="submit" class="btn-primary full">Calcular Ocupação</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Resultado</div>
+        <div class="card-value" id="oc_resultado">--%</div>
+        <p class="text-muted" id="oc_resumo">
+          Informe UHs, dias e diárias vendidas para projetar a ocupação.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>
