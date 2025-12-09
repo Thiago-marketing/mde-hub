@@ -1,178 +1,84 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Simulador de Ocupação • MDE Hub</title>
-
-  <link rel="stylesheet" href="/css/app.css">
-
-  <meta name="robots" content="noindex,nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Simulador de Ocupação</title>
+  <link rel="stylesheet" href="/css/app.css" />
 </head>
-
 <body>
-
-  <div class="layout">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <span class="sidebar-logo">MDE Hub</span>
-        <button class="sidebar-toggle" id="btnSidebarToggle">☰</button>
-      </div>
-
-      <nav class="sidebar-nav">
-
-        <a href="/index.html" class="nav-item">
-          <span class="nav-icon">🏠</span>
-          <span class="nav-text">Início</span>
-        </a>
-
-        <a href="/painel-proprietario.html" class="nav-item">
-          <span class="nav-icon">📊</span>
-          <span class="nav-text">Painel do Proprietário</span>
-        </a>
-
-        <a href="/simuladores.html" class="nav-item active">
-          <span class="nav-icon">🧮</span>
-          <span class="nav-text">Simuladores</span>
-        </a>
-
-        <div class="nav-separator">Em desenvolvimento</div>
-
-        <a href="/crm.html" class="nav-item disabled">
-          <span class="nav-icon">📁</span>
-          <span class="nav-text">Vendas Diretas CRM</span>
-          <span class="nav-badge">Futuro</span>
-        </a>
-
-        <a href="/proposta.html" class="nav-item disabled">
-          <span class="nav-icon">🧠</span>
-          <span class="nav-text">Proposta Hoteleira IA</span>
-          <span class="nav-badge">Futuro</span>
-        </a>
-
-      </nav>
-
-      <div class="sidebar-footer">
-        <p>MDE Sistemas<br><span class="footer-sub">Plataforma Hub</span></p>
-      </div>
-
+  <div class="app-shell">
+    <aside class="sidebar">
+      <!-- sidebar -->
     </aside>
 
-    <!-- MAIN -->
-    <main class="main">
-
-      <!-- TOPBAR -->
+    <div class="main-area">
       <header class="topbar">
-        <div class="topbar-left">
-          <h1 class="topbar-title">Simulador de Ocupação</h1>
-          <p class="topbar-subtitle">Descubra a ocupação estimada conforme suas projeções</p>
+        <div class="topbar-breadcrumb">
+          <span class="crumb-section">MDE Hub</span>
+          <span class="crumb-separator">•</span>
+          <span class="crumb-page">Simulador de Ocupação</span>
         </div>
-
-        <div class="topbar-right">
-          <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+        <div class="topbar-actions">
+          <button class="chip ghost" id="themeToggle">
+            <span class="chip-dot"></span>
+            Tema
+          </button>
         </div>
       </header>
 
+      <main class="content">
+        <section class="page-header">
+          <h1>Simulador de Ocupação</h1>
+          <p>Projeção rápida de ocupação do hotel em um período específico.</p>
+        </section>
 
-      <!-- CONTENT -->
-      <section class="content">
-
-        <!-- FORM -->
-        <div class="card" style="max-width: 600px; margin: auto;">
-
-          <div class="card-title">Preencha os dados</div>
-
-          <label class="form-label">Número total de UHs</label>
-          <input type="number" id="uhsTotal" class="form-input" placeholder="Ex: 80" />
-
-          <label class="form-label">Número de UHs ocupadas</label>
-          <input type="number" id="uhsOcupadas" class="form-input" placeholder="Ex: 52" />
-
-          <label class="form-label">Receita total do período</label>
-          <input type="number" id="receita" class="form-input" placeholder="Ex: 18500" />
-
-          <button class="btn-primary" id="btnCalcular">Calcular Ocupação</button>
-
-        </div>
-
-
-        <!-- RESULTADO -->
-        <div id="resultado" style="display:none; margin-top:30px;">
-
-          <div class="grid-cards">
-
-            <div class="card">
-              <div class="card-title">Ocupação (%)</div>
-              <h2 class="metric-value" id="ocupacaoValor">0%</h2>
-              <p class="metric-delta">Percentual de UH ocupadas</p>
+        <div class="grid-2">
+          <section class="section">
+            <div class="card form-card">
+              <div class="form-group">
+                <label for="oc_uh_total">UHs disponíveis</label>
+                <input type="number" id="oc_uh_total" min="1" value="40" />
+              </div>
+              <div class="form-group">
+                <label for="oc_uh_ocupadas">UHs ocupadas (ou diárias vendidas)</label>
+                <input type="number" id="oc_uh_ocupadas" min="0" value="30" />
+              </div>
+              <button id="btnCalcularOcupacao" class="btn-primary full">
+                Calcular ocupação
+              </button>
             </div>
+          </section>
 
-            <div class="card">
-              <div class="card-title">ADR Estimada</div>
-              <h2 class="metric-value" id="adrValor">R$ 0,00</h2>
-              <p class="metric-delta neutral">Tarifa média do período</p>
+          <section class="section">
+            <div class="card kpi-card big">
+              <header><p class="kpi-label">Ocupação estimada</p></header>
+              <p class="kpi-value" id="oc_resultado">75%</p>
+              <p class="kpi-meta">
+                Ocupação = UHs ocupadas ÷ UHs disponíveis.
+              </p>
             </div>
-
-            <div class="card">
-              <div class="card-title">RevPAR Estimado</div>
-              <h2 class="metric-value" id="revparValor">R$ 0,00</h2>
-              <p class="metric-delta positive">Receita por UH disponível</p>
-            </div>
-
-          </div>
-
+          </section>
         </div>
-
-
-        <!-- RODAPÉ INFORMATIVO -->
-        <div class="roadmap-block">
-          <h2>Como este simulador ajuda</h2>
-          <ul>
-            <li>✔️ Analisa a taxa de ocupação real</li>
-            <li>✔️ Calcula automaticamente ADR e RevPAR</li>
-            <li>✔️ Permite projeções para metas de vendas</li>
-            <li>🔄 Em breve: leitura automática do SQL Server (via Acumulador Lite)</li>
-          </ul>
-        </div>
-
-      </section>
-
-    </main>
+      </main>
+    </div>
   </div>
 
   <script src="/js/app.js"></script>
-
-  <!-- SCRIPT DO SIMULADOR -->
   <script>
-    document.getElementById("btnCalcular").addEventListener("click", function () {
+    document.getElementById('btnCalcularOcupacao').addEventListener('click', function () {
+      const total = Number(document.getElementById('oc_uh_total').value) || 0;
+      const ocupadas = Number(document.getElementById('oc_uh_ocupadas').value) || 0;
 
-      const total = parseFloat(document.getElementById("uhsTotal").value);
-      const ocupadas = parseFloat(document.getElementById("uhsOcupadas").value);
-      const receita = parseFloat(document.getElementById("receita").value);
-
-      if (!total || !ocupadas || !receita) {
-        alert("Preencha todos os campos!");
+      if (!total || total <= 0) {
+        alert('Informe a quantidade de UHs disponíveis.');
         return;
       }
 
-      const ocupacao = (ocupadas / total) * 100;
-      const adr = receita / ocupadas;
-      const revpar = receita / total;
-
-      document.getElementById("ocupacaoValor").textContent = ocupacao.toFixed(1) + "%";
-      document.getElementById("adrValor").textContent = "R$ " + adr.toFixed(2);
-      document.getElementById("revparValor").textContent = "R$ " + revpar.toFixed(2);
-
-      document.getElementById("resultado").style.display = "block";
-
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-
+      const taxa = (ocupadas / total) * 100;
+      document.getElementById('oc_resultado').textContent =
+        taxa.toFixed(1).replace('.', ',') + '%';
     });
   </script>
-
 </body>
 </html>
