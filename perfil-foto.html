@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Foto de Perfil</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+
+  <style>
+    .avatar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .avatar-preview {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 52px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .avatar-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar-hint {
+      font-size: 13px;
+      opacity: .7;
+      text-align: center;
+      max-width: 320px;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .btn-outline {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .status-msg {
+      margin-top: 15px;
+      font-size: 13px;
+      text-align: center;
+      opacity: .75;
+    }
+
+    .status-ok {
+      color: #00ffb4;
+    }
+
+    .status-err {
+      color: #ff6b6b;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div class="logo">🏨 MDE Hub</div>
+
+    <div class="nav-section">
+      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+      <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+      <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
+      <a href="/crm.html" class="nav-item">📘 CRM Hoteleiro</a>
+    </div>
+
+    <div class="nav-section nav-exit">
+      <a href="/perfil.html" class="nav-item">👤 Meu Perfil</a>
+      <a href="/perfil-foto.html" class="nav-item active">📷 Foto de Perfil</a>
+      <a href="/logout.html" class="nav-item">🚪 Sair</a>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="topbar">
+      <button id="btnThemeToggle">🌓</button>
+      <div class="user-badge" id="userInitial">U</div>
+    </div>
+
+    <h1 class="page-title">Foto de Perfil</h1>
+    <p class="page-subtitle">
+      Envie uma foto para personalizar sua experiência no Hub MDE.
+    </p>
+
+    <div class="card">
+      <div class="card-title">Avatar</div>
+      <p class="card-desc">
+        Imagens recomendadas: formato JPG ou PNG, até 2MB.
+      </p>
+
+      <div class="avatar-wrapper">
+        <div class="avatar-preview" id="avatarPreview">
+          <!-- Mostra inicial por padrão; depois substitui por imagem -->
+          <span id="avatarInitialBig">U</span>
+        </div>
+
+        <p class="avatar-hint">
+          Essa foto será usada no topo do sistema e em futuras áreas de identificação de usuário.
+        </p>
+
+        <input type="file" id="fileInput" class="file-input" accept="image/*" />
+
+        <div class="btn-row">
+          <button class="btn-outline" id="btnChoose">Escolher imagem</button>
+          <button class="btn-primary" id="btnUpload" disabled>Salvar foto</button>
+        </div>
+
+        <div id="statusMsg" class="status-msg"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPT -->
+  <script type="module">
+    import { supabase } from "/js/supabase.js";
+
+    const avatarPreview = document.getElementById("avatarPreview");
+    const avatarInitialBig = document.getElementById("avatarInitialBig");
+    const fileInput = document.getElementById("fileInput");
+    const btnChoose = document.getElementById("btnChoose");
+    const btnUpload = document.getElementById("btnUpload");
+    const statusMsg = document.getElementById("statusMsg");
+
+    let selectedFile = null;
+    let currentUser = null;
+
+    // Carregar usuário + avatar atual
+    async function loadUserAvatar() {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error || !user) return;
+
+      currentUser = user;
+      const email = user.email || "";
+      const initial = email.charAt(0).toUpperCase() || "U";
+      avatarInitialBig.textContent = initial;
+
+      // Busca profile para ver se tem avatar_url
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("avatar_url, full_name")
+        .eq("id", user.id)
+        .single()
+        .catch(() => ({}));
+
+      if (profile && profile.avatar_url) {
+        setPreviewImage(profile.avatar_url);
+      } else if (profile && profile.full_name) {
+        avatarInitialBig.textContent = profile.full_name.charAt(0).toUpperCase();
+      }
+    }
+
+    function setPreviewImage(url) {
+      avatarPreview.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = url;
+      avatarPreview.appendChild(img);
+    }
+
+    btnChoose.addEventListener("click", () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      if (file.size > 2 * 1024 * 1024) { // 2MB
+        statusMsg.textContent = "Arquivo muito grande. Tamanho máximo: 2MB.";
+        statusMsg.className = "status-msg status-err";
+        fileInput.value = "";
+        selectedFile = null;
+        btnUpload.disabled = true;
+        return;
+      }
+
+      selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        avatarPreview.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        avatarPreview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+
+      statusMsg.textContent = "Pré-visualização carregada. Clique em 'Salvar foto'.";
+      statusMsg.className = "status-msg";
+      btnUpload.disabled = false;
+    });
+
+    btnUpload.addEventListener("click", async () => {
+      if (!selectedFile || !currentUser) return;
+
+      statusMsg.textContent = "Enviando imagem...";
+      statusMsg.className = "status-msg";
+
+      const fileExt = selectedFile.name.split(".").pop();
+      const fileName = `user-${currentUser.id}-${Date.now()}.${fileExt}`;
+      const filePath = fileName;
+
+      // Ajuste o nome do bucket aqui, se necessário:
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, selectedFile, {
+          cacheControl: "3600",
+          upsert: true
+        });
+
+      if (uploadError) {
+        console.error(uploadError);
+        statusMsg.textContent = "Erro ao enviar imagem: " + uploadError.message;
+        statusMsg.className = "status-msg status-err";
+        return;
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(filePath);
+
+      const publicUrl = publicUrlData?.publicUrl;
+
+      if (!publicUrl) {
+        statusMsg.textContent = "Erro ao obter URL pública.";
+        statusMsg.className = "status-msg status-err";
+        return;
+      }
+
+      // Atualiza no profile
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .update({ avatar_url: publicUrl, updated_at: new Date().toISOString() })
+        .eq("id", currentUser.id);
+
+      if (profileError) {
+        console.error(profileError);
+        statusMsg.textContent = "Imagem enviada, mas houve erro ao atualizar o perfil.";
+        statusMsg.className = "status-msg status-err";
+        return;
+      }
+
+      statusMsg.textContent = "Foto atualizada com sucesso!";
+      statusMsg.className = "status-msg status-ok";
+      btnUpload.disabled = true;
+    });
+
+    loadUserAvatar();
+  </script>
+
+</body>
+</html>
