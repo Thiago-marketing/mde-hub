@@ -1,348 +1,338 @@
-/* =========================================================
-   MDE HUB • APP.CSS PREMIUM – Bills Mode Supreme
-   Estrutura base para todas as telas do Hub
-   Responsivo • Dark+Clean • Sidebar híbrida • Topbar SaaS
-========================================================= */
-
-/* ------------------------------
-   VARIÁVEIS DE TEMA
------------------------------- */
+/* -----------------------------------------------------------
+   CONFIGURAÇÃO GLOBAL
+----------------------------------------------------------- */
 :root {
-  --bg: #f8f9fb;
-  --bg-alt: #ffffff;
-  --text: #1a1a1a;
-  --text-muted: #555;
+  --radius: 12px;
+
+  /* Modo DARK (padrão) */
+  --bg-body: #0d1117;
+  --bg-card: #111722;
+  --bg-panel: #151b28;
+  --bg-sidebar: #0b0f16;
+  --bg-topbar: #10151f;
+
+  --text-main: #ffffff;
+  --text-soft: #9ca3af;
+  --text-muted: #6b7280;
+
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.25);
+
+  --border: #1e2532;
+}
+
+/* LIGHT MODE */
+[data-theme="light"] {
+  --bg-body: #f5f7fb;
+  --bg-card: #ffffff;
+  --bg-panel: #ffffff;
+  --bg-sidebar: #f0f1f5;
+  --bg-topbar: #ffffff;
+
+  --text-main: #111827;
+  --text-soft: #4b5563;
+  --text-muted: #6b7280;
+
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.15);
+
   --border: #e5e7eb;
-  --primary: #0066ff;
-  --primary-hover: #0051cc;
-
-  --sidebar-bg: #ffffff;
-  --sidebar-text: #333;
-  --sidebar-border: #e5e5e5;
-
-  --card-bg: #ffffff;
-  --card-border: #e5e5e5;
-  --card-shadow: rgba(0, 0, 0, 0.05);
 }
 
-/* ------------------------------
-   DARK THEME
------------------------------- */
-[data-theme="dark"] {
-  --bg: #0e1117;
-  --bg-alt: #161b22;
-  --text: #e5e7eb;
-  --text-muted: #8b949e;
-  --border: #1f242c;
-
-  --sidebar-bg: #111418;
-  --sidebar-text: #c9d1d9;
-  --sidebar-border: #1f242c;
-
-  --card-bg: #161b22;
-  --card-border: #1f242c;
-  --card-shadow: rgba(0, 0, 0, 0.25);
-}
-
-/* ------------------------------
-   RESET
------------------------------- */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg-body);
+  color: var(--text-main);
   overflow-x: hidden;
 }
 
-/* ------------------------------
-   LAYOUT BASE
------------------------------- */
-.layout {
+/* -----------------------------------------------------------
+   LAYOUT PRINCIPAL
+----------------------------------------------------------- */
+body {
   display: flex;
-  width: 100%;
-  min-height: 100vh;
 }
 
-/* ------------------------------
+/* -----------------------------------------------------------
    SIDEBAR PREMIUM
------------------------------- */
+----------------------------------------------------------- */
 .sidebar {
   width: 260px;
-  background: var(--sidebar-bg);
-  border-right: 1px solid var(--sidebar-border);
-  padding: 20px 0;
+  background: var(--bg-sidebar);
+  height: 100vh;
+  padding: 24px 16px;
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  transition: 0.3s ease;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
 }
 
 .sidebar-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px 20px 20px;
-  border-bottom: 1px solid var(--sidebar-border);
+  gap: 12px;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 30px;
 }
 
 .sidebar-logo {
-  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 700;
-  color: var(--sidebar-text);
-}
-
-.sidebar-toggle {
-  display: none;
+  color: #ffffff;
   font-size: 20px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: var(--text);
 }
 
-.sidebar-nav {
-  margin-top: 20px;
+.sidebar-menu {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
-.nav-separator {
-  padding: 10px 20px;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
+.sidebar-menu a {
+  padding: 12px;
+  border-radius: var(--radius);
   text-decoration: none;
-  color: var(--sidebar-text);
-  border-left: 3px solid transparent;
-  transition: 0.25s ease;
-}
-
-.nav-item:hover {
-  background: var(--bg-alt);
-  border-left: 3px solid var(--primary);
-}
-
-.nav-item.active {
-  background: var(--bg-alt);
-  border-left: 3px solid var(--primary);
-}
-
-.nav-icon {
-  font-size: 20px;
-}
-
-.nav-badge {
-  background: var(--primary);
-  color: white;
-  padding: 2px 6px;
-  font-size: 10px;
-  border-radius: 4px;
-  margin-left: auto;
-}
-
-.nav-item.disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-/* ------------------------------
-   SIDEBAR MOBILE
------------------------------- */
-@media (max-width: 830px) {
-  .sidebar {
-    position: fixed;
-    left: -260px;
-    top: 0;
-    height: 100vh;
-    z-index: 999;
-  }
-  .sidebar.open {
-    left: 0;
-  }
-  .sidebar-toggle {
-    display: inline-block;
-  }
-}
-
-/* ------------------------------
-   SIDEBAR FOOTER
------------------------------- */
-.sidebar-footer {
-  margin-top: auto;
-  padding: 20px;
-  font-size: 13px;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-/* ------------------------------
-   MAIN AREA
------------------------------- */
-.main {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ------------------------------
-   TOPBAR PREMIUM
------------------------------- */
-.topbar {
-  width: 100%;
-  padding: 20px 30px;
-  background: var(--bg-alt);
-  border-bottom: 1px solid var(--border);
+  font-size: 15px;
   display: flex;
   align-items: center;
+  gap: 10px;
+  color: var(--text-soft);
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-menu a:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.sidebar-menu a.active {
+  background: var(--accent);
+  color: white;
+}
+
+.sidebar-menu a.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.sidebar-divider {
+  margin: 15px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.logout {
+  margin-top: auto;
+  color: #ef4444 !important;
+}
+
+/* -----------------------------------------------------------
+   MAIN CONTENT
+----------------------------------------------------------- */
+.main {
+  margin-left: 260px;
+  padding: 24px;
+  width: calc(100% - 260px);
+}
+
+/* -----------------------------------------------------------
+   TOPBAR PREMIUM
+----------------------------------------------------------- */
+.topbar {
+  background: var(--bg-topbar);
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
 }
 
 .topbar-title {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
 }
 
-.topbar-subtitle {
-  font-size: 13px;
+.topbar-sub {
+  font-size: 14px;
   color: var(--text-muted);
 }
 
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
 }
 
-/* ------------------------------
-   USER BOX
------------------------------- */
+#hotelSelector {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  color: var(--text-main);
+}
+
 .user-box {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--bg);
-  padding: 8px 12px;
-  border-radius: 8px;
+  background: var(--bg-card);
+  padding: 8px 14px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
 }
 
-.user-avatar {
-  width: 34px;
-  height: 34px;
+.user-initial {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
   border-radius: 50%;
-  background: var(--primary);
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-weight: 700;
-  color: #fff;
+  align-items: center;
+  color: white;
+  font-weight: 600;
 }
 
-/* ------------------------------
-   THEME TOGGLE
------------------------------- */
-.theme-toggle {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-/* ------------------------------
-   PAGE CONTENT
------------------------------- */
-.content {
-  padding: 30px;
-}
-
-/* ------------------------------
-   GRID DE CARDS
------------------------------- */
-.grid-cards {
+/* -----------------------------------------------------------
+   GRID DO DASHBOARD
+----------------------------------------------------------- */
+.dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
 }
 
+/* -----------------------------------------------------------
+   CARDS PREMIUM
+----------------------------------------------------------- */
 .card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  padding: 25px;
-  border-radius: 14px;
-  text-decoration: none;
-  color: var(--text);
-  box-shadow: 0 4px 20px var(--card-shadow);
-  transition: 0.25s ease;
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.15s ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  border-color: var(--primary);
 }
 
-.card-disabled {
-  opacity: 0.5;
-  position: relative;
-  cursor: default;
-}
-
-.card-icon {
-  font-size: 34px;
-  margin-bottom: 12px;
-}
-
-.card-title {
-  font-size: 18px;
+.card-value {
+  font-size: 32px;
   font-weight: 700;
 }
 
 .card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* -----------------------------------------------------------
+   PANELS (grandes)
+----------------------------------------------------------- */
+.panel-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.panel {
+  background: var(--bg-panel);
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.chart-placeholder {
+  height: 180px;
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  margin-top: 20px;
+}
+
+/* -----------------------------------------------------------
+   TABELAS PREMIUM
+----------------------------------------------------------- */
+.table {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
   font-size: 14px;
-  color: var(--text-muted);
-  margin-top: 6px;
 }
 
-.badge-futuro {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 4px 8px;
-  font-size: 11px;
-  color: white;
-  background: var(--primary);
-  border-radius: 6px;
+.table thead {
+  background: var(--bg-card);
 }
 
-/* ------------------------------
-   ROADMAP BLOCK
------------------------------- */
-.roadmap-block {
-  margin-top: 40px;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  padding: 25px;
-  border-radius: 14px;
+.table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-soft);
+  border-bottom: 1px solid var(--border);
 }
 
-.roadmap-block h2 {
-  font-size: 20px;
-  margin-bottom: 15px;
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
 }
 
-.roadmap-block li {
-  padding: 6px 0;
-  color: var(--text-muted);
+.table tr:hover td {
+  background: rgba(255,255,255,0.03);
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVIDADE
+----------------------------------------------------------- */
+@media (max-width: 900px) {
+  .panel-row {
+    grid-template-columns: 1fr;
+  }
+
+  .main {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    position: absolute;
+    left: -260px;
+    transition: left 0.25s ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .main {
+    margin-left: 0;
+    width: 100%;
+  }
 }
