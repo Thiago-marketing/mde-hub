@@ -1,123 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Mapa de UHs</title>
-  <link rel="stylesheet" href="/css/app.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MDE Hub • UHs</title>
+  <link rel="stylesheet" href="/css/app.css">
 </head>
 
 <body>
+<div class="layout">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <div class="user-initial">M</div>
-      <div class="sidebar-brand">MDE Hub</div>
+      <div class="avatar">M</div>
+      <span>MDE Hub</span>
     </div>
 
-    <nav class="sidebar-nav">
+    <nav class="sidebar-menu">
       <a href="/dashboard.html">📊 Dashboard</a>
       <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🛎️ Reservas</a>
+      <a href="/reservas.html">🔑 Reservas</a>
       <a href="/financeiro.html">💰 Financeiro</a>
-      <a href="/simuladores.html">🧮 Simuladores</a>
-
-      <a href="/uhs.html" class="active">🛏️ Unidades Habitacionais (UH)</a>
-
-      <div class="separator"></div>
-      <a class="disabled">📘 CRM Hoteleiro • Em breve</a>
-      <a class="disabled">📝 Proposta IA • Em breve</a>
-
-      <div class="separator"></div>
-      <a href="#" id="logoutBtn" class="logout">🚪 Sair</a>
+      <a href="/simuladores.html">📐 Simuladores</a>
+      <a>📘 CRM Hoteleiro • Em breve</a>
+      <a>📄 Proposta IA • Em breve</a>
     </nav>
+
+    <div class="sidebar-footer">
+      <a id="logoutBtn">🚪 Sair</a>
+    </div>
   </aside>
 
-  <!-- MAIN -->
-  <main class="main">
+  <main class="content">
+    <div class="top-right">
+      <select class="hotel-select" id="hotelSelect"></select>
+      <div class="user-badge" id="userBadge">U</div>
+    </div>
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <div>
-        <h1 class="page-title">Mapa de UHs</h1>
-        <p class="page-subtitle">Situação atual de cada unidade habitacional.</p>
+    <h1>Unidades Habitacionais</h1>
+    <p class="content-subtitle">
+      Mapa simples das UHs, tipos e status em tempo real.
+    </p>
+
+    <div class="grid grid-3" id="uhs_resumo">
+      <div class="card">
+        <div class="card-title">Total de UHs</div>
+        <div class="card-value" id="uh_total">--</div>
+        <p class="text-muted">Todas as unidades cadastradas</p>
       </div>
 
-      <div class="topbar-right">
-        <select id="hotelSelect" class="hotel-select">
-          <option>Carregando hotéis...</option>
-        </select>
-
-        <div class="user-profile">
-          <span id="userInitial">U</span>
-          <div>
-            <p id="userName">Carregando...</p>
-            <p id="userEmail"></p>
-          </div>
-        </div>
+      <div class="card">
+        <div class="card-title">Ocupadas</div>
+        <div class="card-value" id="uh_ocupadas">--</div>
+        <p class="text-muted">Em estadia</p>
       </div>
-    </header>
 
-    <!-- STATUS LEGEND -->
-    <section class="panel">
-      <h2>Legenda de Status</h2>
-
-      <div class="legend-row">
-        <span class="legend status-clean">Limpo</span>
-        <span class="legend status-dirty">Sujo</span>
-        <span class="legend status-occupied">Ocupado</span>
-        <span class="legend status-maintenance">Manutenção</span>
-        <span class="legend status-inspection">Inspeção</span>
+      <div class="card">
+        <div class="card-title">Disponíveis</div>
+        <div class="card-value" id="uh_disponiveis">--</div>
+        <p class="text-muted">Prontas para vender</p>
       </div>
-    </section>
+    </div>
 
-    <!-- MAPA DE UHS -->
-    <section class="panel">
-      <h2>Unidades Habitacionais</h2>
-
-      <div class="uh-grid">
-
-        <!-- EXEMPLOS – serão substituídos pelo SQL futuramente -->
-
-        <div class="uh-card status-clean">
-          <h3>UH 101</h3>
-          <p class="uh-type">Standard</p>
-          <span class="status-badge clean">LIMPO</span>
-        </div>
-
-        <div class="uh-card status-occupied">
-          <h3>UH 102</h3>
-          <p class="uh-type">Luxo</p>
-          <span class="status-badge occupied">OCUPADO</span>
-        </div>
-
-        <div class="uh-card status-dirty">
-          <h3>UH 103</h3>
-          <p class="uh-type">Standard</p>
-          <span class="status-badge dirty">SUJO</span>
-        </div>
-
-        <div class="uh-card status-maintenance">
-          <h3>UH 104</h3>
-          <p class="uh-type">Master</p>
-          <span class="status-badge maintenance">MANUTENÇÃO</span>
-        </div>
-
-        <div class="uh-card status-clean">
-          <h3>UH 105</h3>
-          <p class="uh-type">Standard</p>
-          <span class="status-badge clean">LIMPO</span>
-        </div>
-
+    <div class="card" style="margin-top:30px;">
+      <div class="card-title">Lista de UHs</div>
+      <div id="uhs_lista">
+        Tabela / cards serão carregados aqui pelo app.js.
       </div>
-    </section>
+    </div>
 
   </main>
 
-  <script src="/js/supabase.js"></script>
-  <script src="/js/app.js"></script>
+</div>
 
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>
-
