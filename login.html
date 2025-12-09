@@ -6,13 +6,16 @@
   <title>MDE Hub • Login</title>
   <link rel="stylesheet" href="/css/auth.css" />
 </head>
+
 <body>
   <div class="auth-wrapper">
     <div class="auth-card">
+
       <div class="auth-logo">
         <span class="auth-logo-mark">M</span>
         <span class="auth-logo-text">MDE Hub</span>
       </div>
+
       <h1>Acessar MDE Hub</h1>
       <p class="auth-subtitle">Use seu e-mail e senha para entrar.</p>
 
@@ -21,16 +24,21 @@
           <label for="email">E-mail</label>
           <input id="email" type="email" autocomplete="email" required />
         </div>
+
         <div class="form-group">
           <label for="password">Senha</label>
           <input id="password" type="password" autocomplete="current-password" required />
         </div>
+
         <button type="submit" class="btn-primary full">Entrar</button>
       </form>
+
       <p class="auth-footer">Versão demo • Supabase Auth + MDE Hub</p>
     </div>
   </div>
 
+  <!-- Ordem correta dos scripts -->
+  <script type="module" src="/js/supabase.js"></script>
   <script type="module" src="/js/auth.js"></script>
 </body>
 </html>
