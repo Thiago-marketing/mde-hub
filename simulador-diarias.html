@@ -3,81 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Simulador de Diárias</title>
+  <title>MDE Hub • Simulador Diárias Necessárias</title>
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <!-- sidebar -->
-    </aside>
 
-    <div class="main-area">
-      <header class="topbar">
-        <div class="topbar-breadcrumb">
-          <span class="crumb-section">MDE Hub</span>
-          <span class="crumb-separator">•</span>
-          <span class="crumb-page">Diárias necessárias</span>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header"><div class="user-initial">M</div><div class="sidebar-brand">MDE Hub</div></div>
+    <nav class="sidebar-nav">
+      <a href="/dashboard.html">📊 Dashboard</a>
+      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">🛎️ Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a href="/simuladores.html" class="active">🧮 Simuladores</a>
+      <div class="separator"></div>
+      <a class="disabled">📘 CRM Hoteleiro • Em breve</a>
+      <a class="disabled">📝 Proposta IA • Em breve</a>
+      <div class="separator"></div>
+      <a href="#" id="logoutBtn" class="logout">🚪 Sair</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 class="page-title">Simulador de Diárias Necessárias</h1>
+        <p class="page-subtitle">Calcule quantas diárias são necessárias para atingir uma meta.</p>
+      </div>
+      <div class="topbar-right">
+        <select id="hotelSelect" class="hotel-select"><option>Carregando hotéis...</option></select>
+        <div class="user-profile"><span id="userInitial">U</span><div><p id="userName">Carregando...</p><p id="userEmail"></p></div></div>
+      </div>
+    </header>
+
+    <section class="panel">
+      <h2>Preencha os dados</h2>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Meta de Receita (R$)</label>
+          <input type="number" id="meta" placeholder="Ex: 20.000" />
         </div>
-        <div class="topbar-actions">
-          <button class="chip ghost" id="themeToggle">
-            <span class="chip-dot"></span>
-            Tema
-          </button>
+
+        <div class="form-group">
+          <label>ADR Estimado (R$)</label>
+          <input type="number" id="adr" placeholder="Ex: 220" />
         </div>
-      </header>
+      </div>
 
-      <main class="content">
-        <section class="page-header">
-          <h1>Simulador de Diárias necessárias</h1>
-          <p>Descubra quantas diárias são necessárias para bater a meta de faturamento.</p>
-        </section>
+      <button class="btn-primary" onclick="calcDiarias()">Calcular Diárias Necessárias</button>
 
-        <div class="grid-2">
-          <section class="section">
-            <div class="card form-card">
-              <div class="form-group">
-                <label for="dn_meta_faturamento">Meta de faturamento (R$)</label>
-                <input type="number" id="dn_meta_faturamento" min="0" step="0.01" value="50000" />
-              </div>
-              <div class="form-group">
-                <label for="dn_adr">ADR (diária média)</label>
-                <input type="number" id="dn_adr" min="1" step="0.01" value="250" />
-              </div>
-              <button id="btnCalcularDiarias" class="btn-primary full">
-                Calcular diárias necessárias
-              </button>
-            </div>
-          </section>
+      <div class="result-box" id="resultDiarias"></div>
+    </section>
 
-          <section class="section">
-            <div class="card kpi-card big">
-              <header><p class="kpi-label">Diárias necessárias</p></header>
-              <p class="kpi-value" id="dn_resultado">200</p>
-              <p class="kpi-meta">
-                Diárias necessárias = Meta de faturamento ÷ ADR.
-              </p>
-            </div>
-          </section>
-        </div>
-      </main>
-    </div>
-  </div>
+  </main>
 
-  <script src="/js/app.js"></script>
   <script>
-    document.getElementById('btnCalcularDiarias').addEventListener('click', function () {
-      const meta = Number(document.getElementById('dn_meta_faturamento').value) || 0;
-      const adr = Number(document.getElementById('dn_adr').value) || 0;
+    function calcDiarias() {
+      const meta = parseFloat(document.getElementById('meta').value);
+      const adr = parseFloat(document.getElementById('adr').value);
 
-      if (!adr || adr <= 0) {
-        alert('Informe uma ADR válida.');
+      if (!meta || !adr) {
+        document.getElementById('resultDiarias').innerHTML = "<p class='error'>Preencha todos os campos.</p>";
         return;
       }
 
       const diarias = meta / adr;
-      document.getElementById('dn_resultado').textContent = diarias.toFixed(0);
-    });
+
+      document.getElementById('resultDiarias').innerHTML = `
+        <h3>Resultado</h3>
+        <p class='value-highlight'>Diárias Necessárias: ${Math.ceil(diarias)}</p>
+      `;
+    }
   </script>
+
+  <script src="/js/supabase.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
