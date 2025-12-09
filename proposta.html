@@ -1,111 +1,101 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Simulador de Tarifas • MDE Hub</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Proposta Hoteleira IA</title>
+  <link rel="stylesheet" href="/css/app.css" />
 </head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <!-- mesma sidebar -->
+    </aside>
 
-<body class="page">
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">T</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-breadcrumb">
+          <span class="crumb-section">MDE Hub</span>
+          <span class="crumb-separator">•</span>
+          <span class="crumb-page">Proposta Hoteleira (IA)</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="chip ghost" id="themeToggle">
+            <span class="chip-dot"></span>
+            Tema
+          </button>
+          <div class="env-pill">
+            <span class="env-label">Fase</span>
+            <span class="env-value">3 • PropostaIA</span>
+          </div>
+          <div class="user-pill">
+            <div class="user-avatar">BR</div>
+            <div class="user-meta">
+              <span class="user-name">Bruno</span>
+              <span class="user-role">Diretoria</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="page-header">
+          <h1>Proposta Hoteleira — IA</h1>
+          <p>
+            Módulo focado em criar propostas inteligentes, bonitas e vendedoras, conectadas ao
+            CRM, simuladores e reservas diretas.
+          </p>
+        </section>
+
+        <section class="section">
+          <div class="card attention-banner">
+            <h2>Módulo em desenvolvimento</h2>
+            <p>
+              Esta é uma <strong>pré-visualização</strong> do que será o PropostaIA
+              dentro do Hub MDE. Ideal para apresentar visão de produto e aprovar roadmap.
+            </p>
+          </div>
+        </section>
+
+        <div class="grid-2">
+          <section class="section">
+            <div class="section-header">
+              <h2>Estrutura da proposta</h2>
+            </div>
+            <div class="card">
+              <ul class="bullet-list">
+                <li>Resumo da oferta com storytelling do hotel.</li>
+                <li>Comparação de planos (ex.: Standard, Luxo, Experiência Romântica).</li>
+                <li>Benefícios exclusivos para reservas diretas.</li>
+                <li>Bloco de preço claro e objetivo (sem “pegadinha”).</li>
+                <li>CTA com link para confirmação imediata.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-header">
+              <h2>IA a favor da conversão</h2>
+            </div>
+            <div class="card">
+              <p>A PropostaIA deverá:</p>
+              <ul class="bullet-list">
+                <li>Gerar texto sob medida para o perfil do hóspede.</li>
+                <li>Adaptar o tom (família, casal, corporativo, grupo).</li>
+                <li>Recomendar upgrades e experiências adicionais.</li>
+                <li>Registrar abertura, cliques e conversão da proposta.</li>
+              </ul>
+              <p class="card-note">
+                Até entrar em produção, esta tela serve como referência visual e funcional para
+                o escopo do módulo.
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
-    <button id="logoutBtn" class="btn-sair">Sair</button>
-  </header>
+  </div>
 
-<aside class="sidebar">
-
-  <h3>Operação</h3>
-  <nav>
-    <a href="/dashboard.html">Dashboard</a>
-    <a href="/reservas.html">Reservas</a>
-    <a href="/checkin.html">Check-in</a>
-    <a href="/checkout.html">Check-out</a>
-    <a href="/uhs.html">Unidades Habitacionais</a>
-    <a href="/financeiro.html">Financeiro</a>
-    <a href="/config.html">Configurações</a>
-  </nav>
-
-  <h3>Simuladores</h3>
-  <nav>
-    <a href="/simuladores.html">Tela Principal</a>
-    <a href="/sim-faturamento.html">Simulador de Faturamento</a>
-    <a href="/sim-ota.html">Simulador OTA</a>
-    <a href="/sim-tarifa.html">Simulador Tarifa Ideal</a>
-    <a href="/sim-adr-ideal.html">Simulador ADR Ideal</a>
-    <a href="/sim-revpar.html">Simulador RevPAR</a>
-    <a href="/sim-checkin.html">Simulador Check-in (Tempo/Custo)</a>
-
-    <!-- Pendentes – serão criados amanhã -->
-    <a href="/sim-margem.html">Simulador Margem de Lucro</a>
-    <a href="/sim-breakeven.html">Simulador Break-even</a>
-    <a href="/sim-ocupacao-meta.html">Simulador Ocupação Meta</a>
-    <a href="/sim-conversao.html">Simulador Conversão WhatsApp</a>
-  </nav>
-
-  <h3>CRM</h3>
-  <nav>
-    <a href="/crm-dashboard.html">Painel CRM</a>
-    <a href="/leads.html">Leads</a>
-    <a href="/crm-kanban.html">Kanban</a>
-    <a href="/crm-atividades.html">Atividades</a>
-  </nav>
-
-  <h3>Admin</h3>
-  <nav>
-    <a href="/checklist-governanca.html">Checklist Governança</a>
-    <a href="/auditoria.html">Auditoria</a>
-    <a href="/relatorios.html">Relatórios</a>
-  </nav>
-
-</aside>
-
-  <main class="content">
-    <h1>Simulador de Tarifas</h1>
-    <p class="subtitle">Calcule o valor total de uma reserva rapidamente.</p>
-
-    <form class="card" id="tarifaForm">
-      <div class="form-group">
-        <label>Valor da diária (R$)</label>
-        <input type="number" id="diaria" min="50" value="150" required>
-      </div>
-
-      <div class="form-group">
-        <label>Noites</label>
-        <input type="number" id="noites" min="1" value="1" required>
-      </div>
-
-      <div class="form-group">
-        <label>Taxa (% opcional)</label>
-        <input type="number" id="taxa" value="0">
-      </div>
-
-      <button type="submit" class="btn-primary">Calcular</button>
-    </form>
-
-    <div id="resTarifa" class="result-card" style="display:none;">
-      <h2>Resultado</h2>
-      <p><strong>Total:</strong> R$ <span id="tarifaTotal"></span></p>
-    </div>
-  </main>
-
-  <script src="js/supabase.js"></script>
-  <script src="js/app-common.js"></script>
-  <script>
-    tarifaForm.addEventListener("submit", e => {
-      e.preventDefault();
-      let total = diaria.value * noites.value;
-      if (taxa.value > 0) total += total * (taxa.value / 100);
-
-      tarifaTotal.textContent = total.toFixed(2);
-      resTarifa.style.display = "block";
-    });
-  </script>
+  <script src="/js/app.js"></script>
 </body>
 </html>
