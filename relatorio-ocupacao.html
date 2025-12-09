@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Relatório de Ocupação</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+</head>
+
+<body>
+
+<!-- BOTÃO MOBILE -->
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo">🏨 MDE Hub</div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+    <a href="/fechamento.html" class="nav-item">🧾 Fechamento</a>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
+    <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa UHs</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">Simuladores</div>
+    <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a class="nav-item disabled">📘 Em breve</a>
+    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button id="btnThemeToggle">🌓</button>
+    <div class="user-badge" id="userInitial">U</div>
+  </div>
+
+  <h1 class="page-title">Relatório de Ocupação</h1>
+  <p class="page-subtitle">Indicadores detalhados da taxa de ocupação por período</p>
+
+  <!-- FILTROS -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Filtros Avançados</div>
+
+      <label>Data Inicial</label>
+      <input type="date" id="dataInicial">
+
+      <label>Data Final</label>
+      <input type="date" id="dataFinal">
+
+      <label>Agrupamento</label>
+      <select id="agrupamento">
+        <option value="dia">Por dia</option>
+        <option value="semana">Por semana</option>
+        <option value="mes">Por mês</option>
+      </select>
+
+      <button class="btn-primary full">Aplicar Filtros</button>
+    </div>
+  </div>
+
+  <!-- INDICADORES -->
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-title">Taxa Média do Período</div>
+      <div class="card-value">--%</div>
+      <div class="card-desc">Média ponderada do intervalo selecionado</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Maior Ocupação</div>
+      <div class="card-value">--%</div>
+      <div class="card-desc">Melhor dia do período</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Menor Ocupação</div>
+      <div class="card-value">--%</div>
+      <div class="card-desc">Pior dia do período</div>
+    </div>
+
+  </div>
+
+  <!-- GRÁFICO -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Gráfico de Ocupação</div>
+      <div class="chart-placeholder">Gráfico aqui...</div>
+    </div>
+  </div>
+
+  <!-- TABELA DETALHADA -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Tabela Detalhada</div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>UH's Ocupadas</th>
+            <th>Total UH's</th>
+            <th>Taxa de Ocupação</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaOcupacao">
+          <tr><td colspan="4">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // MOCK TEMPORÁRIO ATÉ INTEGRAR COM ACUMULADOR
+  const mockOcupacao = [
+    { data: "2025-12-01", ocupadas: 28, total: 40 },
+    { data: "2025-12-02", ocupadas: 35, total: 40 },
+    { data: "2025-12-03", ocupadas: 31, total: 40 },
+    { data: "2025-12-04", ocupadas: 22, total: 40 },
+    { data: "2025-12-05", ocupadas: 18, total: 40 },
+  ];
+
+  function renderTabela() {
+    const tbody = document.getElementById("tabelaOcupacao");
+    tbody.innerHTML = "";
+
+    mockOcupacao.forEach(d => {
+      const taxa = ((d.ocupadas / d.total) * 100).toFixed(1) + "%";
+
+      tbody.innerHTML += `
+        <tr>
+          <td>${new Date(d.data).toLocaleDateString()}</td>
+          <td>${d.ocupadas}</td>
+          <td>${d.total}</td>
+          <td>${taxa}</td>
+        </tr>
+      `;
+    });
+  }
+
+  renderTabela();
+</script>
+
+</body>
+</html>
