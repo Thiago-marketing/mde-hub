@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Primeiro Acesso</title>
+
+  <link rel="stylesheet" href="/css/auth.css" />
+
+  <style>
+    .sub {
+      font-size: 15px;
+      opacity: .8;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .checkbox-row {
+      margin-top: 10px;
+      font-size: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .checkbox-row input {
+      margin-top: 2px;
+      width: auto;
+    }
+
+    .btn-secondary {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 13px;
+      opacity: .6;
+      text-align: center;
+    }
+
+    .success-box {
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(0,255,160,0.12);
+      border-radius: 10px;
+      border: 1px solid rgba(0,255,160,0.3);
+      color: #00ffb4;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        <span class="auth-logo-mark">M</span>
+        <span class="auth-logo-text">MDE Hub</span>
+      </div>
+
+      <h1>Primeiro acesso</h1>
+      <p class="sub">
+        Só mais um passo!<br>
+        Complete seus dados básicos para personalizarmos sua experiência no Hub.
+      </p>
+
+      <form id="firstAccessForm">
+        <div class="form-group">
+          <label for="fullName">Nome completo</label>
+          <input id="fullName" type="text" required autocomplete="name" />
+        </div>
+
+        <div class="two-cols">
+          <div class="form-group">
+            <label for="phone">Celular / WhatsApp</label>
+            <input id="phone" type="tel" placeholder="(XX) 99999-9999" autocomplete="tel" />
+          </div>
+
+            <div class="form-group">
+              <label for="role">Função</label>
+              <select id="role">
+                <option value="">Selecione...</option>
+                <option>Proprietário(a)</option>
+                <option>Gerente</option>
+                <option>Recepção</option>
+                <option>Reservas</option>
+                <option>Financeiro</option>
+                <option>Marketing/Vendas</option>
+                <option>Outro</option>
+              </select>
+            </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="acceptMkt" checked />
+          <label for="acceptMkt">
+            Aceito receber conteúdos, materiais e novidades da MDE relacionados à gestão hoteleira.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary full">Salvar e continuar</button>
+      </form>
+
+      <button id="skipBtn" class="btn-secondary">
+        Pular por enquanto
+      </button>
+
+      <div id="successBox" class="success-box">
+        Dados salvos com sucesso! Redirecionando...
+      </div>
+
+      <p class="note">
+        Você poderá atualizar essas informações depois em Perfil &gt; Conta.
+      </p>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase } from "/js/supabase.js";
+
+    const form = document.getElementById("firstAccessForm");
+    const skipBtn = document.getElementById("skipBtn");
+    const successBox = document.getElementById("successBox");
+
+    async function saveProfile(fullName, phone, role, acceptsMarketing, skip = false) {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) {
+        alert("Não foi possível carregar o usuário. Faça login novamente.");
+        window.location.href = "/login.html";
+        return;
+      }
+
+      // Ajuste o nome da tabela/colunas aqui se for diferente:
+      const { error } = await supabase.from("profiles").upsert({
+        id: user.id,
+        full_name: fullName || null,
+        phone: phone || null,
+        role: role || null,
+        accepts_marketing: acceptsMarketing,
+        updated_at: new Date().toISOString()
+      });
+
+      if (error) {
+        console.error(error);
+        alert("Erro ao salvar dados de perfil: " + error.message);
+        return;
+      }
+
+      successBox.style.display = "block";
+
+      setTimeout(() => {
+        // Marca que já passou pelo primeiro acesso
+        localStorage.setItem("first_access_done", "yes");
+        window.location.href = "/onboarding.html";
+      }, 1500);
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const role = document.getElementById("role").value;
+      const acceptsMarketing = document.getElementById("acceptMkt").checked;
+
+      if (!fullName) {
+        alert("Por favor, informe seu nome completo.");
+        return;
+      }
+
+      await saveProfile(fullName, phone, role, acceptsMarketing, false);
+    });
+
+    skipBtn.addEventListener("click", async () => {
+      // Se pular, ainda assim podemos gravar flag mínima
+      await saveProfile(null, null, null, false, true);
+    });
+  </script>
+
+</body>
+</html>
