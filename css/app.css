@@ -1,241 +1,218 @@
 /* -----------------------------------------------------------
-    RESET & TOKENS
+   RESET
 ----------------------------------------------------------- */
-*, *::before, *::after {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --bg-sidebar: #0d1117;
-  --bg-content: #0e131a;
-  --bg-card: #111821;
-  --bg-hover: #1a2330;
-
-  --text-main: #e6edf3;
-  --text-muted: #9ba5b4;
-  --text-accent: #58a6ff;
-
-  --border-soft: #1f2a37;
-  --radius: 14px;
-
-  --transition: .25s ease;
-  --shadow: rgba(0,0,0,.2) 0px 8px 32px;
+html {
+  scroll-behavior: smooth;
 }
 
-[data-theme="light"] {
-  --bg-sidebar: #f5f7fa;
-  --bg-content: #fff;
-  --bg-card: #fafafa;
-  --bg-hover: #eef1f6;
-
-  --text-main: #1a1a1a;
-  --text-muted: #555;
-  --text-accent: #0060df;
-
-  --border-soft: #dcdcdc;
-}
-
-/* BODY BASE */
 body {
-  font-family: system-ui, "Segoe UI", sans-serif;
-  background: var(--bg-content);
-  color: var(--text-main);
-  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   display: flex;
-}
-
-/* -----------------------------------------------------------
-    LAYOUT PRINCIPAL
------------------------------------------------------------ */
-.layout {
-  display: flex;
-  width: 100%;
   height: 100vh;
+  overflow: hidden;
 }
 
 /* -----------------------------------------------------------
-    SIDEBAR PREMIUM
+   THEMES
+----------------------------------------------------------- */
+:root {
+  --bg: #0c1117;
+  --bg-light: #111821;
+  --card: #141b26;
+  --text: #e9eef5;
+  --text-muted: #9ba3b4;
+  --primary: #4da3fa;
+  --hover: #1a2433;
+  --border: #223043;
+}
+
+[data-theme='clean'] {
+  --bg: #f3f6fc;
+  --bg-light: #ffffff;
+  --card: #ffffff;
+  --text: #1d1f22;
+  --text-muted: #5b616e;
+  --primary: #0066ff;
+  --hover: #e5ecff;
+  --border: #d7dce5;
+}
+
+/* -----------------------------------------------------------
+   SIDEBAR
 ----------------------------------------------------------- */
 .sidebar {
-  width: 250px;
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border-soft);
-  padding: 24px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
+  width: 260px;
+  background: var(--bg-light);
+  padding: 25px 20px;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
 }
 
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 600;
-  font-size: 18px;
-}
-
-.sidebar-header .avatar {
-  width: 40px;
-  height: 40px;
-  background: var(--text-accent);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.sidebar .brand {
+  font-size: 22px;
   font-weight: 700;
+  margin-bottom: 30px;
 }
 
-/* MENU LIST */
-.sidebar-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.sidebar-menu a {
-  text-decoration: none;
-  color: var(--text-main);
+.nav-item {
   padding: 12px 14px;
-  border-radius: var(--radius);
+  border-radius: 10px;
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 15px;
-  transition: var(--transition);
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.sidebar-menu a:hover {
-  background: var(--bg-hover);
+.nav-item:hover {
+  background: var(--hover);
 }
 
-.sidebar-menu a.active {
-  background: var(--bg-hover);
-  color: var(--text-accent);
-  font-weight: 600;
-}
-
-/* FOOTER */
-.sidebar-footer {
-  margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-soft);
-}
-
-.sidebar-footer a {
-  color: #ff6b6b;
+.nav-item.active {
+  background: var(--primary);
+  color: #fff;
 }
 
 /* -----------------------------------------------------------
-    CONTENT AREA PREMIUM
+   TOPBAR
 ----------------------------------------------------------- */
-.content {
-  margin-left: 250px;
-  padding: 40px 52px;
-  width: calc(100% - 250px);
-}
-
-.content h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.content-subtitle {
-  color: var(--text-muted);
-  margin-bottom: 30px;
-}
-
-/* -----------------------------------------------------------
-    CARDS GRID PREMIUM
------------------------------------------------------------ */
-.grid {
-  display: grid;
-  gap: 22px;
-}
-
-.grid-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.grid-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-@media (max-width: 900px) {
-  .grid-3, .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* CARD */
-.card {
-  background: var(--bg-card);
-  padding: 28px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-soft);
-  box-shadow: var(--shadow);
-}
-
-.card-title {
-  font-size: 20px;
-  margin-bottom: 6px;
-}
-
-.card-value {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-/* -----------------------------------------------------------
-    SELECT HOTEL + USER BADGE
------------------------------------------------------------ */
-.top-right {
+.topbar {
+  width: 100%;
+  height: 70px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
   display: flex;
-  gap: 14px;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 30px;
-}
-
-.hotel-select {
-  padding: 10px 14px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-soft);
-  background: var(--bg-card);
-  color: var(--text-main);
+  padding: 0 25px;
 }
 
 .user-badge {
-  background: var(--text-accent);
-  color: white;
-  padding: 10px 16px;
-  border-radius: var(--radius);
-  font-weight: 600;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.theme-toggle {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text);
 }
 
 /* -----------------------------------------------------------
-    BUTTONS PREMIUM
+   LAYOUT
 ----------------------------------------------------------- */
-.btn {
-  padding: 12px 18px;
-  background: var(--text-accent);
-  border-radius: var(--radius);
-  color: white;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  font-weight: 600;
-  transition: var(--transition);
+.main-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px 40px;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-  opacity: .9;
+/* -----------------------------------------------------------
+   TITLES
+----------------------------------------------------------- */
+.page-title {
+  font-size: 38px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.page-sub {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+/* -----------------------------------------------------------
+   CARDS
+----------------------------------------------------------- */
+.card {
+  background: var(--card);
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  margin-bottom: 6px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+/* -----------------------------------------------------------
+   SIMULATORS
+----------------------------------------------------------- */
+.sim-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.sim-btn {
+  background: var(--primary);
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.result-box {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 14px;
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVE
+----------------------------------------------------------- */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+  body {
+    flex-direction: column;
+  }
+  .main-area {
+    padding: 20px;
+  }
+  .grid-3, .grid-2 {
+    grid-template-columns: 1fr;
+  }
 }
