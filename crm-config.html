@@ -6,7 +6,6 @@
   <title>MDE Hub • Configurações CRM</title>
 
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/app.js"></script>
 
   <style>
     .section-title {
@@ -75,81 +74,23 @@
       margin-top: 15px;
     }
   </style>
-
 </head>
 
 <body>
 
-<!-- MENU MOBILE -->
-<div id="btnSidebarToggle">☰</div>
-
-<!-- SIDEBAR -->
-<div id="sidebar">
-  <div class="logo">🏨 MDE Hub</div>
-
-  <div class="nav-section">
-    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
-    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
-    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
-    <a href="/simuladores.html" class="nav-item">📐 Simuladores</a>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-title">CRM Hoteleiro</div>
-    <a href="/crm.html" class="nav-item">📘 Funil</a>
-    <a href="/crm-contatos.html" class="nav-item">📇 Contatos</a>
-    <a href="/crm-atividades.html" class="nav-item">📝 Atividades</a>
-    <a class="nav-item active">⚙️ Configurações</a>
-  </div>
-
-  <div class="nav-section nav-exit">
-    <a href="/logout.html" class="nav-item">🚪 Sair</a>
-  </div>
-</div>
-
 <!-- BOTÃO DO MENU MOBILE -->
 <div id="btnSidebarToggle">☰</div>
 
+<!-- SIDEBAR DINÂMICA -->
 <div id="sidebar-container"></div>
+
 <!-- CONTEÚDO PRINCIPAL -->
 <main class="main-area">
 
   <header class="page-header">
-    <h1 class="page-title">📌 Atividades</h1>
-    <p class="page-subtitle">Veja todas as interações, eventos, follow-ups e compromissos do CRM.</p>
+    <h1 class="page-title">⚙️ Configurações do CRM</h1>
+    <p class="page-subtitle">Personalize funil, automações e inteligência comportamental.</p>
   </header>
-
-  <section class="card">
-    <h2 class="card-title">Atividades Recentes</h2>
-
-    <div class="activity-list">
-      <!-- placeholder -->
-      <p class="muted">Nenhuma atividade registrada ainda.</p>
-    </div>
-  </section>
-
-</main>
-
-<!-- SCRIPTS -->
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
-<script type="module" src="/js/crm.js"></script>
-
-<!-- INCLUIR SIDEBAR -->
-<script>
-  fetch("/partials/sidebar.html")
-    .then(res => res.text())
-    .then(html => {
-      document.querySelector("#sidebar-container").innerHTML = html;
-    });
-</script>
-
-  <h1 class="page-title">Configurações do CRM</h1>
-  <p class="page-subtitle">Personalize seu funil, automações e preferências</p>
 
   <!-- FUNIL -->
   <h2 class="section-title">Etapas do Funil</h2>
@@ -171,23 +112,21 @@
   <h2 class="section-title">Origens de Contato</h2>
 
   <div class="config-box">
-    <div class="config-group">
-      <label class="config-label">Selecione as origens que deseja usar:</label>
+    <label class="config-label">Selecione as origens disponíveis:</label>
 
-      <label><input type="checkbox" checked /> WhatsApp</label><br>
-      <label><input type="checkbox" checked /> Site</label><br>
-      <label><input type="checkbox" checked /> Instagram</label><br>
-      <label><input type="checkbox" /> Facebook</label><br>
-      <label><input type="checkbox" /> Indicação</label><br>
-      <label><input type="checkbox" /> OTA (Booking/Airbnb)</label><br>
-    </div>
+    <label><input type="checkbox" checked /> WhatsApp</label><br>
+    <label><input type="checkbox" checked /> Site</label><br>
+    <label><input type="checkbox" checked /> Instagram</label><br>
+    <label><input type="checkbox" /> Facebook</label><br>
+    <label><input type="checkbox" /> Indicação</label><br>
+    <label><input type="checkbox" /> OTA (Booking/Airbnb)</label><br>
   </div>
 
   <!-- RESPOSTAS RÁPIDAS -->
   <h2 class="section-title">Respostas Rápidas</h2>
 
   <div class="config-box">
-    <textarea placeholder="Digite aqui suas mensagens prontas para agilizar atendimentos..."></textarea>
+    <textarea placeholder="Digite mensagens prontas para agilizar atendimentos..."></textarea>
   </div>
 
   <!-- NOTIFICAÇÕES -->
@@ -199,7 +138,7 @@
     <label><input type="checkbox" /> Lead quente (IA Whis)</label><br>
   </div>
 
-  <!-- TAGS COMPORTAMENTAIS -->
+  <!-- TAGS DE IA -->
   <h2 class="section-title">Tags Inteligentes (IA Whis)</h2>
 
   <div class="config-box">
@@ -215,7 +154,21 @@
 
   <button class="btn-save">Salvar Configurações</button>
 
-</div>
+</main>
+
+<!-- SCRIPTS -->
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/crm.js"></script>
+
+<!-- INCLUIR SIDEBAR -->
+<script>
+  fetch("/partials/sidebar.html")
+    .then(r => r.text())
+    .then(html => {
+      document.querySelector("#sidebar-container").innerHTML = html;
+    });
+</script>
 
 </body>
 </html>
