@@ -1,218 +1,216 @@
-/* -----------------------------------------------------------
-   RESET
------------------------------------------------------------ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+// /js/app.js
+// MDE Hub • Layout + Tema + Navegação + Simuladores
+// (versão premium inicial, sem dependência direta do Supabase ainda)
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: "Segoe UI", system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  initSidebarActive();
+  initUserBadge();
+  initHotelPlaceholder();
+  initSimulators();
+});
 
 /* -----------------------------------------------------------
-   THEMES
+   TEMA (DARK / CLEAN)
 ----------------------------------------------------------- */
-:root {
-  --bg: #0c1117;
-  --bg-light: #111821;
-  --card: #141b26;
-  --text: #e9eef5;
-  --text-muted: #9ba3b4;
-  --primary: #4da3fa;
-  --hover: #1a2433;
-  --border: #223043;
+function initTheme() {
+  const html = document.documentElement;
+  const stored = localStorage.getItem("mdehub-theme");
+  const prefersDark = window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  let current = stored || (prefersDark ? "dark" : "clean");
+  html.setAttribute("data-theme", current);
+
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  updateThemeButtonLabel(btn, current);
+
+  btn.addEventListener("click", () => {
+    current = current === "dark" ? "clean" : "dark";
+    html.setAttribute("data-theme", current);
+    localStorage.setItem("mdehub-theme", current);
+    updateThemeButtonLabel(btn, current);
+  });
 }
 
-[data-theme='clean'] {
-  --bg: #f3f6fc;
-  --bg-light: #ffffff;
-  --card: #ffffff;
-  --text: #1d1f22;
-  --text-muted: #5b616e;
-  --primary: #0066ff;
-  --hover: #e5ecff;
-  --border: #d7dce5;
+function updateThemeButtonLabel(btn, theme) {
+  btn.textContent = theme === "dark" ? "Modo claro" : "Modo escuro";
 }
 
 /* -----------------------------------------------------------
-   SIDEBAR
+   SIDEBAR – MARCAR ITEM ATIVO
 ----------------------------------------------------------- */
-.sidebar {
-  width: 260px;
-  background: var(--bg-light);
-  padding: 25px 20px;
-  border-right: 1px solid var(--border);
-  overflow-y: auto;
-}
+function initSidebarActive() {
+  const path = window.location.pathname.split("/").pop() || "dashboard.html";
+  const links = document.querySelectorAll(".nav-item");
 
-.sidebar .brand {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 30px;
-}
+  links.forEach(link => {
+    const href = link.getAttribute("href");
+    if (!href) return;
 
-.nav-item {
-  padding: 12px 14px;
-  border-radius: 10px;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--text);
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.nav-item:hover {
-  background: var(--hover);
-}
-
-.nav-item.active {
-  background: var(--primary);
-  color: #fff;
+    const base = href.split("/").pop();
+    if (base === path) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
 }
 
 /* -----------------------------------------------------------
-   TOPBAR
+   USER BADGE (INICIAL) – PLACEHOLDER
+   Futuro: puxar nome real via Supabase.
 ----------------------------------------------------------- */
-.topbar {
-  width: 100%;
-  height: 70px;
-  background: var(--bg-light);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 25px;
-}
+function initUserBadge() {
+  const badge = document.getElementById("userInitial");
+  if (!badge) return;
 
-.user-badge {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--primary);
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 700;
-  font-size: 18px;
-}
+  // Placeholder: tenta pegar de localStorage ou usa "U"
+  const storedName = localStorage.getItem("mdehub-user-name") || "Usuário";
+  const initial = storedName.trim().charAt(0).toUpperCase() || "U";
 
-.theme-toggle {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 8px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  color: var(--text);
-}
+  badge.textContent = initial;
 
-/* -----------------------------------------------------------
-   LAYOUT
------------------------------------------------------------ */
-.main-area {
-  flex: 1;
-  overflow-y: auto;
-  padding: 30px 40px;
-}
-
-/* -----------------------------------------------------------
-   TITLES
------------------------------------------------------------ */
-.page-title {
-  font-size: 38px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.page-sub {
-  font-size: 16px;
-  color: var(--text-muted);
-  margin-bottom: 32px;
-}
-
-/* -----------------------------------------------------------
-   CARDS
------------------------------------------------------------ */
-.card {
-  background: var(--card);
-  padding: 22px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  margin-bottom: 20px;
-}
-
-.card h3 {
-  margin-bottom: 6px;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
-}
-
-/* -----------------------------------------------------------
-   SIMULATORS
------------------------------------------------------------ */
-.sim-input {
-  width: 100%;
-  padding: 10px 12px;
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 10px;
-  margin-bottom: 12px;
-}
-
-.sim-btn {
-  background: var(--primary);
-  padding: 10px 14px;
-  border-radius: 10px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-}
-
-.result-box {
-  font-size: 32px;
-  font-weight: 700;
-  margin-top: 14px;
-}
-
-/* -----------------------------------------------------------
-   RESPONSIVE
------------------------------------------------------------ */
-@media (max-width: 900px) {
-  .sidebar {
-    display: none;
+  const nameSpan = document.getElementById("userName");
+  if (nameSpan) {
+    nameSpan.textContent = storedName;
   }
-  body {
-    flex-direction: column;
-  }
-  .main-area {
-    padding: 20px;
-  }
-  .grid-3, .grid-2 {
-    grid-template-columns: 1fr;
-  }
+}
+
+/* -----------------------------------------------------------
+   HOTEL SELECT – APENAS PLACEHOLDER VISUAL
+   Futuro: popular a partir do banco.
+----------------------------------------------------------- */
+function initHotelPlaceholder() {
+  const select = document.getElementById("hotelSelect");
+  if (!select) return;
+
+  // Evita duplicar opções se já estiver preenchido por outro script
+  if (select.options.length > 0) return;
+
+  const opt = document.createElement("option");
+  opt.value = "demo";
+  opt.textContent = "Carregando hotéis...";
+  select.appendChild(opt);
+}
+
+/* -----------------------------------------------------------
+   SIMULADORES – ADR / DIÁRIAS / OCUPAÇÃO / REVPAR
+----------------------------------------------------------- */
+function initSimulators() {
+  initSimuladorADR();
+  initSimuladorDiarias();
+  initSimuladorOcupacao();
+  initSimuladorRevpar();
+}
+
+/* --------- ADR --------- */
+function initSimuladorADR() {
+  const form = document.getElementById("formADR");
+  if (!form) return;
+
+  const inputReceita = document.getElementById("adrReceita");
+  const inputDiariasVendidas = document.getElementById("adrDiarias");
+  const selectPeriodo = document.getElementById("adrPeriodo");
+  const output = document.getElementById("adrResultado");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const receita = parseFloat((inputReceita.value || "0").replace(",", "."));
+    const diariasVendidas = parseFloat((inputDiariasVendidas.value || "0").replace(",", "."));
+
+    if (!receita || !diariasVendidas || diariasVendidas <= 0) {
+      output.textContent = "–";
+      return;
+    }
+
+    const adr = receita / diariasVendidas;
+    output.textContent = "R$ " + adr.toFixed(2).replace(".", ",");
+  });
+}
+
+/* --------- DIÁRIAS NECESSÁRIAS --------- */
+function initSimuladorDiarias() {
+  const form = document.getElementById("formDiarias");
+  if (!form) return;
+
+  const inputMeta = document.getElementById("metaFaturamento");
+  const inputAdrEstimada = document.getElementById("adrEstimada");
+  const output = document.getElementById("diariasResultado");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const meta = parseFloat((inputMeta.value || "0").replace(",", "."));
+    const adr = parseFloat((inputAdrEstimada.value || "0").replace(",", "."));
+
+    if (!meta || !adr || adr <= 0) {
+      output.textContent = "– diárias";
+      return;
+    }
+
+    const diarias = meta / adr;
+    output.textContent = diarias.toFixed(1).replace(".", ",") + " diárias";
+  });
+}
+
+/* --------- OCUPAÇÃO --------- */
+function initSimuladorOcupacao() {
+  const form = document.getElementById("formOcupacao");
+  if (!form) return;
+
+  const inputUhs = document.getElementById("ocupUhs");
+  const inputDias = document.getElementById("ocupDias");
+  const inputVendidas = document.getElementById("ocupVendidas");
+  const output = document.getElementById("ocupResultado");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const uhs = parseFloat((inputUhs.value || "0").replace(",", "."));
+    const dias = parseFloat((inputDias.value || "0").replace(",", "."));
+    const vendidas = parseFloat((inputVendidas.value || "0").replace(",", "."));
+
+    const capacidade = uhs * dias;
+
+    if (!uhs || !dias || !vendidas || capacidade <= 0) {
+      output.textContent = "--%";
+      return;
+    }
+
+    const ocup = (vendidas / capacidade) * 100;
+    output.textContent = ocup.toFixed(1).replace(".", ",") + "%";
+  });
+}
+
+/* --------- REVPAR --------- */
+function initSimuladorRevpar() {
+  const form = document.getElementById("formRevpar");
+  if (!form) return;
+
+  const inputReceita = document.getElementById("revReceita");
+  const inputUhs = document.getElementById("revUhs");
+  const inputDias = document.getElementById("revDias");
+  const output = document.getElementById("revResultado");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const receita = parseFloat((inputReceita.value || "0").replace(",", "."));
+    const uhs = parseFloat((inputUhs.value || "0").replace(",", "."));
+    const dias = parseFloat((inputDias.value || "0").replace(",", "."));
+
+    const base = uhs * dias;
+
+    if (!receita || !uhs || !dias || base <= 0) {
+      output.textContent = "R$ --";
+      return;
+    }
+
+    const revpar = receita / base;
+    output.textContent = "R$ " + revpar.toFixed(2).replace(".", ",");
+  });
 }
