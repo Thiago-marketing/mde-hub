@@ -6,7 +6,6 @@
   <title>MDE Hub • Contatos CRM</title>
 
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/app.js"></script>
 
   <style>
     .page-header {
@@ -16,11 +15,6 @@
       margin-bottom: 25px;
       flex-wrap: wrap;
       gap: 10px;
-    }
-
-    .page-header h1 {
-      font-size: 28px;
-      font-weight: 700;
     }
 
     .btn-add {
@@ -62,23 +56,9 @@
       background: rgba(255,255,255,0.05);
     }
 
-    .tag {
-      padding: 4px 10px;
-      font-size: 12px;
-      border-radius: 8px;
-      font-weight: 600;
-      color: #fff;
-      display: inline-block;
-    }
-
-    .tag-blue { background: #007bff; }
-    .tag-green { background: #28a745; }
-    .tag-yellow { background: #f0ad4e; }
-    .tag-red { background: #d9534f; }
-
     .contact-avatar {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: var(--primary);
       color: #fff;
@@ -103,110 +83,115 @@
       font-size: 12px;
       opacity: 0.7;
     }
+
+    .tag {
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #fff;
+      display: inline-block;
+    }
+
+    .tag-blue { background: #007bff; }
+    .tag-green { background: #28a745; }
+    .tag-yellow { background: #f0ad4e; }
+    .tag-red { background: #d9534f; }
   </style>
 </head>
 
 <body>
 
-<!-- BOTÃO MOBILE MENU -->
+<!-- BOTÃO DO MENU MOBILE -->
 <div id="btnSidebarToggle">☰</div>
 
-<!-- SIDEBAR -->
-<div id="sidebar">
-  <div class="logo">🏨 MDE Hub</div>
+<!-- SIDEBAR DINÂMICA -->
+<div id="sidebar-container"></div>
 
-  <div class="nav-section">
-    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
-    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
-    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
-    <a href="/simuladores.html" class="nav-item">📐 Simuladores</a>
-  </div>
+<!-- ÁREA PRINCIPAL -->
+<main class="main-area">
 
-  <div class="nav-section">
-    <div class="nav-title">CRM Hoteleiro</div>
-    <a class="nav-item active">📘 Contatos</a>
-    <a href="/crm.html" class="nav-item">🗂️ Funil</a>
-    <a href="/crm-atividades.html" class="nav-item">📝 Atividades</a>
-  </div>
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">📘 Contatos do CRM</h1>
+      <p class="page-subtitle">Gerencie hóspedes, leads e contatos comerciais.</p>
+    </div>
 
-  <div class="nav-section nav-exit">
-    <a href="/logout.html" class="nav-item">🚪 Sair</a>
-  </div>
-</div>
-
-<!-- CONTEÚDO -->
-<div class="main">
-
-  <div class="topbar">
-    <button id="btnThemeToggle">🌓</button>
-    <div class="user-badge" id="userInitial">U</div>
-  </div>
-
-  <div class="page-header">
-    <h1>Contatos do CRM</h1>
     <button class="btn-add">+ Novo Contato</button>
+  </header>
+
+  <div class="card">
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Contato</th>
+            <th>Origem</th>
+            <th>Funil</th>
+            <th>Status</th>
+            <th>Valor Potencial</th>
+            <th>Última Atividade</th>
+          </tr>
+        </thead>
+
+        <tbody id="crmContatos">
+
+          <tr>
+            <td>
+              <div class="contact-info">
+                <div class="contact-avatar">J</div>
+                <div>
+                  <div class="contact-name">João Mendes</div>
+                  <div class="contact-email">joao@email.com</div>
+                </div>
+              </div>
+            </td>
+
+            <td><span class="tag tag-blue">WhatsApp</span></td>
+            <td><span class="tag tag-yellow">Negociação</span></td>
+            <td><span class="tag tag-green">Ativo</span></td>
+            <td>R$ 1.200,00</td>
+            <td>Hoje • 14:00</td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="contact-info">
+                <div class="contact-avatar">M</div>
+                <div>
+                  <div class="contact-name">Marina Lopes</div>
+                  <div class="contact-email">marina@gmail.com</div>
+                </div>
+              </div>
+            </td>
+
+            <td><span class="tag tag-yellow">Instagram</span></td>
+            <td><span class="tag tag-blue">Cotação</span></td>
+            <td><span class="tag tag-red">Inativo</span></td>
+            <td>R$ 800,00</td>
+            <td>Ontem • 18:20</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Contato</th>
-          <th>Origem</th>
-          <th>Funil</th>
-          <th>Status</th>
-          <th>Valor Potencial</th>
-          <th>Última Atividade</th>
-        </tr>
-      </thead>
+</main>
 
-      <tbody id="crmContatos">
+<!-- JS CORE -->
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/crm.js"></script>
 
-        <tr>
-          <td>
-            <div class="contact-info">
-              <div class="contact-avatar">J</div>
-              <div>
-                <div class="contact-name">João Mendes</div>
-                <div class="contact-email">joao@email.com</div>
-              </div>
-            </div>
-          </td>
-
-          <td><span class="tag tag-blue">WhatsApp</span></td>
-          <td><span class="tag tag-yellow">Negociação</span></td>
-          <td><span class="tag tag-green">Ativo</span></td>
-          <td>R$ 1.200,00</td>
-          <td>Hoje • 14:00</td>
-        </tr>
-
-        <tr>
-          <td>
-            <div class="contact-info">
-              <div class="contact-avatar">M</div>
-              <div>
-                <div class="contact-name">Marina Lopes</div>
-                <div class="contact-email">marina@gmail.com</div>
-              </div>
-            </div>
-          </td>
-
-          <td><span class="tag tag-yellow">Instagram</span></td>
-          <td><span class="tag tag-blue">Cotação</span></td>
-          <td><span class="tag tag-red">Inativo</span></td>
-          <td>R$ 800,00</td>
-          <td>Ontem • 18:20</td>
-        </tr>
-
-      </tbody>
-    </table>
-  </div>
-
-</div>
+<!-- INCLUIR SIDEBAR -->
+<script>
+  fetch("/partials/sidebar.html")
+    .then(res => res.text())
+    .then(html => {
+      document.querySelector("#sidebar-container").innerHTML = html;
+    });
+</script>
 
 </body>
 </html>
