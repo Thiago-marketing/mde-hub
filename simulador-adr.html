@@ -1,131 +1,83 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Simulador de Check-in • MDE Hub</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Simulador de ADR</title>
+  <link rel="stylesheet" href="/css/app.css" />
 </head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <!-- sidebar -->
+    </aside>
 
-<body class="page">
-  <!-- Header -->
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">T</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-breadcrumb">
+          <span class="crumb-section">MDE Hub</span>
+          <span class="crumb-separator">•</span>
+          <span class="crumb-page">Simulador de ADR</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="chip ghost" id="themeToggle">
+            <span class="chip-dot"></span>
+            Tema
+          </button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="page-header">
+          <h1>Simulador de ADR</h1>
+          <p>Calcule a diária média necessária para alcançar um determinado faturamento.</p>
+        </section>
+
+        <div class="grid-2">
+          <section class="section">
+            <div class="card form-card">
+              <div class="form-group">
+                <label for="adr_meta_faturamento">Meta de faturamento (R$)</label>
+                <input type="number" id="adr_meta_faturamento" min="0" step="0.01" value="30000" />
+              </div>
+              <div class="form-group">
+                <label for="adr_diarias">Diárias esperadas</label>
+                <input type="number" id="adr_diarias" min="1" value="220" />
+              </div>
+              <button id="btnCalcularAdr" class="btn-primary full">
+                Calcular ADR necessária
+              </button>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="card kpi-card big">
+              <header><p class="kpi-label">ADR necessária</p></header>
+              <p class="kpi-value" id="adr_resultado">R$ 136,36</p>
+              <p class="kpi-meta">
+                ADR = Meta de faturamento ÷ número de diárias vendidas.
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
-    <button id="logoutBtn" class="btn-sair">Sair</button>
-  </header>
+  </div>
 
-  <!-- Menu lateral -->
-<aside class="sidebar">
-
-  <h3>Operação</h3>
-  <nav>
-    <a href="/dashboard.html">Dashboard</a>
-    <a href="/reservas.html">Reservas</a>
-    <a href="/checkin.html">Check-in</a>
-    <a href="/checkout.html">Check-out</a>
-    <a href="/uhs.html">Unidades Habitacionais</a>
-    <a href="/financeiro.html">Financeiro</a>
-    <a href="/config.html">Configurações</a>
-  </nav>
-
-  <h3>Simuladores</h3>
-  <nav>
-    <a href="/simuladores.html">Tela Principal</a>
-    <a href="/sim-faturamento.html">Simulador de Faturamento</a>
-    <a href="/sim-ota.html">Simulador OTA</a>
-    <a href="/sim-tarifa.html">Simulador Tarifa Ideal</a>
-    <a href="/sim-adr-ideal.html">Simulador ADR Ideal</a>
-    <a href="/sim-revpar.html">Simulador RevPAR</a>
-    <a href="/sim-checkin.html">Simulador Check-in (Tempo/Custo)</a>
-
-    <!-- Pendentes – serão criados amanhã -->
-    <a href="/sim-margem.html">Simulador Margem de Lucro</a>
-    <a href="/sim-breakeven.html">Simulador Break-even</a>
-    <a href="/sim-ocupacao-meta.html">Simulador Ocupação Meta</a>
-    <a href="/sim-conversao.html">Simulador Conversão WhatsApp</a>
-  </nav>
-
-  <h3>CRM</h3>
-  <nav>
-    <a href="/crm-dashboard.html">Painel CRM</a>
-    <a href="/leads.html">Leads</a>
-    <a href="/crm-kanban.html">Kanban</a>
-    <a href="/crm-atividades.html">Atividades</a>
-  </nav>
-
-  <h3>Admin</h3>
-  <nav>
-    <a href="/checklist-governanca.html">Checklist Governança</a>
-    <a href="/auditoria.html">Auditoria</a>
-    <a href="/relatorios.html">Relatórios</a>
-  </nav>
-
-</aside>
-
-  <!-- Conteúdo -->
-  <main class="content">
-    <h1>Simulador de Check-in</h1>
-    <p class="subtitle">Ferramenta gratuita para testar processos de recepção.</p>
-
-    <form class="card" id="simForm">
-      <div class="form-group">
-        <label>Nome do hóspede</label>
-        <input type="text" id="nomeHospede" required>
-      </div>
-
-      <div class="form-group">
-        <label>Data de entrada</label>
-        <input type="date" id="dataEntrada" required>
-      </div>
-
-      <div class="form-group">
-        <label>Data de saída</label>
-        <input type="date" id="dataSaida" required>
-      </div>
-
-      <div class="form-group">
-        <label>Quantidade de hóspedes</label>
-        <input type="number" id="qtde" min="1" value="1" required>
-      </div>
-
-      <button type="submit" class="btn-primary">Simular</button>
-    </form>
-
-    <div id="resultado" class="result-card" style="display:none;">
-      <h2>Resultado da Simulação</h2>
-      <p><strong>Hóspede:</strong> <span id="rNome"></span></p>
-      <p><strong>Estadia:</strong> <span id="rEstadia"></span> diárias</p>
-      <p><strong>Hóspedes:</strong> <span id="rQtde"></span></p>
-    </div>
-  </main>
-
-  <script src="js/supabase.js"></script>
-  <script src="js/app-common.js"></script>
+  <script src="/js/app.js"></script>
   <script>
-    document.getElementById("simForm").addEventListener("submit", (e) => {
-      e.preventDefault();
+    document.getElementById('btnCalcularAdr').addEventListener('click', function () {
+      const meta = Number(document.getElementById('adr_meta_faturamento').value) || 0;
+      const diarias = Number(document.getElementById('adr_diarias').value) || 0;
 
-      const nome = nomeHospede.value;
-      const entrada = new Date(dataEntrada.value);
-      const saida = new Date(dataSaida.value);
-      const dias = Math.ceil((saida - entrada) / (1000 * 60 * 60 * 24));
-      const q = qtde.value;
-
-      if (dias <= 0) {
-        alert("Datas inválidas! Verifique.");
+      if (!diarias || diarias <= 0) {
+        alert('Informe a quantidade de diárias esperadas.');
         return;
       }
 
-      document.getElementById("resultado").style.display = "block";
-      rNome.textContent = nome;
-      rEstadia.textContent = dias;
-      rQtde.textContent = q;
+      const adr = meta / diarias;
+      document.getElementById('adr_resultado').textContent =
+        'R$ ' + adr.toFixed(2).replace('.', ',');
     });
   </script>
 </body>
