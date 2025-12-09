@@ -1,78 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Reservas</title>
-  <link rel="stylesheet" href="/css/app.css">
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
-<div class="layout">
 
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="avatar">M</div>
-      <span>MDE Hub</span>
+<!-- BOTÃO MOBILE -->
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR OFICIAL -->
+<div id="sidebar">
+  <div class="logo">🏨 MDE Hub</div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item active">🛎️ Reservas</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">Financeiro</div>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">Simuladores</div>
+    <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a class="nav-item disabled">📘 Em breve</a>
+    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button id="btnThemeToggle">🌓</button>
+    <div class="user-badge" id="userInitial">U</div>
+  </div>
+
+  <h1 class="page-title">Reservas</h1>
+  <p class="page-subtitle">Gestão completa das reservas do hotel</p>
+
+  <!-- FILTROS -->
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-title">Filtro Rápido</div>
+
+      <label>Status</label>
+      <select id="filtroStatus">
+        <option value="">Todos</option>
+        <option value="confirmada">Confirmada</option>
+        <option value="checkin">Check-in</option>
+        <option value="checkout">Check-out</option>
+        <option value="no-show">No-show</option>
+        <option value="cancelada">Cancelada</option>
+      </select>
+
+      <label>Data de Chegada</label>
+      <input type="date" id="filtroChegada">
+
+      <label>Hóspede</label>
+      <input type="text" id="filtroHospede" placeholder="Nome do hóspede">
+
+      <button id="btnFiltrar">Aplicar Filtros</button>
     </div>
 
-    <nav class="sidebar-menu">
-      <a href="/dashboard.html">📊 Dashboard</a>
-      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a class="active" href="/reservas.html">🔑 Reservas</a>
-      <a href="/financeiro.html">💰 Financeiro</a>
-      <a href="/simuladores.html">📐 Simuladores</a>
-      <a>📘 CRM Hoteleiro • Em breve</a>
-      <a>📄 Proposta IA • Em breve</a>
-    </nav>
+  </div>
 
-    <div class="sidebar-footer">
-      <a id="logoutBtn">🚪 Sair</a>
+  <!-- TABELA PRINCIPAL -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Lista de Reservas</div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Reserva</th>
+            <th>Hóspede</th>
+            <th>UH</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="listaReservas">
+          <tr><td colspan="6">Carregando...</td></tr>
+        </tbody>
+      </table>
     </div>
-  </aside>
-
-  <main class="content">
-
-    <div class="top-right">
-      <select class="hotel-select" id="hotelSelect"></select>
-      <div class="user-badge" id="userBadge">U</div>
-    </div>
-
-    <h1>Reservas</h1>
-    <p class="content-subtitle">Gestão de reservas em tempo real</p>
-
-    <div class="grid grid-3">
-
-      <div class="card">
-        <div class="card-title">Check-ins Hoje</div>
-        <div class="card-value" id="r_checkins">--</div>
-        <p class="text-muted">Reservas previstas para entrada</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Check-outs Hoje</div>
-        <div class="card-value" id="r_checkouts">--</div>
-        <p class="text-muted">Hóspedes deixando o hotel</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Hóspedes Agora</div>
-        <div class="card-value" id="r_hospedados">--</div>
-        <p class="text-muted">Ocupação em tempo real</p>
-      </div>
-
-    </div>
-
-    <div class="card" style="margin-top:30px;">
-      <div class="card-title">Próximas chegadas</div>
-      <div id="r_tabela_chegadas">Carregando...</div>
-    </div>
-
-  </main>
+  </div>
 
 </div>
 
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
+<!-- SCRIPT FUTURO: Integração com Acumulador -->
+<script>
+  // MOCK TEMPORÁRIO — remove quando integrar ao SQL Server via acumulador
+  const reservasMock = [
+    { id: 4821, hospede: "Ana Souza", uh: "202", entrada: "2025-12-10", saida: "2025-12-12", status: "confirmada" },
+    { id: 4822, hospede: "Carlos Lima", uh: "305", entrada: "2025-12-10", saida: "2025-12-11", status: "checkin" },
+    { id: 4823, hospede: "Família Oliveira", uh: "401", entrada: "2025-12-11", saida: "2025-12-15", status: "no-show" },
+    { id: 4824, hospede: "Maria Paula", uh: "107", entrada: "2025-12-10", saida: "2025-12-10", status: "cancelada" }
+  ];
+
+  function renderReservas() {
+    const tbody = document.getElementById("listaReservas");
+    tbody.innerHTML = "";
+
+    reservasMock.forEach(r => {
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>#${r.id}</td>
+        <td>${r.hospede}</td>
+        <td>${r.uh}</td>
+        <td>${new Date(r.entrada).toLocaleDateString()}</td>
+        <td>${new Date(r.saida).toLocaleDateString()}</td>
+        <td>${formatStatus(r.status)}</td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  function formatStatus(s) {
+    const map = {
+      "confirmada": "<span class='badge green'>Confirmada</span>",
+      "checkin": "<span class='badge blue'>Check-in</span>",
+      "checkout": "<span class='badge'>Check-out</span>",
+      "no-show": "<span class='badge yellow'>No-show</span>",
+      "cancelada": "<span class='badge red'>Cancelada</span>"
+    };
+    return map[s] || s;
+  }
+
+  renderReservas();
+</script>
+
 </body>
 </html>
