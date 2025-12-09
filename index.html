@@ -3,201 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hub MDE • Painel do Proprietário</title>
+  <title>MDE Hub • Visão Geral</title>
+
+  <!-- SEO Básico (pós-login não indexa) -->
+  <meta name="robots" content="noindex,nofollow" />
+
+  <!-- CSS principal -->
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 
 <body>
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div>
-      <div class="sidebar-logo">
-        Hub MDE
+
+  <!-- ===== LAYOUT WRAPPER ===== -->
+  <div class="layout">
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-header">
+        <span class="sidebar-logo">MDE Hub</span>
+        <button class="sidebar-toggle" id="btnSidebarToggle">☰</button>
       </div>
 
-      <div class="nav-section">Geral</div>
       <nav class="sidebar-nav">
-        <a href="/" class="nav-item active">
-          Painel do Proprietário
+
+        <a href="/index.html" class="nav-item active">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Início</span>
         </a>
-        <a href="/pages/crm.html" class="nav-item">
-          CRM Hoteleiro
+
+        <a href="/painel-proprietario.html" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Painel do Proprietário</span>
         </a>
-        <a href="/pages/simuladores.html" class="nav-item">
-          Simuladores
+
+        <a href="/simuladores.html" class="nav-item">
+          <span class="nav-icon">🧮</span>
+          <span class="nav-text">Simuladores MDE Sistemas</span>
         </a>
+
+        <div class="nav-separator">Módulos (em desenvolvimento)</div>
+
+        <a href="/crm.html" class="nav-item disabled">
+          <span class="nav-icon">📁</span>
+          <span class="nav-text">Vendas Diretas CRM</span>
+          <span class="nav-badge">Futuro</span>
+        </a>
+
+        <a href="/proposta.html" class="nav-item disabled">
+          <span class="nav-icon">🧠</span>
+          <span class="nav-text">Proposta Hoteleira IA</span>
+          <span class="nav-badge">Futuro</span>
+        </a>
+
       </nav>
 
-      <div class="nav-section">Operação</div>
-      <nav class="sidebar-nav">
-        <a href="/pages/uhs.html" class="nav-item">
-          UHs & Ocupação
-        </a>
-        <a href="/pages/reservas.html" class="nav-item disabled">
-          Reservas (futuro)
-          <span class="tag-dev">dev</span>
-        </a>
-      </nav>
-
-      <div class="nav-section">Admin</div>
-      <nav class="sidebar-nav">
-        <a href="/pages/configuracoes.html" class="nav-item disabled">
-          Configurações
-          <span class="tag-dev">dev</span>
-        </a>
-      </nav>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main-area">
-    <!-- HEADER -->
-    <header class="page-header">
-      <div>
-        <h1>Painel do Proprietário</h1>
-        <p class="page-sub">
-          Visão rápida da operação de hoje: ocupação, entradas, saídas e vendas diretas.
-        </p>
+      <div class="sidebar-footer">
+        <p>MDE Sistemas<br><span class="footer-sub">Plataforma Hub</span></p>
       </div>
+    </aside>
 
-      <div class="user-box">
-        <div class="user-initial" id="userInitial">H</div>
-        <div class="user-info">
-          <strong id="userName">Hotel Demo</strong><br />
-          <small id="userEmail">proprietario@hotel.com.br</small>
-        </div>
-      </div>
-    </header>
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main">
 
-    <!-- CARD PRINCIPAL: INDICADORES -->
-    <section class="card indicators">
-      <h2>Indicadores de hoje</h2>
-      <p class="ind-small">
-        Dados consolidados do hotel selecionado. Em breve estes números serão alimentados
-        automaticamente pelo Letoh/Letom via Hub MDE.
-      </p>
+      <!-- ===== TOPBAR ===== -->
+      <header class="topbar">
 
-      <div class="indicators-grid">
-        <div class="ind-card">
-          <span class="ind-label">Ocupação atual</span>
-          <span class="ind-value" id="kpiOcupacao">68%</span>
-          <p class="ind-diff pos">
-            +5 pts vs. ontem
-          </p>
+        <div class="topbar-left">
+          <h1 class="topbar-title">Visão Geral</h1>
+          <p class="topbar-subtitle">Bem-vindo ao MDE Hub — Sua central hoteleira</p>
         </div>
 
-        <div class="ind-card">
-          <span class="ind-label">Entradas &amp; Saídas (hoje)</span>
-          <span class="ind-value" id="kpiEntradasSaidas">14 / 12</span>
-          <p class="ind-diff">
-            Check-ins e check-outs previstos para o dia.
-          </p>
-        </div>
+        <div class="topbar-right">
 
-        <div class="ind-card">
-          <span class="ind-label">Reservas diretas em aberto</span>
-          <span class="ind-value" id="kpiLeadsAbertos">8</span>
-          <p class="ind-diff pos">
-            3 novas oportunidades via CRM
-          </p>
-        </div>
-      </div>
+          <button id="btnThemeToggle" class="theme-toggle">🌓</button>
 
-      <div class="chart-placeholder"></div>
-    </section>
-
-    <!-- LAYOUT 2 COLUNAS: MÓDULOS + PRÓXIMOS PASSOS -->
-    <section class="dashboard-2col">
-      <!-- COLUNA ESQUERDA: MÓDULOS DO HUB -->
-      <div>
-        <div class="card">
-          <div class="module-head">
-            <div>
-              <h2>Módulos do Hub MDE</h2>
-              <p class="mod-desc">
-                Acesse rapidamente o CRM, simuladores e visão de UHs. Estes módulos serão
-                conectados ao PMS conforme avançarmos a integração.
-              </p>
+          <div class="user-box">
+            <div class="user-avatar">BR</div>
+            <div class="user-info">
+              <span class="user-name">Usuário</span>
+              <span class="user-role">MDE Sistemas</span>
             </div>
-            <span class="tag-ready">MVP</span>
           </div>
 
-          <a href="/pages/crm.html" class="module-item">
-            CRM Hoteleiro &mdash; leads, propostas e funil de reservas diretas.
-          </a>
-          <a href="/pages/simuladores.html" class="module-item">
-            Simuladores &mdash; ferramentas gratuitas para captar novos contatos.
-          </a>
-          <a href="/pages/uhs.html" class="module-item">
-            UHs &amp; Ocupação &mdash; visão simplificada das unidades e status.
-          </a>
-          <a href="/pages/dashboard-comercial.html" class="module-item disabled">
-            Painel Comercial Avançado
-            <span class="tag-dev">futuro</span>
-          </a>
-
-          <a href="/pages/sobre-hub.html" class="module-more">
-            Ver visão completa do Hub MDE &rarr;
-          </a>
         </div>
-      </div>
+      </header>
 
-      <!-- COLUNA DIREITA: PRÓXIMOS PASSOS / ROADMAP -->
-      <aside>
-        <div class="card">
-          <div class="module-head">
-            <h2>Próximos passos</h2>
-          </div>
-          <p class="mod-desc">
-            Etapas para transformar o Hub MDE em painel oficial do proprietário e base do CRM.
-          </p>
+      <!-- ===== PAGE CONTENT ===== -->
+      <section class="content">
 
-          <ul class="step-list">
-            <li>
-              Finalizar ajustes de RLS e modelo de dados focado em
-              <strong>leads, propostas e indicadores</strong>.
-              <span class="tag-progress">em andamento</span>
-            </li>
-            <li>
-              Conectar o CRM aos simuladores, registrando automaticamente novos contatos.
-              <span class="tag-progress">prioridade</span>
-            </li>
-            <li>
-              Definir com a diretoria os principais indicadores do painel (ocupação, receita, metas).
-              <span class="tag-later">alinhamento</span>
-            </li>
-            <li>
-              Especificar, junto ao time técnico, o modelo de integração via acumulador Letoh/Letom.
-              <span class="tag-sql">fase 2</span>
-            </li>
+        <!-- GRID DE CARDS PRINCIPAIS -->
+        <div class="grid-cards">
+
+          <a href="/painel-proprietario.html" class="card">
+            <div class="card-icon">📊</div>
+            <div class="card-title">Painel do Proprietário</div>
+            <p class="card-desc">Indicadores do hotel, faturamento, ocupação e metas.</p>
+          </a>
+
+          <a href="/simuladores.html" class="card">
+            <div class="card-icon">🧮</div>
+            <div class="card-title">Simuladores MDE Sistemas</div>
+            <p class="card-desc">RevPAR, ADR, diárias necessárias e planejamento de receita.</p>
+          </a>
+
+          <a href="/crm.html" class="card card-disabled">
+            <div class="card-icon">📁</div>
+            <div class="card-title">Vendas Diretas CRM</div>
+            <p class="card-desc">Organize e acompanhe leads e reservas diretas.</p>
+            <span class="badge-futuro">Em breve</span>
+          </a>
+
+          <a href="/proposta.html" class="card card-disabled">
+            <div class="card-icon">🧠</div>
+            <div class="card-title">Proposta Hoteleira IA</div>
+            <p class="card-desc">Gere propostas inteligentes e aumente conversões.</p>
+            <span class="badge-futuro">Em breve</span>
+          </a>
+
+        </div>
+
+        <!-- BLOCO DE APRESENTAÇÃO (ROADMAP) -->
+        <div class="roadmap-block">
+          <h2>Próximos Passos</h2>
+          <ul>
+            <li>✔️ Finalizar layout premium do Hub</li>
+            <li>🔄 Integrar simuladores ao front</li>
+            <li>⏳ Preparar Painel do Proprietário (WebMDE Lite)</li>
+            <li>🟦 Iniciar Acumulador Lite — MDE Sistemas</li>
+            <li>🧠 Estruturação CRM Hoteleiro 5.0 (Fase 2)</li>
           </ul>
         </div>
 
-        <div class="card">
-          <div class="module-head">
-            <h2>Visão comercial</h2>
-          </div>
-          <p class="mod-desc">
-            O Hub MDE deve gerar receita própria (licença mensal + implantação) e ao mesmo tempo
-            servir como porta de entrada para Letoh, Letom e futuros produtos em nuvem.
-          </p>
-          <ul class="step-list">
-            <li>
-              Definir planos: CRM isolado, Painel + CRM para base Letoh/Letom.
-            </li>
-            <li>
-              Criar página de vendas e materiais para equipe comercial.
-            </li>
-          </ul>
-        </div>
-      </aside>
-    </section>
-  </main>
+      </section>
 
-  <!-- JS futuramente: auth / dados reais / tema -->
-  <script>
-    // Placeholder para futura integração Supabase/Auth/tema
-    // Ex.: carregar nome do hotel, usuário logado, etc.
-  </script>
+    </main>
+
+  </div>
+
+  <!-- JS geral -->
+  <script src="/js/app.js"></script>
+
 </body>
 </html>
