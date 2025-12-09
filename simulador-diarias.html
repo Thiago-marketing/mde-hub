@@ -3,251 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simulador de Tarifa Ideal (ADR Ideal) • MDE Hub</title>
+  <title>MDE Hub • Simulador de Diárias</title>
   <link rel="stylesheet" href="/css/app.css" />
 </head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <!-- sidebar -->
+    </aside>
 
-<body class="page">
-
-  <!-- TOPO -->
-  <header class="topbar">
-    <div class="user-info">
-      <span id="userInitial">U</span>
-      <div>
-        <p id="userName">Carregando usuário...</p>
-        <p id="userEmail"></p>
-      </div>
-    </div>
-
-    <div class="topbar-actions">
-      <a href="/simuladores.html" class="btn-secondary btn-small">← Voltar</a>
-      <button id="toggleThemeBtn" class="btn-secondary btn-small">🌓 Tema</button>
-      <button id="logoutBtn" class="btn-sair">Sair</button>
-    </div>
-  </header>
-
-  <!-- MENU LATERAL -->
-<aside class="sidebar">
-
-  <h3>Operação</h3>
-  <nav>
-    <a href="/dashboard.html">Dashboard</a>
-    <a href="/reservas.html">Reservas</a>
-    <a href="/checkin.html">Check-in</a>
-    <a href="/checkout.html">Check-out</a>
-    <a href="/uhs.html">Unidades Habitacionais</a>
-    <a href="/financeiro.html">Financeiro</a>
-    <a href="/config.html">Configurações</a>
-  </nav>
-
-  <h3>Simuladores</h3>
-  <nav>
-    <a href="/simuladores.html">Tela Principal</a>
-    <a href="/sim-faturamento.html">Simulador de Faturamento</a>
-    <a href="/sim-ota.html">Simulador OTA</a>
-    <a href="/sim-tarifa.html">Simulador Tarifa Ideal</a>
-    <a href="/sim-adr-ideal.html">Simulador ADR Ideal</a>
-    <a href="/sim-revpar.html">Simulador RevPAR</a>
-    <a href="/sim-checkin.html">Simulador Check-in (Tempo/Custo)</a>
-
-    <!-- Pendentes – serão criados amanhã -->
-    <a href="/sim-margem.html">Simulador Margem de Lucro</a>
-    <a href="/sim-breakeven.html">Simulador Break-even</a>
-    <a href="/sim-ocupacao-meta.html">Simulador Ocupação Meta</a>
-    <a href="/sim-conversao.html">Simulador Conversão WhatsApp</a>
-  </nav>
-
-  <h3>CRM</h3>
-  <nav>
-    <a href="/crm-dashboard.html">Painel CRM</a>
-    <a href="/leads.html">Leads</a>
-    <a href="/crm-kanban.html">Kanban</a>
-    <a href="/crm-atividades.html">Atividades</a>
-  </nav>
-
-  <h3>Admin</h3>
-  <nav>
-    <a href="/checklist-governanca.html">Checklist Governança</a>
-    <a href="/auditoria.html">Auditoria</a>
-    <a href="/relatorios.html">Relatórios</a>
-  </nav>
-
-</aside>
-
-  <!-- CONTEÚDO -->
-  <main class="content">
-    <section class="page-header">
-      <h1>Simulador de Tarifa Ideal (ADR Ideal)</h1>
-      <p class="muted">
-        Descubra qual deve ser a sua diária média (ADR) para atingir a meta de faturamento desejada.
-      </p>
-    </section>
-
-    <section class="grid grid-2">
-
-      <!-- FORMULÁRIO -->
-      <form id="simADR" class="card">
-        <div class="card-header">
-          <h2>Dados da hospedagem</h2>
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-breadcrumb">
+          <span class="crumb-section">MDE Hub</span>
+          <span class="crumb-separator">•</span>
+          <span class="crumb-page">Diárias necessárias</span>
         </div>
-
-        <div class="card-body form-grid">
-
-          <div class="form-group">
-            <label for="uhCount">Nº de quartos (UH)</label>
-            <input type="number" id="uhCount" min="1" required placeholder="Ex: 20" />
-          </div>
-
-          <div class="form-group">
-            <label for="occupancy">Ocupação média (%)</label>
-            <input type="number" id="occupancy" min="0" max="100" required placeholder="Ex: 65" />
-          </div>
-
-          <div class="form-group">
-            <label for="currentAdr">ADR atual (R$)</label>
-            <input type="text" id="currentAdr" required placeholder="Ex: 280,00" />
-          </div>
-
-          <div class="form-group">
-            <label for="targetFat">Meta de faturamento mensal (R$)</label>
-            <input type="text" id="targetFat" required placeholder="Ex: 120.000,00" />
-          </div>
-
-        </div>
-
-        <div class="card-footer">
-          <button type="submit" class="btn btn-primary btn-full">
-            Calcular ADR Ideal
+        <div class="topbar-actions">
+          <button class="chip ghost" id="themeToggle">
+            <span class="chip-dot"></span>
+            Tema
           </button>
         </div>
-      </form>
+      </header>
 
-      <!-- RESULTADO -->
-      <section id="resultCard" class="card" style="display: none;">
-        <div class="card-header">
-          <h2>Resultado da simulação</h2>
+      <main class="content">
+        <section class="page-header">
+          <h1>Simulador de Diárias necessárias</h1>
+          <p>Descubra quantas diárias são necessárias para bater a meta de faturamento.</p>
+        </section>
+
+        <div class="grid-2">
+          <section class="section">
+            <div class="card form-card">
+              <div class="form-group">
+                <label for="dn_meta_faturamento">Meta de faturamento (R$)</label>
+                <input type="number" id="dn_meta_faturamento" min="0" step="0.01" value="50000" />
+              </div>
+              <div class="form-group">
+                <label for="dn_adr">ADR (diária média)</label>
+                <input type="number" id="dn_adr" min="1" step="0.01" value="250" />
+              </div>
+              <button id="btnCalcularDiarias" class="btn-primary full">
+                Calcular diárias necessárias
+              </button>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="card kpi-card big">
+              <header><p class="kpi-label">Diárias necessárias</p></header>
+              <p class="kpi-value" id="dn_resultado">200</p>
+              <p class="kpi-meta">
+                Diárias necessárias = Meta de faturamento ÷ ADR.
+              </p>
+            </div>
+          </section>
         </div>
+      </main>
+    </div>
+  </div>
 
-        <div class="card-body">
+  <script src="/js/app.js"></script>
+  <script>
+    document.getElementById('btnCalcularDiarias').addEventListener('click', function () {
+      const meta = Number(document.getElementById('dn_meta_faturamento').value) || 0;
+      const adr = Number(document.getElementById('dn_adr').value) || 0;
 
-          <h3>🎯 ADR Ideal</h3>
-          <p><strong>Tarifa mínima necessária:</strong> <span id="adrIdeal"></span></p>
+      if (!adr || adr <= 0) {
+        alert('Informe uma ADR válida.');
+        return;
+      }
 
-          <hr />
-
-          <h3>📊 Comparação com sua tarifa atual</h3>
-          <p><strong>ADR atual:</strong> <span id="adrAtual"></span></p>
-          <p><strong>Diferença necessária:</strong> <span id="difAdr"></span></p>
-
-          <div id="recomendacao" class="highlight-box"></div>
-
-        </div>
-
-        <div class="card-footer">
-          <button id="whatsBtn" class="btn btn-success btn-full">
-            Receber análise no WhatsApp
-          </button>
-          <p class="muted small">
-            Enviado para o WhatsApp oficial da MDE (+55 11 94027-7447).
-          </p>
-        </div>
-      </section>
-
-    </section>
-  </main>
-
-
-<script>
-  function parseBRL(value) {
-    if (!value) return 0;
-    return parseFloat(value.replace(/\./g, '').replace(',', '.')) || 0;
-  }
-
-  function formatBRL(v) {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v || 0);
-  }
-
-  const form = document.getElementById("simADR");
-  const resultCard = document.getElementById("resultCard");
-
-  const adrIdealEl = document.getElementById("adrIdeal");
-  const adrAtualEl = document.getElementById("adrAtual");
-  const difAdrEl = document.getElementById("difAdr");
-  const recomendacaoEl = document.getElementById("recomendacao");
-
-  const whatsBtn = document.getElementById("whatsBtn");
-
-  let lastSim = null;
-
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const uh = parseInt(document.getElementById("uhCount").value);
-    const occ = parseFloat(document.getElementById("occupancy").value);
-    const currentAdr = parseBRL(document.getElementById("currentAdr").value);
-    const target = parseBRL(document.getElementById("targetFat").value);
-
-    const dias = 30;
-    const roomNights = uh * (occ / 100) * dias;
-
-    const adrIdeal = target / roomNights;
-    const dif = adrIdeal - currentAdr;
-
-    adrIdealEl.textContent = formatBRL(adrIdeal);
-    adrAtualEl.textContent = formatBRL(currentAdr);
-    difAdrEl.textContent = formatBRL(dif);
-
-    let mensagem = "";
-
-    if (adrIdeal <= currentAdr) {
-      mensagem = `
-        <p><strong>Excelente!</strong> Sua tarifa atual já é suficiente para atingir a meta informada.</p>
-        <p>Com melhor distribuição direta e menos OTA, você pode superar essa meta facilmente.</p>
-      `;
-    } else if (dif <= 40) {
-      mensagem = `
-        <p><strong>Você está muito perto!</strong></p>
-        <p>Basta um ajuste leve na tarifa e otimização dos canais para alcançar a meta.</p>
-      `;
-    } else {
-      mensagem = `
-        <p><strong>Atenção!</strong></p>
-        <p>Será necessário um aumento mais significativo na ADR ou aumento na ocupação.</p>
-        <p>A MDE pode ajudar a melhorar reservas diretas e distribuição.</p>
-      `;
-    }
-
-    recomendacaoEl.innerHTML = mensagem;
-
-    resultCard.style.display = "block";
-
-    lastSim = {
-      uh, occ, currentAdr, target, adrIdeal, dif
-    };
-  });
-
-  whatsBtn.addEventListener("click", function() {
-    if (!lastSim) return;
-
-    const msg = `
-Simulação ADR Ideal - MDE
-
-UH: ${lastSim.uh}
-Ocupação: ${lastSim.occ}%
-ADR atual: ${formatBRL(lastSim.currentAdr)}
-Meta mensal: ${formatBRL(lastSim.target)}
-
-ADR Ideal necessário: ${formatBRL(lastSim.adrIdeal)}
-Diferença: ${formatBRL(lastSim.dif)}
-
-Solicito análise completa.
-    `.trim();
-
-    window.open("https://wa.me/5511940277447?text=" + encodeURIComponent(msg), "_blank");
-  });
-</script>
-
-<script src="/js/theme.js"></script>
-<script src="/js/app.js"></script>
+      const diarias = meta / adr;
+      document.getElementById('dn_resultado').textContent = diarias.toFixed(0);
+    });
+  </script>
 </body>
 </html>
