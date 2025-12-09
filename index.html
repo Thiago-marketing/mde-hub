@@ -3,271 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Painel Geral</title>
+  <title>MDE Hub</title>
   <link rel="stylesheet" href="/css/app.css" />
 </head>
+
 <body>
-  <div class="app-shell">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <div class="logo-mark">M</div>
-        <div class="logo-text">
-          <span class="logo-title">MDE Hub</span>
-          <span class="logo-subtitle">Plataforma em nuvem</span>
-        </div>
-      </div>
 
-      <nav class="sidebar-nav">
-        <p class="nav-label">Navegação</p>
-        <a href="/index.html" class="nav-link active">
-          <span class="nav-dot"></span>
-          Início / Painel Geral
-        </a>
-        <a href="/painel-proprietario.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Painel do Proprietário
-        </a>
-        <a href="/financeiro.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Financeiro
-        </a>
-        <a href="/reservas.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Reservas
-        </a>
-        <a href="/crm.html" class="nav-link">
-          <span class="nav-dot"></span>
-          CRM Hoteleiro
-        </a>
-        <a href="/proposta.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Proposta Hoteleira (IA)
-        </a>
-
-        <p class="nav-label">Simuladores MDE</p>
-        <a href="/simulador-revpar.html" class="nav-link">
-          <span class="nav-dot"></span>
-          RevPAR
-        </a>
-        <a href="/simulador-adr.html" class="nav-link">
-          <span class="nav-dot"></span>
-          ADR
-        </a>
-        <a href="/simulador-diarias.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Diárias necessárias
-        </a>
-        <a href="/simulador-ocupacao.html" class="nav-link">
-          <span class="nav-dot"></span>
-          Ocupação
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <p class="sidebar-env">
-          Versão demo • Layout WebMDE → Hub
-        </p>
-      </div>
-    </aside>
-
-    <!-- MAIN AREA -->
-    <div class="main-area">
-      <!-- TOPBAR -->
-      <header class="topbar">
-        <div class="topbar-breadcrumb">
-          <span class="crumb-section">MDE Hub</span>
-          <span class="crumb-separator">•</span>
-          <span class="crumb-page">Painel Geral</span>
-        </div>
-
-        <div class="topbar-actions">
-          <button class="chip ghost" id="themeToggle">
-            <span class="chip-dot"></span>
-            Tema
-          </button>
-          <div class="env-pill">
-            <span class="env-label">Ambiente</span>
-            <span class="env-value">Demo</span>
-          </div>
-          <div class="user-pill">
-            <div class="user-avatar">BR</div>
-            <div class="user-meta">
-              <span class="user-name">Bruno</span>
-              <span class="user-role">Diretoria</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- CONTENT -->
-      <main class="content">
-        <section class="page-header">
-          <h1>Visão geral da operação</h1>
-          <p>
-            Este painel resume a operação atual e organiza o acesso ao Painel do Proprietário,
-            Financeiro, Reservas, CRM Hoteleiro e Simuladores MDE.
-          </p>
-        </section>
-
-        <!-- KPIs -->
-        <section class="section">
-          <div class="section-header">
-            <h2>Indicadores consolidados</h2>
-            <p class="section-subtitle">
-              Baseado em dados do futuro Acumulador Hub (SQL Server Letoh/Letom → PostgreSQL Hub).
-            </p>
-          </div>
-
-          <div class="kpi-grid">
-            <article class="card kpi-card">
-              <header>
-                <p class="kpi-label">Receita prevista (próx. 30 dias)</p>
-                <span class="kpi-tag positive">+12,4% vs. mês anterior</span>
-              </header>
-              <p class="kpi-value">R$ 482.300</p>
-              <p class="kpi-meta">Com base nas reservas futuras confirmadas.</p>
-            </article>
-
-            <article class="card kpi-card">
-              <header>
-                <p class="kpi-label">Ocupação média projetada</p>
-                <span class="kpi-tag neutral">Planejado</span>
-              </header>
-              <p class="kpi-value">78%</p>
-              <p class="kpi-meta">Considerando todas as UHs disponíveis.</p>
-            </article>
-
-            <article class="card kpi-card">
-              <header>
-                <p class="kpi-label">Vendas diretas (site/WhatsApp)</p>
-                <span class="kpi-tag attention">meta: 45%+ diretas</span>
-              </header>
-              <p class="kpi-value">31%</p>
-              <p class="kpi-meta">Percentual da receita que não passa por OTAs.</p>
-            </article>
-
-            <article class="card kpi-card">
-              <header>
-                <p class="kpi-label">Estoque sensível</p>
-                <span class="kpi-tag warning">monitorar</span>
-              </header>
-              <p class="kpi-value">7 itens críticos</p>
-              <p class="kpi-meta">Itens importantes para café da manhã e enxoval.</p>
-            </article>
-          </div>
-
-          <!-- STRIP VISUAL -->
-          <div class="card hero-strip">
-            <div class="hero-strip-content">
-              <p class="hero-strip-label">Hub + WebMDE</p>
-              <h3>Base pronta para o Acumulador Hub Windows</h3>
-              <p>
-                A partir deste painel, o próximo passo é conectar o banco SQL Server (Letoh/Letom)
-                ao PostgreSQL do Hub para trazer dados reais em tempo quase real.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- SIMULADORES + ROADMAP -->
-        <div class="grid-2">
-          <!-- SIMULADORES -->
-          <section class="section">
-            <div class="section-header">
-              <h2>Simuladores MDE</h2>
-              <span class="badge badge-success">Módulo já funcional</span>
-            </div>
-            <p class="section-subtitle">
-              Ferramentas para diretoria e time comercial projetarem faturamento, tarifas e ocupação.
-            </p>
-
-            <div class="list-cards">
-              <a href="/simulador-revpar.html" class="list-card">
-                <div>
-                  <h3>Simulador de RevPAR</h3>
-                  <p>Calcule a receita por apartamento disponível em segundos.</p>
-                </div>
-                <span class="pill-link">abrir</span>
-              </a>
-
-              <a href="/simulador-adr.html" class="list-card">
-                <div>
-                  <h3>Simulador de ADR</h3>
-                  <p>Veja rapidamente a diária média necessária para bater a meta.</p>
-                </div>
-                <span class="pill-link">abrir</span>
-              </a>
-
-              <a href="/simulador-diarias.html" class="list-card">
-                <div>
-                  <h3>Diárias necessárias</h3>
-                  <p>Quantas diárias precisam ser vendidas para alcançar o faturamento desejado.</p>
-                </div>
-                <span class="pill-link">abrir</span>
-              </a>
-
-              <a href="/simulador-ocupacao.html" class="list-card">
-                <div>
-                  <h3>Simulador de Ocupação</h3>
-                  <p>Projeção rápida de ocupação e impacto em receita.</p>
-                </div>
-                <span class="pill-link">abrir</span>
-              </a>
-            </div>
-          </section>
-
-          <!-- PRÓXIMOS PASSOS -->
-          <section class="section">
-            <div class="section-header">
-              <h2>Próximos passos técnicos</h2>
-              <p class="section-subtitle">
-                Fluxo planejado para Acumulador Hub Windows + APIs oficiais MDE.
-              </p>
-            </div>
-
-            <ol class="timeline">
-              <li class="timeline-item">
-                <div class="timeline-badge active"></div>
-                <div class="timeline-content">
-                  <h3>1. Consolidar Hub + Painel + Simuladores</h3>
-                  <p>
-                    Finalizar telas HTML premium, navegação e integração básica Supabase
-                    (auth + multi-hotel).
-                  </p>
-                  <span class="status-pill status-in-progress">em andamento</span>
-                </div>
-              </li>
-
-              <li class="timeline-item">
-                <div class="timeline-badge"></div>
-                <div class="timeline-content">
-                  <h3>2. Implementar Acumulador Hub Windows</h3>
-                  <p>
-                    Serviço em Windows conectando SQL Server (Letoh/Letom) ao PostgreSQL do Hub,
-                    trazendo reservas, UHs, hóspedes, financeiro e estoque.
-                  </p>
-                  <span class="status-pill status-planned">SQL Server → PostgreSQL</span>
-                </div>
-              </li>
-
-              <li class="timeline-item">
-                <div class="timeline-badge"></div>
-                <div class="timeline-content">
-                  <h3>3. Evoluir para APIs oficiais MDE</h3>
-                  <p>
-                    A partir da base do Acumulador, padronizar APIs de consulta e, depois,
-                    APIs de escrita para novos produtos em nuvem.
-                  </p>
-                  <span class="status-pill status-later">fase posterior</span>
-                </div>
-              </li>
-            </ol>
-          </section>
-        </div>
-      </main>
+  <!-- SIDEBAR PREMIUM -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">M</div>
+      <span>MDE Hub</span>
     </div>
-  </div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard.html">📊 Dashboard</a>
+      <a href="painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="reservas.html">🛎 Reservas</a>
+      <a href="financeiro.html">💰 Financeiro</a>
+      <a href="simuladores.html">🧮 Simuladores</a>
+
+      <div class="sidebar-divider"></div>
+      <a class="disabled">🚀 CRM Hoteleiro 5.0 — Em breve</a>
+      <a class="disabled">🧠 Proposta IA — Em breve</a>
+
+      <div class="sidebar-divider"></div>
+      <a href="#" id="logoutBtn" class="logout">Sair</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div>
+        <div class="topbar-title">Bem-vindo ao MDE Hub</div>
+        <div class="topbar-sub">Escolha um módulo no menu ao lado</div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="user-box">
+          <div class="user-initial" id="userInitial">U</div>
+          <span id="userName">Carregando...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- WELCOME PANEL -->
+    <section class="panel">
+      <h2>Plataforma MDE Hub</h2>
+      <p>
+        Seu ambiente integrado com Dashboard do Proprietário, Financeiro, Reservas,
+        Simuladores MDE e mais.  
+        Módulos avançados de CRM e Proposta IA serão liberados em breve.
+      </p>
+    </section>
+
+  </main>
 
   <script src="/js/app.js"></script>
 </body>
