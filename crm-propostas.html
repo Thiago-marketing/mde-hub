@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Propostas</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+
+  <style>
+    .actions-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .actions-row .left,
+    .actions-row .right {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-outline {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--bg3);
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="btnSidebarToggle">☰</div>
+
+<div id="sidebar">
+  <div class="logo">🏨 MDE Hub</div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+    <a href="/simuladores.html" class="nav-item">📐 Simuladores</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a href="/crm-dashboard.html" class="nav-item">📊 Dashboard CRM</a>
+    <a href="/crm.html" class="nav-item">🗂️ Funil</a>
+    <a href="/crm-contatos.html" class="nav-item">📇 Contatos</a>
+    <a href="/crm-atividades.html" class="nav-item">📝 Atividades</a>
+    <a href="/crm-config.html" class="nav-item">⚙️ Configurações</a>
+    <a href="/crm-propostas.html" class="nav-item active">📄 Propostas</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/perfil.html" class="nav-item">👤 Meu Perfil</a>
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="topbar">
+    <button id="btnThemeToggle">🌓</button>
+    <div class="user-badge" id="userInitial">U</div>
+  </div>
+
+  <h1 class="page-title">Propostas</h1>
+  <p class="page-subtitle">Acompanhe propostas enviadas para hóspedes e grupos.</p>
+
+  <div class="card">
+    <div class="actions-row">
+      <div class="left">
+        <button class="btn-primary" onclick="window.location.href='/crm-proposta-lite.html'">
+          + Nova Proposta
+        </button>
+      </div>
+      <div class="right">
+        <input type="text" placeholder="Buscar por hóspede, empresa ou número..." />
+        <select>
+          <option>Status: todos</option>
+          <option>Rascunho</option>
+          <option>Enviada</option>
+          <option>Aceita</option>
+          <option>Perdida</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Hóspede/Empresa</th>
+            <th>Período</th>
+            <th>UH / Plano</th>
+            <th>Valor total</th>
+            <th>Status</th>
+            <th>Atualizado em</th>
+          </tr>
+        </thead>
+        <tbody id="listaPropostas">
+          <tr onclick="window.location.href='/crm-proposta-lite.html?id=1'">
+            <td>0001</td>
+            <td>João Silva</td>
+            <td>10–12/01/2026</td>
+            <td>Suíte Casal</td>
+            <td>R$ 820,00</td>
+            <td><span class="status-badge">Enviada</span></td>
+            <td>09/12/2025 14:32</td>
+          </tr>
+          <tr onclick="window.location.href='/crm-proposta-lite.html?id=2'">
+            <td>0002</td>
+            <td>Empresa XPTO (Grupo)</td>
+            <td>20–23/02/2026</td>
+            <td>10 UHs • Convênio</td>
+            <td>R$ 8.400,00</td>
+            <td><span class="status-badge">Em negociação</span></td>
+            <td>09/12/2025 10:05</td>
+          </tr>
+          <tr onclick="window.location.href='/crm-proposta-lite.html?id=3'">
+            <td>0003</td>
+            <td>Marina Lopes</td>
+            <td>05–07/01/2026</td>
+            <td>Suíte Família</td>
+            <td>R$ 1.240,00</td>
+            <td><span class="status-badge">Aceita</span></td>
+            <td>08/12/2025 18:44</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
