@@ -1,216 +1,325 @@
-// /js/app.js
-// MDE Hub • Layout + Tema + Navegação + Simuladores
-// (versão premium inicial, sem dependência direta do Supabase ainda)
+/* =========================================================
+   MDE HUB — APP.CSS PREMIUM FINAL • Bills Mode Supreme
+   Estrutura global + Sidebar + Layout + Cards + Temas
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  initTheme();
-  initSidebarActive();
-  initUserBadge();
-  initHotelPlaceholder();
-  initSimulators();
-});
-
-/* -----------------------------------------------------------
-   TEMA (DARK / CLEAN)
------------------------------------------------------------ */
-function initTheme() {
-  const html = document.documentElement;
-  const stored = localStorage.getItem("mdehub-theme");
-  const prefersDark = window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  let current = stored || (prefersDark ? "dark" : "clean");
-  html.setAttribute("data-theme", current);
-
-  const btn = document.getElementById("themeToggle");
-  if (!btn) return;
-
-  updateThemeButtonLabel(btn, current);
-
-  btn.addEventListener("click", () => {
-    current = current === "dark" ? "clean" : "dark";
-    html.setAttribute("data-theme", current);
-    localStorage.setItem("mdehub-theme", current);
-    updateThemeButtonLabel(btn, current);
-  });
+/* ---------------------------------------------------------
+   RESET GLOBAL
+--------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-function updateThemeButtonLabel(btn, theme) {
-  btn.textContent = theme === "dark" ? "Modo claro" : "Modo escuro";
+html {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 15px;
 }
 
-/* -----------------------------------------------------------
-   SIDEBAR – MARCAR ITEM ATIVO
------------------------------------------------------------ */
-function initSidebarActive() {
-  const path = window.location.pathname.split("/").pop() || "dashboard.html";
-  const links = document.querySelectorAll(".nav-item");
-
-  links.forEach(link => {
-    const href = link.getAttribute("href");
-    if (!href) return;
-
-    const base = href.split("/").pop();
-    if (base === path) {
-      link.classList.add("active");
-    } else {
-      link.classList.remove("active");
-    }
-  });
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
 }
 
-/* -----------------------------------------------------------
-   USER BADGE (INICIAL) – PLACEHOLDER
-   Futuro: puxar nome real via Supabase.
------------------------------------------------------------ */
-function initUserBadge() {
-  const badge = document.getElementById("userInitial");
-  if (!badge) return;
+/* ---------------------------------------------------------
+   TEMAS (Dark / Clean)
+--------------------------------------------------------- */
+html[data-theme="dark"] {
+  --bg: #0e141b;
+  --bg2: #111821;
+  --bg3: #1a222d;
+  --text: #ffffff;
+  --text2: #d0d7e0;
+  --primary: #00aaff;
+  --border: rgba(255,255,255,0.08);
+  --hover: rgba(255,255,255,0.06);
+}
 
-  // Placeholder: tenta pegar de localStorage ou usa "U"
-  const storedName = localStorage.getItem("mdehub-user-name") || "Usuário";
-  const initial = storedName.trim().charAt(0).toUpperCase() || "U";
+html[data-theme="clean"] {
+  --bg: #f3f5f7;
+  --bg2: #ffffff;
+  --bg3: #eef1f4;
+  --text: #111;
+  --text2: #444;
+  --primary: #0077cc;
+  --border: rgba(0,0,0,0.12);
+  --hover: rgba(0,0,0,0.05);
+}
 
-  badge.textContent = initial;
+/* ---------------------------------------------------------
+   SIDEBAR FIXA (Desktop)
+--------------------------------------------------------- */
+#sidebar {
+  width: 260px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 25px 18px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: all 0.25s ease;
+  z-index: 50;
+}
 
-  const nameSpan = document.getElementById("userName");
-  if (nameSpan) {
-    nameSpan.textContent = storedName;
+#sidebar .logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Navegação do menu */
+.nav-section {
+  margin-top: 25px;
+}
+
+.nav-title {
+  font-size: 13px;
+  opacity: .5;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text2);
+  text-decoration: none;
+  margin-bottom: 4px;
+  transition: all 0.2s ease;
+  gap: 10px;
+}
+
+.nav-item:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Ícone no menu */
+.nav-item img,
+.nav-item svg {
+  width: 18px;
+  opacity: .85;
+}
+
+/* Sair */
+.nav-exit {
+  margin-top: 25px;
+}
+
+/* ---------------------------------------------------------
+   SIDEBAR MOBILE
+--------------------------------------------------------- */
+#btnSidebarToggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  padding: 8px 10px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: none;
+  z-index: 200;
+  cursor: pointer;
+}
+
+@media (max-width: 830px) {
+  #sidebar {
+    transform: translateX(-260px);
+  }
+
+  #sidebar.open {
+    transform: translateX(0);
+  }
+
+  #btnSidebarToggle {
+    display: block;
   }
 }
 
-/* -----------------------------------------------------------
-   HOTEL SELECT – APENAS PLACEHOLDER VISUAL
-   Futuro: popular a partir do banco.
------------------------------------------------------------ */
-function initHotelPlaceholder() {
-  const select = document.getElementById("hotelSelect");
-  if (!select) return;
-
-  // Evita duplicar opções se já estiver preenchido por outro script
-  if (select.options.length > 0) return;
-
-  const opt = document.createElement("option");
-  opt.value = "demo";
-  opt.textContent = "Carregando hotéis...";
-  select.appendChild(opt);
+/* ---------------------------------------------------------
+   LAYOUT PRINCIPAL
+--------------------------------------------------------- */
+.main {
+  margin-left: 260px;
+  padding: 40px;
+  width: calc(100% - 260px);
+  transition: all 0.25s ease;
 }
 
-/* -----------------------------------------------------------
-   SIMULADORES – ADR / DIÁRIAS / OCUPAÇÃO / REVPAR
------------------------------------------------------------ */
-function initSimulators() {
-  initSimuladorADR();
-  initSimuladorDiarias();
-  initSimuladorOcupacao();
-  initSimuladorRevpar();
+@media (max-width: 830px) {
+  .main {
+    margin-left: 0;
+    padding: 25px 18px;
+    width: 100%;
+  }
 }
 
-/* --------- ADR --------- */
-function initSimuladorADR() {
-  const form = document.getElementById("formADR");
-  if (!form) return;
-
-  const inputReceita = document.getElementById("adrReceita");
-  const inputDiariasVendidas = document.getElementById("adrDiarias");
-  const selectPeriodo = document.getElementById("adrPeriodo");
-  const output = document.getElementById("adrResultado");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const receita = parseFloat((inputReceita.value || "0").replace(",", "."));
-    const diariasVendidas = parseFloat((inputDiariasVendidas.value || "0").replace(",", "."));
-
-    if (!receita || !diariasVendidas || diariasVendidas <= 0) {
-      output.textContent = "–";
-      return;
-    }
-
-    const adr = receita / diariasVendidas;
-    output.textContent = "R$ " + adr.toFixed(2).replace(".", ",");
-  });
+/* Título da página */
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--text);
 }
 
-/* --------- DIÁRIAS NECESSÁRIAS --------- */
-function initSimuladorDiarias() {
-  const form = document.getElementById("formDiarias");
-  if (!form) return;
-
-  const inputMeta = document.getElementById("metaFaturamento");
-  const inputAdrEstimada = document.getElementById("adrEstimada");
-  const output = document.getElementById("diariasResultado");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const meta = parseFloat((inputMeta.value || "0").replace(",", "."));
-    const adr = parseFloat((inputAdrEstimada.value || "0").replace(",", "."));
-
-    if (!meta || !adr || adr <= 0) {
-      output.textContent = "– diárias";
-      return;
-    }
-
-    const diarias = meta / adr;
-    output.textContent = diarias.toFixed(1).replace(".", ",") + " diárias";
-  });
+.page-subtitle {
+  font-size: 15px;
+  opacity: .7;
+  margin-bottom: 30px;
 }
 
-/* --------- OCUPAÇÃO --------- */
-function initSimuladorOcupacao() {
-  const form = document.getElementById("formOcupacao");
-  if (!form) return;
-
-  const inputUhs = document.getElementById("ocupUhs");
-  const inputDias = document.getElementById("ocupDias");
-  const inputVendidas = document.getElementById("ocupVendidas");
-  const output = document.getElementById("ocupResultado");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const uhs = parseFloat((inputUhs.value || "0").replace(",", "."));
-    const dias = parseFloat((inputDias.value || "0").replace(",", "."));
-    const vendidas = parseFloat((inputVendidas.value || "0").replace(",", "."));
-
-    const capacidade = uhs * dias;
-
-    if (!uhs || !dias || !vendidas || capacidade <= 0) {
-      output.textContent = "--%";
-      return;
-    }
-
-    const ocup = (vendidas / capacidade) * 100;
-    output.textContent = ocup.toFixed(1).replace(".", ",") + "%";
-  });
+/* ---------------------------------------------------------
+   TOPBAR (lado direito)
+--------------------------------------------------------- */
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 15px;
 }
 
-/* --------- REVPAR --------- */
-function initSimuladorRevpar() {
-  const form = document.getElementById("formRevpar");
-  if (!form) return;
+.user-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+}
 
-  const inputReceita = document.getElementById("revReceita");
-  const inputUhs = document.getElementById("revUhs");
-  const inputDias = document.getElementById("revDias");
-  const output = document.getElementById("revResultado");
+/* Botão tema */
+#btnThemeToggle {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+#btnThemeToggle:hover {
+  background: var(--hover);
+}
 
-    const receita = parseFloat((inputReceita.value || "0").replace(",", "."));
-    const uhs = parseFloat((inputUhs.value || "0").replace(",", "."));
-    const dias = parseFloat((inputDias.value || "0").replace(",", "."));
+/* ---------------------------------------------------------
+   CARDS PADRÃO PREMIUM
+--------------------------------------------------------- */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 25px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  transition: all 0.25s ease;
+}
 
-    const base = uhs * dias;
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
 
-    if (!receita || !uhs || !dias || base <= 0) {
-      output.textContent = "R$ --";
-      return;
-    }
+.card-title {
+  font-size: 20px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
 
-    const revpar = receita / base;
-    output.textContent = "R$ " + revpar.toFixed(2).replace(".", ",");
-  });
+.card-value {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.card-desc {
+  font-size: 14px;
+  opacity: .7;
+}
+
+/* ---------------------------------------------------------
+   GRID FLEX PREMIUM
+--------------------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 25px;
+}
+
+/* ---------------------------------------------------------
+   INPUTS E BOTÕES
+--------------------------------------------------------- */
+input,
+select {
+  padding: 10px 12px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  opacity: .9;
+}
+
+/* ---------------------------------------------------------
+   TABELAS (caso usar futuramente)
+--------------------------------------------------------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  text-align: left;
+  opacity: .7;
+}
+
+/* ---------------------------------------------------------
+   FINAL
+--------------------------------------------------------- */
+footer {
+  margin-top: 40px;
+  font-size: 12px;
+  opacity: .4;
+  text-align: center;
 }
