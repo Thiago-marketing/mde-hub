@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDE Hub • Configurações CRM</title>
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
+
+  <style>
+    .section-title {
+      font-size: 22px;
+      margin: 25px 0 12px 0;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .config-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .config-group {
+      margin-bottom: 20px;
+    }
+
+    .config-label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .btn-save {
+      padding: 12px 20px;
+      font-weight: 700;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<!-- MENU MOBILE -->
+<div id="btnSidebarToggle">☰</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo">🏨 MDE Hub</div>
+
+  <div class="nav-section">
+    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
+    <a href="/simuladores.html" class="nav-item">📐 Simuladores</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-title">CRM Hoteleiro</div>
+    <a href="/crm.html" class="nav-item">📘 Funil</a>
+    <a href="/crm-contatos.html" class="nav-item">📇 Contatos</a>
+    <a href="/crm-atividades.html" class="nav-item">📝 Atividades</a>
+    <a class="nav-item active">⚙️ Configurações</a>
+  </div>
+
+  <div class="nav-section nav-exit">
+    <a href="/logout.html" class="nav-item">🚪 Sair</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="topbar">
+    <button id="btnThemeToggle">🌓</button>
+    <div class="user-badge" id="userInitial">U</div>
+  </div>
+
+  <h1 class="page-title">Configurações do CRM</h1>
+  <p class="page-subtitle">Personalize seu funil, automações e preferências</p>
+
+  <!-- FUNIL -->
+  <h2 class="section-title">Etapas do Funil</h2>
+
+  <div class="config-box">
+    <div class="config-group">
+      <label class="config-label">Etapas (ordem atual):</label>
+      <input type="text" value="Novo Lead" />
+      <input type="text" value="Em Conversa" />
+      <input type="text" value="Follow-up" />
+      <input type="text" value="Proposta Enviada" />
+      <input type="text" value="Aguardando Pagamento" />
+      <input type="text" value="Reserva Confirmada" />
+      <input type="text" value="Perdido" />
+    </div>
+  </div>
+
+  <!-- ORIGENS -->
+  <h2 class="section-title">Origens de Contato</h2>
+
+  <div class="config-box">
+    <div class="config-group">
+      <label class="config-label">Selecione as origens que deseja usar:</label>
+
+      <label><input type="checkbox" checked /> WhatsApp</label><br>
+      <label><input type="checkbox" checked /> Site</label><br>
+      <label><input type="checkbox" checked /> Instagram</label><br>
+      <label><input type="checkbox" /> Facebook</label><br>
+      <label><input type="checkbox" /> Indicação</label><br>
+      <label><input type="checkbox" /> OTA (Booking/Airbnb)</label><br>
+    </div>
+  </div>
+
+  <!-- RESPOSTAS RÁPIDAS -->
+  <h2 class="section-title">Respostas Rápidas</h2>
+
+  <div class="config-box">
+    <textarea placeholder="Digite aqui suas mensagens prontas para agilizar atendimentos..."></textarea>
+  </div>
+
+  <!-- NOTIFICAÇÕES -->
+  <h2 class="section-title">Notificações</h2>
+
+  <div class="config-box">
+    <label><input type="checkbox" checked /> Avisar sobre follow-ups atrasados</label><br>
+    <label><input type="checkbox" checked /> Lembretes de tarefas do dia</label><br>
+    <label><input type="checkbox" /> Lead quente (IA Whis)</label><br>
+  </div>
+
+  <!-- TAGS COMPORTAMENTAIS -->
+  <h2 class="section-title">Tags Inteligentes (IA Whis)</h2>
+
+  <div class="config-box">
+    <div class="tag-list">
+      <span class="tag">Urgente</span>
+      <span class="tag">Intenção Alta</span>
+      <span class="tag">Preço Sensível</span>
+      <span class="tag">Risco de Churn</span>
+      <span class="tag">Interesse Forte</span>
+      <span class="tag">Reservou Antes</span>
+    </div>
+  </div>
+
+  <button class="btn-save">Salvar Configurações</button>
+
+</div>
+
+</body>
+</html>
