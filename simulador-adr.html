@@ -1,92 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Simulador de ADR</title>
-  <link rel="stylesheet" href="/css/app.css">
+
+  <link rel="stylesheet" href="/css/app.css" />
+  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
-<div class="layout">
+
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
 
   <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="avatar">M</div>
-      <span>MDE Hub</span>
+  <div id="sidebar">
+    <div class="logo">
+      <span class="logo-avatar">M</span>
+      <div class="logo-text">
+        <strong>MDE Hub</strong>
+        <span>Simuladores</span>
+      </div>
     </div>
 
-    <nav class="sidebar-menu">
-      <a href="/dashboard.html">📊 Dashboard</a>
-      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
-      <a href="/reservas.html">🔑 Reservas</a>
-      <a href="/financeiro.html">💰 Financeiro</a>
-      <a class="active" href="/simuladores.html">📐 Simuladores</a>
-      <a>📘 CRM Hoteleiro • Em breve</a>
-      <a>📄 Proposta IA • Em breve</a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <a id="logoutBtn">🚪 Sair</a>
+    <div class="nav-section">
+      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
+      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
+      <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
+      <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
+      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
+      <a href="/fechamento.html" class="nav-item">🧾 Fechamento</a>
+      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
+      <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
+      <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa UHs</a>
     </div>
-  </aside>
 
+    <div class="nav-section">
+      <div class="nav-title">Simuladores</div>
+      <a href="/simuladores.html" class="nav-item">🧮 Todos os Simuladores</a>
+      <a href="/simulador-adr.html" class="nav-item active">📏 ADR</a>
+      <a href="/simulador-revpar.html" class="nav-item">📈 RevPAR</a>
+      <a href="/simulador-diarias.html" class="nav-item">📅 Diárias Vendidas</a>
+      <a href="/simulador-ocupacao.html" class="nav-item">🏨 Ocupação</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">CRM Hoteleiro</div>
+      <a class="nav-item disabled">📘 Em breve</a>
+      <a class="nav-item disabled">📄 Proposta Hoteleira</a>
+    </div>
+
+    <div class="nav-section nav-exit">
+      <a href="/logout.html" class="nav-item">🚪 Sair</a>
+    </div>
+  </div>
 
   <!-- MAIN -->
-  <main class="content">
-    <div class="top-right">
-      <select class="hotel-select"><option>Carregando hotéis...</option></select>
-      <div class="user-badge">U</div>
-    </div>
+  <div class="main">
 
-    <h1>Simulador de ADR</h1>
-    <p class="content-subtitle">
-      Calcule a tarifa média diária (ADR) ideal com base na receita e nas diárias vendidas.
-    </p>
-
-    <div class="grid grid-2">
-
-      <div class="card">
-        <div class="card-title">Parâmetros</div>
-        <form id="formAdr" class="form-grid">
-          <label>
-            Receita do período (R$)
-            <input type="number" id="adr_receita" min="0" step="0.01" required>
-          </label>
-
-          <label>
-            Diárias vendidas (nº)
-            <input type="number" id="adr_diarias" min="1" step="1" required>
-          </label>
-
-          <label>
-            Período analisado
-            <select id="adr_periodo">
-              <option value="dia">Dia</option>
-              <option value="semana">Semana</option>
-              <option value="mes">Mês</option>
-            </select>
-          </label>
-
-          <button type="submit" class="btn-primary full">Calcular ADR</button>
-        </form>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Resultado</div>
-        <div class="card-value" id="adr_resultado">R$ --</div>
-        <p class="text-muted" id="adr_resumo">
-          Preencha os campos ao lado e clique em calcular.
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Simulador de ADR</h1>
+        <p class="page-subtitle">
+          Calcule a Diária Média Real (ADR) do seu hotel em poucos segundos.
         </p>
       </div>
 
-    </div>
-  </main>
+      <div class="topbar-right">
+        <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+        <div class="user-pill">
+          <div class="user-avatar">H</div>
+          <div class="user-info">
+            <span class="user-name">Hotel Exemplo</span>
+            <span class="user-email">contato@hotelexemplo.com</span>
+          </div>
+        </div>
+      </div>
+    </header>
 
-</div>
+    <!-- CONTEÚDO -->
+    <section class="content-section">
 
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
+      <div class="grid">
+
+        <!-- EXPLICAÇÃO -->
+        <div class="card">
+          <div class="card-title">O que é ADR?</div>
+          <p class="card-desc">
+            ADR (Average Daily Rate) é a <strong>diária média</strong> obtida
+            dividindo o faturamento de hospedagem pelo número de unidades habitacionais
+            ocupadas no período.
+          </p>
+          <p class="card-desc" style="margin-top:10px;">
+            Fórmula básica:
+            <br />
+            <strong>ADR = Faturamento de Hospedagem ÷ UHs Ocupadas</strong>
+          </p>
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <div class="card">
+          <div class="card-title">Preencha os dados</div>
+
+          <label for="uhsDisponiveis">UHs Disponíveis no período</label>
+          <input
+            type="number"
+            id="uhsDisponiveis"
+            min="0"
+            placeholder="Ex: 40"
+          />
+
+          <label for="uhsOcupadas">UHs Ocupadas no período</label>
+          <input
+            type="number"
+            id="uhsOcupadas"
+            min="0"
+            placeholder="Ex: 32"
+          />
+
+          <label for="faturamentoHospedagem">
+            Faturamento de Hospedagem (R$)
+          </label>
+          <input
+            type="number"
+            id="faturamentoHospedagem"
+            min="0"
+            step="0.01"
+            placeholder="Ex: 18.500,00"
+          />
+
+          <button id="btnCalcularADR" class="btn-primary" style="margin-top:10px;">
+            Calcular ADR
+          </button>
+        </div>
+
+        <!-- RESULTADOS -->
+        <div class="card">
+          <div class="card-title">Resultado</div>
+
+          <p class="card-desc">ADR calculada para o período:</p>
+          <div class="card-value" id="adrResultado">R$ --</div>
+
+          <p class="card-desc" id="adrResumo" style="margin-top: 12px;">
+            Preencha os dados ao lado e clique em "Calcular ADR".
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- SCRIPT DO SIMULADOR (SIMPLES) -->
+  <script>
+    const btnCalcular = document.getElementById("btnCalcularADR");
+    const inputUHDisp = document.getElementById("uhsDisponiveis");
+    const inputUHOcup = document.getElementById("uhsOcupadas");
+    const inputFat = document.getElementById("faturamentoHospedagem");
+    const adrResultado = document.getElementById("adrResultado");
+    const adrResumo = document.getElementById("adrResumo");
+
+    function formatCurrency(value) {
+      if (isNaN(value)) return "R$ --";
+      return value.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        maximumFractionDigits: 2
+      });
+    }
+
+    btnCalcular.addEventListener("click", () => {
+      const uhsOcupadas = parseFloat(inputUHOcup.value.replace(",", ".")) || 0;
+      const faturamento = parseFloat(inputFat.value.replace(",", ".")) || 0;
+
+      if (uhsOcupadas <= 0 || faturamento <= 0) {
+        adrResultado.textContent = "R$ --";
+        adrResumo.textContent = "Informe um número válido de UHs ocupadas e um faturamento maior que zero.";
+        return;
+      }
+
+      const adr = faturamento / uhsOcupadas;
+      adrResultado.textContent = formatCurrency(adr);
+
+      // Interpretação simples
+      let comentario = "ADR calculada com sucesso.";
+      if (adr < 150) {
+        comentario = "ADR baixa: avalie se há espaço para ajuste de tarifas ou estratégias de upsell.";
+      } else if (adr >= 150 && adr < 300) {
+        comentario = "ADR dentro de uma faixa saudável. Compare com períodos anteriores e com o mercado.";
+      } else {
+        comentario = "ADR alta: bom desempenho. Verifique se isso impactou a taxa de ocupação.";
+      }
+
+      adrResumo.textContent = comentario;
+    });
+  </script>
+
 </body>
 </html>
