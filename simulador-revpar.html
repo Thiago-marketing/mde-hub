@@ -3,101 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Simulador de RevPAR</title>
+  <title>MDE Hub • Simulador RevPAR</title>
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <!-- mesma sidebar -->
-    </aside>
 
-    <div class="main-area">
-      <header class="topbar">
-        <div class="topbar-breadcrumb">
-          <span class="crumb-section">MDE Hub</span>
-          <span class="crumb-separator">•</span>
-          <span class="crumb-page">Simulador de RevPAR</span>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header"><div class="user-initial">M</div><div class="sidebar-brand">MDE Hub</div></div>
+    <nav class="sidebar-nav">
+      <a href="/dashboard.html">📊 Dashboard</a>
+      <a href="/painel-proprietario.html">🏨 Painel do Proprietário</a>
+      <a href="/reservas.html">🛎️ Reservas</a>
+      <a href="/financeiro.html">💰 Financeiro</a>
+      <a href="/simuladores.html" class="active">🧮 Simuladores</a>
+      <div class="separator"></div>
+      <a class="disabled">📘 CRM Hoteleiro • Em breve</a>
+      <a class="disabled">📝 Proposta IA • Em breve</a>
+      <div class="separator"></div>
+      <a href="#" id="logoutBtn" class="logout">🚪 Sair</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <h1 class="page-title">Simulador de RevPAR</h1>
+        <p class="page-subtitle">Calcule RevPAR e impacto da receita por apartamento disponível.</p>
+      </div>
+
+      <div class="topbar-right">
+        <select id="hotelSelect" class="hotel-select"><option>Carregando hotéis...</option></select>
+        <div class="user-profile"><span id="userInitial">U</span><div><p id="userName">Carregando...</p><p id="userEmail"></p></div></div>
+      </div>
+    </header>
+
+    <section class="panel">
+      <h2>Preencha os dados</h2>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Receita Total (R$)</label>
+          <input type="number" id="receita" placeholder="Ex: 18.000" />
         </div>
-        <div class="topbar-actions">
-          <button class="chip ghost" id="themeToggle">
-            <span class="chip-dot"></span>
-            Tema
-          </button>
+
+        <div class="form-group">
+          <label>Total de UHs</label>
+          <input type="number" id="total" placeholder="Ex: 40" />
         </div>
-      </header>
 
-      <main class="content">
-        <section class="page-header">
-          <h1>Simulador de RevPAR</h1>
-          <p>
-            Calcule rapidamente a receita por apartamento disponível
-            (Revenue per Available Room).
-          </p>
-        </section>
-
-        <div class="grid-2">
-          <!-- Formulário -->
-          <section class="section">
-            <div class="card form-card">
-              <div class="form-group">
-                <label for="revpar_uh_disponiveis">UHs disponíveis no período</label>
-                <input type="number" id="revpar_uh_disponiveis" min="1" value="40" />
-              </div>
-              <div class="form-group">
-                <label for="revpar_uh_ocupadas">UHs ocupadas (ou diárias vendidas)</label>
-                <input type="number" id="revpar_uh_ocupadas" min="0" value="28" />
-              </div>
-              <div class="form-group">
-                <label for="revpar_receita">Receita total de hospedagem (R$)</label>
-                <input type="number" id="revpar_receita" min="0" step="0.01" value="14500" />
-              </div>
-
-              <button id="btnCalcularRevpar" class="btn-primary full">
-                Calcular RevPAR
-              </button>
-            </div>
-          </section>
-
-          <!-- Resultado -->
-          <section class="section">
-            <div class="card kpi-card big">
-              <header>
-                <p class="kpi-label">RevPAR estimado</p>
-              </header>
-              <p class="kpi-value" id="revpar_resultado">R$ 362,50</p>
-              <p class="kpi-meta">
-                RevPAR = Receita de hospedagem ÷ UHs disponíveis no período.
-              </p>
-            </div>
-
-            <div class="card">
-              <p class="card-note">
-                Dica: compare o RevPAR de períodos diferentes para medir o impacto de
-                campanhas, tarifas e canais de venda.
-              </p>
-            </div>
-          </section>
+        <div class="form-group">
+          <label>UH Ocupadas</label>
+          <input type="number" id="ocupadas" placeholder="Ex: 28" />
         </div>
-      </main>
-    </div>
-  </div>
+      </div>
 
-  <script src="/js/app.js"></script>
+      <button class="btn-primary" onclick="calcRevpar()">Calcular RevPAR</button>
+
+      <div class="result-box" id="resultRevpar"></div>
+    </section>
+
+  </main>
+
   <script>
-    document.getElementById('btnCalcularRevpar').addEventListener('click', function () {
-      const disp = Number(document.getElementById('revpar_uh_disponiveis').value) || 0;
-      const receita = Number(document.getElementById('revpar_receita').value) || 0;
+    function calcRevpar() {
+      const receita = parseFloat(document.getElementById('receita').value);
+      const total = parseFloat(document.getElementById('total').value);
+      const ocupadas = parseFloat(document.getElementById('ocupadas').value);
 
-      if (!disp || disp <= 0) {
-        alert('Informe a quantidade de UHs disponíveis.');
+      if (!receita || !total || !ocupadas) {
+        document.getElementById('resultRevpar').innerHTML = "<p class='error'>Preencha todos os campos.</p>";
         return;
       }
 
-      const revpar = receita / disp;
-      document.getElementById('revpar_resultado').textContent =
-        'R$ ' + revpar.toFixed(2).replace('.', ',');
-    });
+      const adr = receita / ocupadas;
+      const ocupacao = ocupadas / total;
+      const revpar = adr * ocupacao;
+
+      document.getElementById('resultRevpar').innerHTML = `
+        <h3>Resultado</h3>
+        <p class='value-highlight'>RevPAR: R$ ${revpar.toFixed(2)}</p>
+      `;
+    }
   </script>
+
+  <script src="/js/supabase.js"></script>
+  <script src="/js/app.js"></script>
+
 </body>
 </html>
