@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MDE Hub • Confirme seu e-mail</title>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+
+<div class="auth-container">
+    <div class="auth-card">
+
+        <div style="text-align:center; margin-bottom:20px;">
+            <div style="font-size:48px; color:#00c853;">✔</div>
+            <h2 style="margin-top:10px;">Conta criada com sucesso!</h2>
+            <p style="opacity:0.8; margin-top:10px;">
+                Enviamos um e-mail de confirmação para você.  
+                <br>Abra sua caixa de entrada e clique no link para ativar sua conta.
+            </p>
+        </div>
+
+        <div style="margin-top:30px;">
+            <button onclick="abrirEmail()" class="btn-primary" style="width:100%;">
+                Abrir meu e-mail
+            </button>
+        </div>
+
+        <p style="opacity:0.6; text-align:center; margin-top:20px;">
+            Não encontrou o e-mail? Verifique a pasta de Spam ou Promoções.
+        </p>
+    </div>
+</div>
+
+<script>
+function abrirEmail() {
+    const email = localStorage.getItem("mde-temp-email");
+
+    if (!email) {
+        window.location.href = "https://gmail.com";
+        return;
+    }
+
+    const dominio = email.split("@")[1].toLowerCase();
+
+    if (dominio.includes("gmail")) window.location.href = "https://mail.google.com";
+    else if (dominio.includes("hotmail") || dominio.includes("outlook") || dominio.includes("live")) window.location.href = "https://outlook.live.com";
+    else if (dominio.includes("yahoo")) window.location.href = "https://mail.yahoo.com";
+    else window.location.href = "https://gmail.com";
+}
+</script>
+
+</body>
+</html>
