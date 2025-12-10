@@ -1,118 +1,76 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Simuladores</title>
-
+  <title>MDE Hub • Central de Simuladores</title>
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/app.js"></script>
 </head>
 
-<body>
+<body class="page page-simuladores">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("mde-theme") || "clean";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
 
-<!-- BOTÃO MOBILE -->
-<div id="btnSidebarToggle">☰</div>
+  <div id="btnSidebarToggle">☰</div>
+  <div id="sidebar-container"></div>
 
-<!-- SIDEBAR -->
-<div id="sidebar">
-  <div class="logo">🏨 MDE Hub</div>
-
-  <div class="nav-section">
-    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
-    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
-    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    <a href="/fechamento.html" class="nav-item">🧾 Fechamento</a>
-    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
-    <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa UHs</a>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-title">Simuladores</div>
-    <a href="/simuladores.html" class="nav-item active">🧮 Simuladores</a>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-title">CRM Hoteleiro</div>
-    <a class="nav-item disabled">📘 Em breve</a>
-    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
-  </div>
-
-  <div class="nav-section nav-exit">
-    <a href="/logout.html" class="nav-item">🚪 Sair</a>
-  </div>
-</div>
-
-<!-- TOPBAR PREMIUM -->
-<header class="topbar">
-  <div class="topbar-left">
-    <h1 class="page-title">TÍTULO DA PÁGINA</h1>
-    <p class="page-subtitle">Subtítulo explicando a função da tela</p>
-  </div>
-
-  <div class="topbar-right">
-    <div class="hotel-select-wrapper">
-      <span class="label">Hotel</span>
-      <select id="hotelSelector">
-        <option>Carregando...</option>
-      </select>
-    </div>
-
-    <button id="btnThemeToggle" class="theme-toggle">🌓</button>
-
-    <div class="user-pill">
-      <div class="user-avatar">H</div>
-      <div class="user-info">
-        <span class="user-name">Hotel Exemplo</span>
-        <span class="user-email">contato@hotelexemplo.com</span>
+  <main class="main-area">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">Central de Simuladores</h1>
+        <p class="page-subtitle">Ferramentas rápidas para análise de desempenho hoteleiro.</p>
       </div>
-    </div>
-  </div>
-</header>
-
-  <h1 class="page-title">Simuladores Inteligentes</h1>
-  <p class="page-subtitle">Ferramentas gratuitas da MDE para cálculos importantes do seu hotel</p>
-
-  <div class="grid">
-
-    <!-- ADR -->
-    <a href="/simulador-adr.html" class="card card-click">
-      <div class="card-title">Simulador de ADR</div>
-      <div class="card-desc">
-        Calcule a diária média real do seu hotel.
+      <div class="topbar-right">
+        <select id="hotelSelect">
+          <option>Carregando hotéis...</option>
+        </select>
+        <button id="btnThemeToggle">🌓</button>
+        <div class="user-badge" id="userMini">U</div>
       </div>
-    </a>
+    </header>
 
-    <!-- RevPAR -->
-    <a href="/simulador-revpar.html" class="card card-click">
-      <div class="card-title">Simulador de RevPAR</div>
-      <div class="card-desc">
-        Veja seu desempenho comparado à ocupação e receita.
-      </div>
-    </a>
+    <section class="page-content grid-3">
+      <a href="/sim-adr.html" class="card card-link">
+        <h2>ADR Ideal</h2>
+        <p>Simule o valor médio da diária para atingir seu faturamento alvo.</p>
+      </a>
 
-    <!-- Diárias Vendidas -->
-    <a href="/simulador-diarias.html" class="card card-click">
-      <div class="card-title">Simulador de Diárias Vendidas</div>
-      <div class="card-desc">
-        Entenda quanto precisa vender por dia para atingir metas.
-      </div>
-    </a>
+      <a href="/sim-revpar.html" class="card card-link">
+        <h2>RevPAR</h2>
+        <p>Calcule a receita por apartamento disponível.</p>
+      </a>
 
-    <!-- Ocupação -->
-    <a href="/simulador-ocupacao.html" class="card card-click">
-      <div class="card-title">Simulador de Ocupação</div>
-      <div class="card-desc">
-        Preveja ocupação com base em apartamentos disponíveis.
-      </div>
-    </a>
+      <a href="/sim-ocupacao.html" class="card card-link">
+        <h2>Ocupação</h2>
+        <p>Veja o impacto da ocupação na sua receita.</p>
+      </a>
 
-  </div>
+      <a href="/sim-faturamento.html" class="card card-link">
+        <h2>Faturamento</h2>
+        <p>Projeção de faturamento com base em ADR e ocupação.</p>
+      </a>
 
-</div>
+      <a href="/sim-ota.html" class="card card-link">
+        <h2>OTAs x Direto</h2>
+        <p>Compare comissões de OTAs vs reservas diretas.</p>
+      </a>
+    </section>
+  </main>
 
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
+
+  <script>
+    fetch("/partials/sidebar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.querySelector("#sidebar-container").innerHTML = html;
+      })
+      .catch(err => console.error("Sidebar não carregada:", err));
+  </script>
 </body>
 </html>
