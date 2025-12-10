@@ -10,18 +10,24 @@
 
 <body>
 
+    <!-- BOTÃO MOBILE -->
     <div id="btnSidebarToggle">☰</div>
+
+    <!-- SIDEBAR -->
     <div id="sidebar"></div>
 
+    <!-- ÁREA PRINCIPAL -->
     <main class="main-area">
 
+        <!-- TOPO -->
         <div class="topbar">
             <div class="topbar-left">
                 <h1 class="page-title">Estoque</h1>
-                <p class="page-subtitle">Controle básico de produtos e níveis críticos.</p>
+                <p class="page-subtitle">Controle de insumos, níveis de estoque e itens críticos.</p>
             </div>
 
             <div class="topbar-right">
+
                 <div class="hotel-select-wrapper">
                     <span class="label">Hotel selecionado</span>
                     <select id="hotelSelect">
@@ -30,63 +36,93 @@
                 </div>
 
                 <button id="btnThemeToggle">🌓</button>
+
                 <div class="user-badge" id="userInitial">U</div>
             </div>
         </div>
 
+        <!-- INDICADORES -->
         <section class="grid">
 
             <div class="card">
-                <div class="card-title">Itens em Estoque</div>
-                <div class="card-value">--</div>
-                <div class="card-desc">Total cadastrado no sistema.</div>
+                <div class="card-title">Itens no Estoque</div>
+                <div id="card_total_itens" class="card-value">--</div>
+                <div class="card-desc">Itens cadastrados com quantidade atual.</div>
             </div>
 
             <div class="card">
                 <div class="card-title">Itens Críticos</div>
-                <div class="card-value">--</div>
-                <div class="card-desc">Quantidade abaixo do mínimo.</div>
+                <div id="card_itens_criticos" class="card-value">--</div>
+                <div class="card-desc">Abaixo do estoque mínimo.</div>
             </div>
 
             <div class="card">
-                <div class="card-title">Movimentações Hoje</div>
-                <div class="card-value">--</div>
+                <div class="card-title">Movimentações do Dia</div>
+                <div id="card_movimentacoes" class="card-value">--</div>
                 <div class="card-desc">Entradas e saídas registradas hoje.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Última Atualização</div>
+                <div id="card_atualizacao" class="card-value">--</div>
+                <div class="card-desc">Baseado nos dados do SQL Server.</div>
             </div>
 
         </section>
 
+        <!-- LISTA DE ESTOQUE -->
         <section class="card">
-            <div class="card-title">Lista de Produtos</div>
+            <div class="card-title">Níveis de Estoque</div>
+            <p class="card-desc">Lista completa de insumos, estoques atuais e mínimos.</p>
 
             <table class="table">
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Mínimo</th>
-                    <th>Status</th>
-                </tr>
-
-                <tr>
-                    <td>Item Exemplo</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>OK</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Estoque Atual</th>
+                        <th>Estoque Mínimo</th>
+                        <th>Situação</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaEstoque">
+                    <tr><td colspan="4">Carregando...</td></tr>
+                </tbody>
             </table>
+        </section>
 
-            <p class="card-desc">Estoque real será sincronizado com Letoh/Letom → Hub.</p>
+        <!-- MOVIMENTAÇÕES -->
+        <section class="card">
+            <div class="card-title">Movimentações do Dia</div>
+            <p class="card-desc">Entradas e saídas registradas hoje pelo time operacional.</p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Item</th>
+                        <th>Quantidade</th>
+                        <th>Horário</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaMovimentacoes">
+                    <tr><td colspan="4">Carregando...</td></tr>
+                </tbody>
+            </table>
         </section>
 
     </main>
 
+    <!-- JS -->
     <script type="module" src="/js/supabase.js"></script>
     <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/estoque.js"></script>
 
+    <!-- SIDEBAR DINÂMICA -->
     <script>
         fetch("/partials/sidebar.html")
             .then(r => r.text())
-            .then(html => sidebar.innerHTML = html);
+            .then(html => document.querySelector("#sidebar").innerHTML = html)
+            .catch(err => console.error("Erro ao carregar sidebar:", err));
     </script>
 
 </body>
