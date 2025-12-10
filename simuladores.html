@@ -10,25 +10,29 @@
 
 <body>
 
-    <!-- BOTÃO MOBILE -->
+    <!-- Botão Mobile -->
     <div id="btnSidebarToggle">☰</div>
 
-    <!-- SIDEBAR DINÂMICA -->
+    <!-- Sidebar -->
     <div id="sidebar"></div>
 
-    <!-- ÁREA PRINCIPAL -->
+    <!-- Área Principal -->
     <main class="main-area">
 
-        <!-- TOPBAR PREMIUM -->
+        <!-- TOPBAR / HEADER -->
         <div class="topbar">
 
             <div class="topbar-left">
                 <h1 class="page-title">Simuladores Inteligentes</h1>
-                <p class="page-subtitle">Ferramentas úteis para análises rápidas e projeções hoteleiras.</p>
+                <p class="page-subtitle">
+                    Ferramentas rápidas e poderosas para análise hoteleira.  
+                    Os dados reais serão integrados ao SQL Server (Letoh/Letom).
+                </p>
             </div>
 
             <div class="topbar-right">
 
+                <!-- Seleção do hotel -->
                 <div class="hotel-select-wrapper">
                     <span class="label">Hotel selecionado</span>
                     <select id="hotelSelect">
@@ -36,53 +40,60 @@
                     </select>
                 </div>
 
+                <!-- Tema -->
                 <button id="btnThemeToggle">🌓</button>
 
+                <!-- Avatar -->
                 <div class="user-badge" id="userInitial">U</div>
+
             </div>
         </div>
 
         <!-- GRID DOS SIMULADORES -->
         <section class="grid">
 
-            <a href="/simuladores/adr.html" class="card card-link">
+            <!-- ADR -->
+            <div class="card" onclick="location.href='/simuladores/adr.html'" style="cursor:pointer">
                 <div class="card-title">Simulador ADR</div>
                 <div class="card-desc">
-                    Calculadora de Diária Média (ADR) com base em receita e número de diárias.
+                    Calcule sua diária média com base em receita e diárias vendidas.
                 </div>
-            </a>
+            </div>
 
-            <a href="/simuladores/revpar.html" class="card card-link">
+            <!-- RevPAR -->
+            <div class="card" onclick="location.href='/simuladores/revpar.html'" style="cursor:pointer">
                 <div class="card-title">Simulador RevPAR</div>
                 <div class="card-desc">
-                    Receita por UH disponível — principal indicador do desempenho hoteleiro.
+                    Veja qual é sua receita por UH disponível com precisão.
                 </div>
-            </a>
+            </div>
 
-            <a href="/simuladores/ocupacao.html" class="card card-link">
+            <!-- Ocupação -->
+            <div class="card" onclick="location.href='/simuladores/ocupacao.html'" style="cursor:pointer">
                 <div class="card-title">Simulador de Ocupação</div>
                 <div class="card-desc">
-                    Veja rapidamente a taxa de ocupação real considerando UHs indisponíveis.
+                    Calcule a taxa real considerando UHs indisponíveis.
                 </div>
-            </a>
+            </div>
 
-            <a href="/simuladores/diaria.html" class="card card-link">
+            <!-- Preço Ideal -->
+            <div class="card" onclick="location.href='/simuladores/diaria.html'" style="cursor:pointer">
                 <div class="card-title">Preço Ideal da Diária</div>
                 <div class="card-desc">
-                    Defina o preço de venda ideal considerando custos, margem e competitividade.
+                    Defina o valor recomendado da diária com base em custos e margem.
                 </div>
-            </a>
+            </div>
 
         </section>
 
-        <!-- SESSÃO DE CONTEXTO -->
+        <!-- EXTRAS / PHASE 2 -->
         <section class="card">
-            <div class="card-title">Como os simuladores funcionam?</div>
+            <div class="card-title">Simuladores Premium (Fase 2)</div>
             <p class="card-desc">
-                Estes simuladores são ferramentas rápidas para auxiliar gestores e proprietários.
-                Na Fase 2 do Hub MDE, os resultados passarão a ser preenchidos automaticamente com
-                dados reais do SQL Server (Letoh/Letom) pelo Acumulador MDE Hub, trazendo ainda mais precisão
-                e automação às projeções.
+                Versões com inteligência comportamental, IA para análise de cenário, 
+                simulações de demanda e impacto financeiro.  
+                <br>
+                Serão habilitadas assim que o CRM Hoteleiro 5.0 entrar na Fase 2.
             </p>
         </section>
 
@@ -92,10 +103,10 @@
     <script type="module" src="/js/supabase.js"></script>
     <script type="module" src="/js/app.js"></script>
 
-    <!-- CARREGAR SIDEBAR -->
+    <!-- Sidebar Loader -->
     <script>
         fetch("/partials/sidebar.html")
-            .then(r => r.text())
+            .then(res => res.text())
             .then(html => document.querySelector("#sidebar").innerHTML = html)
             .catch(err => console.error("Erro ao carregar sidebar:", err));
     </script>
