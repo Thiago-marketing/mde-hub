@@ -99,6 +99,28 @@
 </head>
 
 <body>
+<body>
+
+<!-- SIDEBAR -->
+<div id="sidebar"></div>
+
+<script>
+// Carregar Sidebar (rota absoluta – compatível com Vercel)
+fetch('/partials/sidebar.html')
+  .then(res => res.text())
+  .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+  })
+  .catch(err => console.error("Erro ao carregar sidebar:", err));
+</script>
+
+<!-- Tema Dark / Clean (aplicação automática) -->
+<script>
+(function() {
+    const savedTheme = localStorage.getItem("mde-theme") || "clean";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+})();
+</script>
 
 <!-- BOTÃO MOBILE -->
 <div id="btnSidebarToggle">☰</div>
