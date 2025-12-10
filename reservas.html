@@ -1,153 +1,94 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Reservas</title>
-
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body>
+<body class="page page-reservas">
 
-<!-- BOTÃO MOBILE -->
-<div id="btnSidebarToggle">☰</div>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("mde-theme") || "clean";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
 
-<!-- SIDEBAR DINÂMICA -->
-<div id="sidebar-container"></div>
+  <div id="btnSidebarToggle">☰</div>
+  <div id="sidebar-container"></div>
 
-<!-- CONTEÚDO PRINCIPAL -->
-<main class="main-area">
-
-  <!-- TOPBAR PREMIUM OFICIAL -->
-  <header class="topbar">
-
-    <div class="topbar-left">
-      <h1 class="page-title">Reservas</h1>
-      <p class="page-subtitle">Gestão completa das reservas do hotel</p>
-    </div>
-
-    <div class="topbar-right">
-      <div class="hotel-select-wrapper">
-        <span class="label">Hotel</span>
-        <select id="hotelSelector">
-          <option>Carregando...</option>
-        </select>
+  <main class="main-area">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">Reservas</h1>
+        <p class="page-subtitle">Controle de reservas ativas, futuras e históricas.</p>
       </div>
 
-      <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+      <div class="topbar-right">
+        <select id="hotelSelect">
+          <option>Carregando hotéis...</option>
+        </select>
+        <button id="btnThemeToggle">🌓</button>
+        <div class="user-badge" id="userMini">U</div>
+      </div>
+    </header>
 
-      <div class="user-pill">
-        <div class="user-avatar">H</div>
-        <div class="user-info">
-          <span class="user-name">Hotel Exemplo</span>
-          <span class="user-email">contato@hotelexemplo.com</span>
+    <section class="page-content">
+      <div class="card">
+        <h2>Filtro Rápido</h2>
+        <div class="form-row">
+          <input type="date" />
+          <input type="date" />
+          <select>
+            <option>Todos os status</option>
+            <option>Confirmada</option>
+            <option>Check-in</option>
+            <option>Check-out</option>
+            <option>Cancelada</option>
+          </select>
+          <button class="btn-primary">Aplicar</button>
         </div>
       </div>
-    </div>
 
-  </header>
+      <div class="card table-card">
+        <h2>Lista de Reservas</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Hóspede</th>
+              <th>UH</th>
+              <th>Entrada</th>
+              <th>Saída</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Exemplo</td>
+              <td>101</td>
+              <td>--/--/----</td>
+              <td>--/--/----</td>
+              <td>Confirmada</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">Dados reais virão da conexão Supabase + SQL Server 2014.</p>
+      </div>
+    </section>
+  </main>
 
-  <!-- FILTROS -->
-  <section class="grid">
-    <div class="card">
-      <div class="card-title">Filtro Rápido</div>
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
 
-      <label>Status</label>
-      <select id="filtroStatus">
-        <option value="">Todos</option>
-        <option value="confirmada">Confirmada</option>
-        <option value="checkin">Check-in</option>
-        <option value="checkout">Check-out</option>
-        <option value="no-show">No-show</option>
-        <option value="cancelada">Cancelada</option>
-      </select>
-
-      <label>Data de Chegada</label>
-      <input type="date" id="filtroChegada">
-
-      <label>Hóspede</label>
-      <input type="text" id="filtroHospede" placeholder="Nome do hóspede">
-
-      <button id="btnFiltrar">Aplicar Filtros</button>
-    </div>
-  </section>
-
-  <!-- TABELA PRINCIPAL -->
-  <section class="grid">
-    <div class="card">
-      <div class="card-title">Lista de Reservas</div>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Reserva</th>
-            <th>Hóspede</th>
-            <th>UH</th>
-            <th>Entrada</th>
-            <th>Saída</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="listaReservas">
-          <tr><td colspan="6">Carregando...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-</main>
-
-<!-- SCRIPTS GLOBAIS -->
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
-
-<!-- SIDEBAR IMPORT -->
-<script>
-  fetch("/partials/sidebar.html")
-    .then(r => r.text())
-    .then(html => (document.getElementById("sidebar-container").innerHTML = html));
-</script>
-
-<!-- MOCK PROVISÓRIO ATÉ CONECTAR LETOH/LETOM VIA ACUMULADOR -->
-<script>
-  const reservasMock = [
-    { id: 4821, hospede: "Ana Souza", uh: "202", entrada: "2025-12-10", saida: "2025-12-12", status: "confirmada" },
-    { id: 4822, hospede: "Carlos Lima", uh: "305", entrada: "2025-12-10", saida: "2025-12-11", status: "checkin" },
-    { id: 4823, hospede: "Família Oliveira", uh: "401", entrada: "2025-12-11", saida: "2025-12-15", status: "no-show" },
-    { id: 4824, hospede: "Maria Paula", uh: "107", entrada: "2025-12-10", saida: "2025-12-10", status: "cancelada" }
-  ];
-
-  function renderReservas() {
-    const tbody = document.getElementById("listaReservas");
-    tbody.innerHTML = "";
-
-    reservasMock.forEach(r => {
-      tbody.innerHTML += `
-        <tr>
-          <td>#${r.id}</td>
-          <td>${r.hospede}</td>
-          <td>${r.uh}</td>
-          <td>${new Date(r.entrada).toLocaleDateString()}</td>
-          <td>${new Date(r.saida).toLocaleDateString()}</td>
-          <td>${formatStatus(r.status)}</td>
-        </tr>`;
-    });
-  }
-
-  function formatStatus(s) {
-    const map = {
-      "confirmada": "<span class='badge green'>Confirmada</span>",
-      "checkin": "<span class='badge blue'>Check-in</span>",
-      "checkout": "<span class='badge'>Check-out</span>",
-      "no-show": "<span class='badge yellow'>No-show</span>",
-      "cancelada": "<span class='badge red'>Cancelada</span>"
-    };
-    return map[s] || s;
-  }
-
-  renderReservas();
-</script>
-
+  <script>
+    fetch("/partials/sidebar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.querySelector("#sidebar-container").innerHTML = html;
+      })
+      .catch(err => console.error("Sidebar não carregada:", err));
+  </script>
 </body>
 </html>
