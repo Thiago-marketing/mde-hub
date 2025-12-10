@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MDE Hub • Simulador RevPAR</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+<div id="btnSidebarToggle">☰</div>
+<div id="sidebar"></div>
+
+<main class="main-area">
+
+    <div class="topbar">
+        <div class="topbar-left">
+            <h1 class="page-title">Simulador RevPAR</h1>
+            <p class="page-subtitle">Calcule quanto seu hotel rende por UH disponível.</p>
+        </div>
+
+        <div class="topbar-right">
+            <div class="hotel-select-wrapper">
+                <span class="label">Hotel selecionado</span>
+                <select id="hotelSelect"><option>Carregando hotéis...</option></select>
+            </div>
+            <button id="btnThemeToggle">🌓</button>
+            <div class="user-badge" id="userInitial">U</div>
+        </div>
+    </div>
+
+    <section class="grid">
+
+        <div class="card">
+            <div class="card-title">Entrada de Dados</div>
+
+            <label>Receita total das diárias (R$)</label>
+            <input type="number" id="rec" placeholder="Ex: 12.500">
+
+            <label>Total de UHs disponíveis</label>
+            <input type="number" id="uh" placeholder="Ex: 40">
+
+            <label>Taxa de ocupação (%)</label>
+            <input type="number" id="ocup" placeholder="Ex: 72">
+
+            <button onclick="calcRevpar()">Calcular RevPAR</button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Resultado</div>
+            <div id="resultadoRevpar" class="card-value">R$ --,--</div>
+            <div class="card-desc">Receita por UH disponível (RevPAR).</div>
+        </div>
+
+    </section>
+
+</main>
+
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
+
+<script>
+    fetch("/partials/sidebar.html")
+        .then(r => r.text())
+        .then(html => document.querySelector("#sidebar").innerHTML = html);
+
+    function calcRevpar() {
+        const rec = parseFloat(document.getElementById("rec").value);
+        const uh = parseFloat(document.getElementById("uh").value);
+        const ocup = parseFloat(document.getElementById("ocup").value) / 100;
+
+        if (!rec || !uh || !ocup) {
+            alert("Preencha todos os campos.");
+            return;
+        }
+
+        const revpar = (rec / uh) * ocup;
+        document.getElementById("resultadoRevpar").innerText = "R$ " + revpar.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
