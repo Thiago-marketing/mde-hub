@@ -4,32 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MDE Hub • Confirme seu e-mail</title>
+
     <link rel="stylesheet" href="/css/auth.css">
+
+    <style>
+        .success-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            padding: 20px;
+        }
+
+        .success-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: #00c853;
+            margin-bottom: 10px;
+        }
+
+        .success-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .success-subtitle {
+            color: var(--text2);
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .success-btn {
+            background: var(--primary);
+            color: #fff;
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .success-btn:hover {
+            opacity: 0.85;
+        }
+
+        .success-info {
+            margin-top: 20px;
+            color: var(--text2);
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
 </head>
 
 <body>
 
-<div class="auth-container">
-    <div class="auth-card">
+<div class="success-wrapper">
+    <div class="success-card">
 
-        <div style="text-align:center; margin-bottom:20px;">
-            <div style="font-size:48px; color:#00c853;">✔</div>
-            <h2 style="margin-top:10px;">Conta criada com sucesso!</h2>
-            <p style="opacity:0.8; margin-top:10px;">
-                Enviamos um e-mail de confirmação para você.  
-                <br>Abra sua caixa de entrada e clique no link para ativar sua conta.
-            </p>
-        </div>
+        <div class="success-icon">✔</div>
 
-        <div style="margin-top:30px;">
-            <button onclick="abrirEmail()" class="btn-primary" style="width:100%;">
-                Abrir meu e-mail
-            </button>
-        </div>
+        <h2 class="success-title">Conta criada com sucesso!</h2>
 
-        <p style="opacity:0.6; text-align:center; margin-top:20px;">
-            Não encontrou o e-mail? Verifique a pasta de Spam ou Promoções.
+        <p class="success-subtitle">
+            Enviamos um e-mail de confirmação.<br>
+            Abra sua caixa de entrada e clique no link para ativar sua conta.
         </p>
+
+        <button class="success-btn" onclick="abrirEmail()">
+            Abrir meu e-mail
+        </button>
+
+        <p class="success-info">
+            Não recebeu? Verifique Spam ou Promoções.
+        </p>
+
     </div>
 </div>
 
@@ -38,16 +110,25 @@ function abrirEmail() {
     const email = localStorage.getItem("mde-temp-email");
 
     if (!email) {
-        window.location.href = "https://gmail.com";
+        window.open("https://mail.google.com", "_blank");
         return;
     }
 
     const dominio = email.split("@")[1].toLowerCase();
 
-    if (dominio.includes("gmail")) window.location.href = "https://mail.google.com";
-    else if (dominio.includes("hotmail") || dominio.includes("outlook") || dominio.includes("live")) window.location.href = "https://outlook.live.com";
-    else if (dominio.includes("yahoo")) window.location.href = "https://mail.yahoo.com";
-    else window.location.href = "https://gmail.com";
+    if (dominio.includes("gmail")) {
+        window.open("https://mail.google.com", "_blank");
+    } 
+    else if (dominio.includes("hotmail") || dominio.includes("outlook") || dominio.includes("live") || dominio.includes("msn")) {
+        window.open("https://outlook.live.com", "_blank");
+    }
+    else if (dominio.includes("yahoo")) {
+        window.open("https://mail.yahoo.com", "_blank");
+    }
+    else {
+        // fallback genérico profissional
+        window.open("https://mail.google.com", "_blank");
+    }
 }
 </script>
 
