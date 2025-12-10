@@ -6,7 +6,6 @@
   <title>MDE Hub • CRM Hoteleiro</title>
 
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/app.js"></script>
 
   <!-- CSS específico do CRM -->
   <style>
@@ -67,106 +66,112 @@
       color: #fff;
     }
   </style>
-
 </head>
 
 <body>
 
-<div id="btnSidebarToggle">☰</div>
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
 
-<!-- SIDEBAR -->
-<div id="sidebar">
-  <div class="logo">🏨 MDE Hub</div>
+  <!-- SIDEBAR VIA PARTIAL -->
+  <div id="sidebar-container"></div>
 
-  <div class="nav-section">
-    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
-    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
-    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
-    <a href="/simuladores.html" class="nav-item">📐 Simuladores</a>
-  </div>
+  <!-- MAIN -->
+  <main class="main-area">
 
-  <div class="nav-section">
-    <div class="nav-title">CRM Hoteleiro</div>
-    <a href="/crm.html" class="nav-item active">📘 CRM</a>
-    <a class="nav-item disabled">📄 Proposta IA (em breve)</a>
-  </div>
-
-  <div class="nav-section nav-exit">
-    <a href="/logout.html" class="nav-item">🚪 Sair</a>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-  <div class="topbar">
-    <button id="btnThemeToggle">🌓</button>
-    <div class="user-badge" id="userInitial">U</div>
-  </div>
-
-  <h1 class="page-title">CRM Hoteleiro</h1>
-  <p class="page-subtitle">Gerencie leads, oportunidades e vendas diretas do seu hotel</p>
-
-  <!-- KANBAN PREMIUM -->
-  <div class="kanban">
-
-    <div class="kanban-column">
-      <div class="kanban-title">🧊 Novo Lead</div>
-
-      <div class="lead-card">
-        <div class="lead-name">João Mendes</div>
-        <div class="lead-meta">Origem: Site • Interesse: 12–15 Jan</div>
-        <div class="tag">Frio</div>
+    <!-- HEADER / TOPBAR HÍBRIDA -->
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">📘 CRM Hoteleiro</h1>
+        <p class="page-subtitle">
+          Gerencie leads, oportunidades e vendas diretas do seu hotel.
+        </p>
       </div>
 
-      <div class="lead-card">
-        <div class="lead-name">Carla Ribeiro</div>
-        <div class="lead-meta">Origem: WhatsApp • Interesse: Casal</div>
-        <div class="tag">Morno</div>
+      <div class="topbar-right">
+        <select id="hotelSelect">
+          <option>Carregando hotéis...</option>
+        </select>
+
+        <button id="btnThemeToggle">🌓</button>
+
+        <div class="user-badge" id="userInitial">U</div>
       </div>
+    </header>
 
-    </div>
+    <!-- VISÃO RÁPIDA DO FUNIL (MINI KANBAN) -->
+    <section class="card">
+      <h2 class="card-title">Visão rápida do funil</h2>
+      <p class="card-desc">
+        Resumo dos leads por etapa. Para gestão avançada, use o Funil Kanban completo.
+      </p>
 
-    <div class="kanban-column">
-      <div class="kanban-title">🔥 Em Conversa</div>
+      <div class="kanban">
 
-      <div class="lead-card">
-        <div class="lead-name">Lucas Almeida</div>
-        <div class="lead-meta">Perguntou sobre suíte luxo</div>
-        <div class="tag">Quente</div>
+        <div class="kanban-column">
+          <div class="kanban-title">🧊 Novo Lead</div>
+
+          <div class="lead-card">
+            <div class="lead-name">João Mendes</div>
+            <div class="lead-meta">Origem: Site • Interesse: 12–15 Jan</div>
+            <div class="tag">Frio</div>
+          </div>
+
+          <div class="lead-card">
+            <div class="lead-name">Carla Ribeiro</div>
+            <div class="lead-meta">Origem: WhatsApp • Interesse: Casal</div>
+            <div class="tag">Morno</div>
+          </div>
+        </div>
+
+        <div class="kanban-column">
+          <div class="kanban-title">🔥 Em Conversa</div>
+
+          <div class="lead-card">
+            <div class="lead-name">Lucas Almeida</div>
+            <div class="lead-meta">Perguntou sobre suíte luxo</div>
+            <div class="tag">Quente</div>
+          </div>
+        </div>
+
+        <div class="kanban-column">
+          <div class="kanban-title">📝 Proposta Enviada</div>
+
+          <div class="lead-card">
+            <div class="lead-name">Patrícia Lima</div>
+            <div class="lead-meta">Proposta enviada ontem</div>
+            <div class="tag">Aguardando</div>
+          </div>
+        </div>
+
+        <div class="kanban-column">
+          <div class="kanban-title">💳 Reserva Confirmada</div>
+
+          <div class="lead-card">
+            <div class="lead-name">Roberto Silva</div>
+            <div class="lead-meta">Check-in 05/01</div>
+            <div class="tag">Fechado</div>
+          </div>
+        </div>
+
       </div>
+    </section>
 
-    </div>
+  </main>
 
-    <div class="kanban-column">
-      <div class="kanban-title">📝 Proposta Enviada</div>
+  <!-- SCRIPTS -->
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="/js/crm.js"></script>
 
-      <div class="lead-card">
-        <div class="lead-name">Patrícia Lima</div>
-        <div class="lead-meta">Proposta enviada ontem</div>
-        <div class="tag">Aguardando</div>
-      </div>
-
-    </div>
-
-    <div class="kanban-column">
-      <div class="kanban-title">💳 Reserva Confirmada</div>
-
-      <div class="lead-card">
-        <div class="lead-name">Roberto Silva</div>
-        <div class="lead-meta">Check-in 05/01</div>
-        <div class="tag">Fechado</div>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
+  <!-- CARREGAR SIDEBAR -->
+  <script>
+    fetch("/partials/sidebar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.querySelector("#sidebar-container").innerHTML = html;
+      });
+  </script>
 
 </body>
 </html>
