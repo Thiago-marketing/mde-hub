@@ -6,7 +6,6 @@
   <title>MDE Hub • Reservas</title>
 
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/app.js"></script>
 </head>
 
 <body>
@@ -14,52 +13,43 @@
 <!-- BOTÃO MOBILE -->
 <div id="btnSidebarToggle">☰</div>
 
-<!-- SIDEBAR OFICIAL -->
-<div id="sidebar">
-  <div class="logo">🏨 MDE Hub</div>
-
-  <div class="nav-section">
-    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    <a href="/reservas.html" class="nav-item active">🛎️ Reservas</a>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-title">Financeiro</div>
-    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-title">Simuladores</div>
-    <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-title">CRM Hoteleiro</div>
-    <a class="nav-item disabled">📘 Em breve</a>
-    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
-  </div>
-
-  <div class="nav-section nav-exit">
-    <a href="/logout.html" class="nav-item">🚪 Sair</a>
-  </div>
-</div>
+<!-- SIDEBAR DINÂMICA -->
+<div id="sidebar-container"></div>
 
 <!-- CONTEÚDO PRINCIPAL -->
-<div class="main">
+<main class="main-area">
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <button id="btnThemeToggle">🌓</button>
-    <div class="user-badge" id="userInitial">U</div>
-  </div>
+  <!-- TOPBAR PREMIUM OFICIAL -->
+  <header class="topbar">
 
-  <h1 class="page-title">Reservas</h1>
-  <p class="page-subtitle">Gestão completa das reservas do hotel</p>
+    <div class="topbar-left">
+      <h1 class="page-title">Reservas</h1>
+      <p class="page-subtitle">Gestão completa das reservas do hotel</p>
+    </div>
+
+    <div class="topbar-right">
+      <div class="hotel-select-wrapper">
+        <span class="label">Hotel</span>
+        <select id="hotelSelector">
+          <option>Carregando...</option>
+        </select>
+      </div>
+
+      <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+
+      <div class="user-pill">
+        <div class="user-avatar">H</div>
+        <div class="user-info">
+          <span class="user-name">Hotel Exemplo</span>
+          <span class="user-email">contato@hotelexemplo.com</span>
+        </div>
+      </div>
+    </div>
+
+  </header>
 
   <!-- FILTROS -->
-  <div class="grid">
-
+  <section class="grid">
     <div class="card">
       <div class="card-title">Filtro Rápido</div>
 
@@ -81,11 +71,10 @@
 
       <button id="btnFiltrar">Aplicar Filtros</button>
     </div>
-
-  </div>
+  </section>
 
   <!-- TABELA PRINCIPAL -->
-  <div class="grid">
+  <section class="grid">
     <div class="card">
       <div class="card-title">Lista de Reservas</div>
 
@@ -105,13 +94,23 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </section>
 
-</div>
+</main>
 
-<!-- SCRIPT FUTURO: Integração com Acumulador -->
+<!-- SCRIPTS GLOBAIS -->
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
+
+<!-- SIDEBAR IMPORT -->
 <script>
-  // MOCK TEMPORÁRIO — remove quando integrar ao SQL Server via acumulador
+  fetch("/partials/sidebar.html")
+    .then(r => r.text())
+    .then(html => (document.getElementById("sidebar-container").innerHTML = html));
+</script>
+
+<!-- MOCK PROVISÓRIO ATÉ CONECTAR LETOH/LETOM VIA ACUMULADOR -->
+<script>
   const reservasMock = [
     { id: 4821, hospede: "Ana Souza", uh: "202", entrada: "2025-12-10", saida: "2025-12-12", status: "confirmada" },
     { id: 4822, hospede: "Carlos Lima", uh: "305", entrada: "2025-12-10", saida: "2025-12-11", status: "checkin" },
@@ -124,18 +123,15 @@
     tbody.innerHTML = "";
 
     reservasMock.forEach(r => {
-      const tr = document.createElement("tr");
-
-      tr.innerHTML = `
-        <td>#${r.id}</td>
-        <td>${r.hospede}</td>
-        <td>${r.uh}</td>
-        <td>${new Date(r.entrada).toLocaleDateString()}</td>
-        <td>${new Date(r.saida).toLocaleDateString()}</td>
-        <td>${formatStatus(r.status)}</td>
-      `;
-
-      tbody.appendChild(tr);
+      tbody.innerHTML += `
+        <tr>
+          <td>#${r.id}</td>
+          <td>${r.hospede}</td>
+          <td>${r.uh}</td>
+          <td>${new Date(r.entrada).toLocaleDateString()}</td>
+          <td>${new Date(r.saida).toLocaleDateString()}</td>
+          <td>${formatStatus(r.status)}</td>
+        </tr>`;
     });
   }
 
