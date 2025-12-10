@@ -472,3 +472,114 @@ footer {
     z-index: 300; /* acima do conteúdo, abaixo de popups */
   }
 }
+/* ============================================================
+   MDE HUB • MAPA DE UHS (Premium)
+   Estilo moderno para cartões de apartamentos/quartos
+   ------------------------------------------------------------
+   Cole no final do /css/app.css
+============================================================ */
+
+/* GRID RESPONSIVO */
+.grid-uhs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* CARTÃO DA UH */
+.uh-card {
+    background: var(--bg2);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    transition: transform .15s ease, box-shadow .15s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.uh-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* TÍTULO DO APARTAMENTO */
+.uh-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* LEGENDA DENTRO DO CARD */
+.uh-card small {
+    opacity: .8;
+    font-size: .85rem;
+}
+
+/* CORES DE STATUS */
+.status-livre {
+    background: #0fbf6f22 !important;
+    border-color: #0fbf6f55 !important;
+}
+
+.status-ocupado {
+    background: #ff4d4d22 !important;
+    border-color: #ff4d4d55 !important;
+}
+
+.status-manutencao {
+    background: #ffb40022 !important;
+    border-color: #ffb40055 !important;
+}
+
+.status-bloqueado {
+    background: #59627533 !important;
+    border-color: #59627566 !important;
+}
+
+/* BOLINHAS DA LEGENDA */
+.legend-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.legend-row .badge {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: .35rem;
+}
+
+/* CORES DA LEGENDA */
+.badge.status-livre {
+    background: #0fbf6f;
+}
+.badge.status-ocupado {
+    background: #ff4d4d;
+}
+.badge.status-manutencao {
+    background: #ffb400;
+}
+.badge.status-bloqueado {
+    background: #596275;
+}
+
+/* MODO DARK (ajustes finos) */
+html[data-theme="dark"] .uh-card {
+    background: #11141a;
+    border-color: #222831;
+}
+
+html[data-theme="dark"] .uh-card:hover {
+    box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+}
+
+html[data-theme="dark"] .legend-row .badge {
+    filter: brightness(1.2);
+}
