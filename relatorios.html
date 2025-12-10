@@ -1,107 +1,168 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Relatórios</title>
-  <link rel="stylesheet" href="/css/app.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MDE Hub • Relatórios</title>
+
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 
-<body class="page page-relatorios">
-  <script>
-    (function() {
-      const savedTheme = localStorage.getItem("mde-theme") || "clean";
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    })();
-  </script>
+<body>
 
-  <div id="btnSidebarToggle">☰</div>
-  <div id="sidebar-container"></div>
+    <!-- BOTÃO MOBILE -->
+    <div id="btnSidebarToggle">☰</div>
 
-  <main class="main-area">
-    <header class="page-header">
-      <div>
-        <h1 class="page-title">Relatórios</h1>
-        <p class="page-subtitle">Relatórios gerenciais básicos, focados em ocupação e financeiro.</p>
-      </div>
-      <div class="topbar-right">
-        <select id="hotelSelect">
-          <option>Carregando hotéis...</option>
-        </select>
-        <button id="btnThemeToggle">🌓</button>
-        <div class="user-badge" id="userMini">U</div>
-      </div>
-    </header>
+    <!-- SIDEBAR -->
+    <div id="sidebar"></div>
 
-    <section class="page-content grid-2">
-      <div class="card">
-        <h2>Filtros gerais</h2>
-        <div class="form-column">
-          <label>Período</label>
-          <div class="form-row">
-            <input type="date" />
-            <input type="date" />
-          </div>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-area">
 
-          <label>Tipo de relatório</label>
-          <select>
-            <option>Selecione...</option>
-            <option>Ocupação por período</option>
-            <option>Financeiro por centro de custo</option>
-            <option>Diárias vendidas</option>
-            <option>Produção por canal (OTA x Direto)</option>
-          </select>
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <h1 class="page-title">Relatórios</h1>
+                <p class="page-subtitle">Consulte indicadores consolidados da operação.</p>
+            </div>
 
-          <button class="btn-primary">Gerar relatório</button>
+            <div class="topbar-right">
+                <div class="hotel-select-wrapper">
+                    <span class="label">Hotel selecionado</span>
+                    <select id="hotelSelect">
+                        <option>Carregando hotéis...</option>
+                    </select>
+                </div>
+
+                <button id="btnThemeToggle">🌓</button>
+                <div class="user-badge" id="userMini">U</div>
+            </div>
         </div>
-      </div>
 
-      <div class="card">
-        <h2>Atalhos de relatórios</h2>
-        <ul class="simple-list">
-          <li>Ocupação diária (últimos 7 dias)</li>
-          <li>Resumo financeiro do mês</li>
-          <li>Produção por canal (mês atual)</li>
-          <li>RevPAR mensal</li>
-        </ul>
-        <p class="note">Em breve: exportação em PDF/Excel diretamente do Hub MDE.</p>
-      </div>
+        <!-- FILTROS -->
+        <section class="card">
+            <div class="card-title">Filtros</div>
 
-      <div class="card table-card">
-        <h2>Pré-visualização</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Dia</th>
-              <th>Ocupação (%)</th>
-              <th>Diárias</th>
-              <th>Receita (R$)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>--/--/----</td>
-              <td>--%</td>
-              <td>--</td>
-              <td>R$ --,--</td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="note">Os dados exibidos aqui serão carregados da base SQL Server via acumulador.</p>
-      </div>
-    </section>
-  </main>
+            <div class="grid">
 
-  <script type="module" src="/js/supabase.js"></script>
-  <script type="module" src="/js/app.js"></script>
+                <div>
+                    <label>Tipo de relatório:</label>
+                    <select id="tipoRelatorio">
+                        <option value="ocupacao">Ocupação</option>
+                        <option value="financeiro">Financeiro</option>
+                        <option value="estoque">Estoque</option>
+                        <option value="entradas_saidas">Check-ins e Check-outs</option>
+                        <option value="diarias">Diárias</option>
+                    </select>
+                </div>
 
-  <script>
-    fetch("/partials/sidebar.html")
-      .then(res => res.text())
-      .then(html => {
-        document.querySelector("#sidebar-container").innerHTML = html;
-      })
-      .catch(err => console.error("Sidebar não carregada:", err));
-  </script>
+                <div>
+                    <label>Data inicial:</label>
+                    <input type="date" id="dataInicio">
+                </div>
+
+                <div>
+                    <label>Data final:</label>
+                    <input type="date" id="dataFim">
+                </div>
+
+            </div>
+
+            <button id="btnGerar">Gerar Relatório</button>
+            <button id="btnExportar" style="margin-left: 10px;">Exportar PDF/Excel</button>
+        </section>
+
+        <!-- CARDS DE RESUMO -->
+        <section class="grid" id="cardsResumo">
+
+            <div class="card">
+                <div class="card-title">Ocupação Média</div>
+                <div class="card-value" id="ocupacaoMedia">--%</div>
+                <div class="card-desc">Período selecionado.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">RevPAR Médio</div>
+                <div class="card-value" id="revpar">R$ --,--</div>
+                <div class="card-desc">Receita por UH disponível.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">ADR Médio</div>
+                <div class="card-value" id="adr">R$ --,--</div>
+                <div class="card-desc">Valor médio das diárias.</div>
+            </div>
+
+        </section>
+
+        <!-- TABELA DE RESULTADOS -->
+        <section class="card">
+            <div class="card-title">Resultados</div>
+
+            <table class="table" id="tabelaRelatorio">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Indicador</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <!-- MOCK INICIAL -->
+                    <tr>
+                        <td>2025-01-01</td>
+                        <td>Ocupação</td>
+                        <td>68%</td>
+                    </tr>
+
+                    <tr>
+                        <td>2025-01-01</td>
+                        <td>ADR</td>
+                        <td>R$ 228,00</td>
+                    </tr>
+
+                    <tr>
+                        <td>2025-01-01</td>
+                        <td>RevPAR</td>
+                        <td>R$ 155,00</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <!-- JS CORE -->
+    <script type="module" src="/js/supabase.js"></script>
+    <script type="module" src="/js/app.js"></script>
+
+    <!-- SIDEBAR -->
+    <script>
+        fetch("/partials/sidebar.html")
+            .then(r => r.text())
+            .then(html => document.querySelector("#sidebar").innerHTML = html)
+            .catch(err => console.error("Erro ao carregar sidebar:", err));
+    </script>
+
+    <!-- MOCK INICIAL (substituir por SQL Server) -->
+    <script>
+        document.getElementById("btnGerar").addEventListener("click", () => {
+
+            // Mock simples (será substituído depois)
+            document.getElementById("ocupacaoMedia").innerText = "72%";
+            document.getElementById("revpar").innerText = "R$ 164,00";
+            document.getElementById("adr").innerText = "R$ 225,00";
+
+            alert("Relatório gerado (modo demonstração Bills)");
+        });
+
+        document.getElementById("btnExportar").addEventListener("click", () => {
+            alert("Exportação disponível em breve — padrão Bills Supreme");
+        });
+    </script>
+
 </body>
 </html>
