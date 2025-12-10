@@ -10,20 +10,15 @@
 
 <body>
 
-    <!-- BOTÃO MOBILE -->
     <div id="btnSidebarToggle">☰</div>
-
-    <!-- SIDEBAR -->
     <div id="sidebar"></div>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-area">
 
-        <!-- TOPBAR -->
         <div class="topbar">
             <div class="topbar-left">
                 <h1 class="page-title">Relatórios</h1>
-                <p class="page-subtitle">Consulte indicadores consolidados da operação.</p>
+                <p class="page-subtitle">Informações operacionais e estatísticas consolidadas.</p>
             </div>
 
             <div class="topbar-right">
@@ -35,133 +30,50 @@
                 </div>
 
                 <button id="btnThemeToggle">🌓</button>
-                <div class="user-badge" id="userMini">U</div>
+                <div class="user-badge" id="userInitial">U</div>
             </div>
         </div>
 
-        <!-- FILTROS -->
-        <section class="card">
-            <div class="card-title">Filtros</div>
-
-            <div class="grid">
-
-                <div>
-                    <label>Tipo de relatório:</label>
-                    <select id="tipoRelatorio">
-                        <option value="ocupacao">Ocupação</option>
-                        <option value="financeiro">Financeiro</option>
-                        <option value="estoque">Estoque</option>
-                        <option value="entradas_saidas">Check-ins e Check-outs</option>
-                        <option value="diarias">Diárias</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Data inicial:</label>
-                    <input type="date" id="dataInicio">
-                </div>
-
-                <div>
-                    <label>Data final:</label>
-                    <input type="date" id="dataFim">
-                </div>
-
-            </div>
-
-            <button id="btnGerar">Gerar Relatório</button>
-            <button id="btnExportar" style="margin-left: 10px;">Exportar PDF/Excel</button>
-        </section>
-
-        <!-- CARDS DE RESUMO -->
-        <section class="grid" id="cardsResumo">
+        <section class="grid">
 
             <div class="card">
-                <div class="card-title">Ocupação Média</div>
-                <div class="card-value" id="ocupacaoMedia">--%</div>
-                <div class="card-desc">Período selecionado.</div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">RevPAR Médio</div>
-                <div class="card-value" id="revpar">R$ --,--</div>
-                <div class="card-desc">Receita por UH disponível.</div>
+                <div class="card-title">Diárias Vendidas</div>
+                <div class="card-value">--</div>
+                <div class="card-desc">Base dos últimos registros.</div>
             </div>
 
             <div class="card">
                 <div class="card-title">ADR Médio</div>
-                <div class="card-value" id="adr">R$ --,--</div>
-                <div class="card-desc">Valor médio das diárias.</div>
+                <div class="card-value">R$ --,--</div>
+                <div class="card-desc">Diária média por reserva.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">RevPAR</div>
+                <div class="card-value">R$ --,--</div>
+                <div class="card-desc">Receita por unidade habitacional disponível.</div>
             </div>
 
         </section>
 
-        <!-- TABELA DE RESULTADOS -->
         <section class="card">
-            <div class="card-title">Resultados</div>
+            <div class="card-title">Exportações</div>
 
-            <table class="table" id="tabelaRelatorio">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Indicador</th>
-                        <th>Valor</th>
-                    </tr>
-                </thead>
+            <button>Exportar CSV</button>
+            <button>Exportar Excel</button>
 
-                <tbody>
-
-                    <!-- MOCK INICIAL -->
-                    <tr>
-                        <td>2025-01-01</td>
-                        <td>Ocupação</td>
-                        <td>68%</td>
-                    </tr>
-
-                    <tr>
-                        <td>2025-01-01</td>
-                        <td>ADR</td>
-                        <td>R$ 228,00</td>
-                    </tr>
-
-                    <tr>
-                        <td>2025-01-01</td>
-                        <td>RevPAR</td>
-                        <td>R$ 155,00</td>
-                    </tr>
-
-                </tbody>
-            </table>
+            <p class="card-desc">Integrações avançadas virão na Fase 3 do dashboard.</p>
         </section>
 
     </main>
 
-    <!-- JS CORE -->
     <script type="module" src="/js/supabase.js"></script>
     <script type="module" src="/js/app.js"></script>
 
-    <!-- SIDEBAR -->
     <script>
         fetch("/partials/sidebar.html")
             .then(r => r.text())
-            .then(html => document.querySelector("#sidebar").innerHTML = html)
-            .catch(err => console.error("Erro ao carregar sidebar:", err));
-    </script>
-
-    <!-- MOCK INICIAL (substituir por SQL Server) -->
-    <script>
-        document.getElementById("btnGerar").addEventListener("click", () => {
-
-            // Mock simples (será substituído depois)
-            document.getElementById("ocupacaoMedia").innerText = "72%";
-            document.getElementById("revpar").innerText = "R$ 164,00";
-            document.getElementById("adr").innerText = "R$ 225,00";
-
-            alert("Relatório gerado (modo demonstração Bills)");
-        });
-
-        document.getElementById("btnExportar").addEventListener("click", () => {
-            alert("Exportação disponível em breve — padrão Bills Supreme");
-        });
+            .then(html => sidebar.innerHTML = html);
     </script>
 
 </body>
