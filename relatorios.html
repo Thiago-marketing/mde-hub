@@ -1,151 +1,107 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Relatórios</title>
-
   <link rel="stylesheet" href="/css/app.css" />
 </head>
 
-<body>
+<body class="page page-relatorios">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("mde-theme") || "clean";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
 
-<!-- BOTÃO MOBILE -->
-<div id="btnSidebarToggle">☰</div>
+  <div id="btnSidebarToggle">☰</div>
+  <div id="sidebar-container"></div>
 
-<!-- SIDEBAR (carregada dinamicamente) -->
-<div id="sidebar-container"></div>
-
-<!-- MAIN -->
-<main class="main-area">
-
-  <!-- TOPBAR PREMIUM -->
-  <header class="topbar">
-
-    <div class="topbar-left">
-      <h1 class="page-title">Relatórios</h1>
-      <p class="page-subtitle">Geração de relatórios operacionais, financeiros e gerenciais</p>
-    </div>
-
-    <div class="topbar-right">
-
-      <div class="hotel-select-wrapper">
-        <span class="label">Hotel</span>
-        <select id="hotelSelector">
-          <option>Carregando...</option>
-        </select>
+  <main class="main-area">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">Relatórios</h1>
+        <p class="page-subtitle">Relatórios gerenciais básicos, focados em ocupação e financeiro.</p>
       </div>
+      <div class="topbar-right">
+        <select id="hotelSelect">
+          <option>Carregando hotéis...</option>
+        </select>
+        <button id="btnThemeToggle">🌓</button>
+        <div class="user-badge" id="userMini">U</div>
+      </div>
+    </header>
 
-      <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+    <section class="page-content grid-2">
+      <div class="card">
+        <h2>Filtros gerais</h2>
+        <div class="form-column">
+          <label>Período</label>
+          <div class="form-row">
+            <input type="date" />
+            <input type="date" />
+          </div>
 
-      <div class="user-pill">
-        <div class="user-avatar">H</div>
-        <div class="user-info">
-          <span class="user-name">Hotel Exemplo</span>
-          <span class="user-email">contato@hotelexemplo.com</span>
+          <label>Tipo de relatório</label>
+          <select>
+            <option>Selecione...</option>
+            <option>Ocupação por período</option>
+            <option>Financeiro por centro de custo</option>
+            <option>Diárias vendidas</option>
+            <option>Produção por canal (OTA x Direto)</option>
+          </select>
+
+          <button class="btn-primary">Gerar relatório</button>
         </div>
       </div>
 
-    </div>
-
-  </header>
-
-  <!-- FILTROS -->
-  <section class="grid">
-    <div class="card">
-      <div class="card-title">Filtros de Período</div>
-
-      <label>Data Inicial</label>
-      <input type="date" id="dataInicial">
-
-      <label>Data Final</label>
-      <input type="date" id="dataFinal">
-
-      <label>Tipo de Relatório</label>
-      <select id="tipoRelatorio">
-        <option value="">Selecione...</option>
-        <option value="ocupacao">Ocupação</option>
-        <option value="financeiro">Financeiro</option>
-        <option value="reservas">Reservas</option>
-        <option value="hospedes">Hóspedes</option>
-        <option value="uhs">Unidades Habitacionais</option>
-        <option value="tarifas">Tarifas</option>
-      </select>
-
-      <button class="btn-primary full" id="btnGerarRelatorio">Gerar Relatório</button>
-    </div>
-  </section>
-
-  <!-- CARDS DOS RELATÓRIOS -->
-  <section class="grid">
-
-    <div class="card">
-      <div class="card-title">Relatório de Ocupação</div>
-      <p class="card-desc">Taxas por período, tendências e picos de hospedagem.</p>
-      <button class="btn-primary" onclick="gerar('ocupacao')">Ver relatório</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Relatório Financeiro</div>
-      <p class="card-desc">Entradas, saídas, saldos e centros de custo.</p>
-      <button class="btn-primary" onclick="gerar('financeiro')">Ver relatório</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Relatório de Reservas</div>
-      <p class="card-desc">Volume, cancelamentos e conversões.</p>
-      <button class="btn-primary" onclick="gerar('reservas')">Ver relatório</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Relatório de Hóspedes</div>
-      <p class="card-desc">Histórico, comportamento e recorrência.</p>
-      <button class="btn-primary" onclick="gerar('hospedes')">Ver relatório</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Relatório de UHs</div>
-      <p class="card-desc">Performance, ocupação e manutenção.</p>
-      <button class="btn-primary" onclick="gerar('uhs')">Ver relatório</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Relatório de Tarifas</div>
-      <p class="card-desc">Comparações e histórico tarifário.</p>
-      <button class="btn-primary" onclick="gerar('tarifas')">Ver relatório</button>
-    </div>
-
-  </section>
-
-  <!-- RESULTADO DINÂMICO -->
-  <section class="grid">
-    <div class="card">
-      <div class="card-title">Resultado</div>
-      <div id="resultadoRelatorio" class="card-desc">
-        Escolha um relatório para visualizar os dados.
+      <div class="card">
+        <h2>Atalhos de relatórios</h2>
+        <ul class="simple-list">
+          <li>Ocupação diária (últimos 7 dias)</li>
+          <li>Resumo financeiro do mês</li>
+          <li>Produção por canal (mês atual)</li>
+          <li>RevPAR mensal</li>
+        </ul>
+        <p class="note">Em breve: exportação em PDF/Excel diretamente do Hub MDE.</p>
       </div>
-    </div>
-  </section>
 
-</main>
+      <div class="card table-card">
+        <h2>Pré-visualização</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Dia</th>
+              <th>Ocupação (%)</th>
+              <th>Diárias</th>
+              <th>Receita (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>--/--/----</td>
+              <td>--%</td>
+              <td>--</td>
+              <td>R$ --,--</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">Os dados exibidos aqui serão carregados da base SQL Server via acumulador.</p>
+      </div>
+    </section>
+  </main>
 
-<!-- JS -->
-<script type="module" src="/js/supabase.js"></script>
-<script type="module" src="/js/app.js"></script>
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
 
-<script>
-  function gerar(tipo) {
-    document.getElementById("resultadoRelatorio").innerHTML =
-      "Gerando relatório de <b>" + tipo + "</b>... (integração futura)";
-  }
-</script>
-
-<!-- Importa Sidebar -->
-<script>
-  fetch("/partials/sidebar.html")
-    .then(r => r.text())
-    .then(html => (document.querySelector("#sidebar-container").innerHTML = html));
-</script>
-
+  <script>
+    fetch("/partials/sidebar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.querySelector("#sidebar-container").innerHTML = html;
+      })
+      .catch(err => console.error("Sidebar não carregada:", err));
+  </script>
 </body>
 </html>
