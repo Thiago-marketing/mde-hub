@@ -118,3 +118,157 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MDE Hub • Estoque</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+    <!-- BOTÃO MOBILE -->
+    <div id="btnSidebarToggle">☰</div>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar"></div>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-area">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <h1 class="page-title">Estoque</h1>
+                <p class="page-subtitle">Acompanhe níveis, itens críticos e movimentações.</p>
+            </div>
+
+            <div class="topbar-right">
+                <div class="hotel-select-wrapper">
+                    <span class="label">Hotel selecionado</span>
+                    <select id="hotelSelect">
+                        <option>Carregando hotéis...</option>
+                    </select>
+                </div>
+
+                <button id="btnThemeToggle">🌓</button>
+                <div class="user-badge" id="userMini">U</div>
+            </div>
+        </div>
+
+        <!-- CARDS SUPERIORES -->
+        <section class="grid">
+
+            <div class="card">
+                <div class="card-title">Itens no Estoque</div>
+                <div id="totalItens" class="card-value">--</div>
+                <div class="card-desc">Quantidade total de produtos cadastrados.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Itens Críticos</div>
+                <div id="itensCriticos" class="card-value">--</div>
+                <div class="card-desc">Abaixo do estoque mínimo.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Movimentos Hoje</div>
+                <div id="movimentosHoje" class="card-value">--</div>
+                <div class="card-desc">Entradas e saídas do dia.</div>
+            </div>
+
+        </section>
+
+        <!-- BUSCA -->
+        <section class="card">
+            <div class="card-title">Buscar Itens</div>
+            <input type="text" id="buscaEstoque" placeholder="Digite o nome do item..." />
+        </section>
+
+        <!-- TABELA DE ESTOQUE -->
+        <section class="card">
+            <div class="card-title">Itens em Estoque</div>
+
+            <table class="table" id="tabelaEstoque">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Categoria</th>
+                        <th>Qtd. Atual</th>
+                        <th>Est. Mínimo</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- MOCK (trocar pelo SQL Server) -->
+
+                    <tr>
+                        <td>Água Mineral 500ml</td>
+                        <td>Bebidas</td>
+                        <td>22</td>
+                        <td>40</td>
+                        <td style="color:#ff4d4d; font-weight:600;">Crítico</td>
+                    </tr>
+
+                    <tr>
+                        <td>Papel Higiênico</td>
+                        <td>Governança</td>
+                        <td>120</td>
+                        <td>60</td>
+                        <td style="color:#0fbf6f; font-weight:600;">OK</td>
+                    </tr>
+
+                    <tr>
+                        <td>Sabonete 30g</td>
+                        <td>Amenidades</td>
+                        <td>18</td>
+                        <td>30</td>
+                        <td style="color:#ffb400; font-weight:600;">Atenção</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <!-- JS CORE -->
+    <script type="module" src="/js/supabase.js"></script>
+    <script type="module" src="/js/app.js"></script>
+
+    <!-- SIDEBAR -->
+    <script>
+        fetch("/partials/sidebar.html")
+            .then(r => r.text())
+            .then(html => document.querySelector("#sidebar").innerHTML = html)
+            .catch(err => console.error("Erro ao carregar sidebar:", err));
+    </script>
+
+    <!-- MOCK (substituir pelo SQL Server depois) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("totalItens").innerText = "148";
+            document.getElementById("itensCriticos").innerText = "3";
+            document.getElementById("movimentosHoje").innerText = "12";
+
+            // Busca dinâmica mock
+            const busca = document.getElementById("buscaEstoque");
+            const linhas = [...document.querySelectorAll("#tabelaEstoque tbody tr")];
+
+            busca.addEventListener("input", () => {
+                const termo = busca.value.toLowerCase();
+
+                linhas.forEach(linha => {
+                    const texto = linha.innerText.toLowerCase();
+                    linha.style.display = texto.includes(termo) ? "" : "none";
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
