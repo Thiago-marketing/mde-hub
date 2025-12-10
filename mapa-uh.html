@@ -1,182 +1,93 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDE Hub • Mapa de UHs</title>
-
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/app.js"></script>
-
-  <style>
-    /* Estilos específicos para o Mapa de UH */
-
-    .uh-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 20px;
-      margin-top: 10px;
-    }
-
-    .uh-card {
-      padding: 18px;
-      border-radius: 14px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      transition: 0.2s;
-      cursor: pointer;
-    }
-
-    .uh-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--primary);
-    }
-
-    .uh-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .uh-status {
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-size: 13px;
-      margin-bottom: 6px;
-      display: inline-block;
-      font-weight: 600;
-    }
-
-    /* STATUS COLORS */
-    .status-disponivel { background: #16a34a33; color: #22c55e; }
-    .status-hospedado { background: #0284c733; color: #38bdf8; }
-    .status-limpeza { background: #eab30833; color: #facc15; }
-    .status-manutencao { background: #dc262633; color: #f87171; }
-
-    .uh-info {
-      font-size: 13px;
-      opacity: 0.8;
-      line-height: 1.4;
-    }
-
-  </style>
-
 </head>
 
-<body>
+<body class="page page-mapa-uh">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("mde-theme") || "clean";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
 
-  <!-- BOTÃO MOBILE -->
   <div id="btnSidebarToggle">☰</div>
+  <div id="sidebar-container"></div>
 
-  <!-- SIDEBAR -->
-  <div id="sidebar">
-    <div class="logo">
-      <span class="logo-avatar">M</span>
-      <div class="logo-text">
-        <strong>Web MDE</strong>
-        <span>Painel Gerencial</span>
+  <main class="main-area">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">Mapa de UHs</h1>
+        <p class="page-subtitle">Visualização rápida da situação dos apartamentos/quartos.</p>
       </div>
-    </div>
-
-    <div class="nav-section">
-      <a href="/index.html" class="nav-item">🏠 Início</a>
-      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-title">Operação</div>
-      <a href="/mapa-uh.html" class="nav-item active">🛏️ Mapa de UHs</a>
-      <a href="/fechamento.html" class="nav-item">🧾 Fechamento de Caixa</a>
-      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-title">Financeiro & Vendas</div>
-      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-      <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
-      <a class="nav-item disabled">📘 CRM Hoteleiro (em breve)</a>
-      <a class="nav-item disabled">📄 Proposta Hoteleira (em breve)</a>
-    </div>
-
-    <div class="nav-section nav-exit">
-      <a href="/logout.html" class="nav-item">🚪 Sair</a>
-    </div>
-  </div>
-
-  <!-- MAIN -->
-  <div class="main">
-
-<!-- TOPBAR PREMIUM -->
-<header class="topbar">
-  <div class="topbar-left">
-    <h1 class="page-title">TÍTULO DA PÁGINA</h1>
-    <p class="page-subtitle">Subtítulo explicando a função da tela</p>
-  </div>
-
-  <div class="topbar-right">
-    <div class="hotel-select-wrapper">
-      <span class="label">Hotel</span>
-      <select id="hotelSelector">
-        <option>Carregando...</option>
-      </select>
-    </div>
-
-    <button id="btnThemeToggle" class="theme-toggle">🌓</button>
-
-    <div class="user-pill">
-      <div class="user-avatar">H</div>
-      <div class="user-info">
-        <span class="user-name">Hotel Exemplo</span>
-        <span class="user-email">contato@hotelexemplo.com</span>
+      <div class="topbar-right">
+        <select id="hotelSelect">
+          <option>Carregando hotéis...</option>
+        </select>
+        <button id="btnThemeToggle">🌓</button>
+        <div class="user-badge" id="userMini">U</div>
       </div>
-    </div>
-  </div>
-</header>
+    </header>
 
-    <!-- CONTEÚDO -->
-    <section class="content-section">
-
-      <!-- GRID DE UHs -->
-      <div class="uh-grid" id="uhGrid">
-
-        <!-- EXEMPLOS (serão substituídos pelos dados reais do Acumulador) -->
-        <div class="uh-card">
-          <div class="uh-title">101</div>
-          <div class="uh-status status-disponivel">Disponível</div>
-          <div class="uh-info">Limpo • Pronto para check-in</div>
+    <section class="page-content">
+      <div class="card">
+        <h2>Legenda</h2>
+        <div class="legend-row">
+          <span class="badge status-livre"></span> Livre
+          <span class="badge status-ocupado"></span> Ocupado
+          <span class="badge status-manutencao"></span> Manutenção
+          <span class="badge status-bloqueado"></span> Bloqueado
         </div>
-
-        <div class="uh-card">
-          <div class="uh-title">102</div>
-          <div class="uh-status status-hospedado">Hospedado</div>
-          <div class="uh-info">Hóspede: João Silva<br>Check-out: 10:00</div>
-        </div>
-
-        <div class="uh-card">
-          <div class="uh-title">103</div>
-          <div class="uh-status status-limpeza">Limpeza</div>
-          <div class="uh-info">Camareira a caminho</div>
-        </div>
-
-        <div class="uh-card">
-          <div class="uh-title">104</div>
-          <div class="uh-status status-manutencao">Manutenção</div>
-          <div class="uh-info">Ar-condicionado • Técnico às 14h</div>
-        </div>
-
-        <!-- Os dados reais serão carregados via JS futuramente:
-             - UH
-             - Tipo
-             - Situação
-             - Nome do hóspede
-             - Previsão de saída
-        -->
-
       </div>
 
+      <div class="card">
+        <h2>Mapa de Apartamentos</h2>
+        <div class="grid-uhs">
+          <!-- Exemplo de UH -->
+          <div class="uh-card status-livre">
+            <h3>101</h3>
+            <p>Standard Casal</p>
+            <small>Livre</small>
+          </div>
+
+          <div class="uh-card status-ocupado">
+            <h3>102</h3>
+            <p>Standard Twin</p>
+            <small>Ocupado até --/--</small>
+          </div>
+
+          <div class="uh-card status-manutencao">
+            <h3>103</h3>
+            <p>Luxo Casal</p>
+            <small>Manutenção</small>
+          </div>
+
+          <div class="uh-card status-bloqueado">
+            <h3>104</h3>
+            <p>Suíte Master</p>
+            <small>Bloqueado</small>
+          </div>
+          <!-- Em breve: gerado via SQL Server / Supabase -->
+        </div>
+        <p class="note">Os dados reais virão da tabela de UHs e situação do Letoh/Letom.</p>
+      </div>
     </section>
-  </div>
+  </main>
 
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
+
+  <script>
+    fetch("/partials/sidebar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.querySelector("#sidebar-container").innerHTML = html;
+      })
+      .catch(err => console.error("Sidebar não carregada:", err));
+  </script>
 </body>
 </html>
