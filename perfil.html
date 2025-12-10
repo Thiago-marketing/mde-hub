@@ -9,25 +9,13 @@
   <script defer src="/js/app.js"></script>
 
   <style>
-    .profile-section {
-      margin-bottom: 35px;
-    }
-
-    .profile-section h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-
-    .profile-section p {
-      font-size: 14px;
-      opacity: .7;
-      margin-bottom: 20px;
-    }
+    .profile-section { margin-bottom: 35px; }
+    .profile-section h2 { font-size: 20px; margin-bottom: 10px; color: var(--text); }
+    .profile-section p { font-size: 14px; opacity: .7; margin-bottom: 20px; }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
       gap: 20px;
     }
 
@@ -57,10 +45,7 @@
       transition: .2s;
       margin-top: 10px;
     }
-
-    .btn-save:hover {
-      opacity: .85;
-    }
+    .btn-save:hover { opacity: .85; }
 
     .success-box {
       margin-top: 15px;
@@ -80,11 +65,7 @@
       background: rgba(255,60,60,0.08);
       border: 1px solid rgba(255,60,60,0.2);
     }
-
-    .danger-zone h3 {
-      color: #ff6b6b;
-      margin-bottom: 10px;
-    }
+    .danger-zone h3 { color: #ff6b6b; margin-bottom: 10px; }
 
     .btn-danger {
       margin-top: 10px;
@@ -96,17 +77,13 @@
       cursor: pointer;
       font-weight: 600;
     }
-
-    .btn-danger:hover {
-      opacity: .8;
-    }
+    .btn-danger:hover { opacity: .8; }
 
     .theme-row {
       display: flex;
       gap: 15px;
       margin-top: 10px;
     }
-
     .theme-option {
       padding: 10px 15px;
       border-radius: 8px;
@@ -114,7 +91,6 @@
       cursor: pointer;
       background: var(--bg);
     }
-
     .theme-option.active {
       border-color: var(--primary);
       background: rgba(0,170,255,0.1);
@@ -124,205 +100,193 @@
 
 <body>
 
-  <!-- MOBILE BUTTON -->
-  <div id="btnSidebarToggle">☰</div>
+<!-- MOBILE BUTTON -->
+<div id="btnSidebarToggle">☰</div>
 
-<!-- TOPBAR PREMIUM -->
-<header class="topbar">
-  <div class="topbar-left">
-    <h1 class="page-title">TÍTULO DA PÁGINA</h1>
-    <p class="page-subtitle">Subtítulo explicando a função da tela</p>
-  </div>
+<!-- SIDEBAR DINÂMICA -->
+<div id="sidebar-container"></div>
 
-  <div class="topbar-right">
-    <div class="hotel-select-wrapper">
-      <span class="label">Hotel</span>
-      <select id="hotelSelector">
-        <option>Carregando...</option>
-      </select>
+<!-- MAIN AREA OFICIAL -->
+<main class="main-area">
+
+  <!-- TOPBAR PREMIUM OFICIAL -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 class="page-title">Meu Perfil</h1>
+      <p class="page-subtitle">Gerencie suas informações pessoais e preferências.</p>
     </div>
 
-    <button id="btnThemeToggle" class="theme-toggle">🌓</button>
-
-    <div class="user-pill">
-      <div class="user-avatar">H</div>
-      <div class="user-info">
-        <span class="user-name">Hotel Exemplo</span>
-        <span class="user-email">contato@hotelexemplo.com</span>
-      </div>
-    </div>
-  </div>
-</header>
-
-    <div class="nav-section">
-      <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-      <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
-      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-      <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
-      <a href="/crm.html" class="nav-item">📘 CRM Hoteleiro</a>
-    </div>
-
-    <div class="nav-section nav-exit">
-      <a href="/perfil.html" class="nav-item active">👤 Meu Perfil</a>
-      <a href="/logout.html" class="nav-item">🚪 Sair</a>
-    </div>
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="main">
-
-    <div class="topbar">
-      <button id="btnThemeToggle">🌓</button>
-      <div class="user-badge" id="userInitial">U</div>
-    </div>
-
-    <h1 class="page-title">Meu Perfil</h1>
-    <p class="page-subtitle">Gerencie suas informações pessoais e preferências do Hub.</p>
-
-    <!-- INFORMAÇÕES PESSOAIS -->
-    <div class="profile-section">
-      <h2>Informações Pessoais</h2>
-      <p>Esses dados são usados para personalizar sua experiência e identificação no Hub MDE.</p>
-
-      <div class="grid-2">
-        <div class="form-group">
-          <label for="fullName">Nome completo</label>
-          <input id="fullName" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input id="email" type="email" disabled style="opacity:.6;" />
-        </div>
-
-        <div class="form-group">
-          <label for="phone">WhatsApp</label>
-          <input id="phone" type="tel" />
-        </div>
-
-        <div class="form-group">
-          <label for="role">Função no hotel</label>
-          <select id="role">
-            <option value="">Selecione...</option>
-            <option>Proprietário(a)</option>
-            <option>Gerente</option>
-            <option>Recepção</option>
-            <option>Reservas</option>
-            <option>Financeiro</option>
-            <option>Marketing/Vendas</option>
-            <option>Outro</option>
-          </select>
-        </div>
+    <div class="topbar-right">
+      <div class="hotel-select-wrapper">
+        <span class="label">Hotel</span>
+        <select id="hotelSelector">
+          <option>Carregando...</option>
+        </select>
       </div>
 
-      <div class="checkbox-row">
-        <input type="checkbox" id="acceptMkt" />
-        <label for="acceptMkt">Aceito receber conteúdos, materiais e novidades da MDE.</label>
+      <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+
+      <div class="user-pill">
+        <div class="user-avatar">H</div>
+        <div class="user-info">
+          <span class="user-name">Hotel Exemplo</span>
+          <span class="user-email">contato@hotelexemplo.com</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO DA PÁGINA -->
+  <section class="profile-section">
+    <h2>Informações Pessoais</h2>
+    <p>Esses dados personalizam sua experiência no Hub MDE.</p>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label for="fullName">Nome completo</label>
+        <input id="fullName" type="text" />
       </div>
 
-      <button class="btn-save" id="btnSaveProfile">Salvar alterações</button>
-      <div id="successBox" class="success-box">Informações atualizadas com sucesso!</div>
-    </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" disabled style="opacity:.6;" />
+      </div>
 
-    <!-- PREFERÊNCIAS -->
-    <div class="profile-section">
-      <h2>Preferências do Sistema</h2>
-      <p>Personalize a forma como o Hub MDE é exibido para você.</p>
+      <div class="form-group">
+        <label for="phone">WhatsApp</label>
+        <input id="phone" type="tel" />
+      </div>
 
-      <div class="theme-row">
-        <div class="theme-option" id="optDark">🌙 Tema Dark</div>
-        <div class="theme-option" id="optClean">☀️ Tema Clean</div>
+      <div class="form-group">
+        <label for="role">Função no hotel</label>
+        <select id="role">
+          <option value="">Selecione...</option>
+          <option>Proprietário(a)</option>
+          <option>Gerente</option>
+          <option>Recepção</option>
+          <option>Reservas</option>
+          <option>Financeiro</option>
+          <option>Marketing/Vendas</option>
+          <option>Outro</option>
+        </select>
       </div>
     </div>
 
-    <!-- ZONA DE SEGURANÇA -->
-    <div class="danger-zone">
-      <h3>Zona de Segurança</h3>
-
-      <button class="btn-danger" onclick="window.location.href='/reset-password.html'">
-        Alterar Senha
-      </button>
-
-      <button class="btn-danger" onclick="window.location.href='/logout.html'">
-        Encerrar Sessão
-      </button>
+    <div class="checkbox-row">
+      <input type="checkbox" id="acceptMkt" />
+      <label for="acceptMkt">Aceito receber novidades, conteúdos e atualizações da MDE.</label>
     </div>
 
-  </div>
+    <button class="btn-save" id="btnSaveProfile">Salvar alterações</button>
+    <div id="successBox" class="success-box">Informações atualizadas com sucesso!</div>
+  </section>
 
-  <!-- SCRIPTS -->
-  <script type="module">
-    import { supabase } from "/js/supabase.js";
+  <!-- PREFERÊNCIAS -->
+  <section class="profile-section">
+    <h2>Preferências do Sistema</h2>
+    <p>Escolha como o Hub MDE será exibido para você.</p>
 
-    const fullName = document.getElementById("fullName");
-    const email = document.getElementById("email");
-    const phone = document.getElementById("phone");
-    const role = document.getElementById("role");
-    const acceptMkt = document.getElementById("acceptMkt");
-    const successBox = document.getElementById("successBox");
-    const btnSave = document.getElementById("btnSaveProfile");
+    <div class="theme-row">
+      <div class="theme-option" id="optDark">🌙 Tema Dark</div>
+      <div class="theme-option" id="optClean">☀️ Tema Clean</div>
+    </div>
+  </section>
 
-    // Carregar perfil
-    async function loadProfile() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+  <!-- ZONA DE SEGURANÇA -->
+  <section class="danger-zone">
+    <h3>Zona de Segurança</h3>
 
-      email.value = user.email;
+    <button class="btn-danger" onclick="window.location.href='/reset-password.html'">
+      Alterar Senha
+    </button>
 
-      const { data } = await supabase.from("profiles").select("*").eq("id", user.id).single();
+    <button class="btn-danger" onclick="window.location.href='/logout.html'">
+      Encerrar Sessão
+    </button>
+  </section>
 
-      if (data) {
-        fullName.value = data.full_name || "";
-        phone.value = data.phone || "";
-        role.value = data.role || "";
-        acceptMkt.checked = data.accepts_marketing || false;
-      }
+</main>
+
+<!-- CARREGAR SIDEBAR -->
+<script>
+  fetch("/partials/sidebar.html")
+    .then(res => res.text())
+    .then(html => document.querySelector("#sidebar-container").innerHTML = html);
+</script>
+
+<!-- PERFIL + SUPABASE -->
+<script type="module">
+  import { supabase } from "/js/supabase.js";
+
+  const fullName = document.getElementById("fullName");
+  const email = document.getElementById("email");
+  const phone = document.getElementById("phone");
+  const role = document.getElementById("role");
+  const acceptMkt = document.getElementById("acceptMkt");
+  const successBox = document.getElementById("successBox");
+  const btnSave = document.getElementById("btnSaveProfile");
+
+  // Carregar perfil
+  async function loadProfile() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    email.value = user.email;
+
+    const { data } = await supabase.from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    if (data) {
+      fullName.value = data.full_name || "";
+      phone.value = data.phone || "";
+      role.value = data.role || "";
+      acceptMkt.checked = data.accepts_marketing || false;
     }
+  }
+  loadProfile();
 
-    loadProfile();
+  // Salvar
+  btnSave.addEventListener("click", async () => {
+    const { data: { user } } = await supabase.auth.getUser();
 
-    // Salvar perfil
-    btnSave.addEventListener("click", async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+    const update = {
+      full_name: fullName.value,
+      phone: phone.value,
+      role: role.value,
+      accepts_marketing: acceptMkt.checked,
+      updated_at: new Date().toISOString()
+    };
 
-      const update = {
-        full_name: fullName.value,
-        phone: phone.value,
-        role: role.value,
-        accepts_marketing: acceptMkt.checked,
-        updated_at: new Date().toISOString()
-      };
+    const { error } = await supabase.from("profiles")
+      .update(update)
+      .eq("id", user.id);
 
-      const { error } = await supabase.from("profiles").update(update).eq("id", user.id);
-
-      if (!error) {
-        successBox.style.display = "block";
-        setTimeout(() => successBox.style.display = "none", 2000);
-      }
-    });
-
-    // Tema
-    const optDark = document.getElementById("optDark");
-    const optClean = document.getElementById("optClean");
-
-    function updateThemeUI(theme) {
-      optDark.classList.toggle("active", theme === "dark");
-      optClean.classList.toggle("active", theme === "clean");
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("theme_pref", theme);
+    if (!error) {
+      successBox.style.display = "block";
+      setTimeout(() => successBox.style.display = "none", 2000);
     }
+  });
 
-    optDark.onclick = () => updateThemeUI("dark");
-    optClean.onclick = () => updateThemeUI("clean");
+  // Tema
+  const optDark = document.getElementById("optDark");
+  const optClean = document.getElementById("optClean");
 
-    // Carregar tema salvo
-    const savedTheme = localStorage.getItem("theme_pref");
-    if (savedTheme) updateThemeUI(savedTheme);
+  function updateThemeUI(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    optDark.classList.toggle("active", theme === "dark");
+    optClean.classList.toggle("active", theme === "clean");
+    localStorage.setItem("theme_pref", theme);
+  }
 
-  </script>
+  optDark.onclick = () => updateThemeUI("dark");
+  optClean.onclick = () => updateThemeUI("clean");
+
+  // Carregar tema salvo
+  const savedTheme = localStorage.getItem("theme_pref");
+  if (savedTheme) updateThemeUI(savedTheme);
+</script>
 
 </body>
 </html>
