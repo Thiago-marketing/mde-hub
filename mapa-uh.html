@@ -21,12 +21,9 @@
 
         <!-- HEADER / TOPBAR -->
         <div class="topbar">
-
             <div class="topbar-left">
                 <h1 class="page-title">Mapa de UHs</h1>
-                <p class="page-subtitle">
-                    Visualização rápida da situação dos apartamentos/quartos.
-                </p>
+                <p class="page-subtitle">Visão rápida da situação atual dos apartamentos do hotel.</p>
             </div>
 
             <div class="topbar-right">
@@ -48,79 +45,53 @@
             </div>
         </div>
 
-        <!-- CARD LEGENDA -->
-        <section class="card">
-            <div class="card-title">Legenda</div>
-            <p class="card-desc">Status visual dos apartamentos/quartos.</p>
+        <!-- GRID DAS UHs (GERADO DINAMICAMENTE FUTURAMENTE) -->
+        <section class="uh-grid">
 
-            <div class="legend-row" style="margin-top: 12px;">
-                <span><span class="badge status-livre"></span> Livre</span>
-                <span><span class="badge status-ocupado"></span> Ocupado</span>
-                <span><span class="badge status-manutencao"></span> Manutenção</span>
-                <span><span class="badge status-bloqueado"></span> Bloqueado</span>
+            <!-- UH EXEMPLO — TROCAR VIA SQL -->
+            <div class="uh-card status-livre">
+                <div class="uh-number">101</div>
+                <div class="uh-info">Standard Casal</div>
+                <div class="uh-status status-livre">LIVRE</div>
             </div>
+
+            <div class="uh-card status-ocupado">
+                <div class="uh-number">102</div>
+                <div class="uh-info">Luxo Solteiro</div>
+                <div class="uh-status status-ocupado">OCUPADO</div>
+            </div>
+
+            <div class="uh-card status-manutencao">
+                <div class="uh-number">103</div>
+                <div class="uh-info">Master Premium</div>
+                <div class="uh-status status-manutencao">MANUTENÇÃO</div>
+            </div>
+
+            <div class="uh-card status-bloqueado">
+                <div class="uh-number">104</div>
+                <div class="uh-info">Standard Duplo</div>
+                <div class="uh-status status-bloqueado">BLOQUEADO</div>
+            </div>
+
         </section>
 
-        <!-- GRID PRINCIPAL (ESQUERDA: MAPA / DIREITA: RESUMO) -->
-        <section class="grid">
+        <!-- LEGENDA PREMIUM -->
+        <section class="legend-box">
 
-            <!-- MAPA DE APARTAMENTOS -->
-            <div class="card">
-                <div class="card-title">Mapa de Apartamentos</div>
-                <p class="card-desc">
-                    Visualização em cards das UHs. Os dados reais virão da integração com o SQL Server (Letoh/Letom).
-                </p>
-
-                <div class="grid-uhs">
-
-                    <!-- MOCKS TEMPORÁRIOS -->
-                    <div class="uh-card status-livre">
-                        <h3>101</h3>
-                        <small>Standard Casal</small>
-                        <small>Livre</small>
-                    </div>
-
-                    <div class="uh-card status-ocupado">
-                        <h3>102</h3>
-                        <small>Standard Twin</small>
-                        <small>Ocupado até --/--</small>
-                    </div>
-
-                    <div class="uh-card status-livre">
-                        <h3>103</h3>
-                        <small>Standard Casal</small>
-                        <small>Pronto para entrada</small>
-                    </div>
-
-                    <div class="uh-card status-bloqueado">
-                        <h3>104</h3>
-                        <small>Suíte Master</small>
-                        <small>Bloqueado</small>
-                    </div>
-
-                    <div class="uh-card status-manutencao">
-                        <h3>201</h3>
-                        <small>Luxo Vista Mar</small>
-                        <small>Em manutenção</small>
-                    </div>
-
-                </div>
+            <div class="legend-item">
+                <span class="legend-bullet legend-livre"></span> Livre
             </div>
 
-            <!-- RESUMO DO STATUS -->
-            <div class="card">
-                <div class="card-title">Status em tempo real</div>
-                <p class="card-desc">
-                    Aqui futuramente teremos o resumo consolidado vindo do acumulador MDE Hub:
-                    ocupação atual, previsão de saídas, bloqueios e UHs em manutenção.
-                </p>
+            <div class="legend-item">
+                <span class="legend-bullet legend-ocupado"></span> Ocupado
+            </div>
 
-                <ul style="margin-top: 16px; list-style: none; padding-left: 0; font-size: 14px;">
-                    <li>• UHs Livres: 18</li>
-                    <li>• UHs Ocupadas: 32</li>
-                    <li>• Em Manutenção: 3</li>
-                    <li>• Bloqueadas: 5</li>
-                </ul>
+            <div class="legend-item">
+                <span class="legend-bullet legend-manutencao"></span> Manutenção
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-bullet legend-bloqueado"></span> Bloqueado
             </div>
 
         </section>
