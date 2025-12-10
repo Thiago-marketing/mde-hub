@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MDE Hub • Simulador ADR</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+    <!-- BOTÃO MOBILE -->
+    <div id="btnSidebarToggle">☰</div>
+
+    <!-- SIDEBAR DINÂMICA -->
+    <div id="sidebar"></div>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-area">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <h1 class="page-title">Simulador de ADR</h1>
+                <p class="page-subtitle">Calcule o valor médio da diária com base na sua receita e número de diárias vendidas.</p>
+            </div>
+
+            <div class="topbar-right">
+                <button id="btnThemeToggle">🌓</button>
+                <div class="user-badge" id="userInitial">U</div>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <section class="grid-2">
+
+            <!-- CARD DE ENTRADA -->
+            <div class="card">
+                <div class="card-title">Dados da Operação</div>
+
+                <label class="form-label">Receita Total (R$)</label>
+                <input id="receita" type="number" class="input" placeholder="Ex: 12470">
+
+                <label class="form-label">Diárias Vendidas</label>
+                <input id="diarias" type="number" class="input" placeholder="Ex: 58">
+
+                <button id="btnCalcular" class="btn-primary" style="margin-top: 12px;">
+                    Calcular ADR
+                </button>
+            </div>
+
+            <!-- RESULTADO -->
+            <div class="card">
+                <div class="card-title">Resultado</div>
+
+                <p class="card-desc">ADR (Average Daily Rate):</p>
+                <div id="resultadoADR" class="card-value" style="font-size: 34px;">R$ --,--</div>
+
+                <p class="card-desc" style="margin-top: 20px;">O ADR representa o valor médio que o hotel recebeu por diária vendida.</p>
+            </div>
+        </section>
+
+        <!-- CARD EXPLICATIVO -->
+        <section class="card">
+            <div class="card-title">Como o ADR é calculado?</div>
+            <p class="card-desc">
+                O ADR (Average Daily Rate) é calculado dividindo a <strong>receita total</strong> pelo número de <strong>diárias vendidas</strong>.
+            </p>
+
+            <pre style="margin-top: 10px; font-size: 14px; opacity: .8;">
+ADR = Receita Total ÷ Diárias Vendidas
+            </pre>
+        </section>
+
+    </main>
+
+    <!-- JS CORE -->
+    <script type="module" src="/js/app.js"></script>
+
+    <!-- CARREGAR SIDEBAR -->
+    <script>
+        fetch("/partials/sidebar.html")
+            .then(r => r.text())
+            .then(html => document.querySelector("#sidebar").innerHTML = html);
+    </script>
+
+    <!-- SCRIPT DO SIMULADOR -->
+    <script>
+        document.getElementById("btnCalcular").addEventListener("click", () => {
+
+            const receita = parseFloat(document.getElementById("receita").value);
+            const diarias = parseFloat(document.getElementById("diarias").value);
+            const output = document.getElementById("resultadoADR");
+
+            if (!receita || !diarias || diarias === 0) {
+                output.innerText = "Dados inválidos";
+                return;
+            }
+
+            const adr = receita / diarias;
+            output.innerText = "R$ " + adr.toFixed(2).replace(".", ",");
+        });
+    </script>
+
+</body>
+</html>
