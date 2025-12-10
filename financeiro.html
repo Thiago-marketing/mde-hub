@@ -10,18 +10,28 @@
 
 <body>
 
+    <!-- BOTÃO MOBILE -->
     <div id="btnSidebarToggle">☰</div>
+
+    <!-- SIDEBAR -->
     <div id="sidebar"></div>
 
+    <!-- ÁREA PRINCIPAL -->
     <main class="main-area">
 
+        <!-- TOPBAR -->
         <div class="topbar">
+
             <div class="topbar-left">
                 <h1 class="page-title">Financeiro</h1>
-                <p class="page-subtitle">Resumo financeiro diário e visão operacional.</p>
+                <p class="page-subtitle">
+                    Controle financeiro diário do hotel: entradas, saídas e fluxo de caixa consolidado.
+                </p>
             </div>
 
             <div class="topbar-right">
+                
+                <!-- Hotel selecionado -->
                 <div class="hotel-select-wrapper">
                     <span class="label">Hotel selecionado</span>
                     <select id="hotelSelect">
@@ -29,70 +39,96 @@
                     </select>
                 </div>
 
+                <!-- Tema -->
                 <button id="btnThemeToggle">🌓</button>
+
+                <!-- Avatar -->
                 <div class="user-badge" id="userInitial">U</div>
+
             </div>
+
         </div>
 
+        <!-- GRID DOS INDICADORES FINANCEIROS -->
         <section class="grid">
 
             <div class="card">
-                <div class="card-title">Entradas Hoje</div>
-                <div class="card-value">R$ --,--</div>
-                <div class="card-desc">Pagamentos previstos ou já realizados.</div>
+                <div class="card-title">Receita do Dia</div>
+                <div id="card_receita" class="card-value">--</div>
+                <div class="card-desc">Somatório de todas as entradas registradas hoje.</div>
             </div>
 
             <div class="card">
-                <div class="card-title">Saídas Hoje</div>
-                <div class="card-value">R$ --,--</div>
-                <div class="card-desc">Contas previstas para o dia.</div>
+                <div class="card-title">Saídas do Dia</div>
+                <div id="card_saidas" class="card-value">--</div>
+                <div class="card-desc">Pagamentos e despesas realizados no dia.</div>
             </div>
 
             <div class="card">
-                <div class="card-title">Saldo Diário</div>
-                <div class="card-value">R$ --,--</div>
-                <div class="card-desc">Entradas - Saídas.</div>
+                <div class="card-title">Saldo Previsto</div>
+                <div id="card_saldo" class="card-value">--</div>
+                <div class="card-desc">Receitas menos despesas do dia.</div>
             </div>
 
             <div class="card">
-                <div class="card-title">Saldo Caixa Atual</div>
-                <div class="card-value">R$ --,--</div>
-                <div class="card-desc">Com base nos lançamentos de caixa.</div>
+                <div class="card-title">Caixa Atual</div>
+                <div id="card_caixa" class="card-value">--</div>
+                <div class="card-desc">Valor disponível em caixa agora.</div>
             </div>
 
         </section>
 
+        <!-- ENTRADAS FINANCEIRAS -->
         <section class="card">
-            <div class="card-title">Movimentações Recentes</div>
+            <div class="card-title">Entradas do Dia</div>
+            <p class="card-desc">Pagamentos recebidos, reservas, consumos e recebíveis processados.</p>
 
             <table class="table">
-                <tr>
-                    <th>Data</th>
-                    <th>Descrição</th>
-                    <th>Tipo</th>
-                    <th>Valor</th>
-                </tr>
-
-                <tr>
-                    <td>--/--</td>
-                    <td>Exemplo de lançamento</td>
-                    <td>Entrada</td>
-                    <td>R$ --,--</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Origem</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaEntradas">
+                    <tr><td colspan="3">Carregando...</td></tr>
+                </tbody>
             </table>
+        </section>
 
-            <p class="card-desc">Dados reais virão do acumulador SQL → Hub.</p>
+        <!-- SAÍDAS FINANCEIRAS -->
+        <section class="card">
+            <div class="card-title">Saídas do Dia</div>
+            <p class="card-desc">Pagamentos diversos, compras e despesas operacionais.</p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Categoria</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaSaidas">
+                    <tr><td colspan="3">Carregando...</td></tr>
+                </tbody>
+            </table>
         </section>
 
     </main>
 
+    <!-- JS CORE -->
     <script type="module" src="/js/supabase.js"></script>
     <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/financeiro.js"></script>
 
+    <!-- CARREGAR SIDEBAR -->
     <script>
         fetch("/partials/sidebar.html")
             .then(r => r.text())
-            .then(html => sidebar.innerHTML = html);
+            .then(html => document.querySelector("#sidebar").innerHTML = html)
+            .catch(err => console.error("Erro ao carregar sidebar:", err));
     </script>
 
 </body>
