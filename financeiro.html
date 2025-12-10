@@ -1,95 +1,4 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Financeiro</title>
-  <link rel="stylesheet" href="/css/app.css" />
-</head>
-
-<body class="page page-financeiro">
-  <script>
-    (function() {
-      const savedTheme = localStorage.getItem("mde-theme") || "clean";
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    })();
-  </script>
-
-  <div id="btnSidebarToggle">☰</div>
-  <div id="sidebar-container"></div>
-
-  <main class="main-area">
-    <header class="page-header">
-      <div>
-        <h1 class="page-title">Financeiro</h1>
-        <p class="page-subtitle">Visão simples de receitas, despesas e fluxo de caixa.</p>
-      </div>
-      <div class="topbar-right">
-        <select id="hotelSelect">
-          <option>Carregando hotéis...</option>
-        </select>
-        <button id="btnThemeToggle">🌓</button>
-        <div class="user-badge" id="userMini">U</div>
-      </div>
-    </header>
-
-    <section class="page-content grid-2">
-      <div class="card">
-        <h2>Resumo Diário</h2>
-        <ul class="simple-list">
-          <li>Entradas: R$ --,--</li>
-          <li>Saídas: R$ --,--</li>
-          <li>Saldo: R$ --,--</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>Resumo Mensal</h2>
-        <ul class="simple-list">
-          <li>Receitas: R$ --,--</li>
-          <li>Despesas: R$ --,--</li>
-          <li>Resultado: R$ --,--</li>
-        </ul>
-      </div>
-
-      <div class="card table-card">
-        <h2>Movimentos Recentes</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Descrição</th>
-              <th>Tipo</th>
-              <th>Valor</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>--/--/----</td>
-              <td>Exemplo</td>
-              <td>Receita</td>
-              <td>R$ --,--</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <script type="module" src="/js/supabase.js"></script>
-  <script type="module" src="/js/app.js"></script>
-
-  <script>
-    fetch("/partials/sidebar.html")
-      .then(res => res.text())
-      .then(html => {
-        document.querySelector("#sidebar-container").innerHTML = html;
-      })
-      .catch(err => console.error("Sidebar não carregada:", err));
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -101,25 +10,18 @@
 
 <body>
 
-    <!-- BOTÃO MOBILE -->
     <div id="btnSidebarToggle">☰</div>
-
-    <!-- SIDEBAR -->
     <div id="sidebar"></div>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-area">
 
-        <!-- TOPBAR -->
         <div class="topbar">
-
             <div class="topbar-left">
                 <h1 class="page-title">Financeiro</h1>
-                <p class="page-subtitle">Movimentações diárias, previsão e resumo financeiro.</p>
+                <p class="page-subtitle">Resumo financeiro diário e visão operacional.</p>
             </div>
 
             <div class="topbar-right">
-
                 <div class="hotel-select-wrapper">
                     <span class="label">Hotel selecionado</span>
                     <select id="hotelSelect">
@@ -128,113 +30,69 @@
                 </div>
 
                 <button id="btnThemeToggle">🌓</button>
-                <div class="user-badge" id="userMini">U</div>
-
+                <div class="user-badge" id="userInitial">U</div>
             </div>
         </div>
 
-        <!-- CARDS SUPERIORES -->
         <section class="grid">
 
             <div class="card">
                 <div class="card-title">Entradas Hoje</div>
-                <div id="entradasHoje" class="card-value">R$ --,--</div>
-                <div class="card-desc">Pagamentos recebidos no caixa.</div>
+                <div class="card-value">R$ --,--</div>
+                <div class="card-desc">Pagamentos previstos ou já realizados.</div>
             </div>
 
             <div class="card">
                 <div class="card-title">Saídas Hoje</div>
-                <div id="saidasHoje" class="card-value">R$ --,--</div>
-                <div class="card-desc">Despesas pagas hoje.</div>
+                <div class="card-value">R$ --,--</div>
+                <div class="card-desc">Contas previstas para o dia.</div>
             </div>
 
             <div class="card">
-                <div class="card-title">Saldo do Dia</div>
-                <div id="saldoDia" class="card-value">R$ --,--</div>
-                <div class="card-desc">Entradas – saídas.</div>
+                <div class="card-title">Saldo Diário</div>
+                <div class="card-value">R$ --,--</div>
+                <div class="card-desc">Entradas - Saídas.</div>
             </div>
 
             <div class="card">
-                <div class="card-title">Previsão 7 dias</div>
-                <div id="previsaoSemana" class="card-value">R$ --,--</div>
-                <div class="card-desc">Receitas e despesas previstas.</div>
+                <div class="card-title">Saldo Caixa Atual</div>
+                <div class="card-value">R$ --,--</div>
+                <div class="card-desc">Com base nos lançamentos de caixa.</div>
             </div>
 
         </section>
 
-        <!-- LISTAGEM DE MOVIMENTOS -->
         <section class="card">
-            <div class="card-title">Movimentações do Dia</div>
+            <div class="card-title">Movimentações Recentes</div>
 
-            <table class="table" id="tabelaFinanceiro">
-                <thead>
-                    <tr>
-                        <th>Tipo</th>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                        <th>Horário</th>
-                    </tr>
-                </thead>
+            <table class="table">
+                <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                </tr>
 
-                <tbody>
-
-                    <!-- MOCK TEMPORÁRIO -->
-                    <tr>
-                        <td>Entrada</td>
-                        <td>Diária – Apt. 102</td>
-                        <td>R$ 320,00</td>
-                        <td>08:52</td>
-                    </tr>
-
-                    <tr>
-                        <td>Entrada</td>
-                        <td>Extra – Restaurante</td>
-                        <td>R$ 78,00</td>
-                        <td>10:14</td>
-                    </tr>
-
-                    <tr>
-                        <td>Saída</td>
-                        <td>Compra – Bebidas</td>
-                        <td>R$ 240,00</td>
-                        <td>11:03</td>
-                    </tr>
-
-                    <tr>
-                        <td>Saída</td>
-                        <td>Manutenção – UH 201</td>
-                        <td>R$ 180,00</td>
-                        <td>12:40</td>
-                    </tr>
-
-                </tbody>
+                <tr>
+                    <td>--/--</td>
+                    <td>Exemplo de lançamento</td>
+                    <td>Entrada</td>
+                    <td>R$ --,--</td>
+                </tr>
             </table>
+
+            <p class="card-desc">Dados reais virão do acumulador SQL → Hub.</p>
         </section>
 
     </main>
 
-    <!-- JS CORE -->
     <script type="module" src="/js/supabase.js"></script>
     <script type="module" src="/js/app.js"></script>
 
-    <!-- SIDEBAR -->
     <script>
         fetch("/partials/sidebar.html")
             .then(r => r.text())
-            .then(html => document.querySelector("#sidebar").innerHTML = html)
-            .catch(err => console.error("Erro ao carregar sidebar:", err));
-    </script>
-
-    <!-- MOCK FINANCEIRO (substituir SQL futuramente) -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-
-            document.getElementById("entradasHoje").innerText = "R$ 398,00";
-            document.getElementById("saidasHoje").innerText = "R$ 420,00";
-            document.getElementById("saldoDia").innerText = "R$ -22,00";
-            document.getElementById("previsaoSemana").innerText = "R$ 8.270,00";
-
-        });
+            .then(html => sidebar.innerHTML = html);
     </script>
 
 </body>
