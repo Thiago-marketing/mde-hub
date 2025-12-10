@@ -66,17 +66,41 @@ html[data-theme="clean"] {
   z-index: 50;
 }
 
+/* Logo */
 #sidebar .logo {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 30px;
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 30px;
 }
 
-/* Navegação do menu */
+.logo-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0ea5e9, #22c55e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-text strong {
+  font-size: 15px;
+}
+
+.logo-text span {
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* Navegação */
 .nav-section {
   margin-top: 25px;
 }
@@ -111,18 +135,6 @@ html[data-theme="clean"] {
   font-weight: 600;
 }
 
-/* Ícone no menu */
-.nav-item img,
-.nav-item svg {
-  width: 18px;
-  opacity: .85;
-}
-
-/* Sair */
-.nav-exit {
-  margin-top: 25px;
-}
-
 /* ---------------------------------------------------------
    SIDEBAR MOBILE
 --------------------------------------------------------- */
@@ -153,10 +165,10 @@ html[data-theme="clean"] {
   }
 }
 
-/* ---------------------------------------------------------
-   LAYOUT PRINCIPAL
---------------------------------------------------------- */
-.main {
+/* =========================================================
+   LAYOUT PRINCIPAL (CORRIGIDO PARA main-area)
+========================================================= */
+.main-area {
   margin-left: 260px;
   padding: 40px;
   width: calc(100% - 260px);
@@ -164,14 +176,16 @@ html[data-theme="clean"] {
 }
 
 @media (max-width: 830px) {
-  .main {
+  .main-area {
     margin-left: 0;
-    padding: 25px 18px;
+    padding: 65px 20px 25px;
     width: 100%;
   }
 }
 
-/* Título da página */
+/* ---------------------------------------------------------
+   TÍTULOS
+--------------------------------------------------------- */
 .page-title {
   font-size: 28px;
   font-weight: 700;
@@ -186,14 +200,12 @@ html[data-theme="clean"] {
 }
 
 /* ---------------------------------------------------------
-   TOPBAR (lado direito)
+   TOPBAR
 --------------------------------------------------------- */
-.topbar {
+.topbar-right {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  margin-bottom: 25px;
-  gap: 15px;
+  gap: 16px;
 }
 
 .user-badge {
@@ -208,7 +220,7 @@ html[data-theme="clean"] {
   font-weight: 700;
 }
 
-/* Botão tema */
+/* Tema */
 #btnThemeToggle {
   padding: 8px 12px;
   border-radius: 8px;
@@ -224,7 +236,7 @@ html[data-theme="clean"] {
 }
 
 /* ---------------------------------------------------------
-   CARDS PADRÃO PREMIUM
+   CARDS PREMIUM
 --------------------------------------------------------- */
 .card {
   background: var(--bg2);
@@ -240,25 +252,8 @@ html[data-theme="clean"] {
   border-color: var(--primary);
 }
 
-.card-title {
-  font-size: 20px;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.card-value {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.card-desc {
-  font-size: 14px;
-  opacity: .7;
-}
-
 /* ---------------------------------------------------------
-   GRID FLEX PREMIUM
+   GRID
 --------------------------------------------------------- */
 .grid {
   display: grid;
@@ -267,7 +262,7 @@ html[data-theme="clean"] {
 }
 
 /* ---------------------------------------------------------
-   INPUTS E BOTÕES
+   INPUTS
 --------------------------------------------------------- */
 input,
 select {
@@ -280,306 +275,79 @@ select {
   margin-bottom: 12px;
 }
 
-button {
-  padding: 10px 16px;
-  border-radius: 8px;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-button:hover {
-  opacity: .9;
-}
-
 /* ---------------------------------------------------------
-   TABELAS (caso usar futuramente)
---------------------------------------------------------- */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.table th,
-.table td {
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.table th {
-  text-align: left;
-  opacity: .7;
-}
-
-/* ---------------------------------------------------------
-   FINAL
---------------------------------------------------------- */
-footer {
-  margin-top: 40px;
-  font-size: 12px;
-  opacity: .4;
-  text-align: center;
-}
-/* ---- Logo híbrida WebMDE / Hub ---- */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-.logo-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #0ea5e9, #22c55e);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 700;
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.logo-text strong {
-  font-size: 15px;
-}
-
-.logo-text span {
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-/* ---- Topbar híbrida ---- */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 24px;
-}
-
-.topbar-left {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.hotel-select-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 12px;
-}
-
-.hotel-select-wrapper .label {
-  opacity: 0.7;
-}
-
-.hotel-select-wrapper select {
-  min-width: 200px;
-}
-
-/* Botão de tema com estilo pill */
-.theme-toggle {
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  cursor: pointer;
-}
-
-/* ---- User pill estilo WebMDE ---- */
-.user-pill {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-}
-
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: #0ea5e9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 700;
-}
-
-.user-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.user-name {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.user-email {
-  font-size: 11px;
-  opacity: 0.7;
-}
-
-/* Ajuste em telas menores */
-@media (max-width: 900px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .topbar-right {
-    width: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-}
-/* =========================================================
-   AJUSTE MOBILE – Evitar sobreposição do botão Menu
+   MAPA DE UHS PREMIUM
 ========================================================= */
-@media (max-width: 830px) {
 
-  /* Adiciona espaço para o botão ficar acima do conteúdo */
-  .main {
-    padding-top: 65px !important;
-  }
-
-  /* Deixa o botão alinhado corretamente */
-  #btnSidebarToggle {
-    top: 18px;
-    left: 18px;
-    z-index: 300; /* acima do conteúdo, abaixo de popups */
-  }
-}
-/* ============================================================
-   MDE HUB • MAPA DE UHS (Premium)
-   Estilo moderno para cartões de apartamentos/quartos
-   ------------------------------------------------------------
-   Cole no final do /css/app.css
-============================================================ */
-
-/* GRID RESPONSIVO */
 .grid-uhs {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-/* CARTÃO DA UH */
 .uh-card {
-    background: var(--bg2);
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-    gap: .25rem;
-    transition: transform .15s ease, box-shadow .15s ease;
-    cursor: pointer;
-    border: 1px solid transparent;
+  background: var(--bg2);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  transition: .15s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
 }
 
 .uh-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 
-/* TÍTULO DO APARTAMENTO */
 .uh-card h3 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
-/* LEGENDA DENTRO DO CARD */
-.uh-card small {
-    opacity: .8;
-    font-size: .85rem;
-}
-
-/* CORES DE STATUS */
 .status-livre {
-    background: #0fbf6f22 !important;
-    border-color: #0fbf6f55 !important;
+  background: #0fbf6f22 !important;
+  border-color: #0fbf6f55 !important;
 }
 
 .status-ocupado {
-    background: #ff4d4d22 !important;
-    border-color: #ff4d4d55 !important;
+  background: #ff4d4d22 !important;
+  border-color: #ff4d4d55 !important;
 }
 
 .status-manutencao {
-    background: #ffb40022 !important;
-    border-color: #ffb40055 !important;
+  background: #ffb40022 !important;
+  border-color: #ffb40055 !important;
 }
 
 .status-bloqueado {
-    background: #59627533 !important;
-    border-color: #59627566 !important;
+  background: #59627533 !important;
+  border-color: #59627566 !important;
 }
 
-/* BOLINHAS DA LEGENDA */
 .legend-row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .legend-row .badge {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: .35rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
 }
 
-/* CORES DA LEGENDA */
-.badge.status-livre {
-    background: #0fbf6f;
-}
-.badge.status-ocupado {
-    background: #ff4d4d;
-}
-.badge.status-manutencao {
-    background: #ffb400;
-}
-.badge.status-bloqueado {
-    background: #596275;
-}
-
-/* MODO DARK (ajustes finos) */
+/* Modo dark UHs */
 html[data-theme="dark"] .uh-card {
-    background: #11141a;
-    border-color: #222831;
+  background: #11141a;
+  border-color: #222831;
 }
 
 html[data-theme="dark"] .uh-card:hover {
-    box-shadow: 0 4px 18px rgba(0,0,0,0.5);
-}
-
-html[data-theme="dark"] .legend-row .badge {
-    filter: brightness(1.2);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.5);
 }
