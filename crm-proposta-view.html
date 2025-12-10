@@ -9,61 +9,42 @@
 
 <body class="page">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <span class="logo-mark">M</span>
-      <span class="logo-text">Web MDE</span>
-    </div>
+  <!-- BOTÃO MOBILE -->
+  <div id="btnSidebarToggle">☰</div>
 
-    <nav class="menu">
-      <a href="/dashboard.html">🏠 Início</a>
-      <a href="/crm.html" class="active">📊 CRM</a>
-      <a href="/crm-dashboard.html">📈 Dashboard CRM</a>
-      <a href="/crm-kanban.html">🗂 Kanban</a>
-      <a href="/crm-propostas.html" class="strong active">📄 Propostas</a>
-      <a href="/crm-contatos.html">👥 Contatos</a>
-      <a href="/crm-atividades.html">📝 Atividades</a>
-      <a href="/crm-config.html">⚙️ Configurações</a>
-
-      <hr />
-      <a href="/logout.html" class="logout">Sair</a>
-    </nav>
-  </aside>
+  <!-- SIDEBAR DINÂMICA -->
+  <div id="sidebar-container"></div>
 
   <!-- MAIN AREA -->
   <main class="main-area">
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <button id="btnSidebar" class="btn-icon">☰</button>
-
-      <div class="topbar-title">
-        <h1>Proposta • #1234</h1>
-        <p>Resumo e detalhes completos da proposta enviada ao hóspede</p>
+    <!-- HEADER / TOPBAR -->
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">📄 Proposta • #1234</h1>
+        <p class="page-subtitle">Resumo e detalhes completos enviados ao hóspede</p>
       </div>
 
-      <div class="topbar-actions">
+      <div class="topbar-right">
         <select id="hotelSelect">
           <option>Carregando hotéis...</option>
         </select>
 
-        <button id="btnThemeToggle" class="btn-icon">🌓</button>
+        <button id="btnThemeToggle">🌓</button>
 
-        <div class="user-mini">
-          <span id="userMini">U</span>
-        </div>
+        <div class="user-badge" id="userMini">U</div>
       </div>
     </header>
 
     <!-- PROPOSTA VISUAL -->
     <section class="content-section">
 
-      <!-- CABEÇALHO DA PROPOSTA -->
+      <!-- CABEÇALHO -->
       <div class="card highlight">
         <h2>Informações da Proposta</h2>
 
         <div class="info-grid">
+
           <div>
             <p class="label">Hóspede</p>
             <p class="value">Carla Menezes</p>
@@ -88,18 +69,21 @@
             <p class="label">Criada por</p>
             <p class="value">Thiago (Recepção)</p>
           </div>
+
         </div>
       </div>
 
-      <!-- DESCRIÇÃO DA PROPOSTA -->
+      <!-- RESUMO -->
       <div class="card">
         <h2>Resumo da Proposta</h2>
+
         <p>
           Esta proposta foi criada para atender a solicitação de hospedagem da Sra. Carla Menezes.
           Inclui opções de tarifa promocional com possibilidade de upgrade mediante disponibilidade.
         </p>
 
         <div class="proposal-box">
+
           <h3>🛏 Acomodação</h3>
           <p>Suíte Luxo — Vista para o mar</p>
 
@@ -116,12 +100,14 @@
             <li>Welcome drink</li>
             <li>Late checkout até 14h (mediante disponibilidade)</li>
           </ul>
+
         </div>
       </div>
 
       <!-- TIMELINE -->
       <div class="card">
         <h2>Linha do Tempo</h2>
+
         <div class="timeline">
 
           <div class="timeline-item">
@@ -154,7 +140,18 @@
 
   </main>
 
-  <script src="/js/app.js"></script>
+  <!-- SCRIPTS -->
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
+
+  <!-- SIDEBAR PARTIAL -->
+  <script>
+    fetch("/partials/sidebar.html")
+      .then(r => r.text())
+      .then(html => {
+        document.querySelector("#sidebar-container").innerHTML = html;
+      });
+  </script>
 
 </body>
 </html>
