@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Lead</title>
+  <title>MDE Hub • Lead CRM</title>
 
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/app.js"></script>
 
   <style>
     .lead-header {
@@ -32,6 +31,7 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      margin-top: 8px;
     }
 
     .tag {
@@ -41,28 +41,6 @@
       color: #fff;
       background: var(--primary);
       font-weight: 600;
-    }
-
-    .timeline {
-      margin-top: 20px;
-      border-left: 2px solid var(--border);
-      padding-left: 18px;
-    }
-
-    .timeline-item {
-      margin-bottom: 18px;
-    }
-
-    .timeline-title {
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--text);
-    }
-
-    .timeline-desc {
-      opacity: .8;
-      font-size: 14px;
-      margin-top: 3px;
     }
 
     .section-title {
@@ -83,6 +61,28 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 18px;
+    }
+
+    .timeline {
+      margin-top: 10px;
+      border-left: 2px solid var(--border);
+      padding-left: 18px;
+    }
+
+    .timeline-item {
+      margin-bottom: 18px;
+    }
+
+    .timeline-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .timeline-desc {
+      opacity: .8;
+      font-size: 14px;
+      margin-top: 3px;
     }
 
     .actions {
@@ -116,53 +116,32 @@
       border: 1px solid var(--border);
       padding: 18px;
       border-radius: 12px;
-      margin-top: 25px;
+      margin-top: 10px;
     }
-
   </style>
-
 </head>
 
 <body>
 
+<!-- BOTÃO MOBILE -->
 <div id="btnSidebarToggle">☰</div>
 
-<!-- SIDEBAR -->
-<div id="sidebar">
-  <div class="logo">🏨 MDE Hub</div>
+<!-- SIDEBAR DINÂMICA -->
+<div id="sidebar-container"></div>
 
-  <div class="nav-section">
-    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
-    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
-    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
-    <a href="/simuladores.html" class="nav-item">📐 Simuladores</a>
-  </div>
+<!-- ÁREA PRINCIPAL -->
+<main class="main-area">
 
-  <div class="nav-section">
-    <div class="nav-title">CRM Hoteleiro</div>
-    <a href="/crm.html" class="nav-item">📘 CRM</a>
-    <a href="/crm-detalhe.html" class="nav-item active">👤 Lead</a>
-  </div>
-
-  <div class="nav-section nav-exit">
-    <a href="/logout.html" class="nav-item">🚪 Sair</a>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-  <div class="topbar">
-    <button id="btnThemeToggle">🌓</button>
-    <div class="user-badge" id="userInitial">U</div>
-  </div>
+  <!-- HEADER GLOBAL DA PÁGINA -->
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">👤 Lead • João Mendes</h1>
+      <p class="page-subtitle">Visão completa do lead, jornada e insights inteligentes.</p>
+    </div>
+  </header>
 
   <!-- HEADER DO LEAD -->
-  <div class="lead-header">
+  <section class="lead-header">
     <div>
       <div class="lead-name">João Mendes</div>
       <div class="lead-tags">
@@ -178,9 +157,9 @@
       <button class="btn btn-primary">Enviar WhatsApp</button>
       <button class="btn btn-primary">Gerar Proposta IA</button>
     </div>
-  </div>
+  </section>
 
-  <!-- INFORMAÇÕES -->
+  <!-- INFORMAÇÕES DO LEAD -->
   <h2 class="section-title">Informações do Lead</h2>
 
   <div class="info-grid">
@@ -198,11 +177,10 @@
     </div>
   </div>
 
-  <!-- TIMELINE -->
+  <!-- LINHA DO TEMPO -->
   <h2 class="section-title">Linha do Tempo</h2>
 
   <div class="timeline">
-
     <div class="timeline-item">
       <div class="timeline-title">Mensagem recebida</div>
       <div class="timeline-desc">"Olá, gostaria de saber valores para janeiro."</div>
@@ -217,7 +195,6 @@
       <div class="timeline-title">Lead movido para Em Conversa</div>
       <div class="timeline-desc">O interesse aumentou após respostas sobre o quarto.</div>
     </div>
-
   </div>
 
   <!-- INSIGHTS DA IA -->
@@ -229,7 +206,21 @@
     <p><strong>Objeções prováveis:</strong> Preço e flexibilidade de cancelamento.</p>
   </div>
 
-</div>
+</main>
+
+<!-- JS CORE -->
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/crm.js"></script>
+
+<!-- CARREGAR SIDEBAR -->
+<script>
+  fetch("/partials/sidebar.html")
+    .then(res => res.text())
+    .then(html => {
+      document.querySelector("#sidebar-container").innerHTML = html;
+    });
+</script>
 
 </body>
 </html>
