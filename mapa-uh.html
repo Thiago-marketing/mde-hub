@@ -91,3 +91,115 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MDE Hub • Mapa de UHs</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body>
+
+    <!-- BOTÃO MOBILE -->
+    <div id="btnSidebarToggle">☰</div>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar"></div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-area">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <h1 class="page-title">Mapa de UHs</h1>
+                <p class="page-subtitle">Status em tempo real dos apartamentos/quartos.</p>
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="hotel-select-wrapper">
+                    <span class="label">Hotel selecionado</span>
+                    <select id="hotelSelect">
+                        <option>Carregando hotéis...</option>
+                    </select>
+                </div>
+
+                <button id="btnThemeToggle">🌓</button>
+                <div class="user-badge" id="userMini">U</div>
+            </div>
+        </div>
+
+        <!-- LEGENDA -->
+        <div class="card">
+            <div class="card-title">Legenda dos Status</div>
+
+            <div class="legend-row">
+                <span><span class="badge status-livre"></span> Livre</span>
+                <span><span class="badge status-ocupado"></span> Ocupado</span>
+                <span><span class="badge status-manutencao"></span> Manutenção</span>
+                <span><span class="badge status-bloqueado"></span> Bloqueado</span>
+            </div>
+        </div>
+
+        <!-- GRID DE UHS -->
+        <section class="grid-uhs" id="uhContainer">
+
+            <!-- EXEMPLOS (serão substituídos pelo SQL Server futuramente) -->
+            <div class="uh-card status-ocupado">
+                <h3>102</h3>
+                <small>Standard Twin</small>
+                <small>Ocupado até --/--</small>
+            </div>
+
+            <div class="uh-card status-livre">
+                <h3>103</h3>
+                <small>Standard Casal</small>
+                <small>Pronto para entrada</small>
+            </div>
+
+            <div class="uh-card status-bloqueado">
+                <h3>104</h3>
+                <small>Suíte Master</small>
+                <small>Bloqueado</small>
+            </div>
+
+            <div class="uh-card status-manutencao">
+                <h3>201</h3>
+                <small>Luxo Vista Mar</small>
+                <small>Em manutenção</small>
+            </div>
+
+            <div class="uh-card status-ocupado">
+                <h3>202</h3>
+                <small>Luxo Vista Mar</small>
+                <small>Saída prevista às 12h</small>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JS CORE -->
+    <script type="module" src="/js/supabase.js"></script>
+    <script type="module" src="/js/app.js"></script>
+
+    <!-- CARREGAR SIDEBAR -->
+    <script>
+        fetch("/partials/sidebar.html")
+            .then(r => r.text())
+            .then(html => document.querySelector("#sidebar").innerHTML = html)
+            .catch(err => console.error("Erro ao carregar sidebar:", err));
+    </script>
+
+    <!-- MOCK PARA TESTE (remove após SQL Server) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("Mapa de UHs carregado — Bills Mode Supreme");
+        });
+    </script>
+
+</body>
+</html>
