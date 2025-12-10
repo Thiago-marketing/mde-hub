@@ -1,95 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>MDE Hub • Recuperar Senha</title>
 
-  <link rel="stylesheet" href="/css/auth.css" />
-
-  <style>
-    .auth-small-link {
-      margin-top: 20px;
-      font-size: 14px;
-      opacity: .7;
-      text-align: center;
-    }
-    .auth-small-link a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .success-box {
-      margin-top: 20px;
-      padding: 15px;
-      background: rgba(0,255,180,0.1);
-      border: 1px solid rgba(0,255,180,0.3);
-      border-radius: 10px;
-      color: #00ffb4;
-      text-align: center;
-      font-size: 14px;
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/auth.css"/>
 </head>
 
 <body>
 
-  <div class="auth-wrapper">
-    <div class="auth-card">
+<div class="auth-container">
 
-      <div class="auth-logo">
-        <span class="auth-logo-mark">M</span>
-        <span class="auth-logo-text">MDE Hub</span>
-      </div>
+  <div class="login-card">
 
-      <h1>Recuperar Senha</h1>
-      <p class="auth-subtitle">
-        Informe seu e-mail e enviaremos um link para redefinir sua senha.
-      </p>
-
-      <form id="recoverForm">
-        <div class="form-group">
-          <label for="email">E-mail cadastrado</label>
-          <input id="email" type="email" required autocomplete="email" />
-        </div>
-
-        <button type="submit" class="btn-primary full">Enviar link de recuperação</button>
-      </form>
-
-      <div id="successBox" class="success-box">
-        Link enviado! Verifique sua caixa de entrada.  
-      </div>
-
-      <p class="auth-small-link">
-        <a href="/login.html">Voltar para o login</a>
-      </p>
+    <div class="logo-area">
+      <div class="logo-mark">M</div>
+      <div class="logo-text">MDE Hub</div>
     </div>
+
+    <h1 class="login-title">Recuperar Senha</h1>
+    <p class="login-subtitle">Informe seu e-mail e enviaremos um link para redefinir sua senha.</p>
+
+    <form id="recoverForm" class="login-form">
+      <div class="form-group">
+        <label for="email">E-mail cadastrado</label>
+        <input id="email" type="email" required />
+      </div>
+
+      <button type="submit" class="btn-primary full">Enviar link de recuperação</button>
+    </form>
+
+    <p class="login-footer">
+      <a href="/login.html">Voltar para o login</a>
+    </p>
+
   </div>
 
-  <script type="module">
-    import { supabase } from "/js/supabase.js";
+</div>
 
-    const form = document.getElementById("recoverForm");
-    const successBox = document.getElementById("successBox");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const email = document.getElementById("email").value.trim();
-
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + "/reset-password.html"
-      });
-
-      if (!error) {
-        successBox.style.display = "block";
-      } else {
-        alert("Erro ao enviar e-mail: " + error.message);
-      }
-    });
-  </script>
+<script type="module" src="/js/supabase.js"></script>
+<script type="module" src="/js/auth.js"></script>
 
 </body>
 </html>
