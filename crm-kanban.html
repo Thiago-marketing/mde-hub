@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,6 +9,14 @@
 </head>
 
 <body class="page page-crm-kanban">
+
+  <!-- APLICAÇÃO AUTOMÁTICA DO TEMA -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("mde-theme") || "clean";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
 
   <!-- BOTÃO DO MENU MOBILE -->
   <div id="btnSidebarToggle">☰</div>
@@ -149,7 +157,7 @@
   <script type="module" src="/js/app.js"></script>
   <script type="module" src="/js/crm.js"></script>
 
-  <!-- LÓGICA DO MODAL DE PROPOSTA -->
+  <!-- MODAL: Lógica -->
   <script>
     document.getElementById("btnCriarProposta").addEventListener("click", () => {
       const idLead = document.querySelector("#modalProposta input[name='lead_id']").value;
@@ -157,13 +165,14 @@
     });
   </script>
 
-  <!-- CARREGAR SIDEBAR VIA PARTIAL -->
+  <!-- CARREGAMENTO DA SIDEBAR -->
   <script>
     fetch("/partials/sidebar.html")
       .then(res => res.text())
       .then(html => {
         document.querySelector("#sidebar-container").innerHTML = html;
-      });
+      })
+      .catch(err => console.error("Sidebar não carregada:", err));
   </script>
 
 </body>
