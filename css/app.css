@@ -351,3 +351,119 @@ html[data-theme="dark"] .uh-card {
 html[data-theme="dark"] .uh-card:hover {
   box-shadow: 0 4px 18px rgba(0,0,0,0.5);
 }
+/* ============================================================
+   MDE HUB • MAPA DE UHs — Bills Mode Supreme (versão final)
+   Cartões premium alinhados com o design do dashboard
+============================================================ */
+
+/* GRID GERAL */
+.uh-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+/* CARTÃO PREMIUM DA UH */
+.uh-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all .25s ease;
+    cursor: pointer;
+}
+
+/* Hover premium igual ao card principal */
+.uh-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+
+/* Título (Número da UH) */
+.uh-number {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* Sub-informações dentro do card */
+.uh-info {
+    font-size: 14px;
+    opacity: .75;
+}
+
+/* STATUS (cores padronizadas Bills) */
+.uh-status {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+/* Cores de status — tons premium */
+.status-livre {
+    background: rgba(26, 203, 103, 0.15);
+    color: #1acb67;
+    border: 1px solid rgba(26, 203, 103, 0.35);
+}
+
+.status-ocupado {
+    background: rgba(255, 70, 70, 0.15);
+    color: #ff4646;
+    border: 1px solid rgba(255, 70, 70, 0.35);
+}
+
+.status-manutencao {
+    background: rgba(255, 185, 0, 0.15);
+    color: #ffb900;
+    border: 1px solid rgba(255, 185, 0, 0.35);
+}
+
+.status-bloqueado {
+    background: rgba(110, 120, 140, 0.2);
+    color: #aab0c2;
+    border: 1px solid rgba(110, 120, 140, 0.35);
+}
+
+/* LEGENDA PREMIUM */
+.legend-box {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.legend-bullet {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+.legend-livre { background: #1acb67; }
+.legend-ocupado { background: #ff4646; }
+.legend-manutencao { background: #ffb900; }
+.legend-bloqueado { background: #6e788c; }
+
+/* DARK MODE refinado */
+html[data-theme="dark"] .uh-card {
+    background: var(--bg3);
+    border-color: rgba(255,255,255,0.07);
+}
+
+html[data-theme="dark"] .uh-card:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.55);
+}
