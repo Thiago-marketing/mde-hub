@@ -1,176 +1,90 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDE Hub • Dashboard</title>
-
+  <title>MDE Hub • Dashboard Geral</title>
   <link rel="stylesheet" href="/css/app.css" />
-  <script defer src="/js/app.js"></script>
 </head>
 
-<body>
+<body class="page page-dashboard">
 
-  <!-- BOTÃO MOBILE -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("mde-theme") || "clean";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
+
   <div id="btnSidebarToggle">☰</div>
+  <div id="sidebar-container"></div>
 
-  <!-- SIDEBAR HÍBRIDA -->
-  <div id="sidebar">
-    <div class="logo">
-      <span class="logo-avatar">M</span>
-      <div class="logo-text">
-        <strong>Web MDE</strong>
-        <span>Painel Gerencial</span>
-      </div>
-    </div>
-
-    <div class="nav-section">
-      <a href="/dashboard.html" class="nav-item active">📊 Dashboard</a>
-      <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-title">Operação</div>
-      <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa de UHs</a>
-      <a href="/fechamento.html" class="nav-item">🧾 Fechamento de Caixa</a>
-      <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    </div>
-
-    <div class="nav-section">
-      <div class="nav-title">Financeiro & Vendas</div>
-      <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-      <a href="/simuladores.html" class="nav-item">🧮 Simuladores</a>
-      <a class="nav-item disabled">📘 CRM Hoteleiro (em breve)</a>
-      <a class="nav-item disabled">📄 Proposta Hoteleira (em breve)</a>
-    </div>
-
-    <div class="nav-section nav-exit">
-      <a href="/logout.html" class="nav-item">🚪 Sair</a>
-    </div>
-  </div>
-
-  <!-- ÁREA PRINCIPAL -->
-  <div class="main">
-
-    <!-- TOPBAR PREMIUM -->
-<header class="topbar">
-  <div class="topbar-left">
-    <h1 class="page-title">TÍTULO DA PÁGINA</h1>
-    <p class="page-subtitle">Subtítulo explicando a função da tela</p>
-  </div>
-
-  <div class="topbar-right">
-    <div class="hotel-select-wrapper">
-      <span class="label">Hotel</span>
-      <select id="hotelSelector">
-        <option>Carregando...</option>
-      </select>
-    </div>
-
-    <button id="btnThemeToggle" class="theme-toggle">🌓</button>
-
-    <div class="user-pill">
-      <div class="user-avatar">H</div>
-      <div class="user-info">
-        <span class="user-name">Hotel Exemplo</span>
-        <span class="user-email">contato@hotelexemplo.com</span>
-      </div>
-    </div>
-  </div>
-</header>
-
-    <!-- CONTEÚDO -->
-    <section class="content-section">
-
-      <!-- LINHA 1: Indicadores principais -->
-      <div class="grid">
-
-        <div class="card">
-          <div class="card-title">Ocupação Atual</div>
-          <div class="card-value" id="db_ocupacao">--%</div>
-          <div class="card-desc">Taxa de ocupação agora</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">UHs Disponíveis</div>
-          <div class="card-value" id="db_uhDisponiveis">--</div>
-          <div class="card-desc">Prontas para venda</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Receita Hoje</div>
-          <div class="card-value" id="db_receitaHoje">R$ --</div>
-          <div class="card-desc">Hospedagens + Extras</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Previsão Amanhã</div>
-          <div class="card-value" id="db_prevAmanha">--</div>
-          <div class="card-desc">Entradas previstas para o próximo dia</div>
-        </div>
-
+  <main class="main-area">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">Dashboard Geral</h1>
+        <p class="page-subtitle">Resumo rápido da operação dos hotéis conectados ao MDE Hub.</p>
       </div>
 
-      <!-- LINHA 2: Gráficos -->
-      <div class="grid">
+      <div class="topbar-right">
+        <select id="hotelSelect">
+          <option>Carregando hotéis...</option>
+        </select>
+        <button id="btnThemeToggle">🌓</button>
+        <div class="user-badge" id="userMini">U</div>
+      </div>
+    </header>
 
-        <div class="card">
-          <div class="card-title">Ocupação • Últimos 7 dias</div>
-          <div class="chart-placeholder" id="grafico_ocupacao">
-            Gráfico aqui...
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Receita por Centro de Custo</div>
-          <div class="chart-placeholder" id="grafico_centros">
-            Gráfico aqui...
-          </div>
-        </div>
-
+    <section class="page-content grid-3">
+      <div class="card kpi-card">
+        <h2>Ocupação Hoje</h2>
+        <p class="kpi-value">--%</p>
+        <p class="kpi-caption">Baseado nas reservas confirmadas.</p>
       </div>
 
-      <!-- LINHA 3: Tabelas resumo -->
-      <div class="grid">
-
-        <div class="card">
-          <div class="card-title">Próximas Chegadas</div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Reserva</th>
-                <th>Hóspede</th>
-                <th>UH</th>
-                <th>Chegada</th>
-              </tr>
-            </thead>
-            <tbody id="db_chegadas">
-              <tr><td colspan="4">Carregando...</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Movimento do Caixa (Hoje)</div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Hora</th>
-                <th>Tipo</th>
-                <th>Descrição</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-            <tbody id="db_caixa">
-              <tr><td colspan="4">Carregando...</td></tr>
-            </tbody>
-          </table>
-        </div>
-
+      <div class="card kpi-card">
+        <h2>Check-ins Hoje</h2>
+        <p class="kpi-value">--</p>
+        <p class="kpi-caption">Entradas previstas para o dia.</p>
       </div>
 
+      <div class="card kpi-card">
+        <h2>Receita Prevista</h2>
+        <p class="kpi-value">R$ --,--</p>
+        <p class="kpi-caption">Total estimado de diárias e extras.</p>
+      </div>
+
+      <div class="card">
+        <h2>Próximas Entradas</h2>
+        <p>Em breve: integração em tempo real com SQL Server 2014 (Letoh/Letom).</p>
+      </div>
+
+      <div class="card">
+        <h2>Próximas Saídas</h2>
+        <p>Visualização rápida de saídas do dia e atrasadas.</p>
+      </div>
+
+      <div class="card">
+        <h2>Alertas</h2>
+        <ul>
+          <li>Estoque mínimo (em breve)</li>
+          <li>Contas a vencer (em breve)</li>
+          <li>Quartos bloqueados (em breve)</li>
+        </ul>
+      </div>
     </section>
+  </main>
 
-  </div>
+  <script type="module" src="/js/supabase.js"></script>
+  <script type="module" src="/js/app.js"></script>
+
+  <script>
+    fetch("/partials/sidebar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.querySelector("#sidebar-container").innerHTML = html;
+      })
+      .catch(err => console.error("Sidebar não carregada:", err));
+  </script>
 </body>
 </html>
