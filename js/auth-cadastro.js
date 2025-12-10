@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // botão desabilitado para evitar duplo envio
+    // evita duplo envio
     btn.disabled = true;
     btn.textContent = "Criando conta...";
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       email,
       password,
       options: {
-        emailRedirectTo: "https://hub.mdesistemas.com/auth/confirmado.html",
+        emailRedirectTo: "https://hub.mdesistemas.com.br/auth/confirmado.html",
         data: {
           whatsapp,
           emailOptin
@@ -58,11 +58,21 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // sucesso!
-    msg.textContent = "Conta criada! Verifique seu e-mail para confirmar o cadastro.";
+    // ------------------------------------------
+    // 1) Salva o email para abrir Gmail/Outlook
+    // ------------------------------------------
+    localStorage.setItem("mde-temp-email", email);
+
+    // ------------------------------------------
+    // 2) Redireciona para tela profissional
+    // ------------------------------------------
+    window.location.href = "/cadastro-sucesso.html";
+
+    // (abaixo não chega a executar porque houve redirecionamento,
+    // mas deixo por segurança caso precisava remover o redirect no futuro)
+    msg.textContent = "Conta criada! Verifique seu e-mail para confirmar.";
     msg.classList.add("success");
 
-    // limpar form
     form.reset();
     btn.disabled = false;
     btn.textContent = "Criar conta";
