@@ -23,35 +23,68 @@
     <h1 class="login-title">Criar Conta</h1>
     <p class="login-subtitle">Acesse simuladores e o painel do proprietário do MDE Hub.</p>
 
-    <!-- FORM -->
-    <form id="cadastroForm" class="login-form">
+    <!-- FORM CORRIGIDO -->
+    <form id="formCadastro" class="login-form">
 
       <div class="form-group">
         <label for="email">E-mail</label>
-        <input id="email" type="email" placeholder="voce@hotel.com.br" required />
+        <input 
+          id="email" 
+          name="email" 
+          type="email" 
+          placeholder="voce@hotel.com.br" 
+          required 
+        />
       </div>
 
       <div class="form-group">
         <label for="whatsapp">WhatsApp</label>
-        <input id="whatsapp" type="text" placeholder="(11) 99999-9999" required />
+        <input 
+          id="whatsapp" 
+          name="whatsapp" 
+          type="text" 
+          placeholder="(11) 99999-9999" 
+          required 
+        />
       </div>
 
       <div class="form-group">
         <label for="password">Senha</label>
-        <input id="password" type="password" placeholder="Crie uma senha" required />
+        <input 
+          id="password" 
+          name="password" 
+          type="password" 
+          placeholder="Crie uma senha" 
+          required 
+        />
       </div>
 
       <div class="form-group">
-        <label for="confirmPassword">Confirmar senha</label>
-        <input id="confirmPassword" type="password" placeholder="Repita a senha" required />
+        <label for="passwordConfirm">Confirmar senha</label>
+        <input 
+          id="passwordConfirm" 
+          name="passwordConfirm" 
+          type="password" 
+          placeholder="Repita a senha" 
+          required 
+        />
       </div>
 
       <label class="checkbox-area">
-        <input type="checkbox" id="aceitoMkt" checked />
+        <input 
+          type="checkbox" 
+          id="emailOptin" 
+          name="emailOptin" 
+          checked 
+        />
         <span>Aceito receber novidades e materiais da MDE.</span>
       </label>
 
-      <button type="submit" class="btn-primary full">Criar conta</button>
+      <button id="btnSubmitCadastro" type="submit" class="btn-primary full">
+        Criar conta
+      </button>
+
+      <p id="cadastroMensagem" class="auth-message"></p>
 
     </form>
 
