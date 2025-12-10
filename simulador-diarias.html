@@ -11,74 +11,32 @@
 
 <body>
 
-<!-- BOTÃO MOBILE -->
-<div id="btnSidebarToggle">☰</div>
-
-<!-- SIDEBAR -->
-<div id="sidebar">
-  <div class="logo">
-    <span class="logo-avatar">M</span>
-    <div class="logo-text">
-      <strong>MDE Hub</strong>
-      <span>Simuladores</span>
-    </div>
+<!-- TOPBAR PREMIUM -->
+<header class="topbar">
+  <div class="topbar-left">
+    <h1 class="page-title">TÍTULO DA PÁGINA</h1>
+    <p class="page-subtitle">Subtítulo explicando a função da tela</p>
   </div>
 
-  <div class="nav-section">
-    <a href="/dashboard.html" class="nav-item">📊 Dashboard</a>
-    <a href="/painel-proprietario.html" class="nav-item">🧭 Painel do Proprietário</a>
-    <a href="/reservas.html" class="nav-item">🛎️ Reservas</a>
-    <a href="/hospedes.html" class="nav-item">👤 Hóspedes</a>
-    <a href="/estoque.html" class="nav-item">📦 Estoque</a>
-    <a href="/fechamento.html" class="nav-item">🧾 Fechamento</a>
-    <a href="/financeiro.html" class="nav-item">💰 Financeiro</a>
-    <a href="/relatorios.html" class="nav-item">📑 Relatórios</a>
-    <a href="/mapa-uh.html" class="nav-item">🛏️ Mapa UHs</a>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-title">Simuladores</div>
-    <a href="/simuladores.html" class="nav-item">🧮 Todos os Simuladores</a>
-    <a href="/simulador-adr.html" class="nav-item">📏 ADR</a>
-    <a href="/simulador-revpar.html" class="nav-item">📈 RevPAR</a>
-    <a href="/simulador-diarias.html" class="nav-item active">📅 Diárias Vendidas</a>
-    <a href="/simulador-ocupacao.html" class="nav-item">🏨 Ocupação</a>
-  </div>
-
-  <div class="nav-section">
-    <div class="nav-title">CRM Hoteleiro</div>
-    <a class="nav-item disabled">📘 Em breve</a>
-    <a class="nav-item disabled">📄 Proposta Hoteleira</a>
-  </div>
-
-  <div class="nav-section nav-exit">
-    <a href="/logout.html" class="nav-item">🚪 Sair</a>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <div class="topbar-left">
-      <h1 class="page-title">Simulador de Diárias Vendidas</h1>
-      <p class="page-subtitle">
-        Veja quantas diárias são necessárias para atingir metas de faturamento.
-      </p>
+  <div class="topbar-right">
+    <div class="hotel-select-wrapper">
+      <span class="label">Hotel</span>
+      <select id="hotelSelector">
+        <option>Carregando...</option>
+      </select>
     </div>
 
-    <div class="topbar-right">
-      <button id="btnThemeToggle" class="theme-toggle">🌓</button>
-      <div class="user-pill">
-        <div class="user-avatar">H</div>
-        <div class="user-info">
-          <span class="user-name">Hotel Exemplo</span>
-          <span class="user-email">contato@hotelexemplo.com</span>
-        </div>
+    <button id="btnThemeToggle" class="theme-toggle">🌓</button>
+
+    <div class="user-pill">
+      <div class="user-avatar">H</div>
+      <div class="user-info">
+        <span class="user-name">Hotel Exemplo</span>
+        <span class="user-email">contato@hotelexemplo.com</span>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
   <!-- CONTEÚDO -->
   <section class="content-section">
